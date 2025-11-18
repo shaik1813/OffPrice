@@ -31,6 +31,7 @@ fun ShimmerEffect(
         Color.White.copy(alpha = 0.3f),
     )
 
+
     val transition = rememberInfiniteTransition(label = "")
 
     val translateAnimation = transition.animateFloat(
