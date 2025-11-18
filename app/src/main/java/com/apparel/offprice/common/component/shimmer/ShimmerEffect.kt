@@ -23,7 +23,6 @@ fun ShimmerEffect(
     durationMillis: Int = 1000,
 ) {
 
-
     val shimmerColors = listOf(
         Color.White.copy(alpha = 0.3f),
         Color.White.copy(alpha = 0.5f),
