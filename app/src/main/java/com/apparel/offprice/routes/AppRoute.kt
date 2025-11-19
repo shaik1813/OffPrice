@@ -1,5 +1,6 @@
 package com.apparel.offprice.routes
 
+import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -20,7 +21,6 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         startDestination = AppScreen.SplashScreen
     ){
         composable<AppScreen.SplashScreen> {
-
         }
 
         composable<AppScreen.LoginScreen> {
