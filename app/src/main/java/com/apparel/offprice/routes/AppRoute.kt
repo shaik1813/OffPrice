@@ -1,11 +1,11 @@
 package com.apparel.offprice.routes
 
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.apparel.offprice.features.home.presentation.screens.HomeScreen
 
 
 @Composable
@@ -18,7 +18,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
     NavHost(
         navController = navController,
-        startDestination = AppScreen.SplashScreen
+        startDestination = AppScreen.HomeScreen
     ){
         composable<AppScreen.SplashScreen> {
 
@@ -42,7 +42,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable< AppScreen.HomeScreen> {
-
+            HomeScreen()
         }
 
     }
