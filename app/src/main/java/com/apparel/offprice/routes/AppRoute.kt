@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
     val navController = rememberNavController()
+
     val widthSizeClass = windowSizeClass.widthSizeClass
     val heightSizeClass = windowSizeClass.heightSizeClass
 
