@@ -2,16 +2,22 @@ package com.apparel.offprice.features.home.presentation.screens
 
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
@@ -27,23 +33,27 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.apparel.offprice.features.home.presentation.screens.categoriesDrawer.CategoriesDrawer
 import com.apparel.offprice.features.home.data.model.bottomNavItems
+import com.apparel.offprice.features.home.presentation.screens.categoriesDrawer.CategoriesDrawer
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(outerNavController: NavHostController) {
 
-    val navController = rememberNavController()
-    val currentBackStack by navController.currentBackStackEntryAsState()
+    val innerNavController = rememberNavController()
+    val currentBackStack by innerNavController.currentBackStackEntryAsState()
     val currentRoute = currentBackStack?.destination?.route
     // Drawer State
     var isCategoriesOpen by remember { mutableStateOf(false) }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
     NavigationSuiteScaffold(
         navigationSuiteItems = {
             bottomNavItems.forEach{ destinations ->
@@ -61,9 +71,9 @@ fun HomeScreen() {
                         } else {
                             // Normal navigation
                             if (currentRoute != destinations.route) {
-                                navController.navigate(destinations.route) {
+                                innerNavController.navigate(destinations.route) {
                                     launchSingleTop = true
-                                    popUpTo(navController.graph.startDestinationId) {
+                                    popUpTo(innerNavController.graph.startDestinationId) {
                                         saveState = true
                                     }
                                     restoreState = true
@@ -80,12 +90,14 @@ fun HomeScreen() {
             )
     )
     {
-        Scaffold(modifier = Modifier.fillMaxSize()){
-                innerPadding ->
+        Scaffold(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues = WindowInsets.safeDrawing.asPaddingValues()) //This will add padding for both system bars and display cutouts
+        ){ innerPadding ->
             NavHost(
-                navController = navController,
-                startDestination = "HOME",
-                modifier = Modifier.padding(innerPadding)
+                navController = innerNavController,
+                startDestination = "HOME"
             ){
                 composable("HOME") {
                     Greeting("Home")
@@ -122,8 +134,8 @@ fun HomeScreen() {
 
             AnimatedVisibility(
                 visible = true,
-                enter = slideInHorizontally { -it },
-                exit = slideOutHorizontally { -it }
+                enter = slideInHorizontally(animationSpec = tween(300)) { -it },
+                exit = slideOutHorizontally(animationSpec = tween(250)) { -it }
             ) {
                 Box(
                     modifier = Modifier
@@ -136,7 +148,7 @@ fun HomeScreen() {
                         onItemClick = { categoryItems ->
                             isCategoriesOpen = false
                             //navController.navigate("category_details/$id")
-                            Toast.makeText(navController.context, categoryItems.title, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(innerNavController.context, categoryItems.title, Toast.LENGTH_SHORT).show()
                         }
                     )
                 }
@@ -147,11 +159,14 @@ fun HomeScreen() {
 
 @Composable
 fun Greeting(string: String) {
-    Text(text = string)
+    Column {
+        Text(text = string, style = MaterialTheme.typography.titleMedium)
+    }
+
 }
 
 @Preview
 @Composable
 fun CategoryPreview(){
-    HomeScreen()
+    HomeScreen(outerNavController = rememberNavController())
 }
