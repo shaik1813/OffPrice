@@ -41,7 +41,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable< AppScreen.HomeScreen> {
-            HomeScreen(navController)
+            HomeScreen()
         }
 
     }
