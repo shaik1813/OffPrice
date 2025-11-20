@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.apparel.offprice.features.home.data.model.CategoryItem
 
 @Composable
@@ -37,8 +38,7 @@ fun CategoryCard(
             Column(
                 modifier = Modifier.weight(1f)
             ) {
-                Text(item.title, style = MaterialTheme.typography.bodyLarge)
-                Text("Tap to explore", style = MaterialTheme.typography.bodySmall)
+                Text(item.title, style = MaterialTheme.typography.titleSmall)
             }
 
             Image(
@@ -51,4 +51,13 @@ fun CategoryCard(
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun categoryCardPreview(){
+    CategoryCard(
+        item = CategoryItem("1", "Category 1", android.R.drawable.ic_menu_gallery),
+        onClick = {}
+    )
 }

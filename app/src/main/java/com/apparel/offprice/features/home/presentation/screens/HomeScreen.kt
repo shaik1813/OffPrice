@@ -4,12 +4,17 @@ import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -25,14 +30,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.apparel.offprice.features.home.data.model.CategoryItem
+import com.apparel.offprice.features.home.data.model.DrawerMode
 import com.apparel.offprice.features.home.presentation.screens.categoriesDrawer.CategoriesDrawer
 import com.apparel.offprice.features.home.data.model.bottomNavItems
+import com.apparel.offprice.features.home.data.model.sampleTopTabs
 
 @Composable
 fun HomeScreen() {
@@ -40,104 +49,141 @@ fun HomeScreen() {
     val navController = rememberNavController()
     val currentBackStack by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStack?.destination?.route
-    // Drawer State
+    var selectedTab by remember { mutableStateOf("HOME") }
+    var lastNavigatedTab by remember { mutableStateOf("HOME") }
     var isCategoriesOpen by remember { mutableStateOf(false) }
+    val bottomNavHeight = 100.dp
+    val screenHeight = LocalConfiguration.current.screenHeightDp.dp
+    val drawerHeight = screenHeight - bottomNavHeight
+    val drawerWidth = (LocalConfiguration.current.screenWidthDp / 1.3f).dp
+    var drawerMode by remember { mutableStateOf(DrawerMode.CATEGORY_LIST) }
+    var selectedCategory by remember { mutableStateOf<CategoryItem?>(null) }
+    var selectedTopTab by remember { mutableStateOf(sampleTopTabs.first().id) }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-    NavigationSuiteScaffold(
-        navigationSuiteItems = {
-            bottomNavItems.forEach{ destinations ->
-                item(
-                    icon = { Icon(
-                        destinations.icon,
-                        contentDescription = destinations.label)
-                    },
-                    label = { Text(destinations.label) },
-                    selected = currentRoute == destinations.route,
-                    onClick = {
-                        if (destinations.route == "CATEGORIES") {
-                            // OPEN DRAWER
-                            isCategoriesOpen = true
-                        } else {
-                            // Normal navigation
-                            if (currentRoute != destinations.route) {
-                                navController.navigate(destinations.route) {
-                                    launchSingleTop = true
-                                    popUpTo(navController.graph.startDestinationId) {
-                                        saveState = true
-                                    }
-                                    restoreState = true
-                                }
-                            }
-                        }
-                    }
-                )
-            }
-        },
-        modifier = Modifier
-            .then(
-                if (isCategoriesOpen) Modifier.blur(15.dp) else Modifier
-            )
-    )
-    {
-        Scaffold(modifier = Modifier.fillMaxSize()){
-                innerPadding ->
-            NavHost(
-                navController = navController,
-                startDestination = "HOME",
-                modifier = Modifier.padding(innerPadding)
-            ){
-                composable("HOME") {
-                    Greeting("Home")
-                }
-                composable("CATEGORIES") {
-                    Greeting("No Categories navigation")
-                }
-                composable("BESTPRICE") {
-                    Greeting("BestPrice")
-                }
-                composable("CART") {
-                    Greeting("Cart")
-                }
-                composable("ACCOUNT") {
-                    Greeting("Account")
+    Column(modifier = Modifier.fillMaxSize()) {
+
+        // MAIN CONTENT (BLUR ONLY THIS)
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)   // ✅ Correct: weight is allowed in Column
+                .then(if (isCategoriesOpen) Modifier.blur(15.dp) else Modifier)
+        ) {
+            Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+
+                NavHost(
+                    navController = navController,
+                    startDestination = "HOME",
+                    modifier = Modifier.padding(innerPadding)
+                ) {
+                    composable("HOME") { Greeting("Home") }
+                    composable("CATEGORIES") { Greeting("No Categories navigation") }
+                    composable("BESTPRICE") { Greeting("BestPrice") }
+                    composable("CART") { Greeting("Cart") }
+                    composable("ACCOUNT") { Greeting("Account") }
                 }
             }
         }
-    }
-        // === OVERLAY + DRAWER ===
-        if (isCategoriesOpen) {
 
-            // DARK SCRIM (click anywhere to close)
+        // BOTTOM NAVIGATION (Always Visible)
+        NavigationSuiteScaffold(
+            navigationSuiteItems = {
+                bottomNavItems.forEach { item ->
+                    item(
+                        icon = {
+                            val iconRes =
+                                if (selectedTab == item.route) item.filledIcon
+                                else item.outlinedIcon
+
+                            Image(
+                                painter = painterResource(id = iconRes),
+                                contentDescription = item.label,
+                                modifier = Modifier.size(28.dp)
+                            )
+                        },
+                        label = { Text(item.label) },
+
+                        selected = false,
+                        onClick = {
+                            if (item.route == "CATEGORIES") {
+                                selectedTab = "CATEGORIES"
+                                    isCategoriesOpen = true
+                            } else {
+                                // Update both states for real navigation tabs
+                                selectedTab = item.route
+                                lastNavigatedTab = item.route
+                                isCategoriesOpen = false
+                                if (currentRoute != item.route) {
+                                    navController.navigate(item.route) {
+                                        launchSingleTop = true
+                                        restoreState = true
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            saveState = true
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+                    )
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(bottomNavHeight)
+        ) {}
+    }
+
+    // OVERLAY (SCRIM + DRAWER)
+    Box(modifier = Modifier.fillMaxSize()) {
+        if (isCategoriesOpen) {
+            // SCRIM ONLY ABOVE BOTTOM NAVIGATION
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .height(drawerHeight)
+                    .fillMaxWidth()
                     .background(Color.Black.copy(alpha = 0.35f))
+                    .align(Alignment.TopStart)
                     .clickable { isCategoriesOpen = false }
             )
 
-            // LEFT DRAWER (half width)
-            val screenWidth = LocalConfiguration.current.screenWidthDp
-            val drawerWidth = (screenWidth / 1.3f).dp
-
             AnimatedVisibility(
-                visible = true,
+                visible = isCategoriesOpen,
                 enter = slideInHorizontally { -it },
-                exit = slideOutHorizontally { -it }
+                exit = slideOutHorizontally { -it },
+                modifier = Modifier.align(Alignment.TopStart)
             ) {
                 Box(
                     modifier = Modifier
-                        .fillMaxHeight()
+                        .height(drawerHeight)     // drawer stops above bottom nav
                         .width(drawerWidth)
-                        .align(Alignment.CenterStart)
+                        .background(Color.White)
                 ) {
                     CategoriesDrawer(
-                        onClose = { isCategoriesOpen = false },
-                        onItemClick = { categoryItems ->
+                        drawerMode = drawerMode,
+                        selectedCategory = selectedCategory,
+                        selectedTopTab = selectedTopTab,
+                        onTopTabClick = { id -> selectedTopTab = id },
+                        onCategoryClick = { category ->
+                            selectedCategory = category
+                            drawerMode = DrawerMode.SUBCATEGORY_LIST
+                        },
+                        onSubCategoryClick = { subCategory ->
+                            Toast.makeText(
+                                navController.context,
+                                subCategory.title,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        onBack = {
+                            drawerMode = DrawerMode.CATEGORY_LIST
+                        },
+                        onClose = {
                             isCategoriesOpen = false
-                            //navController.navigate("category_details/$id")
-                            Toast.makeText(navController.context, categoryItems.title, Toast.LENGTH_SHORT).show()
+                            drawerMode = DrawerMode.CATEGORY_LIST
+                            selectedTab = lastNavigatedTab
                         }
+
                     )
                 }
             }

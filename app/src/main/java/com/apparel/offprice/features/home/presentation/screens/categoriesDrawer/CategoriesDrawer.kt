@@ -2,6 +2,8 @@ package com.apparel.offprice.features.home.presentation.screens.categoriesDrawer
 
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -16,15 +18,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import com.apparel.offprice.features.home.data.model.CategoryItem
+import com.apparel.offprice.features.home.data.model.DrawerMode
+import com.apparel.offprice.features.home.data.model.SubCategoryItem
 import com.apparel.offprice.features.home.data.model.sampleCategoryItems
+import com.apparel.offprice.features.home.data.model.sampleSubCategories
 import com.apparel.offprice.features.home.data.model.sampleTopTabs
 
 @Composable
 fun CategoriesDrawer(
-    onClose: () -> Unit,
-    onItemClick: (CategoryItem) -> Unit
+    drawerMode: DrawerMode,
+    selectedCategory: CategoryItem?,
+    selectedTopTab: String,
+    onTopTabClick: (String) -> Unit,
+    onCategoryClick: (CategoryItem) -> Unit,
+    onSubCategoryClick: (SubCategoryItem) -> Unit,
+    onBack: () -> Unit,
+    onClose: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -33,54 +47,119 @@ fun CategoriesDrawer(
             .padding(16.dp)
     ) {
 
-        Spacer(modifier = Modifier.height(20.dp).fillMaxWidth())
+        Spacer(modifier = Modifier
+            .height(20.dp)
+            .fillMaxWidth())
         // Top Bar
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            Text(
-                text = "OFF/PRICE",
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.weight(1f)
-            )
+            // BACK icon only in SUBCATEGORY mode
+            if (drawerMode == DrawerMode.SUBCATEGORY_LIST) {
+                IconButton(onClick = onBack) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                }
+
+                // Title next to back arrow
+                Text(
+                    text = selectedCategory?.title ?: "",
+                    style = MaterialTheme.typography.titleLarge
+                )
+
+            } else {
+                // CATEGORY_LIST mode
+
+                Text(
+                    text = "OFF/PRICE",
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
+
+            // Spacer to push Close icon to the right
+            Spacer(modifier = Modifier.weight(1f))
 
             IconButton(onClick = onClose) {
-                Icon(Icons.Default.Close,
-                    contentDescription = "Close", tint = Color.Black)
+                Icon(Icons.Default.Close, contentDescription = "Close")
             }
         }
 
-        Spacer(modifier = Modifier.height(8.dp).fillMaxWidth())
 
-        // Horizontal tabs
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            items(sampleTopTabs) { topTabs ->
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(16.dp))
-                        .background(Color(0xFFEAEAEA))
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                ) {
-                    Text(topTabs.label)
+        Spacer(modifier = Modifier
+            .height(8.dp)
+            .fillMaxWidth())
+
+        if (drawerMode == DrawerMode.CATEGORY_LIST) {
+
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+            ) {
+                items(sampleTopTabs) { tab ->
+
+                    val isSelected = selectedTopTab == tab.id
+
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(
+                                if (isSelected) Color.Black else Color.White
+                            )
+                            .border(
+                                width = 1.dp,
+                                color = Color.Black,
+                                shape = RoundedCornerShape(6.dp)
+                            )
+                            .clickable {
+                                onTopTabClick(tab.id)
+                            }
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                    ) {
+                        Text(
+                            text = tab.label,
+                            color = if (isSelected) Color.White else Color.Black,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
                 }
             }
         }
 
-        Spacer(modifier = Modifier.height(12.dp)
+
+        Spacer(modifier = Modifier
+            .height(12.dp)
             .fillMaxWidth())
 
-        // Category list
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.fillMaxSize()
-        ) {
-            items(sampleCategoryItems) { item ->
-                CategoryCard(item, onItemClick)
+        when (drawerMode) {
+
+            DrawerMode.CATEGORY_LIST -> {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    items(sampleCategoryItems) { item ->
+                        CategoryCard(item) {
+                            onCategoryClick(item)
+                        }
+                    }
+                }
+            }
+
+            DrawerMode.SUBCATEGORY_LIST -> {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    items(sampleSubCategories) { subItem ->
+                        SubCategoryCard(subItem) {
+                            onSubCategoryClick(subItem)
+                        }
+                    }
+                }
             }
         }
     }
@@ -90,7 +169,12 @@ fun CategoriesDrawer(
 @Composable
 fun CategoriesDrawerPreview(){
     CategoriesDrawer(
-        onClose = {},
-        onItemClick = {}
-    )
+        drawerMode = DrawerMode.CATEGORY_LIST,
+        selectedCategory = null,
+        selectedTopTab = "men",
+        onTopTabClick = { },
+        onCategoryClick = { },
+        onSubCategoryClick = { },
+        onBack = { },
+    ) { }
 }
