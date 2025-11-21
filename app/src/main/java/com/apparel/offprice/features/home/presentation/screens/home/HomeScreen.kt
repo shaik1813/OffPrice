@@ -1,7 +1,8 @@
-package com.apparel.offprice.features.home.presentation.screens
+package com.apparel.offprice.features.home.presentation.screens.home
 
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.Image
@@ -9,14 +10,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
@@ -30,9 +30,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -42,9 +44,13 @@ import com.apparel.offprice.features.home.data.model.DrawerMode
 import com.apparel.offprice.features.home.presentation.screens.categoriesDrawer.CategoriesDrawer
 import com.apparel.offprice.features.home.data.model.bottomNavItems
 import com.apparel.offprice.features.home.data.model.sampleTopTabs
+import com.apparel.offprice.routes.AppScreen
+import okhttp3.CacheControl
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    outerNavControl: NavHostController
+) {
 
     val navController = rememberNavController()
     val currentBackStack by navController.currentBackStackEntryAsState()
@@ -69,14 +75,28 @@ fun HomeScreen() {
                 .weight(1f)   // ✅ Correct: weight is allowed in Column
                 .then(if (isCategoriesOpen) Modifier.blur(15.dp) else Modifier)
         ) {
-            Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
+            Scaffold(
+                modifier = Modifier.fillMaxSize(),
+                containerColor = MaterialTheme.colorScheme.surface
+            ) { innerPadding ->
                 NavHost(
                     navController = navController,
                     startDestination = "HOME",
                     modifier = Modifier.padding(innerPadding)
                 ) {
-                    composable("HOME") { Greeting("Home") }
+                    composable("HOME") {
+                        HomeContent(
+                            onNavigateToSearch = {
+                                outerNavControl.navigate(AppScreen.SearchScreen){}
+                            },
+                            onNavigateToStore = {
+                                outerNavControl.navigate(AppScreen.WishListScreen){}
+                            },
+                            onNavigateToWishlist = {
+                                outerNavControl.navigate(AppScreen.StoreLocatorScreen){}
+                            }
+                        )
+                    }
                     composable("CATEGORIES") { Greeting("No Categories navigation") }
                     composable("BESTPRICE") { Greeting("BestPrice") }
                     composable("CART") { Greeting("Cart") }
@@ -102,7 +122,6 @@ fun HomeScreen() {
                             )
                         },
                         label = { Text(item.label) },
-
                         selected = false,
                         onClick = {
                             if (item.route == "CATEGORIES") {
@@ -120,7 +139,6 @@ fun HomeScreen() {
                                         popUpTo(navController.graph.startDestinationId) {
                                             saveState = true
                                         }
-
                                     }
                                 }
                             }
@@ -136,6 +154,7 @@ fun HomeScreen() {
 
     // OVERLAY (SCRIM + DRAWER)
     Box(modifier = Modifier.fillMaxSize()) {
+        val context = LocalContext.current
         if (isCategoriesOpen) {
             // SCRIM ONLY ABOVE BOTTOM NAVIGATION
             Box(
@@ -149,8 +168,8 @@ fun HomeScreen() {
 
             AnimatedVisibility(
                 visible = isCategoriesOpen,
-                enter = slideInHorizontally { -it },
-                exit = slideOutHorizontally { -it },
+                enter = slideInHorizontally(animationSpec = tween(300)) { -it },
+                exit = slideOutHorizontally(animationSpec = tween(250)) { -it },
                 modifier = Modifier.align(Alignment.TopStart)
             ) {
                 Box(
@@ -170,7 +189,7 @@ fun HomeScreen() {
                         },
                         onSubCategoryClick = { subCategory ->
                             Toast.makeText(
-                                navController.context,
+                                context,
                                 subCategory.title,
                                 Toast.LENGTH_SHORT
                             ).show()
@@ -183,7 +202,6 @@ fun HomeScreen() {
                             drawerMode = DrawerMode.CATEGORY_LIST
                             selectedTab = lastNavigatedTab
                         }
-
                     )
                 }
             }
@@ -199,5 +217,7 @@ fun Greeting(string: String) {
 @Preview
 @Composable
 fun CategoryPreview(){
-    HomeScreen()
+   HomeScreen(
+       outerNavControl = rememberNavController()
+   )
 }
