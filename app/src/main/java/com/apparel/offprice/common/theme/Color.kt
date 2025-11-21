@@ -13,4 +13,13 @@ val redColor = Color(0xFFFB637E)
 
 val inputTextColor = Color(0xFF545454)
 
+val lineColor = Color(0xFF666666)
+
+val buttonBorderColor = Color(0xFF8A8A8A)
+
+val loginGoogleColor = Color(0xFF191919)
+val loginButtonColor = Color(0xFF333333)
+
+
+
 

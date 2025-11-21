@@ -16,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.apparel.offprice.common.theme.inputTextColor
+import com.apparel.offprice.common.theme.lineColor
 
 @Composable
 fun CustomCheckbox(
@@ -24,10 +26,10 @@ fun CustomCheckbox(
 ) {
     Box(
         modifier = Modifier
-            .size(24.dp)
-            .clip(RoundedCornerShape(6.dp))
-            .background(if (checked) Color.Black else Color.Transparent)
-            .border(2.dp, Color.Black, RoundedCornerShape(6.dp))
+            .size(16.dp)
+            .clip(RoundedCornerShape(4.dp))
+            .background(if (checked) lineColor else Color.Transparent)
+            .border(1.dp, lineColor, RoundedCornerShape(4.dp))
             .clickable { onCheckedChange(!checked) },
         contentAlignment = Alignment.Center
     ) {

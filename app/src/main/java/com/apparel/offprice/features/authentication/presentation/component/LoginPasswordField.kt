@@ -17,14 +17,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.inputTextColor
 
 @Composable
-fun NoAnimationOutlinedTextFieldWithIcon(
+fun LoginPasswordField(
     value: String,
     onValueChange: (String) -> Unit,
     placeholder: String,
@@ -38,7 +36,7 @@ fun NoAnimationOutlinedTextFieldWithIcon(
                 color = MaterialTheme.colorScheme.primary,
                 shape = RoundedCornerShape(12.dp)
             )
-            .padding(horizontal = 12.dp, vertical = 14.dp),
+            .padding(horizontal = 12.dp, vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
 
@@ -49,6 +47,7 @@ fun NoAnimationOutlinedTextFieldWithIcon(
                 Text(
                     text = placeholder,
                     color = Color.Gray,
+                    style = MaterialTheme.typography.bodyMedium,
                     fontSize = 14.sp
                 )
             }
@@ -59,10 +58,10 @@ fun NoAnimationOutlinedTextFieldWithIcon(
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
                 textStyle = LocalTextStyle.current.copy(
-                    fontSize = 14.sp,
-                    color = Color.Black
+                    fontSize = 12.sp,
+                    color = inputTextColor
                 ),
-                cursorBrush = SolidColor(Color.Black)
+                cursorBrush = SolidColor(inputTextColor)
             )
         }
 

@@ -5,6 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.apparel.offprice.common.theme.OffPriceTheme
+import com.apparel.offprice.features.authentication.presentation.screen.LoginScreen
+import com.apparel.offprice.features.authentication.presentation.screen.SignupScreen
 import com.apparel.offprice.features.home.presentation.screens.HomeScreen
 
 
@@ -19,7 +22,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
     NavHost(
         navController = navController,
         startDestination = AppScreen.HomeScreen
-    ){
+    ) {
         composable<AppScreen.SplashScreen> {
         }
 
@@ -31,17 +34,19 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
         }
 
-        composable< AppScreen.ForgetPasswordScreen> {
+        composable<AppScreen.ForgetPasswordScreen> {
 
         }
 
 
-        composable< AppScreen.OTPScreen> {
+        composable<AppScreen.OTPScreen> {
 
         }
 
-        composable< AppScreen.HomeScreen> {
-            HomeScreen()
+        composable<AppScreen.HomeScreen> {
+            OffPriceTheme {
+                SignupScreen()
+            }
         }
 
     }
