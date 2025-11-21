@@ -5,7 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.apparel.offprice.features.home.presentation.screens.HomeScreen
+import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
+import com.apparel.offprice.features.home.presentation.screens.search.SearchScreen
+import com.apparel.offprice.features.storeLocator.presentation.screen.StoreLocatorScreen
+import com.apparel.offprice.features.wishlist.presentation.screen.WishListScreen
 
 
 @Composable
@@ -21,6 +24,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         startDestination = AppScreen.HomeScreen
     ){
         composable<AppScreen.SplashScreen> {
+
         }
 
         composable<AppScreen.LoginScreen> {
@@ -35,13 +39,24 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
         }
 
-
         composable< AppScreen.OTPScreen> {
 
         }
 
         composable< AppScreen.HomeScreen> {
-            HomeScreen()
+            HomeScreen(outerNavControl = navController)
+        }
+
+        composable <AppScreen.SearchScreen>{
+            SearchScreen()
+        }
+
+        composable<AppScreen.StoreLocatorScreen> {
+            StoreLocatorScreen()
+        }
+
+        composable<AppScreen.WishListScreen> {
+            WishListScreen()
         }
 
     }
