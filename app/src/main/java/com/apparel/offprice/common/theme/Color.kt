@@ -13,4 +13,4 @@ val redColor = Color(0xFFFB637E)
 
 val inputTextColor = Color(0xFF545454)
 
-
+val IconBackgroundColor = Color(0xFFF5F5F5)

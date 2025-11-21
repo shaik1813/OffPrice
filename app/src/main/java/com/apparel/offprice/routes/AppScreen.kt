@@ -20,4 +20,14 @@ sealed interface AppScreen{
 
     @Serializable
     object HomeScreen: AppScreen
+
+    @Serializable
+    object SearchScreen : AppScreen
+
+    @Serializable
+    object StoreLocatorScreen : AppScreen
+
+    @Serializable
+    object WishListScreen : AppScreen
+
 }
