@@ -1,5 +1,6 @@
 package com.apparel.offprice.features.authentication.presentation.screen
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,23 +10,22 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,25 +35,27 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
-import com.apparel.offprice.common.theme.primaryColor
+import com.apparel.offprice.common.theme.buttonBorderColor
+import com.apparel.offprice.common.theme.customFontFamily
+import com.apparel.offprice.common.theme.inputTextColor
+import com.apparel.offprice.common.theme.lineColor
+import com.apparel.offprice.common.theme.loginButtonColor
+import com.apparel.offprice.common.theme.loginGoogleColor
 import com.apparel.offprice.common.theme.redColor
+import com.apparel.offprice.common.theme.surfaceColor
 import com.apparel.offprice.features.authentication.presentation.component.CustomCheckbox
-import com.apparel.offprice.features.authentication.presentation.component.NoAnimationOutlinedTextField
-import com.apparel.offprice.features.authentication.presentation.component.NoAnimationOutlinedTextFieldWithIcon
-import com.apparel.offprice.features.authentication.presentation.component.PasswordInputField
+import com.apparel.offprice.features.authentication.presentation.component.LoginEmailPhoneField
+import com.apparel.offprice.features.authentication.presentation.component.LoginPasswordField
 
 @Preview(showBackground = true)
 @Composable
@@ -62,7 +64,7 @@ fun LoginScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(horizontal = 16.dp, vertical = 26.dp),
         contentAlignment = Alignment.Center
     ) {
 
@@ -79,43 +81,40 @@ fun LoginScreen() {
                     .padding(20.dp)
             ) {
 
-                // ---------- TOP TITLE ----------
+
                 Text(
-                    stringResource(R.string.login_account_header)
-                    /*buildAnnotatedString {
-                        withStyle(style = SpanStyle(color = Color.Yellow)) {
-                            append("LOGIN ")
-                        }
-                        append("YOUR ACCOUNT")
-                    }*/,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
+                    stringResource(R.string.login_account_header),
+                    fontSize = 16.sp,
+                    fontFamily = customFontFamily,
+                    fontWeight = FontWeight.Bold
                 )
 
                 Text(
                     stringResource(R.string.login_details),
                     fontSize = 12.sp,
                     color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.padding(top = 10.dp)
+                    modifier = Modifier.padding(top = 10.dp),
+                    fontFamily = customFontFamily,
+                    fontWeight = FontWeight.Normal
                 )
 
 
                 Text(
                     buildAnnotatedString {
-                        append(stringResource(R.string.email_address))
+                        append(stringResource(R.string.email_address_phone))
                         withStyle(style = SpanStyle(color= redColor)) {
                             append("*")
                         }
                     },
                     fontSize = 14.sp,
-                    color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Black,
                     modifier = Modifier.padding(top = 20.dp, bottom = 12.dp)
                 )
 
-                // ---------- EMAIL FIELD ----------
                 var email by remember { mutableStateOf("") }
 
-                NoAnimationOutlinedTextField(email, { email = it }, "enter email")
+                LoginEmailPhoneField(email, { email = it }, stringResource(R.string.enter_mail))
 
 
                 Text(
@@ -126,150 +125,105 @@ fun LoginScreen() {
                         }
                     },
                     fontSize = 14.sp,
-                    color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Black,
                     modifier = Modifier.padding(top = 20.dp, bottom = 12.dp)
                 )
 
-                // ---------- PASSWORD FIELD ----------
-                var password by remember { mutableStateOf("") }
-                var showPassword by remember { mutableStateOf(false) }
+                var passtemp by remember { mutableStateOf("") }
+                var showPasswordTemp by remember { mutableStateOf(false) }
 
 
-                /*  NoAnimationOutlinedTextFieldWithIcon(
-                      value = password,
-                      onValueChange = { password = it },
-                      placeholder = "Password *",
-                      trailingIcon = {
-                          IconButton(onClick = { showPassword = !showPassword }) {
-                              Icon(
-                                  imageVector = if (showPassword)
-                                      Icons.Default.Visibility
-                                  else
-                                      Icons.Default.VisibilityOff,
-                                  contentDescription = null
-                              )
-                          }
-                      }
-                  )*/
-                OutlinedTextField(
-                    value = password,
-                    onValueChange = { password = it },
-                    label = {
-                        Text(buildAnnotatedString {
-                            append(stringResource(R.string.password))
-                            withStyle(style = SpanStyle( color = MaterialTheme.colorScheme.tertiary)) {
-                                append("*")
-                            }
-                        })
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp),
-                    singleLine = true,
-                    visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+                LoginPasswordField(
+                    value = passtemp,
+                    onValueChange = { passtemp = it },
+                    placeholder = stringResource(R.string.password),
                     trailingIcon = {
-                        IconButton(onClick = { showPassword = !showPassword }) {
+                        IconButton(onClick = { showPasswordTemp = !showPasswordTemp }) {
                             Icon(
-                                painterResource(
-                                    if (showPassword) R.drawable.eye_slash
-                                    else R.drawable.eye_slash
-                                ),
+                                imageVector = if (showPasswordTemp)
+                                    Icons.Default.Visibility
+                                else
+                                    Icons.Default.VisibilityOff,
                                 contentDescription = null
                             )
                         }
                     }
                 )
 
+
                 Spacer(Modifier.height(10.dp))
+
 
                 var isCheck by remember { mutableStateOf(false) }
-                Spacer(Modifier.height(10.dp))
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    Row(){
                     CustomCheckbox(isCheck) { isCheck = it }
 
-                    Text(
-                        stringResource(R.string.remember_me), fontSize = 12.sp,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                    Text(
-                        stringResource(R.string.forgot_pass),
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 12.sp
-                    )
-                }
-                // ---------- REMEMBER ME + FORGOT ----------
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
+                    Spacer(modifier = Modifier.size(5.dp))
 
-
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Checkbox(
-                            checked = false,
-                            onCheckedChange = {}
-                        )
-                        Text(
-                            stringResource(R.string.remember_me), fontSize = 14.sp,
-                            color = MaterialTheme.colorScheme.primary
-                        )
+                    Text(
+                        stringResource(R.string.remember_me),
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontSize = 12.sp,
+                        color = Color.Black, modifier = Modifier.align(
+                            Alignment.CenterVertically)
+                    )
                     }
-
                     Text(
                         stringResource(R.string.forgot_pass),
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Black,
+                        style = MaterialTheme.typography.bodyMedium,
                         fontSize = 12.sp
                     )
                 }
 
                 Spacer(Modifier.height(20.dp))
 
-                // ---------- LOGIN BUTTON ----------
                 Button(
                     onClick = { },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(55.dp),
+                        .padding(vertical = 14.dp),
                     shape = RoundedCornerShape(8.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Black
+                        containerColor = loginButtonColor
                     )
                 ) {
                     Text(
-                        "LOGIN",
-                        color = Color.Yellow,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp
+                        stringResource(R.string.login_caps),
+                        color = surfaceColor,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontSize = 14.sp
                     )
                 }
 
                 Spacer(Modifier.height(20.dp))
 
-                // ---------- DIVIDER ----------
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     HorizontalDivider(
-                        modifier = Modifier.weight(1f),
-                        color = Color.LightGray,
-                        thickness = 1.dp
+                        modifier = Modifier.weight(1f).padding(end=12.dp,start=40.dp),
+                        color = inputTextColor,
+                        thickness = 0.5.dp
                     )
                     Text(
-                        "  or sign in with  ",
-                        color = Color.Gray,
+                        " "+stringResource(R.string.signin_with)+" ",
+                        color = inputTextColor,
+                        style = MaterialTheme.typography.titleMedium,
                         fontSize = 14.sp
                     )
                     HorizontalDivider(
-                        modifier = Modifier.weight(1f),
-                        color = Color.LightGray,
-                        thickness = 1.dp
+                        modifier = Modifier.weight(1f).padding(start=12.dp,end=40.dp),
+                        color = inputTextColor,
+                        thickness = 0.5.dp
                     )
                 }
 
@@ -287,7 +241,8 @@ fun LoginScreen() {
                         modifier = Modifier
                             .weight(1f)
                             .height(50.dp),
-                        shape = RoundedCornerShape(12.dp)
+                        shape = RoundedCornerShape(12.dp),
+                        border = BorderStroke(1.dp, buttonBorderColor)
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.google_icon),
@@ -295,7 +250,10 @@ fun LoginScreen() {
                             tint = Color.Unspecified
                         )
                         Spacer(Modifier.width(8.dp))
-                        Text("Google")
+                        Text(stringResource(R.string.google),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = loginGoogleColor
+                        )
                     }
 
                     // Facebook
@@ -304,7 +262,8 @@ fun LoginScreen() {
                         modifier = Modifier
                             .weight(1f)
                             .height(50.dp),
-                        shape = RoundedCornerShape(12.dp)
+                        shape = RoundedCornerShape(12.dp),
+                        border = BorderStroke(1.dp, buttonBorderColor)
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.facebook_icon),
@@ -312,23 +271,28 @@ fun LoginScreen() {
                             tint = Color.Unspecified
                         )
                         Spacer(Modifier.width(8.dp))
-                        Text("Facebook")
+                        Text(stringResource(R.string.facebook),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = loginGoogleColor
+                        )
                     }
                 }
 
                 Spacer(Modifier.height(20.dp))
 
-                // ---------- REGISTER LINK ----------
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Text("Don’t have an account?")
+                    Text(stringResource(R.string.dont_have_account),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                        fontSize = 14.sp)
                     Text(
-                        " Register Now",
-                        color = Color.Blue,
-                        fontWeight = FontWeight.SemiBold
-                    )
+                        stringResource(R.string.register_now),
+                        fontSize = 14.sp,
+                        color = Color.Black,
+                        style = MaterialTheme.typography.bodyMedium)
                 }
             }
         }
