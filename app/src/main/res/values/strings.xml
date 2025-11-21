@@ -8,6 +8,11 @@
     <string name="password">Password</string>
     <string name="remember_me">Remember me</string>
     <string name="forgot_pass">Forgot Password?</string>
+    <string name="title_recent_search">RECENT SEARCH</string>
+    <string name="title_trending_search">TRENDING SEARCH</string>
+    <string name="title_all_result">ALL RESULT</string>
+    <string name="label_search_for_product">Search for products</string>
+    <string name="label_cancel">Cancel</string>
 
 
 
