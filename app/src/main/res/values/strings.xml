@@ -26,6 +26,11 @@
     <string name="signin_with"> or sign in with </string>
     <string name="login_caps">LOGIN</string>
 
+    <string name="title_recent_search">RECENT SEARCH</string>
+    <string name="title_trending_search">TRENDING SEARCH</string>
+    <string name="title_all_result">ALL RESULT</string>
+    <string name="label_search_for_product">Search for products</string>
+    <string name="label_cancel">Cancel</string>
 
 
 

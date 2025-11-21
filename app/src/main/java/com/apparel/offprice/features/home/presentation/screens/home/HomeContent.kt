@@ -8,14 +8,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Icon
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.IconBackgroundColor
 
@@ -37,72 +40,66 @@ fun HomeContent(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Image(
-                painter = painterResource(R.drawable.offprice_pics),
-                contentDescription = "App Logo pics",
+            Text(
+                text = "OFF/PRICE",
+                style = MaterialTheme.typography.titleLarge,
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
-                    .size(100.dp)
+                    .padding(start = 12.dp)
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                IconButton(
-                    onClick = {
-                        onNavigateToStore()
-                    },
-                    modifier = Modifier
-                        .padding(6.dp)
-                        .background(
-                            color = IconBackgroundColor,
-                            shape = MaterialTheme.shapes.small
-                        )
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.icon_store_locator),
-                        contentDescription = "store Locator",
-                        modifier = Modifier
-                            .size(24.dp)
-                    )
+                CardIcon(
+                    icon = R.drawable.icon_store_locator,
+                    iconDescriptor = "Store Locator"
+                ){
+                    onNavigateToStore()
                 }
-                IconButton(
-                    onClick = {
-                        onNavigateToWishlist()
-                    },
-                    modifier = Modifier
-                        .padding(6.dp)
-                        .background(
-                            color = IconBackgroundColor,
-                            shape = MaterialTheme.shapes.small
-                        )
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.icon_wishlist),
-                        contentDescription = "wishlist",
-                        modifier = Modifier
-                            .size(24.dp)
-                    )
+                CardIcon(
+                    icon = R.drawable.icon_wishlist,
+                    iconDescriptor = "Wishlist"
+                ){
+                    onNavigateToWishlist()
                 }
-
-                IconButton(
-                    onClick = {
-                        onNavigateToSearch()
-                    },
-                    modifier = Modifier
-                        .padding(6.dp)
-                        .background(
-                            color = IconBackgroundColor,
-                            shape = MaterialTheme.shapes.small
-                        ),
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.icon_search),
-                        contentDescription = "icon search",
-                        modifier = Modifier
-                            .size(24.dp)
-                    )
+                CardIcon(
+                    icon = R.drawable.icon_search,
+                    iconDescriptor = "Icon search"
+                ){
+                    onNavigateToSearch()
                 }
             }
         }
+        HorizontalDivider(thickness = 1.dp)
+    }
+}
+
+
+@Composable
+fun CardIcon(
+    icon : Int,
+    iconDescriptor : String,
+    onClick : () -> Unit
+){
+    IconButton(
+        onClick = {
+            onClick()
+        },
+        modifier = Modifier
+            .padding(6.dp)
+            .background(
+                color = IconBackgroundColor,
+                shape = MaterialTheme.shapes.small
+            )
+    ) {
+        Image(
+            painter = painterResource(icon),
+            contentDescription = iconDescriptor,
+            modifier = Modifier
+                .size(24.dp)
+        )
     }
 }
