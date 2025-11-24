@@ -22,11 +22,6 @@ data class CategoryItem(
 )
 
 
-data class DrawerTab(
-    val id: String,
-    val label: String
-)
-
 
 // SAMPLE CATEGORY ITEMS
 val sampleCategoryItems = List(10) {
@@ -37,17 +32,10 @@ val sampleCategoryItems = List(10) {
     )
 }
 
-// SAMPLE DYNAMIC TABS
-/*val sampleTopTabs = listOf(
-    DrawerTab("tab_men", "Men"),
-    DrawerTab("tab_women", "Women"),
-    DrawerTab("tab_kids", "Kids")
-)*/
 
 
 
 //SubCategories
-
 enum class DrawerMode {
     CATEGORY_LIST,
     SUBCATEGORY_LIST

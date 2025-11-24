@@ -30,4 +30,10 @@ sealed interface AppScreen{
     @Serializable
     object WishListScreen : AppScreen
 
+    @Serializable
+    object GenderCategoryScreen : AppScreen
+
+    @Serializable
+    object LocationSelectionScreen : AppScreen
+
 }
