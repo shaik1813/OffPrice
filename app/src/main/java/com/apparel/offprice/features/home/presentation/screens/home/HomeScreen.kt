@@ -46,7 +46,6 @@ import com.apparel.offprice.features.home.data.model.bottomNavItems
 import com.apparel.offprice.features.home.data.model.sampleTopTabs
 import com.apparel.offprice.features.home.presentation.screens.myaccounts.MyAccountScreen
 import com.apparel.offprice.routes.AppScreen
-import okhttp3.CacheControl
 
 @Composable
 fun HomeScreen(
