@@ -25,6 +25,8 @@
     <string name="facebook">Facebook</string>
     <string name="signin_with"> or sign in with </string>
     <string name="login_caps">LOGIN</string>
+    <string name="label_register_caps">REGISTER</string>
+    <string name="label_my_account">My Account</string>
 
     <string name="title_recent_search">RECENT SEARCH</string>
     <string name="title_trending_search">TRENDING SEARCH</string>
