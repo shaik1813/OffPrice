@@ -84,7 +84,18 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable <AppScreen.SearchScreen>{
-            SearchScreen()
+            SearchScreen(
+                onSearchSubmit = { productId ->
+                    // TODO : Added the PLP navigation from here
+                },
+                onNavigateToHome = {
+                    navController.navigate(AppScreen.HomeScreen){
+                        popUpTo (AppScreen.HomeScreen){
+                            inclusive = true
+                        }
+                    }
+                }
+            )
         }
 
         composable<AppScreen.StoreLocatorScreen> {

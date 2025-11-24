@@ -4,10 +4,33 @@
 
     <string name="login_account_header">LOGIN YOUR ACCOUNT</string>
     <string name="login_details">Enter Your Login Details Below</string>
-    <string name="email_address">Email Address / Phone Number *</string>
+    <string name="email_address_phone">Email Address / Phone Number</string>
+    <string name="email_address">Email Address</string>
     <string name="password">Password</string>
     <string name="remember_me">Remember me</string>
     <string name="forgot_pass">Forgot Password?</string>
+    <string name="dont_have_account">Dont\'t have an account?</string>
+    <string name="register_now">Register Now</string>
+    <string name="create_new_account">CREATE NEW ACCOUNT</string>
+    <string name="signup_detail">Enter Your Details Below To Create Account</string>
+    <string name="name">Name</string>
+    <string name="phone_no">Phone Number</string>
+    <string name="enter_phone">Enter Phone Number</string>
+    <string name="already_account">Already Have an Account?</string>
+    <string name="login">Login</string>
+    <string name="continue_txt">Continue</string>
+    <string name="enter_mail">Enter email</string>
+    <string name="enter_name">Enter name</string>
+    <string name="google">Google</string>
+    <string name="facebook">Facebook</string>
+    <string name="signin_with"> or sign in with </string>
+    <string name="login_caps">LOGIN</string>
+
+    <string name="title_recent_search">RECENT SEARCH</string>
+    <string name="title_trending_search">TRENDING SEARCH</string>
+    <string name="title_all_result">ALL RESULT</string>
+    <string name="label_search_for_product">Search for products</string>
+    <string name="label_cancel">Cancel</string>
 
 
 
