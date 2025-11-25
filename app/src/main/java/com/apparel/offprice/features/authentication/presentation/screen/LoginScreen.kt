@@ -1,6 +1,7 @@
 package com.apparel.offprice.features.authentication.presentation.screen
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -56,10 +57,11 @@ import com.apparel.offprice.common.theme.surfaceColor
 import com.apparel.offprice.features.authentication.presentation.component.CustomCheckbox
 import com.apparel.offprice.features.authentication.presentation.component.LoginEmailPhoneField
 import com.apparel.offprice.features.authentication.presentation.component.LoginPasswordField
+import com.apparel.offprice.features.welcome.data.model.LocationSelectionItem
+import com.apparel.offprice.routes.AppScreen
 
-@Preview(showBackground = true)
 @Composable
-fun LoginScreen() {
+fun LoginScreen(onItemClick: (AppScreen) -> Unit) {
 
     Box(
         modifier = Modifier
@@ -85,8 +87,7 @@ fun LoginScreen() {
                 Text(
                     stringResource(R.string.login_account_header),
                     fontSize = 16.sp,
-                    fontFamily = customFontFamily,
-                    fontWeight = FontWeight.Bold
+                    style = MaterialTheme.typography.titleLarge
                 )
 
                 Text(
@@ -186,7 +187,7 @@ fun LoginScreen() {
                 Spacer(Modifier.height(20.dp))
 
                 Button(
-                    onClick = { },
+                    onClick = { onItemClick(AppScreen.OTPScreen) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 14.dp),
@@ -282,14 +283,15 @@ fun LoginScreen() {
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
+                    horizontalArrangement = Arrangement.Center,
                 ) {
                     Text(stringResource(R.string.dont_have_account),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.primary,
                         fontSize = 14.sp)
-                    Text(
-                        stringResource(R.string.register_now),
+                    Text(modifier = Modifier.clickable(){
+                        onItemClick(AppScreen.RegistrationScreen)},
+                        text= stringResource(R.string.register_now),
                         fontSize = 14.sp,
                         color = Color.Black,
                         style = MaterialTheme.typography.bodyMedium)
