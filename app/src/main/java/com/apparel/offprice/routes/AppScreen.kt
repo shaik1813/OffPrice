@@ -13,6 +13,9 @@ sealed interface AppScreen{
     object ForgetPasswordScreen : AppScreen
 
     @Serializable
+    object ResetPasswordScreen : AppScreen
+
+    @Serializable
     object RegistrationScreen : AppScreen
 
     @Serializable
