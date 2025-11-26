@@ -13,6 +13,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.apparel.offprice.features.authentication.presentation.screen.LoginScreen
+import com.apparel.offprice.features.authentication.presentation.screen.OTPVerifyScreen
+import com.apparel.offprice.features.authentication.presentation.screen.SignupScreen
 import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
 import com.apparel.offprice.features.home.presentation.screens.search.SearchScreen
 import com.apparel.offprice.features.storeLocator.presentation.screen.StoreLocatorScreen
@@ -50,13 +53,13 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         when {
             location == null -> AppScreen.LocationSelectionScreen
             gender == null -> AppScreen.GenderCategoryScreen
-            else -> AppScreen.HomeScreen
+            else -> AppScreen.LoginScreen
         }
 
     NavHost(
         navController = navController,
         startDestination = startDestination
-    ){
+    ) {
         composable<AppScreen.SplashScreen> {
             ChooseLocationScreen(onItemClick = {
                 navController.navigate(AppScreen.LocationSelectionScreen)
@@ -64,33 +67,40 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.LoginScreen> {
-
+            LoginScreen(onItemClick = { appScreen ->
+                when(appScreen){
+                    is AppScreen.RegistrationScreen ->  navController.navigate(AppScreen.RegistrationScreen)
+                    is AppScreen.ForgetPasswordScreen -> navController.navigate(AppScreen.ForgetPasswordScreen)
+                    is AppScreen.OTPScreen -> navController.navigate(AppScreen.OTPScreen)
+                    else -> {}
+                }
+            })
         }
 
         composable<AppScreen.RegistrationScreen> {
+            SignupScreen()
+        }
+
+        composable<AppScreen.ForgetPasswordScreen> {
 
         }
 
-        composable< AppScreen.ForgetPasswordScreen> {
-
+        composable<AppScreen.OTPScreen> {
+            OTPVerifyScreen()
         }
 
-        composable< AppScreen.OTPScreen> {
-
-        }
-
-        composable< AppScreen.HomeScreen> {
+        composable<AppScreen.HomeScreen> {
             HomeScreen(outerNavControl = navController)
         }
 
-        composable <AppScreen.SearchScreen>{
+        composable<AppScreen.SearchScreen> {
             SearchScreen(
                 onSearchSubmit = { productId ->
                     // TODO : Added the PLP navigation from here
                 },
                 onNavigateToHome = {
-                    navController.navigate(AppScreen.HomeScreen){
-                        popUpTo (AppScreen.HomeScreen){
+                    navController.navigate(AppScreen.HomeScreen) {
+                        popUpTo(AppScreen.HomeScreen) {
                             inclusive = true
                         }
                     }
