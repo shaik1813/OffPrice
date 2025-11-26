@@ -53,7 +53,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         when {
             location == null -> AppScreen.LocationSelectionScreen
             gender == null -> AppScreen.GenderCategoryScreen
-            else -> AppScreen.LoginScreen
+            else -> AppScreen.HomeScreen
         }
 
     NavHost(

@@ -111,6 +111,12 @@ fun HomeScreen(
                             },
                             onItemClick = { item ->
                                 println(item)
+                            },
+                            onNavigateToLogin = {
+                                outerNavControl.navigate(AppScreen.LoginScreen){}
+                            },
+                            onNavigateToRegistration = {
+                                outerNavControl.navigate(AppScreen.RegistrationScreen){}
                             }
                         )
                     }

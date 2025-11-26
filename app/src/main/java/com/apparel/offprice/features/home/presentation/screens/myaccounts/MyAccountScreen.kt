@@ -65,6 +65,8 @@ import java.util.Locale
 fun MyAccountScreen(
     onNavigateToSearch: () -> Unit,
     onNavigateToWishlist: () -> Unit,
+    onNavigateToLogin: () -> Unit,
+    onNavigateToRegistration: () -> Unit,
     onItemClick: (String) -> Unit,
     isGuestUser: Boolean = true
 ) {
@@ -147,8 +149,14 @@ fun MyAccountScreen(
                     .fillMaxWidth(),
                 leftButtonText = stringResource(R.string.login_caps),
                 rightButtonText = stringResource(R.string.label_register_caps),
-                onLeftClick = {},
-                onRightClick = {}
+                onLeftClick = {
+                    //Login Flow
+                    onNavigateToLogin()
+                },
+                onRightClick = {
+                    //Registration Flow
+                    onNavigateToRegistration()
+                }
             )
         } else {
             //LoggedIn Flow
