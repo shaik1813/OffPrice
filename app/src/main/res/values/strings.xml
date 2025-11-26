@@ -31,7 +31,9 @@
     <string name="title_all_result">ALL RESULT</string>
     <string name="label_search_for_product">Search for products</string>
     <string name="label_cancel">Cancel</string>
-
+    <string name="verify_account">VERIFY YOUR ACCOUNT</string>
+    <string name="verify">VERIFY</string>
+    <string name="verify_code_msg">Enter the verification code sent to</string>
 
 
 </resources>
