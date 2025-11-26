@@ -21,6 +21,4 @@ val loginGoogleColor = Color(0xFF191919)
 val loginButtonColor = Color(0xFF333333)
 
 
-
-
 val IconBackgroundColor = Color(0xFFF5F5F5)

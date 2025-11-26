@@ -25,6 +25,11 @@
     <string name="facebook">Facebook</string>
     <string name="signin_with"> or sign in with </string>
     <string name="login_caps">LOGIN</string>
+    <string name="label_register_caps">REGISTER</string>
+    <string name="label_my_account">My Account</string>
+    <string name="label_select_location">SELECT YOUR LOCATION</string>
+    <string name="label_submit">SUBMIT</string>
+    <string name="label_select_language">SELECT LANGUAGE</string>
 
     <string name="title_recent_search">RECENT SEARCH</string>
     <string name="title_trending_search">TRENDING SEARCH</string>
@@ -40,5 +45,16 @@
     <string name="reset_your_password">RESET YOUR PASSWORD</string>
     <string name="new_password">New Password</string>
 
+    <!--    My Account Section-->
+    <string name="label_user_profile">User Profile</string>
+    <string name="label_my_orders">My Orders</string>
+    <string name="label_returns">Returns</string>
+    <string name="label_exchange">Exchange</string>
+    <string name="label_store_credit">Store Credits</string>
+    <string name="label_my_coupons">My Coupons</string>
+    <string name="label_delivery_address">Delivery Addresses</string>
+    <string name="label_payment_cards">Payment Cards</string>
+    <string name="label_store_locator">Store Locator</string>
+    <string name="label_log_out">Log Out</string>
 
 </resources>

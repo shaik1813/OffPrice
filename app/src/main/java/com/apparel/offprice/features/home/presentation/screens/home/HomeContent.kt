@@ -104,3 +104,10 @@ fun CardIcon(
         )
     }
 }
+
+
+@Preview(showBackground = true)
+@Composable
+fun HomeContentPreview() {
+    HomeContent(onNavigateToSearch = {}, onNavigateToStore = {}, onNavigateToWishlist = {})
+}

@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import coil.compose.AsyncImage
 import com.apparel.offprice.features.home.data.model.CategoryItem
 
 @Composable
@@ -50,8 +51,8 @@ fun CategoryCard(
                 Text(item.title, style = MaterialTheme.typography.titleSmall)
             }
 
-            Image(
-                painter = painterResource(item.img),
+            AsyncImage(
+                model = item.img,
                 contentDescription = item.title,
                 modifier = Modifier
                     .size(55.dp)
@@ -66,7 +67,7 @@ fun CategoryCard(
 @Composable
 fun categoryCardPreview(){
     CategoryCard(
-        item = CategoryItem("1", "Category 1", android.R.drawable.ic_menu_gallery),
+        item = CategoryItem("1", "Category 1", "https://media.istockphoto.com/id/2231090399/photo/wifi-over-modern-american-houses-internet-connected-broadband-in-suburban-town-graphic.webp?a=1&b=1&s=612x612&w=0&k=20&c=GuzBrIeOTxYknGMxVgODdbvlUPAFFhUN6UeXTkKGamA="),
         onClick = {}
     )
 }

@@ -55,7 +55,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         when {
             location == null -> AppScreen.LocationSelectionScreen
             gender == null -> AppScreen.GenderCategoryScreen
-            else -> AppScreen.LoginScreen
+            else -> AppScreen.HomeScreen
         }
 
     NavHost(
@@ -135,11 +135,16 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
             GenderCategoryScreen(
                 onCategoryClick = { genderItem ->
                     vm.saveGender(genderItem.id)
-
                     // Go to HOME and CLEAR stack
                     navController.navigate(AppScreen.HomeScreen) {
                         popUpTo(0) { inclusive = true }
                     }
+                },
+                onSearchClick = {
+                    navController.navigate(AppScreen.SearchScreen)
+                },
+                onWishlistClick = {
+                    navController.navigate(AppScreen.WishListScreen)
                 }
             )
         }

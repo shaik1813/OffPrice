@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -26,7 +27,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
+import com.apparel.offprice.R
+import com.apparel.offprice.features.home.presentation.screens.home.CardIcon
 import com.apparel.offprice.features.welcome.data.model.genderCategories
+import com.apparel.offprice.routes.AppScreen
 
 @Composable
 fun GenderCategoryScreen(
@@ -38,59 +44,79 @@ fun GenderCategoryScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .padding(horizontal = 16.dp)
     ) {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        // Top Bar
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.fillMaxWidth(1f)
+                .padding(horizontal = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-
             Text(
                 text = "OFF/PRICE",
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.weight(1f)
+                style = MaterialTheme.typography.titleLarge,
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .padding(start = 12.dp)
             )
-
-            IconButton(onClick = onSearchClick) {
-                Icon(Icons.Default.Search, contentDescription = "Search")
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            CardIcon(
+                icon = R.drawable.icon_wishlist,
+                iconDescriptor = "Wishlist"
+            ){
+                onWishlistClick()
             }
-
-            IconButton(onClick = onWishlistClick) {
-                Icon(Icons.Default.FavoriteBorder, contentDescription = "Wishlist")
+            CardIcon(
+                icon = R.drawable.icon_search,
+                iconDescriptor = "Icon search"
+            ){
+                onSearchClick()
             }
         }
+    }
+    HorizontalDivider(thickness = 1.dp)
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        // Title
-        Text(
-            text = "Discover Our Exclusive Collection",
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.SemiBold
-        )
-
-        Spacer(modifier = Modifier.height(4.dp))
-
-        // Subtitle
-        Text(
-            text = "Shop by category and choose what you love",
-            style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray)
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        // Category List
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.fillMaxSize()
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White)
+                .padding(horizontal = 16.dp)
         ) {
-            items(genderCategories) { item ->
-                GenderCategoryCard(item) {
-                    onCategoryClick(item)
+            // Title
+            Text(
+                text = "Discover Our Exclusive Collection",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            // Subtitle
+            Text(
+                text = "Shop by category and choose what you love",
+                style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray)
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            // Category List
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                items(genderCategories) { item ->
+                    GenderCategoryCard(item) {
+                        onCategoryClick(item)
+                    }
                 }
             }
         }
