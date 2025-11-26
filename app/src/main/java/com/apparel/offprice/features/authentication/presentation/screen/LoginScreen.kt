@@ -1,6 +1,8 @@
 package com.apparel.offprice.features.authentication.presentation.screen
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,12 +15,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -42,14 +44,12 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.buttonBorderColor
 import com.apparel.offprice.common.theme.customFontFamily
 import com.apparel.offprice.common.theme.inputTextColor
-import com.apparel.offprice.common.theme.lineColor
 import com.apparel.offprice.common.theme.loginButtonColor
 import com.apparel.offprice.common.theme.loginGoogleColor
 import com.apparel.offprice.common.theme.redColor
@@ -57,7 +57,6 @@ import com.apparel.offprice.common.theme.surfaceColor
 import com.apparel.offprice.features.authentication.presentation.component.CustomCheckbox
 import com.apparel.offprice.features.authentication.presentation.component.LoginEmailPhoneField
 import com.apparel.offprice.features.authentication.presentation.component.LoginPasswordField
-import com.apparel.offprice.features.welcome.data.model.LocationSelectionItem
 import com.apparel.offprice.routes.AppScreen
 
 @Composable
@@ -103,7 +102,7 @@ fun LoginScreen(onItemClick: (AppScreen) -> Unit) {
                 Text(
                     buildAnnotatedString {
                         append(stringResource(R.string.email_address_phone))
-                        withStyle(style = SpanStyle(color= redColor)) {
+                        withStyle(style = SpanStyle(color = redColor)) {
                             append("*")
                         }
                     },
@@ -163,28 +162,36 @@ fun LoginScreen(onItemClick: (AppScreen) -> Unit) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Row(){
-                    CustomCheckbox(isCheck) { isCheck = it }
+                    Row() {
+                        CustomCheckbox(isCheck) { isCheck = it }
 
-                    Spacer(modifier = Modifier.size(5.dp))
+                        Spacer(modifier = Modifier.size(5.dp))
 
-                    Text(
-                        stringResource(R.string.remember_me),
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontSize = 12.sp,
-                        color = Color.Black, modifier = Modifier.align(
-                            Alignment.CenterVertically)
-                    )
+
+                        Text(
+                            stringResource(R.string.remember_me),
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontSize = 12.sp,
+                            color = Color.Black
+                        )
                     }
+
                     Text(
-                        stringResource(R.string.forgot_pass),
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .clickable() {
+                                onItemClick(AppScreen.ForgetPasswordScreen)
+                            },
+                        text = stringResource(R.string.forgot_pass),
                         color = Color.Black,
                         style = MaterialTheme.typography.bodyMedium,
                         fontSize = 12.sp
                     )
+
                 }
 
-                Spacer(Modifier.height(20.dp))
+                Spacer(modifier = Modifier.size(30.dp))
+
 
                 Button(
                     onClick = { onItemClick(AppScreen.OTPScreen) },
@@ -204,6 +211,8 @@ fun LoginScreen(onItemClick: (AppScreen) -> Unit) {
                     )
                 }
 
+
+
                 Spacer(Modifier.height(20.dp))
 
                 Row(
@@ -211,18 +220,23 @@ fun LoginScreen(onItemClick: (AppScreen) -> Unit) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     HorizontalDivider(
-                        modifier = Modifier.weight(1f).padding(end=12.dp,start=40.dp),
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 12.dp, start = 40.dp),
                         color = inputTextColor,
                         thickness = 0.5.dp
                     )
                     Text(
-                        " "+stringResource(R.string.signin_with)+" ",
+                        " " + stringResource(R.string.signin_with) + " ",
                         color = inputTextColor,
                         style = MaterialTheme.typography.titleMedium,
                         fontSize = 14.sp
                     )
+
                     HorizontalDivider(
-                        modifier = Modifier.weight(1f).padding(start=12.dp,end=40.dp),
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(start = 12.dp, end = 40.dp),
                         color = inputTextColor,
                         thickness = 0.5.dp
                     )
@@ -230,7 +244,6 @@ fun LoginScreen(onItemClick: (AppScreen) -> Unit) {
 
                 Spacer(Modifier.height(20.dp))
 
-                // ---------- SOCIAL BUTTONS ----------
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -251,13 +264,13 @@ fun LoginScreen(onItemClick: (AppScreen) -> Unit) {
                             tint = Color.Unspecified
                         )
                         Spacer(Modifier.width(8.dp))
-                        Text(stringResource(R.string.google),
+                        Text(
+                            stringResource(R.string.google),
                             style = MaterialTheme.typography.bodyMedium,
                             color = loginGoogleColor
                         )
                     }
 
-                    // Facebook
                     OutlinedButton(
                         onClick = {},
                         modifier = Modifier
@@ -272,7 +285,8 @@ fun LoginScreen(onItemClick: (AppScreen) -> Unit) {
                             tint = Color.Unspecified
                         )
                         Spacer(Modifier.width(8.dp))
-                        Text(stringResource(R.string.facebook),
+                        Text(
+                            stringResource(R.string.facebook),
                             style = MaterialTheme.typography.bodyMedium,
                             color = loginGoogleColor
                         )
@@ -285,16 +299,21 @@ fun LoginScreen(onItemClick: (AppScreen) -> Unit) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
                 ) {
-                    Text(stringResource(R.string.dont_have_account),
+                    Text(
+                        stringResource(R.string.dont_have_account),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.primary,
-                        fontSize = 14.sp)
-                    Text(modifier = Modifier.clickable(){
-                        onItemClick(AppScreen.RegistrationScreen)},
-                        text= stringResource(R.string.register_now),
+                        fontSize = 14.sp
+                    )
+                    Text(
+                        modifier = Modifier.clickable() {
+                            onItemClick(AppScreen.RegistrationScreen)
+                        },
+                        text = stringResource(R.string.register_now),
                         fontSize = 14.sp,
                         color = Color.Black,
-                        style = MaterialTheme.typography.bodyMedium)
+                        style = MaterialTheme.typography.bodyMedium
+                    )
                 }
             }
         }

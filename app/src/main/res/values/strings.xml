@@ -39,6 +39,11 @@
     <string name="verify_account">VERIFY YOUR ACCOUNT</string>
     <string name="verify">VERIFY</string>
     <string name="verify_code_msg">Enter the verification code sent to</string>
+    <string name="forgot_your_password">FORGOT YOUR PASSWORD?</string>
+    <string name="forgot_msg_details">Please Enter the Details to Reset Your The Password</string>
+    <string name="back_to_login">Back To Login</string>
+    <string name="reset_your_password">RESET YOUR PASSWORD</string>
+    <string name="new_password">New Password</string>
 
     <!--    My Account Section-->
     <string name="label_user_profile">User Profile</string>
