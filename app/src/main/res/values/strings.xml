@@ -27,6 +27,9 @@
     <string name="login_caps">LOGIN</string>
     <string name="label_register_caps">REGISTER</string>
     <string name="label_my_account">My Account</string>
+    <string name="label_select_location">SELECT YOUR LOCATION</string>
+    <string name="label_submit">SUBMIT</string>
+    <string name="label_select_language">SELECT LANGUAGE</string>
 
     <string name="title_recent_search">RECENT SEARCH</string>
     <string name="title_trending_search">TRENDING SEARCH</string>

@@ -72,7 +72,7 @@ fun HomeScreen(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f)   // ✅ Correct: weight is allowed in Column
+                .weight(1f)
                 .then(if (isCategoriesOpen) Modifier.blur(15.dp) else Modifier)
         ) {
             Scaffold(
@@ -102,11 +102,15 @@ fun HomeScreen(
                     composable("CART") { Greeting("Cart") }
                     composable("ACCOUNT") {
                         MyAccountScreen(
+                            isGuestUser = true,
                             onNavigateToSearch = {
                                 outerNavControl.navigate(AppScreen.SearchScreen){}
                             },
                             onNavigateToWishlist = {
                                 outerNavControl.navigate(AppScreen.WishListScreen){}
+                            },
+                            onItemClick = { item ->
+                                println(item)
                             }
                         )
                     }
