@@ -119,11 +119,16 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
             GenderCategoryScreen(
                 onCategoryClick = { genderItem ->
                     vm.saveGender(genderItem.id)
-
                     // Go to HOME and CLEAR stack
                     navController.navigate(AppScreen.HomeScreen) {
                         popUpTo(0) { inclusive = true }
                     }
+                },
+                onSearchClick = {
+                    navController.navigate(AppScreen.SearchScreen)
+                },
+                onWishlistClick = {
+                    navController.navigate(AppScreen.WishListScreen)
                 }
             )
         }

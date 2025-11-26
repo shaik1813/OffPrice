@@ -1,6 +1,5 @@
 package com.apparel.offprice.features.welcome.presentation.location
 
-import android.R
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -27,6 +26,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.apparel.offprice.features.welcome.data.model.LocationSelectionItem
 
 @Composable
@@ -56,8 +56,8 @@ fun ChooseLocationCard(
         ) {
 
             // Flag
-            Image(
-                painter = painterResource(item.img),
+            AsyncImage(
+                model = item.img,
                 contentDescription = item.title,
                 modifier = Modifier
                     .size(42.dp)
@@ -85,9 +85,9 @@ fun ChooseLocationCard(
 
 @Preview
 @Composable
-fun categoryCardPreview(){
+fun CategoryCardPreview(){
     ChooseLocationCard(
-        item = LocationSelectionItem("1", "UAE", "الإمارات", R.drawable.ic_menu_gallery),
+        item = LocationSelectionItem("1", "UAE", "الإمارات", "https://upload.wikimedia.org/wikipedia/commons/2/2c/Flag_of_Bahrain.svg"),
         onClick = {}
     )
 }
