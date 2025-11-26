@@ -40,5 +40,16 @@
     <string name="verify">VERIFY</string>
     <string name="verify_code_msg">Enter the verification code sent to</string>
 
+    <!--    My Account Section-->
+    <string name="label_user_profile">User Profile</string>
+    <string name="label_my_orders">My Orders</string>
+    <string name="label_returns">Returns</string>
+    <string name="label_exchange">Exchange</string>
+    <string name="label_store_credit">Store Credits</string>
+    <string name="label_my_coupons">My Coupons</string>
+    <string name="label_delivery_address">Delivery Addresses</string>
+    <string name="label_payment_cards">Payment Cards</string>
+    <string name="label_store_locator">Store Locator</string>
+    <string name="label_log_out">Log Out</string>
 
 </resources>

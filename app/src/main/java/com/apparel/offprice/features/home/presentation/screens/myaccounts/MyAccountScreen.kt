@@ -67,7 +67,7 @@ fun MyAccountScreen(
     onNavigateToWishlist: () -> Unit,
     onNavigateToLogin: () -> Unit,
     onNavigateToRegistration: () -> Unit,
-    onItemClick: (String) -> Unit,
+    onItemClick: (Int) -> Unit,
     isGuestUser: Boolean = true
 ) {
     var showCountrySheet by remember { mutableStateOf(false) }
@@ -176,9 +176,9 @@ fun MyAccountScreen(
 
                 items(accountItems, key = { it.categoryId }) { item ->
                     AccountMenuItem(
-                        title = item.title,
+                        title = stringResource(item.title),
                         icon = item.icon,
-                        onClick = { onItemClick(item.title) }
+                        onClick = { onItemClick(item.categoryId) }
                     )
                     HorizontalDivider(color = Color(0xFFEAEAEA))
                 }
