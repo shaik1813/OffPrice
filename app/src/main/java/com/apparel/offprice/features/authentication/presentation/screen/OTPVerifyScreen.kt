@@ -99,7 +99,7 @@ fun OTPVerifyScreen() {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Enter the verification code sent to",
+                    text = stringResource(R.string.verify_code_msg),
                     fontSize = 10.sp,
                     color = inputTextColor
                 )
@@ -211,7 +211,7 @@ fun OTPVerifyScreen() {
                     onClick = { },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(55.dp),
+                        .height(48.dp),
                     shape = RoundedCornerShape(12.dp)
                 ) {
                     Text(text = stringResource(R.string.verify), color = Color.White, fontSize = 18.sp)

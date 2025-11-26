@@ -61,7 +61,6 @@ import com.apparel.offprice.features.authentication.presentation.component.Signu
 @Composable
 fun SignupScreen() {
 
-    Log.e("signupPage","working")
     Box(
         modifier = Modifier
             .fillMaxSize()
