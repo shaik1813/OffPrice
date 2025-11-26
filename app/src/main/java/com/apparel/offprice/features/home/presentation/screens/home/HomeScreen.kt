@@ -44,6 +44,7 @@ import com.apparel.offprice.features.home.data.model.DrawerMode
 import com.apparel.offprice.features.home.presentation.screens.categoriesDrawer.CategoriesDrawer
 import com.apparel.offprice.features.home.data.model.bottomNavItems
 import com.apparel.offprice.features.home.data.model.sampleTopTabs
+import com.apparel.offprice.features.home.presentation.screens.myaccounts.MyAccountScreen
 import com.apparel.offprice.routes.AppScreen
 
 @Composable
@@ -71,7 +72,7 @@ fun HomeScreen(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f)   // ✅ Correct: weight is allowed in Column
+                .weight(1f)
                 .then(if (isCategoriesOpen) Modifier.blur(15.dp) else Modifier)
         ) {
             Scaffold(
@@ -89,17 +90,36 @@ fun HomeScreen(
                                 outerNavControl.navigate(AppScreen.SearchScreen){}
                             },
                             onNavigateToStore = {
-                                outerNavControl.navigate(AppScreen.WishListScreen){}
+                                outerNavControl.navigate(AppScreen.StoreLocatorScreen){}
                             },
                             onNavigateToWishlist = {
-                                outerNavControl.navigate(AppScreen.StoreLocatorScreen){}
+                                outerNavControl.navigate(AppScreen.WishListScreen){}
                             }
                         )
                     }
-                    composable("CATEGORIES") { Greeting("No Categories navigation") }
+                    composable("CATEGORIES") { }
                     composable("BESTPRICE") { Greeting("BestPrice") }
                     composable("CART") { Greeting("Cart") }
-                    composable("ACCOUNT") { Greeting("Account") }
+                    composable("ACCOUNT") {
+                        MyAccountScreen(
+                            isGuestUser = true,
+                            onNavigateToSearch = {
+                                outerNavControl.navigate(AppScreen.SearchScreen){}
+                            },
+                            onNavigateToWishlist = {
+                                outerNavControl.navigate(AppScreen.WishListScreen){}
+                            },
+                            onItemClick = { item ->
+                                println(item)
+                            },
+                            onNavigateToLogin = {
+                                outerNavControl.navigate(AppScreen.LoginScreen){}
+                            },
+                            onNavigateToRegistration = {
+                                outerNavControl.navigate(AppScreen.RegistrationScreen){}
+                            }
+                        )
+                    }
                 }
             }
         }
