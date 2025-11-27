@@ -39,6 +39,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.apparel.offprice.features.authentication.presentation.screen.ForgotDialog
+import com.apparel.offprice.features.authentication.presentation.screen.LoginDialog
+import com.apparel.offprice.features.authentication.presentation.screen.OTPVerifyDialog
+import com.apparel.offprice.features.authentication.presentation.screen.SignupDialog
 import com.apparel.offprice.features.home.data.model.CategoryItem
 import com.apparel.offprice.features.home.data.model.DrawerMode
 import com.apparel.offprice.features.home.presentation.screens.categoriesDrawer.CategoriesDrawer
@@ -66,6 +70,36 @@ fun HomeScreen(
     var selectedCategory by remember { mutableStateOf<CategoryItem?>(null) }
     var selectedTopTab by remember { mutableStateOf(sampleTopTabs.first().id) }
 
+    var showLoginDialog by remember { mutableStateOf(false) }
+    var showSignupDialog by remember { mutableStateOf(false) }
+    var showForgotDialog by remember { mutableStateOf(false) }
+    var showOtpDialog by remember { mutableStateOf(false) }
+
+
+
+    if (showLoginDialog) {
+        LoginDialog({ showLoginDialog = false }, onItemClick = { appScreen ->
+            when (appScreen) {
+                is AppScreen.RegistrationScreen -> showSignupDialog = true
+                is AppScreen.ForgetPasswordScreen -> showForgotDialog = true
+                is AppScreen.OTPScreen -> showOtpDialog = true
+                else -> {}
+            }
+        })
+    }
+
+    if (showSignupDialog) {
+        SignupDialog(onDismiss = { showSignupDialog = false })
+    }
+
+    if (showForgotDialog) {
+        ForgotDialog(onDismiss = { showForgotDialog = false })
+    }
+
+    if (showOtpDialog) {
+        OTPVerifyDialog(onDismiss = { showOtpDialog = false })
+    }
+
     Column(modifier = Modifier.fillMaxSize()) {
 
         // MAIN CONTENT (BLUR ONLY THIS)
@@ -87,13 +121,13 @@ fun HomeScreen(
                     composable("HOME") {
                         HomeContent(
                             onNavigateToSearch = {
-                                outerNavControl.navigate(AppScreen.SearchScreen){}
+                                outerNavControl.navigate(AppScreen.SearchScreen) {}
                             },
                             onNavigateToStore = {
-                                outerNavControl.navigate(AppScreen.StoreLocatorScreen){}
+                                outerNavControl.navigate(AppScreen.StoreLocatorScreen) {}
                             },
                             onNavigateToWishlist = {
-                                outerNavControl.navigate(AppScreen.WishListScreen){}
+                                outerNavControl.navigate(AppScreen.WishListScreen) {}
                             }
                         )
                     }
@@ -104,19 +138,20 @@ fun HomeScreen(
                         MyAccountScreen(
                             isGuestUser = true,
                             onNavigateToSearch = {
-                                outerNavControl.navigate(AppScreen.SearchScreen){}
+                                outerNavControl.navigate(AppScreen.SearchScreen) {}
                             },
                             onNavigateToWishlist = {
-                                outerNavControl.navigate(AppScreen.WishListScreen){}
+                                outerNavControl.navigate(AppScreen.WishListScreen) {}
                             },
                             onItemClick = { item ->
                                 println(item)
                             },
                             onNavigateToLogin = {
-                                outerNavControl.navigate(AppScreen.LoginScreen){}
+                                showLoginDialog = true
+                            //  outerNavControl.navigate(AppScreen.LoginScreen)
                             },
                             onNavigateToRegistration = {
-                                outerNavControl.navigate(AppScreen.RegistrationScreen){}
+                                outerNavControl.navigate(AppScreen.RegistrationScreen) {}
                             }
                         )
                     }
@@ -145,7 +180,7 @@ fun HomeScreen(
                         onClick = {
                             if (item.route == "CATEGORIES") {
                                 selectedTab = "CATEGORIES"
-                                    isCategoriesOpen = true
+                                isCategoriesOpen = true
                             } else {
                                 // Update both states for real navigation tabs
                                 selectedTab = item.route
@@ -235,8 +270,8 @@ fun Greeting(string: String) {
 
 @Preview
 @Composable
-fun CategoryPreview(){
-   HomeScreen(
-       outerNavControl = rememberNavController()
-   )
+fun CategoryPreview() {
+    HomeScreen(
+        outerNavControl = rememberNavController()
+    )
 }

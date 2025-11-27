@@ -1,5 +1,6 @@
 package com.apparel.offprice.features.authentication.presentation.screen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -46,28 +48,30 @@ import com.apparel.offprice.routes.AppScreen
 
 
 @Composable
-fun ForgotPasswordScreen(onItemClick: (AppScreen) -> Unit) {
+fun ForgotPasswordScreen(onItemClick: (AppScreen) -> Unit,onDismiss:()->Unit) {
 
     var otpValues by remember { mutableStateOf(List(6) { "" }) }
     val focusRequesters = List(6) { FocusRequester() }
     val focusManager = LocalFocusManager.current
+
+    var showResetDialog by remember { mutableStateOf(false) }
+
+    if(showResetDialog){
+        ResetPasswordDialog(onDismiss = {showResetDialog = false}) { }
+    }
+
     LaunchedEffect(Unit) {
         focusRequesters[0].requestFocus()
     }
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(20.dp)
+            .fillMaxWidth(0.85f)
+            .wrapContentHeight()
             .statusBarsPadding(),
     ) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp),
-            elevation = CardDefaults.cardElevation(8.dp)
-        ) {
-            Column(modifier = Modifier.padding(20.dp)) {
+
+            Column() {
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -75,7 +79,10 @@ fun ForgotPasswordScreen(onItemClick: (AppScreen) -> Unit) {
                 ) {
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription = "close"
+                        contentDescription = "close",
+                        modifier = Modifier.clickable{
+                            onDismiss()
+                        }
                     )
                 }
 
@@ -114,7 +121,7 @@ fun ForgotPasswordScreen(onItemClick: (AppScreen) -> Unit) {
                 LoginEmailPhoneField(email, { email = it }, stringResource(R.string.enter_mail))
 
                 Button(
-                    onClick = { onItemClick(AppScreen.ResetPasswordScreen) },
+                    onClick = { showResetDialog = true },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top=30.dp)
@@ -137,7 +144,7 @@ fun ForgotPasswordScreen(onItemClick: (AppScreen) -> Unit) {
                     modifier = Modifier.padding(top=30.dp).align(Alignment.CenterHorizontally)
                 )
             }
-        }
+
 
     }
 

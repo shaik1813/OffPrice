@@ -1,7 +1,7 @@
 package com.apparel.offprice.features.authentication.presentation.screen
 
-import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,16 +13,12 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -44,18 +40,15 @@ import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.inputTextColor
 import com.apparel.offprice.common.theme.lineColor
-import com.apparel.offprice.features.authentication.presentation.component.BottomBorderTextField
-import kotlin.collections.get
 
 @Composable
-fun OTPVerifyScreen() {
+fun OTPVerifyScreen(onDismiss:() -> Unit) {
 
     var otpValues by remember { mutableStateOf(List(6) { "" }) }
     val focusRequesters = List(6) { FocusRequester() }
@@ -66,25 +59,18 @@ fun OTPVerifyScreen() {
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(20.dp)
+            .fillMaxWidth(0.85f)
             .statusBarsPadding(),
     ) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp),
-            elevation = CardDefaults.cardElevation(8.dp)
-        ) {
-            Column(modifier = Modifier.padding(20.dp)) {
-                // Close button (Top Right)
+            Column() {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ) {
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription = "close"
+                        contentDescription = "close",
+                        modifier = Modifier.clickable{ onDismiss() }
                     )
                 }
 
@@ -218,7 +204,7 @@ fun OTPVerifyScreen() {
                 }
 
             }
-        }
+
 
     }
 
