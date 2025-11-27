@@ -128,7 +128,8 @@ fun MyAccountScreen(
             }
 
             MyAccountContract.UiEffect.NavigateToRegistration -> {
-                onNavigateToRegistration()
+                showSignupDialog = true
+               // onNavigateToRegistration()
             }
 
             MyAccountContract.UiEffect.NavigateToSearch -> {
