@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val widthSizeClass: WindowSizeClass = calculateWindowSizeClass(this)
-            OffPriceTheme {
+            OffPriceTheme (darkTheme = false){
                 Surface(
                     modifier = Modifier.fillMaxSize(1f)
                 ) {

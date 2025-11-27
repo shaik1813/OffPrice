@@ -50,14 +50,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
+import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.takeInitials
+import com.apparel.offprice.common.utils.use
+import com.apparel.offprice.features.home.data.model.MyAccountItems
 import com.apparel.offprice.features.home.data.model.accountItems
-import com.apparel.offprice.features.home.data.model.countries
 import com.apparel.offprice.features.home.presentation.component.CircularProgressbar
 import com.apparel.offprice.features.home.presentation.component.CountrySelectionBottomSheet
 import com.apparel.offprice.features.home.presentation.component.LanguageSelectionBottomSheet
-import java.util.Locale
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -67,17 +69,39 @@ fun MyAccountScreen(
     onNavigateToWishlist: () -> Unit,
     onNavigateToLogin: () -> Unit,
     onNavigateToRegistration: () -> Unit,
-    onItemClick: (Int) -> Unit,
-    isGuestUser: Boolean = true
+    onItemClick: (MyAccountItems) -> Unit,
+    isGuestUser: Boolean = true,
+    viewModel: MyAccountViewModel = hiltViewModel()
 ) {
     var showCountrySheet by remember { mutableStateOf(false) }
-    var showLangauageSheet by remember { mutableStateOf(false) }
+    var showLanguageSheet by remember { mutableStateOf(false) }
 
-    var countrySelected by remember { mutableStateOf("UAE") }
-    var languageSelected by remember { mutableStateOf("ENGLISH") }
+    val (state, event, effect) = use(viewModel = viewModel)
 
-    val languageList = listOf("ENGLISH", "ARABIC")
+    effect.CollectInLaunchedEffect {
+        when (it) {
+            is MyAccountContract.UiEffect.ShowError -> {}
+            is MyAccountContract.UiEffect.AccountItemClick -> {
+                onItemClick(it.item)
+            }
 
+            MyAccountContract.UiEffect.NavigateToLogin -> {
+                onNavigateToLogin()
+            }
+
+            MyAccountContract.UiEffect.NavigateToRegistration -> {
+                onNavigateToRegistration()
+            }
+
+            MyAccountContract.UiEffect.NavigateToSearch -> {
+                onNavigateToSearch()
+            }
+
+            MyAccountContract.UiEffect.NavigateToWishlist -> {
+                onNavigateToWishlist()
+            }
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -92,7 +116,7 @@ fun MyAccountScreen(
             },
             actions = {
                 IconButton(
-                    onClick = onNavigateToSearch,
+                    onClick = { event.invoke(MyAccountContract.UiEvent.NavigateToSearch) },
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.icon_search),
@@ -101,7 +125,7 @@ fun MyAccountScreen(
                     )
                 }
                 IconButton(
-                    onClick = onNavigateToWishlist,
+                    onClick = { event.invoke(MyAccountContract.UiEvent.NavigateToWishlist) },
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.icon_wishlist),
@@ -151,11 +175,11 @@ fun MyAccountScreen(
                 rightButtonText = stringResource(R.string.label_register_caps),
                 onLeftClick = {
                     //Login Flow
-                    onNavigateToLogin()
+                    event.invoke(MyAccountContract.UiEvent.NavigateToLogin)
                 },
                 onRightClick = {
                     //Registration Flow
-                    onNavigateToRegistration()
+                    event.invoke(MyAccountContract.UiEvent.NavigateToRegistration)
                 }
             )
         } else {
@@ -168,8 +192,8 @@ fun MyAccountScreen(
             ) {
                 item {
                     UserProfileCard(
-                        name = "Jack Harrington",
-                        email = "Jackharrington21@gmail.com",
+                        name = state.username,
+                        email = state.userEmail,
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                 }
@@ -178,7 +202,7 @@ fun MyAccountScreen(
                     AccountMenuItem(
                         title = stringResource(item.title),
                         icon = item.icon,
-                        onClick = { onItemClick(item.categoryId) }
+                        onClick = { event.invoke(MyAccountContract.UiEvent.AccountItemClick(item)) }
                     )
                     HorizontalDivider(color = Color(0xFFEAEAEA))
                 }
@@ -203,12 +227,12 @@ fun MyAccountScreen(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(R.drawable.icon_flag),
+                        painter = painterResource(state.countrySelected.countryFlag),
                         contentDescription = "Country"
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
-                        text = countrySelected,
+                        text = state.countrySelected.countryName,
                         style = MaterialTheme.typography.bodySmall,
                         fontSize = 13.sp
                     )
@@ -221,7 +245,7 @@ fun MyAccountScreen(
             }
 
             TextButton(
-                onClick = { showLangauageSheet = true },
+                onClick = { showLanguageSheet = true },
                 modifier = Modifier
                     .weight(1f)
                     .border(
@@ -238,7 +262,7 @@ fun MyAccountScreen(
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
-                        text = languageSelected.capitalize(Locale.ENGLISH),
+                        text = state.languageSelected.display,
                         style = MaterialTheme.typography.bodySmall,
                         fontSize = 13.sp
                     )
@@ -253,12 +277,11 @@ fun MyAccountScreen(
             //Country BottomSheet
             if (showCountrySheet) {
                 CountrySelectionBottomSheet(
-                    countries = countries,
-                    initialSelected = countrySelected,
+                    countries = state.countryItemList,
+                    initialSelected = state.countrySelected,
                     onSubmit = { selected ->
-                        countrySelected = selected
+                        event.invoke(MyAccountContract.UiEvent.OnCountrySelected(selected))
                         showCountrySheet = false
-
                     },
                     onDismiss = { showCountrySheet = false }
                 )
@@ -266,15 +289,15 @@ fun MyAccountScreen(
 
 
             //Language BottomSheet
-            if (showLangauageSheet) {
+            if (showLanguageSheet) {
                 LanguageSelectionBottomSheet(
-                    languageList = languageList,
-                    initialSelected = languageSelected,
+                    languageList = state.languageItemList,
+                    initialSelected = state.languageSelected,
                     onSubmit = { selected ->
-                        languageSelected = selected
-                        showLangauageSheet = false
+                        event.invoke(MyAccountContract.UiEvent.OnLanguageSelected(selected))
+                        showLanguageSheet = false
                     },
-                    onDismiss = { showLangauageSheet = false }
+                    onDismiss = { showLanguageSheet = false }
                 )
             }
         }
