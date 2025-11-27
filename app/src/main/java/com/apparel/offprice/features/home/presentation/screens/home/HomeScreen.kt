@@ -45,6 +45,8 @@ import com.apparel.offprice.features.authentication.presentation.screen.OTPVerif
 import com.apparel.offprice.features.authentication.presentation.screen.SignupDialog
 import com.apparel.offprice.features.home.data.model.CategoryItem
 import com.apparel.offprice.features.home.data.model.DrawerMode
+import com.apparel.offprice.features.home.data.model.MyAccountItems
+import com.apparel.offprice.features.home.data.model.accountItems
 import com.apparel.offprice.features.home.presentation.screens.categoriesDrawer.CategoriesDrawer
 import com.apparel.offprice.features.home.data.model.bottomNavItems
 import com.apparel.offprice.features.home.data.model.sampleTopTabs
@@ -136,7 +138,7 @@ fun HomeScreen(
                     composable("CART") { Greeting("Cart") }
                     composable("ACCOUNT") {
                         MyAccountScreen(
-                            isGuestUser = true,
+                            isGuestUser = false,
                             onNavigateToSearch = {
                                 outerNavControl.navigate(AppScreen.SearchScreen) {}
                             },
@@ -144,7 +146,41 @@ fun HomeScreen(
                                 outerNavControl.navigate(AppScreen.WishListScreen) {}
                             },
                             onItemClick = { item ->
-                                println(item)
+                               when(item.categoryId){
+                                   0 -> {
+                                       //LogOut
+                                   }
+                                   1 -> {
+                                       //User Profile
+                                   }
+                                   2 -> {
+                                       //My Orders
+                                   }
+                                   3 -> {
+                                       //Returns
+                                   }
+                                   4 -> {
+                                       //Exchange
+                                   }
+                                   5 -> {
+                                       //Store Credit
+                                   }
+                                   6 -> {
+                                       //MyCoupons
+                                   }
+                                   7 -> {
+                                       //Delivery Address
+                                   }
+                                   8 -> {
+                                       //Payment cards
+                                   }
+                                   9 -> {
+                                       //Store Locator
+                                   }
+                                   else -> {
+                                       //Other case
+                                   }
+                               }
                             },
                             onNavigateToLogin = {
                                 showLoginDialog = true

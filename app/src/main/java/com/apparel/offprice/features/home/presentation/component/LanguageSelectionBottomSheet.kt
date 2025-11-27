@@ -36,14 +36,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
+import com.apparel.offprice.features.home.data.model.Language
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LanguageSelectionBottomSheet(
-    languageList: List<String>,
-    initialSelected: String = "ENGLISH",
-    onSubmit: (String) -> Unit,
+    languageList: List<Language>,
+    initialSelected: Language,
+    onSubmit: (Language) -> Unit,
     onDismiss: () -> Unit
 ){
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -88,23 +89,23 @@ fun LanguageSelectionBottomSheet(
             Spacer(modifier = Modifier.height(10.dp))
 
 
-            languageList.forEach { languageText ->
+            languageList.forEach { language ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { selectedLanguage = languageText }
+                        .clickable { selectedLanguage = language }
                         .padding(vertical = 16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
 
                     Text(
-                        text = languageText,
+                        text = language.display,
                         style = MaterialTheme.typography.titleMedium,
                         fontSize = 14.sp,
                         modifier = Modifier.weight(1f)
                     )
 
-                    if (selectedLanguage == languageText) {
+                    if (selectedLanguage == language) {
                         Icon(
                             imageVector = Icons.Default.Check,
                             contentDescription = "Selected",
