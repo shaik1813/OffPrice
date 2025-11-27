@@ -72,35 +72,7 @@ fun HomeScreen(
     var selectedCategory by remember { mutableStateOf<CategoryItem?>(null) }
     var selectedTopTab by remember { mutableStateOf(sampleTopTabs.first().id) }
 
-    var showLoginDialog by remember { mutableStateOf(false) }
-    var showSignupDialog by remember { mutableStateOf(false) }
-    var showForgotDialog by remember { mutableStateOf(false) }
-    var showOtpDialog by remember { mutableStateOf(false) }
 
-
-
-    if (showLoginDialog) {
-        LoginDialog({ showLoginDialog = false }, onItemClick = { appScreen ->
-            when (appScreen) {
-                is AppScreen.RegistrationScreen -> showSignupDialog = true
-                is AppScreen.ForgetPasswordScreen -> showForgotDialog = true
-                is AppScreen.OTPScreen -> showOtpDialog = true
-                else -> {}
-            }
-        })
-    }
-
-    if (showSignupDialog) {
-        SignupDialog(onDismiss = { showSignupDialog = false })
-    }
-
-    if (showForgotDialog) {
-        ForgotDialog(onDismiss = { showForgotDialog = false })
-    }
-
-    if (showOtpDialog) {
-        OTPVerifyDialog(onDismiss = { showOtpDialog = false })
-    }
 
     Column(modifier = Modifier.fillMaxSize()) {
 
@@ -138,7 +110,7 @@ fun HomeScreen(
                     composable("CART") { Greeting("Cart") }
                     composable("ACCOUNT") {
                         MyAccountScreen(
-                            isGuestUser = false,
+                            isGuestUser = true,
                             onNavigateToSearch = {
                                 outerNavControl.navigate(AppScreen.SearchScreen) {}
                             },
@@ -183,7 +155,6 @@ fun HomeScreen(
                                }
                             },
                             onNavigateToLogin = {
-                                showLoginDialog = true
                             //  outerNavControl.navigate(AppScreen.LoginScreen)
                             },
                             onNavigateToRegistration = {
