@@ -2,6 +2,7 @@ package com.apparel.offprice.features.authentication.presentation.component
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -19,9 +20,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.apparel.offprice.common.theme.inputTextColor
 import com.apparel.offprice.common.theme.lineColor
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,8 +36,11 @@ fun PasswordEditText() {
 
     OutlinedTextField(
         value = password,
+        textStyle = TextStyle(
+            fontSize = 14.sp
+        ),
         onValueChange = { password = it },
-        placeholder = { Text(text = "Password") },
+        placeholder = { Text(text = "Password", fontSize = 12.sp, color = inputTextColor) },
         singleLine = true,
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         trailingIcon = {
@@ -46,12 +53,11 @@ fun PasswordEditText() {
         },
         modifier = Modifier
             .fillMaxWidth()
-
             .border(
                 width = 1.dp,
                 color = lineColor,
                 shape = RoundedCornerShape(8.dp)
-            ),
+            ).padding(horizontal = 5.dp),
         shape = RoundedCornerShape(8.dp),
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = androidx.compose.ui.graphics.Color.Transparent,

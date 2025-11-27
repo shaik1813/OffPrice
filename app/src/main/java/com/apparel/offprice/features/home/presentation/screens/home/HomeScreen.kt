@@ -39,6 +39,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.apparel.offprice.features.authentication.presentation.screen.ForgotDialog
+import com.apparel.offprice.features.authentication.presentation.screen.LoginDialog
+import com.apparel.offprice.features.authentication.presentation.screen.OTPVerifyDialog
+import com.apparel.offprice.features.authentication.presentation.screen.SignupDialog
 import com.apparel.offprice.features.home.data.model.CategoryItem
 import com.apparel.offprice.features.home.data.model.DrawerMode
 import com.apparel.offprice.features.home.data.model.MyAccountItems
@@ -68,6 +72,8 @@ fun HomeScreen(
     var selectedCategory by remember { mutableStateOf<CategoryItem?>(null) }
     var selectedTopTab by remember { mutableStateOf(sampleTopTabs.first().id) }
 
+
+
     Column(modifier = Modifier.fillMaxSize()) {
 
         // MAIN CONTENT (BLUR ONLY THIS)
@@ -89,13 +95,13 @@ fun HomeScreen(
                     composable("HOME") {
                         HomeContent(
                             onNavigateToSearch = {
-                                outerNavControl.navigate(AppScreen.SearchScreen){}
+                                outerNavControl.navigate(AppScreen.SearchScreen) {}
                             },
                             onNavigateToStore = {
-                                outerNavControl.navigate(AppScreen.StoreLocatorScreen){}
+                                outerNavControl.navigate(AppScreen.StoreLocatorScreen) {}
                             },
                             onNavigateToWishlist = {
-                                outerNavControl.navigate(AppScreen.WishListScreen){}
+                                outerNavControl.navigate(AppScreen.WishListScreen) {}
                             }
                         )
                     }
@@ -104,12 +110,12 @@ fun HomeScreen(
                     composable("CART") { Greeting("Cart") }
                     composable("ACCOUNT") {
                         MyAccountScreen(
-                            isGuestUser = false,
+                            isGuestUser = true,
                             onNavigateToSearch = {
-                                outerNavControl.navigate(AppScreen.SearchScreen){}
+                                outerNavControl.navigate(AppScreen.SearchScreen) {}
                             },
                             onNavigateToWishlist = {
-                                outerNavControl.navigate(AppScreen.WishListScreen){}
+                                outerNavControl.navigate(AppScreen.WishListScreen) {}
                             },
                             onItemClick = { item ->
                                when(item.categoryId){
@@ -149,10 +155,10 @@ fun HomeScreen(
                                }
                             },
                             onNavigateToLogin = {
-                                outerNavControl.navigate(AppScreen.LoginScreen){}
+                            //  outerNavControl.navigate(AppScreen.LoginScreen)
                             },
                             onNavigateToRegistration = {
-                                outerNavControl.navigate(AppScreen.RegistrationScreen){}
+                                outerNavControl.navigate(AppScreen.RegistrationScreen) {}
                             }
                         )
                     }
@@ -181,7 +187,7 @@ fun HomeScreen(
                         onClick = {
                             if (item.route == "CATEGORIES") {
                                 selectedTab = "CATEGORIES"
-                                    isCategoriesOpen = true
+                                isCategoriesOpen = true
                             } else {
                                 // Update both states for real navigation tabs
                                 selectedTab = item.route
@@ -271,8 +277,8 @@ fun Greeting(string: String) {
 
 @Preview
 @Composable
-fun CategoryPreview(){
-   HomeScreen(
-       outerNavControl = rememberNavController()
-   )
+fun CategoryPreview() {
+    HomeScreen(
+        outerNavControl = rememberNavController()
+    )
 }
