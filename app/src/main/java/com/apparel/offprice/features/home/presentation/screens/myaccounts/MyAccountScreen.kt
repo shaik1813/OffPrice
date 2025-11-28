@@ -72,8 +72,6 @@ import com.apparel.offprice.routes.AppScreen
 fun MyAccountScreen(
     onNavigateToSearch: () -> Unit,
     onNavigateToWishlist: () -> Unit,
-    onNavigateToLogin: () -> Unit,
-    onNavigateToRegistration: () -> Unit,
     onItemClick: (MyAccountItems) -> Unit,
     isGuestUser: Boolean = true,
     viewModel: MyAccountViewModel = hiltViewModel()
@@ -81,26 +79,13 @@ fun MyAccountScreen(
     var showCountrySheet by remember { mutableStateOf(false) }
     var showLanguageSheet by remember { mutableStateOf(false) }
 
-    val (state, event, effect) = use(viewModel = viewModel)
-
-
     var showLoginDialog by remember { mutableStateOf(false) }
     var showSignupDialog by remember { mutableStateOf(false) }
     var showForgotDialog by remember { mutableStateOf(false) }
     var showOtpDialog by remember { mutableStateOf(false) }
 
 
-
-    if (showLoginDialog) {
-        LoginDialog({ showLoginDialog = false }, onItemClick = { appScreen ->
-            when (appScreen) {
-                is AppScreen.RegistrationScreen -> showSignupDialog = true
-                is AppScreen.ForgetPasswordScreen -> showForgotDialog = true
-                is AppScreen.OTPScreen -> showOtpDialog = true
-                else -> {}
-            }
-        })
-    }
+    val (state, event, effect) = use(viewModel = viewModel)
 
     if (showSignupDialog) {
         SignupDialog(onDismiss = { showSignupDialog = false })
@@ -114,6 +99,16 @@ fun MyAccountScreen(
         OTPVerifyDialog(onDismiss = { showOtpDialog = false })
     }
 
+    if (showLoginDialog) {
+        LoginDialog({ showLoginDialog = false }, onItemClick = { appScreen ->
+            when (appScreen) {
+                is AppScreen.RegistrationScreen -> showSignupDialog = true
+                is AppScreen.ForgetPasswordScreen -> showForgotDialog = true
+                is AppScreen.OTPScreen -> showOtpDialog = true
+                else -> {}
+            }
+        })
+    }
 
     effect.CollectInLaunchedEffect {
         when (it) {
@@ -266,7 +261,7 @@ fun MyAccountScreen(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(state.countrySelected.countryFlag),
+                        painter = painterResource(state.countrySelected.countryFlagRound),
                         contentDescription = "Country"
                     )
                     Spacer(modifier = Modifier.width(6.dp))

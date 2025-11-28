@@ -1,6 +1,6 @@
 package com.apparel.offprice.features.welcome.presentation.location
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,64 +14,62 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.apparel.offprice.features.welcome.data.model.LocationSelectionItem
-import com.apparel.offprice.features.welcome.data.model.sampleLocationSelectionItems
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.apparel.offprice.R
+import com.apparel.offprice.features.home.data.model.Country
+import com.apparel.offprice.features.home.data.model.countryList
 
 @Composable
 fun ChooseLocationScreen(
-    onItemClick: (LocationSelectionItem) -> Unit
+    onNavigateToNextScreen: () -> Unit,
+    viewModel: ChooseLocationViewModel = hiltViewModel()
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
-            .padding(horizontal = 20.dp)
+            .padding(vertical = 20.dp, horizontal = 20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
         Spacer(modifier = Modifier.height(40.dp))
 
-        // Title
-        Text(
-            text = "OFF/PRICE",
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+        Image(
+            painter = painterResource(R.drawable.icon_off_price),
+            contentDescription = "OffPrice",
+            modifier = Modifier
+                .height(20.dp),
+            contentScale = ContentScale.Crop
         )
 
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-        // Subtitle
         Text(
-            text = "CHOOSE YOUR LOCATION",
+            text = stringResource(R.string.label_choose_location),
             style = MaterialTheme.typography.titleMedium.copy(
-                fontSize = 14.sp,
-                color = Color.Gray
-            ),
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+                fontSize = 20.sp,
+                fontWeight = FontWeight.SemiBold
+            )
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Location List
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier.fillMaxSize()
         ) {
-            items(sampleLocationSelectionItems) { item ->
-                ChooseLocationCard(item){
-                    onItemClick(item)
+            items(countryList) { item ->
+                ChooseLocationCard(item) {
+                    viewModel.saveRegion(item)
+                    onNavigateToNextScreen()
                 }
             }
         }
     }
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun ChooseLocationPreview(){
-    ChooseLocationScreen(onItemClick = {})
-}

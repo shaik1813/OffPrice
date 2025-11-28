@@ -25,16 +25,12 @@ class UserPreferences @Inject constructor(
     companion object {
         private val USERNAME_KEY = stringPreferencesKey("username")
         private val IS_FIRST_TIME = booleanPreferencesKey("isFirstTime")
-
-        private val USER_LOCATION = stringPreferencesKey("user_location")
         private val USER_GENDER = stringPreferencesKey("user_gender")
     }
 
     val username: Flow<String?> = dataStore.data.map { preferences -> preferences[USERNAME_KEY] }
 
     val isFirstTime : Flow<Boolean> = dataStore.data.map { preferences -> preferences[IS_FIRST_TIME] ?: false }
-
-    val userLocation: Flow<String?> = dataStore.data.map { it[USER_LOCATION] }
     val userGender: Flow<String?> = dataStore.data.map { it[USER_GENDER] }
 
     suspend fun saveUsername(username: String) {
@@ -53,10 +49,6 @@ class UserPreferences @Inject constructor(
         dataStore.edit { preferences ->
             preferences[IS_FIRST_TIME] = bool
         }
-    }
-
-    suspend fun saveLocation(location: String) {
-        dataStore.edit { it[USER_LOCATION] = location }
     }
 
     suspend fun saveGender(gender: String) {

@@ -1,89 +1,97 @@
 package com.apparel.offprice.features.welcome.presentation.genderCategory
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.apparel.offprice.features.welcome.data.model.GenderCategoryItem
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.rememberNavController
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
-import com.apparel.offprice.features.home.presentation.screens.home.CardIcon
 import com.apparel.offprice.features.welcome.data.model.genderCategories
-import com.apparel.offprice.routes.AppScreen
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GenderCategoryScreen(
-    onCategoryClick: (GenderCategoryItem) -> Unit,
-    onSearchClick: () -> Unit = {},
-    onWishlistClick: () -> Unit = {}
+    onCategoryClick: () -> Unit,
+    onSearchClick: () -> Unit,
+    onWishlistClick: () -> Unit,
+    viewModel: GenderCategoryViewModel = hiltViewModel()
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .padding(paddingValues = WindowInsets.safeDrawing.asPaddingValues())
     ) {
 
+        TopAppBar(
+            title = {
+                Image(
+                    painter = painterResource(R.drawable.icon_off_price),
+                    contentDescription = "App name"
+                )
+            },
+            actions = {
+                IconButton(
+                    onClick = {
+                        onSearchClick()
+                    },
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.icon_search),
+                        contentDescription = "Search",
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                IconButton(
+                    onClick = {
+                        onWishlistClick()
+                    },
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.icon_wishlist),
+                        contentDescription = "Wishlist",
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = Color.White
+            ),
+            windowInsets = WindowInsets(0, 0, 0, 0),
+            modifier = Modifier
+                .shadow(
+                    elevation = 6.dp,
+                    spotColor = Color.Gray
+                ),
+        )
+
         Spacer(modifier = Modifier.height(20.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(1f)
-                .padding(horizontal = 4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = "OFF/PRICE",
-                style = MaterialTheme.typography.titleLarge,
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier
-                    .padding(start = 12.dp)
-            )
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            CardIcon(
-                icon = R.drawable.icon_wishlist,
-                iconDescriptor = "Wishlist"
-            ){
-                onWishlistClick()
-            }
-            CardIcon(
-                icon = R.drawable.icon_search,
-                iconDescriptor = "Icon search"
-            ){
-                onSearchClick()
-            }
-        }
-    }
-    HorizontalDivider(thickness = 1.dp)
-
-        Spacer(modifier = Modifier.height(20.dp))
 
         Column(
             modifier = Modifier
@@ -93,17 +101,19 @@ fun GenderCategoryScreen(
         ) {
             // Title
             Text(
-                text = "Discover Our Exclusive Collection",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold
+                text = stringResource(R.string.label_exclusive_collection),
+                style = MaterialTheme.typography.titleMedium.copy(fontSize = 20.sp),
             )
 
             Spacer(modifier = Modifier.height(4.dp))
 
             // Subtitle
             Text(
-                text = "Shop by category and choose what you love",
-                style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray)
+                text = stringResource(R.string.label_shop_by_category),
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = Color.Gray,
+                    fontSize = 12.sp
+                )
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -115,7 +125,8 @@ fun GenderCategoryScreen(
             ) {
                 items(genderCategories) { item ->
                     GenderCategoryCard(item) {
-                        onCategoryClick(item)
+                        viewModel.saveGender(item)
+                        onCategoryClick()
                     }
                 }
             }
@@ -125,6 +136,6 @@ fun GenderCategoryScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun GenderCategoryScreenPreview(){
-    GenderCategoryScreen(onCategoryClick = {})
+fun GenderCategoryScreenPreview() {
+    GenderCategoryScreen(onCategoryClick = {}, onSearchClick = {}, onWishlistClick = {})
 }
