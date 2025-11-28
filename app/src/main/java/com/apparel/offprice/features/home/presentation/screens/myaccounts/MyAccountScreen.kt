@@ -227,7 +227,7 @@ fun MyAccountScreen(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(state.countrySelected.countryFlag),
+                        painter = painterResource(state.countrySelected.countryFlagRound),
                         contentDescription = "Country"
                     )
                     Spacer(modifier = Modifier.width(6.dp))

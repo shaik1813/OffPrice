@@ -1,6 +1,17 @@
 <resources>
     <string name="app_name">OffPrice</string>
 
+    <!--    My Account Section-->
+    <string name="label_user_profile">User Profile</string>
+    <string name="label_my_orders">My Orders</string>
+    <string name="label_returns">Returns</string>
+    <string name="label_exchange">Exchange</string>
+    <string name="label_store_credit">Store Credits</string>
+    <string name="label_my_coupons">My Coupons</string>
+    <string name="label_delivery_address">Delivery Addresses</string>
+    <string name="label_payment_cards">Payment Cards</string>
+    <string name="label_store_locator">Store Locator</string>
+    <string name="label_log_out">Log Out</string>
 
     <string name="login_account_header">LOGIN YOUR ACCOUNT</string>
     <string name="login_details">Enter Your Login Details Below</string>
@@ -30,7 +41,7 @@
     <string name="label_select_location">SELECT YOUR LOCATION</string>
     <string name="label_submit">SUBMIT</string>
     <string name="label_select_language">SELECT LANGUAGE</string>
-
+    <string name="label_choose_location">CHOOSE YOUR LOCATION</string>
     <string name="title_recent_search">RECENT SEARCH</string>
     <string name="title_trending_search">TRENDING SEARCH</string>
     <string name="title_all_result">ALL RESULT</string>
@@ -44,17 +55,9 @@
     <string name="back_to_login">Back To Login</string>
     <string name="reset_your_password">RESET YOUR PASSWORD</string>
     <string name="new_password">New Password</string>
+    <string name="label_exclusive_collection">Discover Our Exclusive Collection</string>
+    <string name="label_shop_by_category">Shop by category and choose what you love</string>
 
-    <!--    My Account Section-->
-    <string name="label_user_profile">User Profile</string>
-    <string name="label_my_orders">My Orders</string>
-    <string name="label_returns">Returns</string>
-    <string name="label_exchange">Exchange</string>
-    <string name="label_store_credit">Store Credits</string>
-    <string name="label_my_coupons">My Coupons</string>
-    <string name="label_delivery_address">Delivery Addresses</string>
-    <string name="label_payment_cards">Payment Cards</string>
-    <string name="label_store_locator">Store Locator</string>
-    <string name="label_log_out">Log Out</string>
+
 
 </resources>

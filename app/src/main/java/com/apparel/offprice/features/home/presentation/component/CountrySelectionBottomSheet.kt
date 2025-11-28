@@ -104,7 +104,7 @@ fun CountrySelectionBottomSheet(
                 ) {
 
                     Image(
-                        painter = painterResource(id = country.countryFlag),
+                        painter = painterResource(id = country.countryFlagRound),
                         contentDescription = "${country.countryName} Flag",
                         modifier = Modifier
                             .size(28.dp)

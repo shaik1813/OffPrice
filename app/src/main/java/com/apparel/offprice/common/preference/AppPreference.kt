@@ -22,9 +22,13 @@ class AppPreference @Inject constructor(
 
     companion object {
         private val LANGUAGE_PREFERENCE = stringPreferencesKey("LanguagePreference")
+
+        private val REGIONAL_PREFERENCE = stringPreferencesKey("RegionalPreference")
     }
 
     val languagePreference: Flow<String?> = dataStore.data.map { preferences -> preferences[LANGUAGE_PREFERENCE] ?: "en"}
+
+    val regionalPreference: Flow<String?> = dataStore.data.map { preferences -> preferences[REGIONAL_PREFERENCE] ?: ""}
 
 
     suspend fun saveLanguagePreference(language: String) {
@@ -36,6 +40,18 @@ class AppPreference @Inject constructor(
     suspend fun clearLanguagePreference() {
         dataStore.edit { preferences ->
             preferences.remove(LANGUAGE_PREFERENCE)
+        }
+    }
+
+    suspend fun saveRegionalPreference(region: String) {
+        dataStore.edit { preferences ->
+            preferences[REGIONAL_PREFERENCE] = region
+        }
+    }
+
+    suspend fun clearRegionalPreference() {
+        dataStore.edit { preferences ->
+            preferences.remove(REGIONAL_PREFERENCE)
         }
     }
 
