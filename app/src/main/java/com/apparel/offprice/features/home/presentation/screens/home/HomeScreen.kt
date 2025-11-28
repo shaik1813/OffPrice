@@ -39,14 +39,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.apparel.offprice.features.authentication.presentation.screen.ForgotDialog
-import com.apparel.offprice.features.authentication.presentation.screen.LoginDialog
-import com.apparel.offprice.features.authentication.presentation.screen.OTPVerifyDialog
-import com.apparel.offprice.features.authentication.presentation.screen.SignupDialog
 import com.apparel.offprice.features.home.data.model.CategoryItem
 import com.apparel.offprice.features.home.data.model.DrawerMode
-import com.apparel.offprice.features.home.data.model.MyAccountItems
-import com.apparel.offprice.features.home.data.model.accountItems
 import com.apparel.offprice.features.home.presentation.screens.categoriesDrawer.CategoriesDrawer
 import com.apparel.offprice.features.home.data.model.bottomNavItems
 import com.apparel.offprice.features.home.data.model.sampleTopTabs
@@ -153,12 +147,6 @@ fun HomeScreen(
                                        //Other case
                                    }
                                }
-                            },
-                            onNavigateToLogin = {
-                            //  outerNavControl.navigate(AppScreen.LoginScreen)
-                            },
-                            onNavigateToRegistration = {
-                                outerNavControl.navigate(AppScreen.RegistrationScreen) {}
                             }
                         )
                     }
