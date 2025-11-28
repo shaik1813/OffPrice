@@ -5,11 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.apparel.offprice.features.authentication.presentation.screen.ForgotPasswordScreen
-import com.apparel.offprice.features.authentication.presentation.screen.LoginScreen
-import com.apparel.offprice.features.authentication.presentation.screen.OTPVerifyScreen
-import com.apparel.offprice.features.authentication.presentation.screen.ResetPasswordScreen
-import com.apparel.offprice.features.authentication.presentation.screen.SignupScreen
 import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
 import com.apparel.offprice.features.home.presentation.screens.search.SearchScreen
 import com.apparel.offprice.features.storeLocator.presentation.screen.StoreLocatorScreen
@@ -45,30 +40,23 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.LoginScreen> {
-            LoginScreen(onItemClick = { appScreen ->
-                when (appScreen) {
-                    is AppScreen.RegistrationScreen -> navController.navigate(AppScreen.RegistrationScreen)
-                    is AppScreen.ForgetPasswordScreen -> navController.navigate(AppScreen.ForgetPasswordScreen)
-                    is AppScreen.OTPScreen -> navController.navigate(AppScreen.OTPScreen)
-                    else -> {}
-                }
-            })
+
         }
 
         composable<AppScreen.RegistrationScreen> {
-            SignupScreen()
+
         }
 
         composable<AppScreen.ForgetPasswordScreen> {
-            ForgotPasswordScreen() { navController.navigate(AppScreen.ResetPasswordScreen) }
+
         }
 
         composable<AppScreen.OTPScreen> {
-            OTPVerifyScreen()
+
         }
 
         composable<AppScreen.ResetPasswordScreen> {
-            ResetPasswordScreen()
+
         }
 
         composable<AppScreen.HomeScreen> {

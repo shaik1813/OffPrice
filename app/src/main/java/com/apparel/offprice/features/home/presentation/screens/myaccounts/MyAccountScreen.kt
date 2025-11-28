@@ -55,11 +55,16 @@ import com.apparel.offprice.R
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.takeInitials
 import com.apparel.offprice.common.utils.use
+import com.apparel.offprice.features.authentication.presentation.screen.ForgotDialog
+import com.apparel.offprice.features.authentication.presentation.screen.LoginDialog
+import com.apparel.offprice.features.authentication.presentation.screen.OTPVerifyDialog
+import com.apparel.offprice.features.authentication.presentation.screen.SignupDialog
 import com.apparel.offprice.features.home.data.model.MyAccountItems
 import com.apparel.offprice.features.home.data.model.accountItems
 import com.apparel.offprice.features.home.presentation.component.CircularProgressbar
 import com.apparel.offprice.features.home.presentation.component.CountrySelectionBottomSheet
 import com.apparel.offprice.features.home.presentation.component.LanguageSelectionBottomSheet
+import com.apparel.offprice.routes.AppScreen
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -78,6 +83,38 @@ fun MyAccountScreen(
 
     val (state, event, effect) = use(viewModel = viewModel)
 
+
+    var showLoginDialog by remember { mutableStateOf(false) }
+    var showSignupDialog by remember { mutableStateOf(false) }
+    var showForgotDialog by remember { mutableStateOf(false) }
+    var showOtpDialog by remember { mutableStateOf(false) }
+
+
+
+    if (showLoginDialog) {
+        LoginDialog({ showLoginDialog = false }, onItemClick = { appScreen ->
+            when (appScreen) {
+                is AppScreen.RegistrationScreen -> showSignupDialog = true
+                is AppScreen.ForgetPasswordScreen -> showForgotDialog = true
+                is AppScreen.OTPScreen -> showOtpDialog = true
+                else -> {}
+            }
+        })
+    }
+
+    if (showSignupDialog) {
+        SignupDialog(onDismiss = { showSignupDialog = false })
+    }
+
+    if (showForgotDialog) {
+        ForgotDialog(onDismiss = { showForgotDialog = false })
+    }
+
+    if (showOtpDialog) {
+        OTPVerifyDialog(onDismiss = { showOtpDialog = false })
+    }
+
+
     effect.CollectInLaunchedEffect {
         when (it) {
             is MyAccountContract.UiEffect.ShowError -> {}
@@ -86,11 +123,13 @@ fun MyAccountScreen(
             }
 
             MyAccountContract.UiEffect.NavigateToLogin -> {
-                onNavigateToLogin()
+              //  onNavigateToLogin()
+              showLoginDialog = true
             }
 
             MyAccountContract.UiEffect.NavigateToRegistration -> {
-                onNavigateToRegistration()
+                showSignupDialog = true
+               // onNavigateToRegistration()
             }
 
             MyAccountContract.UiEffect.NavigateToSearch -> {
