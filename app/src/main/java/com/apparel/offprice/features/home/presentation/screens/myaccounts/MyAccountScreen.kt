@@ -128,7 +128,7 @@ fun MyAccountScreen(
             }
 
             MyAccountContract.UiEffect.NavigateToRegistration -> {
-                showSignupDialog = true
+               showSignupDialog = true
                // onNavigateToRegistration()
             }
 
@@ -141,6 +141,7 @@ fun MyAccountScreen(
             }
         }
     }
+
     Column(
         modifier = Modifier
             .fillMaxSize()

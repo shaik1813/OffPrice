@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
 import com.apparel.offprice.features.home.presentation.screens.search.SearchScreen
+import com.apparel.offprice.features.pdp.presentation.screen.PDPscreen
 import com.apparel.offprice.features.storeLocator.presentation.screen.StoreLocatorScreen
 import com.apparel.offprice.features.welcome.presentation.genderCategory.GenderCategoryScreen
 import com.apparel.offprice.features.welcome.presentation.location.ChooseLocationScreen
@@ -50,7 +51,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         when {
             location == null -> AppScreen.LocationSelectionScreen
             gender == null -> AppScreen.GenderCategoryScreen
-            else -> AppScreen.HomeScreen
+            else -> AppScreen.OTPScreen
         }
 
     NavHost(
@@ -76,7 +77,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.OTPScreen> {
-
+            PDPscreen()
         }
 
         composable<AppScreen.ResetPasswordScreen> {
