@@ -104,7 +104,7 @@ fun HomeScreen(
                     composable("CART") { Greeting("Cart") }
                     composable("ACCOUNT") {
                         MyAccountScreen(
-                            isGuestUser = true,
+                            isGuestUser = false,
                             onNavigateToSearch = {
                                 outerNavControl.navigate(AppScreen.SearchScreen) {}
                             },
