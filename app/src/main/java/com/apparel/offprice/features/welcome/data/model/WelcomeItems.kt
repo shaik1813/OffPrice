@@ -1,6 +1,6 @@
 package com.apparel.offprice.features.welcome.data.model
 
-import android.R
+
 
 
 //Location Selection

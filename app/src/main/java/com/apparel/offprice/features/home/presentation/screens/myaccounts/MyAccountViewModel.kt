@@ -3,7 +3,9 @@ package com.apparel.offprice.features.home.presentation.screens.myaccounts
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.apparel.offprice.common.preference.AppPreference
+import com.apparel.offprice.features.home.data.model.Country
 import com.apparel.offprice.features.home.data.model.Language
+import com.apparel.offprice.features.home.data.model.countryList
 import com.apparel.offprice.features.home.data.model.languageList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -29,7 +31,14 @@ class MyAccountViewModel @Inject constructor(
     override val effect: SharedFlow<MyAccountContract.UiEffect> = _effectFlow.asSharedFlow()
 
     init {
+        setRegionPreference()
         setLanguagePreference()
+    }
+
+    private fun setRegionPreference(){
+        viewModelScope.launch {
+            _state.update { it -> it.copy(countrySelected = countryList.first { it.countryCode ==  appPreference.regionalPreference.first() }) }
+        }
     }
 
     private fun setLanguagePreference() {
@@ -45,6 +54,7 @@ class MyAccountViewModel @Inject constructor(
             }
 
             is MyAccountContract.UiEvent.OnCountrySelected -> {
+                saveRegionPreference(event.country)
                 _state.update { it.copy(countrySelected = event.country) }
             }
 
@@ -82,6 +92,12 @@ class MyAccountViewModel @Inject constructor(
                     _effectFlow.emit(MyAccountContract.UiEffect.NavigateToWishlist)
                 }
             }
+        }
+    }
+
+    private fun saveRegionPreference(country: Country) {
+        viewModelScope.launch {
+            appPreference.saveRegionalPreference(country.countryCode)
         }
     }
 
