@@ -12,6 +12,7 @@
     <string name="label_payment_cards">Payment Cards</string>
     <string name="label_store_locator">Store Locator</string>
     <string name="label_log_out">Log Out</string>
+    <string name="sales_ends_in">Sales Ends in</string>
 
     <string name="login_account_header">LOGIN YOUR ACCOUNT</string>
     <string name="login_details">Enter Your Login Details Below</string>
@@ -57,7 +58,8 @@
     <string name="new_password">New Password</string>
     <string name="label_exclusive_collection">Discover Our Exclusive Collection</string>
     <string name="label_shop_by_category">Shop by category and choose what you love</string>
-
+    <string name="size_desc">Sizes shown are International. Please refer to the size chart</string>
+    <string name="size_desc2">Fit is oversized, Sizing down one size is recommended.</string>
 
 
 </resources>

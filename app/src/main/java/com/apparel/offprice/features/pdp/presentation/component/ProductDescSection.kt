@@ -1,24 +1,23 @@
 package com.apparel.offprice.features.pdp.presentation.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -28,15 +27,18 @@ import com.apparel.offprice.common.theme.backgroundColor
 import com.apparel.offprice.common.theme.inputTextColor
 import com.apparel.offprice.common.theme.nonReturnbgColor
 import com.apparel.offprice.common.theme.nonreturnTxtColor
+import com.apparel.offprice.features.pdp.presentation.screen.ColorSection
 import com.apparel.offprice.features.pdp.presentation.screen.PriceSection
-import com.apparel.offprice.features.pdp.presentation.screen.SalesEndSection
-import com.apparel.offprice.features.pdp.presentation.screen.salesEnd
+import com.apparel.offprice.features.pdp.presentation.screen.SizeSelector
+import com.apparel.offprice.features.pdp.presentation.screen.salesEndSection
 
 
 @Composable
 fun ProductDescSection() {
 
-    Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
+    Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp).verticalScroll(
+        rememberScrollState()
+    )) {
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
 
@@ -48,7 +50,6 @@ fun ProductDescSection() {
                 modifier = Modifier.size(30.dp)
             )
         }
-
 
 
         Text(
@@ -80,7 +81,13 @@ fun ProductDescSection() {
 
         HorizontalDivider(modifier = Modifier.height(1.dp), color = backgroundColor)
 
-        salesEnd()
+        salesEndSection()
+
+        HorizontalDivider(modifier = Modifier.height(1.dp), color = backgroundColor)
+
+        SizeSelector()
+
+        ColorSection()
     }
 
 

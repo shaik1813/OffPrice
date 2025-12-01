@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,164 +29,16 @@ import com.apparel.offprice.common.theme.saleCardColor
 import com.apparel.offprice.common.theme.saleEndTextColor
 
 
-@Preview(showBackground = true)
 @Composable
-fun SalesEndSection() {
-    Row(modifier = Modifier.fillMaxWidth(),verticalAlignment = Alignment.CenterVertically ) {
-        Text(
-            text = "Sales Ends in",
-            style = MaterialTheme.typography.bodyMedium,
-            color = saleEndTextColor,
-            textAlign = TextAlign.Center
-        )
-
-        Card(
-            shape = RoundedCornerShape(2.45.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = saleCardColor
-            ),
-            modifier = Modifier.padding(start = 10.dp, top=6.dp,bottom = 6.dp, end = 6.dp).align(Alignment.CenterVertically)
-        ) {
-            Column(modifier = Modifier.padding(vertical = 2.3.dp, horizontal = 6.dp)) {
-                Text(
-                    text = "01",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = Color.White,
-                    fontSize = 11.sp
-                )
-
-                Spacer(modifier = Modifier.size(1.dp))
-
-                HorizontalDivider(modifier = Modifier
-                    .width(7.48.dp)
-                    .height(0.63.dp))
-
-                Spacer(modifier = Modifier.size(1.dp))
-
-                Text(
-                    text = "Day",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.White,
-                    fontSize = 7.sp
-                )
-            }
-        }
-
-
-
-        Card(
-            shape = RoundedCornerShape(2.45.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = saleCardColor
-            ),
-            modifier = Modifier.padding(start = 10.dp, top=6.dp,end = 6.dp).align(Alignment.CenterVertically)
-        ) {
-            Column(modifier = Modifier.padding(vertical = 2.3.dp, horizontal = 6.dp).align(Alignment.CenterHorizontally)) {
-                Text(
-                    text = "15",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = Color.White,
-                    fontSize = 11.sp
-                )
-
-                Spacer(modifier = Modifier.size(1.dp))
-
-                HorizontalDivider(modifier = Modifier
-                    .width(7.48.dp)
-                    .height(0.63.dp))
-
-                Spacer(modifier = Modifier.size(1.dp))
-
-                Text(
-                    text = "Hours",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.White,
-                    fontSize = 7.sp
-                )
-            }
-        }
-
-
-
-        Card(
-            shape = RoundedCornerShape(2.45.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = saleCardColor
-            ),
-            modifier = Modifier.padding(start = 10.dp, top=6.dp,end = 6.dp).align(Alignment.CenterVertically)
-        ) {
-            Column(modifier = Modifier.padding(vertical = 2.3.dp, horizontal = 6.dp).align(Alignment.CenterHorizontally)) {
-                Text(
-                    text = "29",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = Color.White,
-                    fontSize = 11.sp
-                )
-
-                Spacer(modifier = Modifier.size(1.dp))
-
-                HorizontalDivider(modifier = Modifier
-                    .width(7.48.dp)
-                    .height(0.63.dp))
-
-                Spacer(modifier = Modifier.size(1.dp))
-
-                Text(
-                    text = "Mins",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.White,
-                    fontSize = 7.sp
-                )
-            }
-        }
-
-
-
-
-        Card(
-            shape = RoundedCornerShape(2.45.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = saleCardColor
-            ),
-            modifier = Modifier.padding(start = 10.dp, top=6.dp,end = 6.dp).align(Alignment.CenterVertically)
-        ) {
-            Column(modifier = Modifier.padding(vertical = 2.3.dp, horizontal = 6.dp).align(Alignment.CenterHorizontally)) {
-                Text(
-                    text = "58",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = Color.White,
-                    fontSize = 11.sp
-                )
-
-                Spacer(modifier = Modifier.size(1.dp))
-
-                HorizontalDivider(modifier = Modifier
-                    .width(7.48.dp)
-                    .height(0.63.dp))
-
-                Spacer(modifier = Modifier.size(1.dp))
-
-                Text(
-                    text = "Mins",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.White,
-                    fontSize = 7.sp
-                )
-            }
-        }
-
-    }
-}
-
-@Composable
-fun salesEnd(){
+fun salesEndSection(){
     Row(verticalAlignment = Alignment.CenterVertically) {
 
         Text(
-            text = "Sales Ends in",
+            text = stringResource(com.apparel.offprice.R.string.sales_ends_in),
             style = MaterialTheme.typography.bodyLarge,
-            color = Color(0xFFB30000), // Red Text
-            modifier = Modifier.padding(end = 12.dp)
+            fontSize = 14.sp,
+            color = saleEndTextColor, // Red Text
+            modifier = Modifier.padding(end = 10.dp)
         )
 
         TimeBox(value = 1, label = "Day")
@@ -209,7 +62,7 @@ fun TimeBox(
     ) {
         Column(
             modifier = Modifier
-                .width(25.dp)
+                .width(30.dp)
                 .padding(vertical = 6.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

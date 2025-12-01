@@ -25,7 +25,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
     NavHost(
         navController = navController,
-        startDestination = AppScreen.SplashScreen
+        startDestination = AppScreen.OTPScreen
     ) {
         composable<AppScreen.SplashScreen> {
             SplashScreen(
