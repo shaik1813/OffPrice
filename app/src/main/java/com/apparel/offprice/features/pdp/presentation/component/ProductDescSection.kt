@@ -30,6 +30,7 @@ import com.apparel.offprice.common.theme.nonReturnbgColor
 import com.apparel.offprice.common.theme.nonreturnTxtColor
 import com.apparel.offprice.features.pdp.presentation.screen.PriceSection
 import com.apparel.offprice.features.pdp.presentation.screen.SalesEndSection
+import com.apparel.offprice.features.pdp.presentation.screen.salesEnd
 
 
 @Composable
@@ -79,7 +80,7 @@ fun ProductDescSection() {
 
         HorizontalDivider(modifier = Modifier.height(1.dp), color = backgroundColor)
 
-        SalesEndSection()
+        salesEnd()
     }
 
 
