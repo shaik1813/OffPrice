@@ -65,6 +65,8 @@ import com.apparel.offprice.features.home.data.model.accountItems
 import com.apparel.offprice.features.home.presentation.component.CircularProgressbar
 import com.apparel.offprice.features.home.presentation.component.CountrySelectionBottomSheet
 import com.apparel.offprice.features.home.presentation.component.LanguageSelectionBottomSheet
+import com.apparel.offprice.features.home.presentation.screens.myaccounts.MyAccountContract
+import com.apparel.offprice.features.home.presentation.screens.myaccounts.MyAccountViewModel
 import com.apparel.offprice.routes.AppScreen
 
 
@@ -119,13 +121,11 @@ fun MyAccountScreen(
             }
 
             MyAccountContract.UiEffect.NavigateToLogin -> {
-              //  onNavigateToLogin()
-              showLoginDialog = true
+                showLoginDialog = true
             }
 
             MyAccountContract.UiEffect.NavigateToRegistration -> {
                 showSignupDialog = true
-               // onNavigateToRegistration()
             }
 
             MyAccountContract.UiEffect.NavigateToSearch -> {
@@ -451,7 +451,6 @@ fun AccountMenuItem(
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.weight(1f)
         )
-
         Icon(
             painter = painterResource(R.drawable.icon_arrow_right),
             contentDescription = "Arrow Right",
@@ -463,7 +462,7 @@ fun AccountMenuItem(
 @Preview(showBackground = true)
 @Composable
 fun MyAccountScreenPreview() {
-    MyAccountScreen(onNavigateToSearch = {}, onNavigateToWishlist = {}, onNavigateToLogin = {}, onNavigateToRegistration = {}, onItemClick = {})
+    MyAccountScreen(onNavigateToSearch = {}, onNavigateToWishlist = {}, onItemClick = {})
 }
 
 

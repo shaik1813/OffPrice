@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">خارج السعر</string>
+
+    <!--    My Account Section-->
+    <string name="label_user_profile">ملف تعريف المستخدم</string>
+    <string name="label_my_orders">طلباتي</string>
+    <string name="label_returns">المرتجعات</string>
+    <string name="label_exchange">تبادل</string>
+    <string name="label_store_credit">اعتمادات المتجر</string>
+    <string name="label_my_coupons">كوبونات بلدي</string>
+    <string name="label_delivery_address">عناوين التسليم</string>
+    <string name="label_payment_cards">بطاقات الدفع</string>
+    <string name="label_store_locator">محدد موقع المتجر</string>
+    <string name="label_log_out">تسجيل الخروج</string>
+
 </resources>
