@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -33,39 +34,61 @@ import com.apparel.offprice.common.theme.sizeCardColor
 @Preview
 @Composable
 fun ColorSection() {
-    Column(modifier = Modifier.padding(top = 16.dp)){
+    Column(modifier = Modifier.padding(top = 16.dp)) {
 
-        Row(verticalAlignment = Alignment.CenterVertically){
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = "SELECTED COLOR:",
+                text = "SELECTED COLOR :",
                 fontSize = 14.sp,
                 style = MaterialTheme.typography.titleMedium,
                 color = loginButtonColor
             )
+            Spacer(modifier = Modifier.size(10.dp))
             Box(
                 modifier = Modifier
                     .size(14.dp)
                     .clip(CircleShape)
                     .background(blueRoundColor)
-
+            )
+            Text(
+                text = "Blue",
+                fontSize = 14.sp,
+                modifier = Modifier.padding(start = 5.dp),
+                style = MaterialTheme.typography.titleMedium,
+                color = loginButtonColor
             )
         }
 
-        Row(){
-            repeat(4){ it ->
-                Card(shape = RoundedCornerShape(8.dp), elevation = CardDefaults.cardElevation(0.dp),
-                    modifier = Modifier.background(sizeCardColor).width(50.dp).height(59.dp)){
+        Spacer(modifier = Modifier.size(10.dp))
 
-                    var sourceId : Int =0
-                    if(it==0)
+        Row() {
+            repeat(4) { it ->
+                Card(
+                    shape = RoundedCornerShape(8.dp), elevation = CardDefaults.cardElevation(0.dp),
+                    modifier = Modifier
+                        .padding(end = 10.dp)
+                        .background(sizeCardColor)
+                        .width(50.dp)
+                        .height(59.dp)
+                )
+                {
+
+                    var sourceId: Int = 0
+
+                    if (it % 2 == 0)
                         sourceId = R.drawable.colorimg
                     else sourceId = R.drawable.colorimg2
 
 
-                    Image(painter = painterResource(sourceId), contentDescription = "colorIcon",modifier = Modifier.fillMaxSize())
+                    Image(
+                        painter = painterResource(sourceId),
+                        contentDescription = "colorIcon",
+                        modifier = Modifier.fillMaxSize()
+                    )
                 }
             }
         }
+
 
 
     }

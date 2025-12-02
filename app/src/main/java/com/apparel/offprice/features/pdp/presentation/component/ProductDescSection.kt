@@ -28,7 +28,11 @@ import com.apparel.offprice.common.theme.inputTextColor
 import com.apparel.offprice.common.theme.nonReturnbgColor
 import com.apparel.offprice.common.theme.nonreturnTxtColor
 import com.apparel.offprice.features.pdp.presentation.screen.ColorSection
+import com.apparel.offprice.features.pdp.presentation.screen.OfferCardUI
+import com.apparel.offprice.features.pdp.presentation.screen.PaymentCardUI
 import com.apparel.offprice.features.pdp.presentation.screen.PriceSection
+import com.apparel.offprice.features.pdp.presentation.screen.ProductInfoUI
+import com.apparel.offprice.features.pdp.presentation.screen.ReturnDesignUI
 import com.apparel.offprice.features.pdp.presentation.screen.SizeSelector
 import com.apparel.offprice.features.pdp.presentation.screen.salesEndSection
 
@@ -88,6 +92,16 @@ fun ProductDescSection() {
         SizeSelector()
 
         ColorSection()
+
+        OfferCardUI()
+
+        PaymentCardUI()
+
+        ReturnDesignUI()
+
+        ProductInfoUI()
+
+
     }
 
 
