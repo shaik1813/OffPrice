@@ -67,6 +67,8 @@ fun HomeScreen(
     var selectedCategory by remember { mutableStateOf<CategoryItem?>(null) }
     var selectedTopTab by remember { mutableStateOf(sampleTopTabs.first().id) }
 
+
+
     Column(modifier = Modifier.fillMaxSize()) {
 
         // MAIN CONTENT (BLUR ONLY THIS)
@@ -88,13 +90,13 @@ fun HomeScreen(
                     composable("HOME") {
                         HomeContent(
                             onNavigateToSearch = {
-                                outerNavControl.navigate(AppScreen.SearchScreen){}
+                                outerNavControl.navigate(AppScreen.SearchScreen) {}
                             },
                             onNavigateToStore = {
-                                outerNavControl.navigate(AppScreen.StoreLocatorScreen){}
+                                outerNavControl.navigate(AppScreen.StoreLocatorScreen) {}
                             },
                             onNavigateToWishlist = {
-                                outerNavControl.navigate(AppScreen.WishListScreen){}
+                                outerNavControl.navigate(AppScreen.WishListScreen) {}
                             }
                         )
                     }
@@ -116,19 +118,47 @@ fun HomeScreen(
                         MyAccountScreen(
                             isGuestUser = true,
                             onNavigateToSearch = {
-                                outerNavControl.navigate(AppScreen.SearchScreen){}
+                                outerNavControl.navigate(AppScreen.SearchScreen) {}
                             },
                             onNavigateToWishlist = {
-                                outerNavControl.navigate(AppScreen.WishListScreen){}
+                                outerNavControl.navigate(AppScreen.WishListScreen) {}
                             },
                             onItemClick = { item ->
-                                println(item)
-                            },
-                            onNavigateToLogin = {
-                                outerNavControl.navigate(AppScreen.LoginScreen){}
-                            },
-                            onNavigateToRegistration = {
-                                outerNavControl.navigate(AppScreen.RegistrationScreen){}
+                               when(item.categoryId){
+                                   0 -> {
+                                       //LogOut
+                                   }
+                                   1 -> {
+                                       //User Profile
+                                   }
+                                   2 -> {
+                                       //My Orders
+                                   }
+                                   3 -> {
+                                       //Returns
+                                   }
+                                   4 -> {
+                                       //Exchange
+                                   }
+                                   5 -> {
+                                       //Store Credit
+                                   }
+                                   6 -> {
+                                       //MyCoupons
+                                   }
+                                   7 -> {
+                                       //Delivery Address
+                                   }
+                                   8 -> {
+                                       //Payment cards
+                                   }
+                                   9 -> {
+                                       //Store Locator
+                                   }
+                                   else -> {
+                                       //Other case
+                                   }
+                               }
                             }
                         )
                     }
@@ -157,7 +187,7 @@ fun HomeScreen(
                         onClick = {
                             if (item.route == "CATEGORIES") {
                                 selectedTab = "CATEGORIES"
-                                    isCategoriesOpen = true
+                                isCategoriesOpen = true
                             } else {
                                 // Update both states for real navigation tabs
                                 selectedTab = item.route
@@ -247,8 +277,8 @@ fun Greeting(string: String) {
 
 @Preview
 @Composable
-fun CategoryPreview(){
-   HomeScreen(
-       outerNavControl = rememberNavController()
-   )
+fun CategoryPreview() {
+    HomeScreen(
+        outerNavControl = rememberNavController()
+    )
 }

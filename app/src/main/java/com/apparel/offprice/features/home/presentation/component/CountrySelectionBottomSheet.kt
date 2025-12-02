@@ -42,13 +42,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
+import com.apparel.offprice.features.home.data.model.Country
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CountrySelectionBottomSheet(
-    countries : List<Pair<String,Int>>,
-    initialSelected: String = "UAE",
-    onSubmit: (String) -> Unit,
+    countries : List<Country>,
+    initialSelected: Country,
+    onSubmit: (Country) -> Unit,
     onDismiss: () -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -93,7 +94,7 @@ fun CountrySelectionBottomSheet(
             Spacer(modifier = Modifier.height(10.dp))
 
 
-            countries.forEach { (country, flag) ->
+            countries.forEach { country ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -103,8 +104,8 @@ fun CountrySelectionBottomSheet(
                 ) {
 
                     Image(
-                        painter = painterResource(id = flag),
-                        contentDescription = "$country Flag",
+                        painter = painterResource(id = country.countryFlagRound),
+                        contentDescription = "${country.countryName} Flag",
                         modifier = Modifier
                             .size(28.dp)
                             .clip(CircleShape)
@@ -113,7 +114,7 @@ fun CountrySelectionBottomSheet(
                     Spacer(modifier = Modifier.width(16.dp))
 
                     Text(
-                        text = country,
+                        text = country.countryName,
                         style = MaterialTheme.typography.titleMedium,
                         fontSize = 14.sp,
                         modifier = Modifier.weight(1f)

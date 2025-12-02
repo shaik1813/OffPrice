@@ -14,44 +14,4 @@ import javax.inject.Inject
 @HiltViewModel
 class AppRouteViewModel @Inject constructor(
     private val userPreferences: UserPreferences
-) : ViewModel() {
-
-
-    val isDataLoaded = MutableStateFlow(false)
-
-    init {
-        viewModelScope.launch {
-            combine(
-                userPreferences.userLocation,
-                userPreferences.userGender
-            ) { _, _ -> true }
-                .collect {
-                    isDataLoaded.value = true
-                }
-        }
-    }
-
-    val userLocation = userPreferences.userLocation.stateIn(
-        viewModelScope,
-        SharingStarted.Eagerly,
-        null
-    )
-
-    val userGender = userPreferences.userGender.stateIn(
-        viewModelScope,
-        SharingStarted.Eagerly,
-        null
-    )
-
-    fun saveLocation(location: String) {
-        viewModelScope.launch {
-            userPreferences.saveLocation(location)
-        }
-    }
-
-    fun saveGender(gender: String) {
-        viewModelScope.launch {
-            userPreferences.saveGender(gender)
-        }
-    }
-}
+) : ViewModel() {}

@@ -24,16 +24,19 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.apparel.offprice.R
+import com.apparel.offprice.features.home.data.model.Country
 import com.apparel.offprice.features.welcome.data.model.LocationSelectionItem
 
 @Composable
 fun ChooseLocationCard(
-    item: LocationSelectionItem,
-    onClick: (LocationSelectionItem) -> Unit
+    item: Country,
+    onClick: (Country) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -42,11 +45,11 @@ fun ChooseLocationCard(
             .clickable { onClick(item) },
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White     // ✔ Pure white
+            containerColor = Color.White
         ),
         border = BorderStroke(
             width = 1.dp,
-            color = Color(0xFFE0E0E0)        // ✔ Light grey outline (#E0E0E0)
+            color = Color(0xFFE0E0E0)
         )
     ) {
         Row(
@@ -56,29 +59,26 @@ fun ChooseLocationCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            // Flag
-            AsyncImage(
-                model = item.img,
-                contentDescription = item.title,
-                modifier = Modifier
-                    .size(42.dp)
-                    .clip(RoundedCornerShape(6.dp)),
-                contentScale = ContentScale.Crop
+            Image(
+                painter = painterResource(item.countryFlag),
+                contentDescription = item.countryName,
             )
 
             Spacer(modifier = Modifier.width(12.dp))
 
-            // English Title
             Text(
-                text = item.title,
+                text = item.countryName,
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(0.5f),
+                overflow = TextOverflow.Ellipsis
             )
 
-            // Arabic Text (right side)
             Text(
-                text = item.arabicTitle,
-                style = MaterialTheme.typography.titleMedium
+                text = item.countryNameArabic,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.weight(0.5f),
+                textAlign = TextAlign.End,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
@@ -88,7 +88,13 @@ fun ChooseLocationCard(
 @Composable
 fun CategoryCardPreview(){
     ChooseLocationCard(
-        item = LocationSelectionItem("1", "UAE", "الإمارات", "https://upload.wikimedia.org/wikipedia/commons/2/2c/Flag_of_Bahrain.svg"),
+        item = Country(
+            countryName = "UAE",
+            countryCode = "+971",
+            countryFlagRound = R.drawable.icon_flag_uae_round,
+            countryFlag = R.drawable.icon_flag_uae,
+            countryNameArabic = "الإمارات"
+        ),
         onClick = {}
     )
 }

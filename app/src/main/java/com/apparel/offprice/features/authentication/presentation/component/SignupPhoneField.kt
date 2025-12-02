@@ -1,6 +1,7 @@
 package com.apparel.offprice.features.authentication.presentation.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -14,7 +15,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -59,6 +62,11 @@ fun SignupPhoneField() {
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth()
+            .border(
+                width = 1.dp,
+                color = lineColor,
+                shape = RoundedCornerShape(8.dp)
+            )
             .padding(vertical = 0.dp, horizontal = 0.dp),
         placeholder = {
             Text(
@@ -67,7 +75,7 @@ fun SignupPhoneField() {
                 color = inputTextColor
             )
         },
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(12.dp),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
         textStyle = TextStyle(
             fontSize = 12.sp,
@@ -104,12 +112,12 @@ fun SignupPhoneField() {
                 Spacer(modifier = Modifier.width(6.dp))
             }
         },
-        colors = TextFieldDefaults.colors(
-            focusedIndicatorColor = inputTextColor,
-            unfocusedIndicatorColor = inputTextColor,
-            cursorColor = inputTextColor,
-            focusedTextColor = inputTextColor,
-            unfocusedTextColor = Color.Gray
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = androidx.compose.ui.graphics.Color.Transparent,
+            unfocusedBorderColor = androidx.compose.ui.graphics.Color.Transparent,
+            errorBorderColor = androidx.compose.ui.graphics.Color.Transparent,
+            disabledBorderColor = androidx.compose.ui.graphics.Color.Transparent,
+            cursorColor = MaterialTheme.colorScheme.primary
         )
     )
 
