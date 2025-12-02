@@ -57,4 +57,7 @@
     <string name="label_store_locator">Store Locator</string>
     <string name="label_log_out">Log Out</string>
 
+
+    <string name="label_off_price">OFF/PRICE</string>
+
 </resources>
