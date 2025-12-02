@@ -57,7 +57,8 @@ import com.apparel.offprice.features.home.data.model.DrawerMode
 import com.apparel.offprice.features.home.data.model.bottomNavItems
 import com.apparel.offprice.features.home.data.model.sampleTopTabs
 import com.apparel.offprice.features.home.presentation.screens.categoriesDrawer.CategoriesDrawer
-import com.apparel.offprice.features.home.presentation.screens.myaccounts.MyAccountScreen
+import com.apparel.offprice.features.plp.presentation.screens.PLPScreen
+import com.apparel.offprice.features.profile.presentation.myaccounts.MyAccountScreen
 import com.apparel.offprice.routes.AppScreen
 import kotlinx.coroutines.launch
 
@@ -122,7 +123,16 @@ fun HomeScreen(
                         )
                     }
                     composable("CATEGORIES") { }
-                    composable("BESTPRICE") { Greeting("BestPrice") }
+                    composable("BESTPRICE") {
+                        PLPScreen(
+                            onNavigateToSearch = {
+                                outerNavControl.navigate(AppScreen.SearchScreen){}
+                            },
+                            onNavigateToWishlist = {
+                                outerNavControl.navigate(AppScreen.WishListScreen){}
+                            }
+                        )
+                    }
                     composable("CART") { Greeting("Cart") }
                     composable("ACCOUNT") {
                         MyAccountScreen(
