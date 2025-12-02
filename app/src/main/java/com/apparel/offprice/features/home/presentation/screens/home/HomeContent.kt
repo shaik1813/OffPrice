@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -42,7 +43,7 @@ fun HomeContent(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "OFF/PRICE",
+                text = stringResource(R.string.label_off_price).uppercase(),
                 style = MaterialTheme.typography.titleLarge,
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,

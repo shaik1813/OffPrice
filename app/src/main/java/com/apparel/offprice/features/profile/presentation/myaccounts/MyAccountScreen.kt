@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.home.presentation.screens.myaccounts
+package com.apparel.offprice.features.profile.presentation.myaccounts
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -48,6 +48,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -64,6 +65,8 @@ import com.apparel.offprice.features.home.data.model.accountItems
 import com.apparel.offprice.features.home.presentation.component.CircularProgressbar
 import com.apparel.offprice.features.home.presentation.component.CountrySelectionBottomSheet
 import com.apparel.offprice.features.home.presentation.component.LanguageSelectionBottomSheet
+import com.apparel.offprice.features.home.presentation.screens.myaccounts.MyAccountContract
+import com.apparel.offprice.features.home.presentation.screens.myaccounts.MyAccountViewModel
 import com.apparel.offprice.routes.AppScreen
 
 
@@ -118,13 +121,11 @@ fun MyAccountScreen(
             }
 
             MyAccountContract.UiEffect.NavigateToLogin -> {
-              //  onNavigateToLogin()
-              showLoginDialog = true
+                showLoginDialog = true
             }
 
             MyAccountContract.UiEffect.NavigateToRegistration -> {
-               showSignupDialog = true
-               // onNavigateToRegistration()
+                showSignupDialog = true
             }
 
             MyAccountContract.UiEffect.NavigateToSearch -> {
@@ -136,7 +137,6 @@ fun MyAccountScreen(
             }
         }
     }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -451,7 +451,6 @@ fun AccountMenuItem(
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.weight(1f)
         )
-
         Icon(
             painter = painterResource(R.drawable.icon_arrow_right),
             contentDescription = "Arrow Right",
@@ -460,5 +459,10 @@ fun AccountMenuItem(
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun MyAccountScreenPreview() {
+    MyAccountScreen(onNavigateToSearch = {}, onNavigateToWishlist = {}, onItemClick = {})
+}
 
 

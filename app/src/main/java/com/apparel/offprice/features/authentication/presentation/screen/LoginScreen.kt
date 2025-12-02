@@ -13,14 +13,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -42,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.buttonBorderColor
-import com.apparel.offprice.common.theme.customFontFamily
+import com.apparel.offprice.common.theme.wixMadeForDisplayFamily
 import com.apparel.offprice.common.theme.inputTextColor
 import com.apparel.offprice.common.theme.loginButtonColor
 import com.apparel.offprice.common.theme.loginGoogleColor
@@ -50,7 +46,6 @@ import com.apparel.offprice.common.theme.redColor
 import com.apparel.offprice.common.theme.surfaceColor
 import com.apparel.offprice.features.authentication.presentation.component.CustomCheckbox
 import com.apparel.offprice.features.authentication.presentation.component.LoginEmailPhoneField
-import com.apparel.offprice.features.authentication.presentation.component.LoginPasswordField
 import com.apparel.offprice.features.authentication.presentation.component.PasswordEditText
 import com.apparel.offprice.routes.AppScreen
 
@@ -74,7 +69,7 @@ fun LoginScreen(onItemClick: (AppScreen) -> Unit) {
             fontSize = 12.sp,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(top = 10.dp),
-            fontFamily = customFontFamily,
+            fontFamily = wixMadeForDisplayFamily,
             fontWeight = FontWeight.Normal
         )
 
