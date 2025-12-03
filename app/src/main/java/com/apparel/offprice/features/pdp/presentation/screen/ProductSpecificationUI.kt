@@ -32,12 +32,11 @@ fun ProductSpecificationUI() {
 
             val background = if (index % 2 == 1) Color(0xFFF5F5F5) else Color.White
 
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(background)
-                    .padding(top = if(index ==0) 0.dp else 10.dp, bottom = if(index == 4) 26.dp else 10.dp,start = 10.dp , end = 10.dp),
+                    .padding(10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -53,7 +52,7 @@ fun ProductSpecificationUI() {
                     text = item.second,
                     fontSize = 14.sp,
                     color = loginButtonColor,
-                   style = MaterialTheme.typography.labelMedium
+                    style = MaterialTheme.typography.labelMedium
                 )
             }
         }
