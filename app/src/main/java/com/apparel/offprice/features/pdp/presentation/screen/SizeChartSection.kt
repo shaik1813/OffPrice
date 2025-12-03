@@ -1,0 +1,190 @@
+package com.apparel.offprice.features.pdp.presentation.screen
+
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.inputTextColor
+import com.apparel.offprice.common.theme.loginButtonColor
+import com.apparel.offprice.common.theme.sizeCardColor
+import com.apparel.offprice.common.theme.sizeDescColor
+import com.apparel.offprice.common.theme.stockLeftColor
+import com.apparel.offprice.features.pdp.data.model.SizeItem
+
+
+@Composable
+fun SizeSelector() {
+    val sizes = listOf(
+        SizeItem("S", 4),
+        SizeItem("M", 1),
+        SizeItem("L", 2),
+        SizeItem("XL", 0),  // Sold out example
+        SizeItem("XXL", 5),
+        SizeItem("XXXL", 0, disabled = true)
+    )
+
+    var selectedSize by remember { mutableStateOf<String?>(null) }
+
+    Column(modifier = Modifier.padding(top = 16.dp)) {
+
+        /** TITLE + SIZE GUIDE */
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "SIZE :",
+                style = MaterialTheme.typography.titleMedium,
+                color = loginButtonColor,
+                fontSize = 16.sp
+            )
+
+            Text(
+                text = "Size Guide",
+                fontSize = 12.sp,
+                style = MaterialTheme.typography.titleSmall.copy(color = inputTextColor),
+                modifier = Modifier.clickable { }
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        /** SIZE OPTIONS */
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(13.dp)
+        ) {
+            sizes.forEach { item ->
+                SizeCard(
+                    sizeitem = item,
+                    isSelected = selectedSize == item.label,
+                    onClick = {
+                        if (!item.disabled) selectedSize = item.label
+                    }
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        /** NOTES */
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(painter = painterResource(id = R.drawable.size_info), contentDescription = null,  modifier = Modifier.size(14.dp))
+                Spacer(modifier = Modifier.width(10.dp))
+                Text(
+                    text = stringResource(R.string.size_desc),
+                    style = MaterialTheme.typography.titleSmall,
+                    color = sizeDescColor
+                )
+            }
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(painter = painterResource(id = R.drawable.fiticon), contentDescription = null, modifier = Modifier.size(14.dp))
+                Spacer(modifier = Modifier.width(10.dp))
+                Text(
+                    text = stringResource(R.string.size_desc2),
+                    style = MaterialTheme.typography.titleSmall,
+                    color = sizeDescColor
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun SizeCard(
+    sizeitem: SizeItem,
+    isSelected: Boolean,
+    onClick: () -> Unit
+) {
+    val backgroundColor = when {
+        sizeitem.disabled -> sizeCardColor
+        isSelected -> Color.DarkGray
+        else -> sizeCardColor
+    }
+
+    val textColor = if (isSelected) Color.White else Color.Black
+
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
+        Box(
+            modifier = Modifier
+                .height(40.dp)
+
+                .clip(RoundedCornerShape(6.dp))
+                .background(backgroundColor)
+                .border(
+                    width = if (isSelected) 2.dp else 0.dp,
+                    color = if (isSelected) Color.Red else Color.Transparent,
+                    shape = RoundedCornerShape(6.dp)
+                )
+                .clickable(enabled = !sizeitem.disabled) { onClick() },
+            contentAlignment = Alignment.Center
+        ) {
+            if (sizeitem.disabled) {
+                Canvas(modifier = Modifier.matchParentSize()) {
+                    drawLine(
+                        color = Color.White,
+                        start = Offset(0f,0f),
+                        end = Offset(size.width, size.height),
+                        strokeWidth = 5f
+                    )
+                }
+            }
+
+            Text(
+                text = sizeitem.label,
+                color = textColor,
+                fontSize = 14.sp,
+                modifier = Modifier.padding(horizontal = 15.dp),
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+        if (!sizeitem.disabled && sizeitem.stock > 0) {
+            Text(
+                text = "${sizeitem.stock} Left",
+                color = stockLeftColor,
+                fontSize = 10.sp,
+                style = MaterialTheme.typography.labelSmall
+            )
+        }
+    }
+}

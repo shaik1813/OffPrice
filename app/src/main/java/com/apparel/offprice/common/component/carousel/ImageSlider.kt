@@ -104,6 +104,79 @@ fun ImageSliderWithIndicator(
 }
 
 
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun ImageSliderWithIndicatorPDP(
+    images: List<String>,
+    selectedIndicatorColor: Color = Color.DarkGray,
+    unSelectedIndicatorColor: Color = Color.LightGray,
+    modifier: Modifier = Modifier
+) {
+    if (images.isEmpty()) {
+        return
+    }
+    val pagerState = rememberPagerState(pageCount = { images.size })
+    BoxWithConstraints(modifier = modifier) {
+        val screenHeight = this.maxHeight
+        val imageSize = screenHeight * 0.45f
+        HorizontalPager(
+            state = pagerState,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(imageSize)
+        ) { page ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+
+            ) {
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(images[page])
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(imageSize)
+                )
+            }
+        }
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .padding(bottom = screenHeight * 0.02f)
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(horizontal = 2.dp)
+                    .background(
+                        color = MaterialTheme.colorScheme.surface,
+                        shape = RoundedCornerShape(8.dp)
+                    )
+            ) {
+                images.forEachIndexed { index, _ ->
+                    val isSelected = pagerState.currentPage == index
+                    Box(
+                        modifier = Modifier
+                            .padding(3.dp)
+                            .size(if (isSelected) 10.dp else 8.dp)
+                            .clip(CircleShape)
+                            .background(
+                                if (isSelected) selectedIndicatorColor else unSelectedIndicatorColor
+                            )
+                    )
+                }
+            }
+        }
+    }
+}
+
+
 @Preview(showBackground = true)
 @Composable
 fun ImageSliderDemo() {
