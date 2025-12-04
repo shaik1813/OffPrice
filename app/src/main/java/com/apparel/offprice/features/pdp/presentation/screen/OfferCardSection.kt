@@ -1,5 +1,6 @@
 package com.apparel.offprice.features.pdp.presentation.screen
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,6 +20,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,19 +34,41 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.offerCardColor
+import com.apparel.offprice.common.utils.CollectInLaunchedEffect
+import com.apparel.offprice.common.utils.use
+import com.apparel.offprice.features.home.presentation.screens.myaccounts.MyAccountViewModel
 import com.apparel.offprice.features.pdp.presentation.component.dottedBorder
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 @Composable
-fun OfferCardUI() {
+fun OfferCardUI(viewModel: PDPViewModel = hiltViewModel()) {
 
-    var click by remember{ mutableStateOf(false) }
+    var isOpenLocation by remember { mutableStateOf(false) }
+    //  val isOpenLocationState by viewModel.state.collectAsState()
 
     var selectedCity by remember { mutableStateOf("") }
 
+    var (state, event, effect) = use(viewModel = viewModel)
 
-    if(click) LocationSheetPDP(selectedCity, onCitySelected = { selectedCity = it}, onDismiss = {})
+    Log.e("checkcard", "location sheet " + isOpenLocation + " , ")
+    if (isOpenLocation) LocationSheetPDP(
+        selectedCity,
+        onCitySelected = {
+            selectedCity = it
+            isOpenLocation = false
+        },
+        onDismiss = { isOpenLocation = false })
+
+    effect.CollectInLaunchedEffect { it ->
+        when (it) {
+            is PDPContract.UiEffect.onOpenBottomSheetLocation -> isOpenLocation = true
+            is PDPContract.UiEffect.onCloseBottomSheetLocation -> isOpenLocation = false
+
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -108,8 +132,13 @@ fun OfferCardUI() {
         Spacer(modifier = Modifier.height(10.dp))
 
         // ----- Delivery Time Tag -----
-        Row(modifier = Modifier.fillMaxWidth().padding(bottom = 10.dp),verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
 
             Box(
                 modifier = Modifier
@@ -140,9 +169,11 @@ fun OfferCardUI() {
             // ----- Location -----
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.wrapContentWidth().clickable{
-                    click = true
-                }
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .clickable {
+                        event.invoke(PDPContract.UiEvent.onOpenBottomSheetLocation)
+                    }
             ) {
 
                 Icon(

@@ -211,6 +211,7 @@ fun LocationSheetPDP(
                                 )
                             }
                         }
+
                         HorizontalDivider(
                             color = Color(0xFFB1B2B2),
                             thickness = 0.5.dp
