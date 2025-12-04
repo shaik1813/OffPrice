@@ -57,10 +57,9 @@
     <string name="new_password">New Password</string>
     <string name="label_exclusive_collection">Discover Our Exclusive Collection</string>
     <string name="label_shop_by_category">Shop by category and choose what you love</string>
-
-
-
-
     <string name="label_off_price">OFF/PRICE</string>
+    <string name="filter_label">Filter</string>
+    <string name="clear_all_label">ClearAll</string>
+    <string name="recommended_label">Recommended</string>
 
 </resources>

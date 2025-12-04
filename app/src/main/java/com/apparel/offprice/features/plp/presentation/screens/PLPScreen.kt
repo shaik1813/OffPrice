@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,10 +15,13 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,10 +41,19 @@ import com.apparel.offprice.features.plp.data.model.samplePLPHorizontalListItems
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PLPScreen(onNavigateToSearch: () -> Unit,
-              onNavigateToWishlist: () -> Unit)
-{
+              onNavigateToWishlist: () -> Unit) {
 
     var selectedCategoryId by remember { mutableStateOf("1") }
+
+    // Bottom Sheet State
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true     // ⬅️ CRITICAL
+    )
+    var isFilterSheetOpen by remember { mutableStateOf(false) }
+
+    // SORT SHEET STATE
+    val sortSheetState = rememberModalBottomSheetState()
+    var isSortSheetOpen by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -118,7 +131,10 @@ fun PLPScreen(onNavigateToSearch: () -> Unit,
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        FilterStrip()
+        FilterStrip(
+            onFilterClick = { isFilterSheetOpen = true },
+            onSortClick = { isSortSheetOpen = true }
+        )
 
         ProductGrid(
             products = sampleProducts,
@@ -129,6 +145,49 @@ fun PLPScreen(onNavigateToSearch: () -> Unit,
                 // navigate to product details
             }
         )
+
+        // Bottom Sheet (filter)
+        if (isFilterSheetOpen) {
+            ModalBottomSheet(
+                sheetState = sheetState,
+                onDismissRequest = { isFilterSheetOpen = false },
+                dragHandle = null,  // remove handle (matches your figma)
+                modifier = Modifier.fillMaxHeight()  // ⬅️ FORCE FULL SCREEN HEIGHT
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()    // ⬅️ Force content to full height
+                        .fillMaxWidth()
+                ) {
+                    FilterScreen(
+                        onClose = { isFilterSheetOpen = false },
+                        onApply = { isFilterSheetOpen = false },
+                        onClearAll = {
+                            // TODO: clear all selected filters from ViewModel/State
+                        }
+                    )
+                }
+            }
+        }
+
+        //   SORT BOTTOM SHEET Hosted Here
+        if (isSortSheetOpen) {
+            ModalBottomSheet(
+                sheetState = sortSheetState,
+                onDismissRequest = { isSortSheetOpen = false },
+                dragHandle = null, // remove default handle
+                containerColor = Color.White,
+                tonalElevation = 0.dp
+            ) {
+                SortBottomSheet(
+                    onClose = { isSortSheetOpen = false },
+                    onSortSelected = { sortType ->
+                        // TODO: handle sort action
+                        isSortSheetOpen = false
+                    }
+                )
+            }
+        }
     }
 }
 
