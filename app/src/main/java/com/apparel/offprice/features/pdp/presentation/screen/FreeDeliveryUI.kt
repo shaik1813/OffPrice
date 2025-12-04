@@ -23,7 +23,7 @@ import com.apparel.offprice.R
 
 
 @Composable
-fun ReturnDesignUI() {
+fun FreeDeliveryUI() {
 
     Row(
         modifier = Modifier
@@ -41,7 +41,7 @@ fun ReturnDesignUI() {
                     , RoundedCornerShape(8.dp)),
 
         ) {
-            Text("100 % Authentic International brands", style = MaterialTheme.typography.titleLarge,
+            Text("100 % Authentic International brands", style = MaterialTheme.typography.titleMedium,
                 fontSize = 10.sp,
                 modifier = Modifier.align(Alignment.TopStart).padding(10.dp))
 
@@ -57,7 +57,7 @@ fun ReturnDesignUI() {
                 .background(Color(0xFFF3F3F3), RoundedCornerShape(8.dp)),
 
         ) {
-            Text("100 % Authentic International brands", style = MaterialTheme.typography.titleLarge,
+            Text("100 % Authentic International brands", style = MaterialTheme.typography.titleMedium,
                 fontSize = 10.sp,
                 modifier = Modifier.align(Alignment.TopStart).padding(10.dp))
 
@@ -73,7 +73,7 @@ fun ReturnDesignUI() {
                 .background(Color(0xFFF3F3F3), RoundedCornerShape(8.dp)),
 
         ) {
-            Text("100 % Authentic International brands", style = MaterialTheme.typography.titleLarge,
+            Text("100 % Authentic International brands", style = MaterialTheme.typography.titleMedium,
                 fontSize = 10.sp,
                 modifier = Modifier.align(Alignment.TopStart).padding(10.dp))
 
