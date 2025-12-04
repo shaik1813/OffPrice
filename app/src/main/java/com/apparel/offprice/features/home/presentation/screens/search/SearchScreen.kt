@@ -39,7 +39,7 @@ import java.util.Locale
 @Composable
 fun SearchScreen(
     onSearchSubmit: (String) -> Unit,
-    onNavigateToHome: () -> Unit,
+    onNavigateToBack: () -> Unit,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
     val (state, event, effect) = use(viewModel = viewModel)
@@ -47,7 +47,7 @@ fun SearchScreen(
     effect.CollectInLaunchedEffect {
         when (it) {
             SearchContract.UiEffect.NavigateToHome -> {
-                onNavigateToHome()
+                onNavigateToBack()
             }
 
             is SearchContract.UiEffect.NavigateToSearchResult -> {
