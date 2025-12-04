@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -62,8 +63,8 @@ fun ColorSection() {
 
         Spacer(modifier = Modifier.size(10.dp))
 
-        Row() {
-            repeat(4) { it ->
+        LazyRow() {
+            items(4){ it ->
                 Card(
                     shape = RoundedCornerShape(8.dp), elevation = CardDefaults.cardElevation(0.dp),
                     modifier = Modifier
@@ -88,7 +89,7 @@ fun ColorSection() {
                     )
                 }
             }
-        }
+
 
 
 
