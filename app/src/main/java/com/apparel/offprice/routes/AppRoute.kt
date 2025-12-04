@@ -25,7 +25,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
     NavHost(
         navController = navController,
-        startDestination = AppScreen.OTPScreen
+        startDestination = AppScreen.SplashScreen
     ) {
         composable<AppScreen.SplashScreen> {
             SplashScreen(
@@ -69,8 +69,8 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                 onSearchSubmit = { productId ->
                     // TODO : Added the PLP navigation from here
                 },
-                onNavigateToHome = {
-                    navController.navigate(AppScreen.HomeScreen) {}
+                onNavigateToBack = {
+                    navController.popBackStack()
                 }
             )
         }
@@ -80,7 +80,22 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.WishListScreen> {
-            WishListScreen()
+            WishListScreen(
+                onNavigateToBack = {
+                    navController.popBackStack()
+                },
+                onStartShoppingClicked = {
+                    navController.navigate(AppScreen.HomeScreen){
+                        popUpTo(AppScreen.HomeScreen) { inclusive = true }
+                    }
+                },
+                onNavigateToCart = {
+
+                },
+                onNavigateToPDP = { product ->
+                    navController.navigate(AppScreen.PDPScreen){}
+                }
+            )
         }
 
         composable<AppScreen.LocationSelectionScreen> {
@@ -103,6 +118,10 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                     navController.navigate(AppScreen.WishListScreen)
                 }
             )
+        }
+
+        composable<AppScreen.PDPScreen> {
+            PDPscreen()
         }
 
     }
