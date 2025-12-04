@@ -64,7 +64,7 @@ fun ColorSection() {
         Spacer(modifier = Modifier.size(10.dp))
 
         LazyRow() {
-            items(4){ it ->
+            items(4) { it ->
                 Card(
                     shape = RoundedCornerShape(8.dp), elevation = CardDefaults.cardElevation(0.dp),
                     modifier = Modifier
@@ -90,8 +90,6 @@ fun ColorSection() {
                 }
             }
 
-
-
-
+        }
     }
 }
