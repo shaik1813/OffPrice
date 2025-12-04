@@ -1,6 +1,5 @@
 package com.apparel.offprice.features.pdp.presentation.screen
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -37,7 +36,6 @@ import com.apparel.offprice.common.theme.sizeCardColor
 @Preview
 @Composable
 fun ColorSection() {
-    Log.e("checkcard", "ColorSection page "  + " , ")
     Column(modifier = Modifier.padding(top = 16.dp)) {
 
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -91,8 +89,7 @@ fun ColorSection() {
                     )
                 }
             }
+
         }
-
-
     }
 }

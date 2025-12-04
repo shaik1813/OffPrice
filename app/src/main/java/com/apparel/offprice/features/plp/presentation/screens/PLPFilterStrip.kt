@@ -1,6 +1,7 @@
 package com.apparel.offprice.features.plp.presentation.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -30,8 +32,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.apparel.offprice.R
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilterStrip() {
+fun FilterStrip(onFilterClick: () -> Unit, onSortClick: () -> Unit) {
     val borderColor = Color(0xFFE0E0E0)
 
     Column(
@@ -50,14 +53,16 @@ fun FilterStrip() {
 
             FilterCell(
                 icon = R.drawable.filter_icon,   // your filter icon
-                label = "Filter"
+                label = "Filter",
+                onClick = { onFilterClick() }
             )
 
             VerticalDivider(color = borderColor, thickness = 1.dp)
 
             FilterCell(
                 icon = R.drawable.sort_icon,     // your sort icon
-                label = "Sort"
+                label = "Sort",
+                onClick = { onSortClick() }
             )
 
             VerticalDivider(color = borderColor, thickness = 1.dp)
@@ -66,7 +71,8 @@ fun FilterStrip() {
                 icon = R.drawable.best_price_outline_icon,    // your brand icon
                 label = "Brand",
                 count = 4,
-                showDropdown = true
+                showDropdown = true,
+                onClick = { onFilterClick() }
             )
 
             VerticalDivider(color = borderColor, thickness = 1.dp)
@@ -75,7 +81,8 @@ fun FilterStrip() {
                 icon = R.drawable.best_price_outline_icon,     // your size icon
                 label = "Size",
                 count = 2,
-                showDropdown = true
+                showDropdown = true,
+                onClick = { onFilterClick() }
             )
         }
 
@@ -89,14 +96,17 @@ fun RowScope.FilterCell(
     icon: Int,
     label: String,
     count: Int = 0,
-    showDropdown: Boolean = false
+    showDropdown: Boolean = false,
+    onClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .weight(1f)
             .fillMaxHeight()
-            .padding(horizontal = 12.dp),
+            .padding(horizontal = 12.dp)
+            .clickable { onClick() },
         verticalAlignment = Alignment.CenterVertically
+
     ) {
 
         Icon(
@@ -147,5 +157,5 @@ fun RowScope.FilterCell(
 @Preview(showBackground = true)
 @Composable
 fun FilterStripPreview() {
-    FilterStrip()
+    FilterStrip(onFilterClick = {}, onSortClick = {})
 }

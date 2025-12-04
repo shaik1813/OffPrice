@@ -74,5 +74,8 @@
     <string name="product_highlights">Product Highlights</string>
     <string name="details">Details</string>
     <string name="shipping_and_returns">Shipping And Returns</string>
+    <string name="filter_label">Filter</string>
+    <string name="clear_all_label">ClearAll</string>
+    <string name="recommended_label">Recommended</string>
 
 </resources>
