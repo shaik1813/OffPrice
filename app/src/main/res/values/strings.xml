@@ -57,7 +57,23 @@
     <string name="new_password">New Password</string>
     <string name="label_exclusive_collection">Discover Our Exclusive Collection</string>
     <string name="label_shop_by_category">Shop by category and choose what you love</string>
+    <string name="size_desc">Sizes shown are International. Please refer to the size chart</string>
+    <string name="size_desc2">Fit is oversized, Sizing down one size is recommended.</string>
+    <string name="see_all">See All</string>
+    <string name="sales_ends_in">Sales Ends In</string>
+
+
     <string name="label_off_price">OFF/PRICE</string>
+    <string name="selected_color">SELECTED COLOR :</string>
+    <string name="returnable">Returnable</string>
+    <string name="exchangeable">Exchangeable</string>
+    <string name="learn_more_return">"Learn More About Our Return And Exchange Policy "</string>
+    <string name="here">Here</string>
+    <string name="select_city">SELECT CITY</string>
+    <string name="search_city">Search City</string>
+    <string name="product_highlights">Product Highlights</string>
+    <string name="details">Details</string>
+    <string name="shipping_and_returns">Shipping And Returns</string>
     <string name="filter_label">Filter</string>
     <string name="clear_all_label">ClearAll</string>
     <string name="recommended_label">Recommended</string>

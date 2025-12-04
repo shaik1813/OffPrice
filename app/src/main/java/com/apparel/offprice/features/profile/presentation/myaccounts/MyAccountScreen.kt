@@ -121,13 +121,11 @@ fun MyAccountScreen(
             }
 
             MyAccountContract.UiEffect.NavigateToLogin -> {
-              //  onNavigateToLogin()
-              showLoginDialog = true
+                showLoginDialog = true
             }
 
             MyAccountContract.UiEffect.NavigateToRegistration -> {
                 showSignupDialog = true
-               // onNavigateToRegistration()
             }
 
             MyAccountContract.UiEffect.NavigateToSearch -> {
@@ -453,7 +451,6 @@ fun AccountMenuItem(
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.weight(1f)
         )
-
         Icon(
             painter = painterResource(R.drawable.icon_arrow_right),
             contentDescription = "Arrow Right",
@@ -465,7 +462,7 @@ fun AccountMenuItem(
 @Preview(showBackground = true)
 @Composable
 fun MyAccountScreenPreview() {
-    MyAccountScreen(onNavigateToSearch = {}, onNavigateToWishlist = {}, onItemClick = {}, isGuestUser = true, viewModel = hiltViewModel())
+    MyAccountScreen(onNavigateToSearch = {}, onNavigateToWishlist = {}, onItemClick = {})
 }
 
 

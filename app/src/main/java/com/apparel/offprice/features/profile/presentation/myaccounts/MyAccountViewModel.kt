@@ -1,5 +1,7 @@
 package com.apparel.offprice.features.home.presentation.screens.myaccounts
 
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.apparel.offprice.common.preference.AppPreference
@@ -11,10 +13,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,6 +33,13 @@ class MyAccountViewModel @Inject constructor(
 
     private val _effectFlow = MutableSharedFlow<MyAccountContract.UiEffect>()
     override val effect: SharedFlow<MyAccountContract.UiEffect> = _effectFlow.asSharedFlow()
+
+    val languagePreference : StateFlow<String?> = appPreference.languagePreference
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = null
+        )
 
     init {
         setRegionPreference()
@@ -104,6 +115,9 @@ class MyAccountViewModel @Inject constructor(
     private fun saveLanguagePreference(language: Language) {
         viewModelScope.launch {
             appPreference.saveLanguagePreference(language.localeCode)
+            AppCompatDelegate.setApplicationLocales(
+                LocaleListCompat.forLanguageTags(language.localeCode)
+            )
         }
     }
 
