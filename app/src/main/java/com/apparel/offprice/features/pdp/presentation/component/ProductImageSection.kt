@@ -26,6 +26,7 @@ fun ProductImageSection() {
 
     Box() {
         ImageSliderWithIndicatorPDP(images)
+
         Image(
             painter = painterResource(id = R.drawable.back_icon),
             contentDescription = "App Icon",
@@ -41,7 +42,7 @@ fun ProductImageSection() {
             Spacer(modifier = Modifier.size(12.dp))
 
             Image(
-                painter = painterResource(id = R.drawable.heart_icon),
+                painter = painterResource(id = R.drawable.heart_pdpicon),
                 contentDescription = "App Icon",
                 modifier = Modifier.size(40.dp).align(Alignment.End)
             )

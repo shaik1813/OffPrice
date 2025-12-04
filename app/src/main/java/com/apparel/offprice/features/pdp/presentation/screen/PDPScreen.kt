@@ -1,7 +1,7 @@
 package com.apparel.offprice.features.pdp.presentation.screen
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -13,10 +13,11 @@ import com.apparel.offprice.features.pdp.presentation.component.ProductImageSect
 @Composable
 fun PDPscreen() {
 
-    Column(modifier = Modifier.statusBarsPadding()) {
-        ProductImageSection()
+        LazyColumn(modifier = Modifier.systemBarsPadding()) {
 
-        ProductDescSection()
-    }
+            item { ProductImageSection() }
+
+            item { ProductDescSection() }
+        }
 
 }
