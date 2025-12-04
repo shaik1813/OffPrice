@@ -85,8 +85,7 @@ fun SizeSelector() {
 
         /** SIZE OPTIONS */
         LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(13.dp),
-            modifier = Modifier.horizontalScroll(rememberScrollState())
+            horizontalArrangement = Arrangement.spacedBy(13.dp)
         ) {
             items(sizes){ item ->
                 SizeCard(
