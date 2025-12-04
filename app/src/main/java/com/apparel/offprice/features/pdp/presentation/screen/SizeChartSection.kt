@@ -4,6 +4,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,11 +15,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -85,7 +83,8 @@ fun SizeSelector() {
 
         /** SIZE OPTIONS */
         Row(
-            horizontalArrangement = Arrangement.spacedBy(13.dp)
+            horizontalArrangement = Arrangement.spacedBy(13.dp),
+            modifier = Modifier.horizontalScroll(rememberScrollState())
         ) {
             sizes.forEach { item ->
                 SizeCard(
@@ -104,7 +103,11 @@ fun SizeSelector() {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
 
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(painter = painterResource(id = R.drawable.size_info), contentDescription = null,  modifier = Modifier.size(14.dp))
+                Icon(
+                    painter = painterResource(id = R.drawable.size_info),
+                    contentDescription = null,
+                    modifier = Modifier.size(14.dp)
+                )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = stringResource(R.string.size_desc),
@@ -114,7 +117,11 @@ fun SizeSelector() {
             }
 
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(painter = painterResource(id = R.drawable.fiticon), contentDescription = null, modifier = Modifier.size(14.dp))
+                Icon(
+                    painter = painterResource(id = R.drawable.fiticon),
+                    contentDescription = null,
+                    modifier = Modifier.size(14.dp)
+                )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = stringResource(R.string.size_desc2),
@@ -160,7 +167,7 @@ fun SizeCard(
                 Canvas(modifier = Modifier.matchParentSize()) {
                     drawLine(
                         color = Color.White,
-                        start = Offset(0f,0f),
+                        start = Offset(0f, 0f),
                         end = Offset(size.width, size.height),
                         strokeWidth = 5f
                     )

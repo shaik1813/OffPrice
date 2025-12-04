@@ -5,13 +5,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -28,11 +27,11 @@ import com.apparel.offprice.common.theme.inputTextColor
 import com.apparel.offprice.common.theme.nonReturnbgColor
 import com.apparel.offprice.common.theme.nonreturnTxtColor
 import com.apparel.offprice.features.pdp.presentation.screen.ColorSection
+import com.apparel.offprice.features.pdp.presentation.screen.FreeDeliveryUI
 import com.apparel.offprice.features.pdp.presentation.screen.OfferCardUI
 import com.apparel.offprice.features.pdp.presentation.screen.PaymentCardUI
 import com.apparel.offprice.features.pdp.presentation.screen.PriceSection
 import com.apparel.offprice.features.pdp.presentation.screen.ProductInfoUI
-import com.apparel.offprice.features.pdp.presentation.screen.ReturnDesignUI
 import com.apparel.offprice.features.pdp.presentation.screen.SizeSelector
 import com.apparel.offprice.features.pdp.presentation.screen.salesEndSection
 
@@ -40,9 +39,7 @@ import com.apparel.offprice.features.pdp.presentation.screen.salesEndSection
 @Composable
 fun ProductDescSection() {
 
-    Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp).verticalScroll(
-        rememberScrollState()
-    )) {
+    Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
 
@@ -97,10 +94,9 @@ fun ProductDescSection() {
 
         PaymentCardUI()
 
-        ReturnDesignUI()
+        FreeDeliveryUI()
 
         ProductInfoUI()
-
 
     }
 

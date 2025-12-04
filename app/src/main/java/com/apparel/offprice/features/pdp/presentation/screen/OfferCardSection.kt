@@ -2,6 +2,7 @@ package com.apparel.offprice.features.pdp.presentation.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,9 +19,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -33,10 +39,18 @@ import com.apparel.offprice.features.pdp.presentation.component.dottedBorder
 @Composable
 fun OfferCardUI() {
 
+    var click by remember{ mutableStateOf(false) }
+
+    var selectedCity by remember { mutableStateOf("") }
+
+
+    if(click) LocationSheetPDP(selectedCity, onCitySelected = { selectedCity = it}, onDismiss = {})
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 16.dp)
+            .graphicsLayer(alpha = 1f)
             .dottedBorder(
                 color = Color(0xFFE2B2B4),
                 strokeWidth = 1.dp,
@@ -126,7 +140,9 @@ fun OfferCardUI() {
             // ----- Location -----
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.wrapContentWidth()
+                modifier = Modifier.wrapContentWidth().clickable{
+                    click = true
+                }
             ) {
 
                 Icon(
