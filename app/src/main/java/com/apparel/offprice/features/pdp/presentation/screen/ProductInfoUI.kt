@@ -1,5 +1,6 @@
 package com.apparel.offprice.features.pdp.presentation.screen
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -40,6 +41,7 @@ fun ProductInfoUI() {
         stringResource(com.apparel.offprice.R.string.details) to "Content",
         stringResource(com.apparel.offprice.R.string.shipping_and_returns) to " Content."
     )
+    Log.e("checkcard", "ProductInfoUI  "  + " , ")
 
     Column(
         modifier = Modifier.fillMaxWidth()
