@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -89,9 +90,8 @@ fun WishListScreen(
                 },
                 navigationIcon = {
                     Icon(
-                        imageVector = Icons.Filled.ArrowBackIosNew,
+                        painter = painterResource(R.drawable.back_icon),
                         contentDescription = "Arrow back",
-                        tint = Color.Gray,
                         modifier = Modifier
                             .clickable {
                                 event.invoke(WishListContract.UiEvent.OnBackPressed)

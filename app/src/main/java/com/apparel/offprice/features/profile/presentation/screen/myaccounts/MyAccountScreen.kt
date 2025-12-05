@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.profile.presentation.myaccounts
+package com.apparel.offprice.features.profile.presentation.screen.myaccounts
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
