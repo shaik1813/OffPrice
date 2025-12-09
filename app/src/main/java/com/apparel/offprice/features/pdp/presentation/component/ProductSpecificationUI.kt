@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.pdp.presentation.screen
+package com.apparel.offprice.features.pdp.presentation.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

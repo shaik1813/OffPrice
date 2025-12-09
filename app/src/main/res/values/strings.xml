@@ -77,5 +77,17 @@
     <string name="filter_label">Filter</string>
     <string name="clear_all_label">ClearAll</string>
     <string name="recommended_label">Recommended</string>
+    <string name="you_may_also_like">YOU MAY ALSO LIKE</string>
+    <string name="view_all">View all</string>
+    <string name="add_to_bag">ADD TO BAG</string>
+    <string name="select_size">SELECT SIZE</string>
+    <string name="out_of_stock">OUT OF STOCK</string>
+    <string name="go_to_bag">GO TO BAG</string>
+    <string name="continue_shopping">CONTINUE SHOPPING</string>
+    <string name="success_add_bag">SUCCESSFULLY ADDED TO YOUR BASKET</string>
+    <string name="size">SIZE :</string>
+    <string name="size_guide">Size Guide</string>
+    <string name="share_product">SHARE PRODUCT</string>
+    <string name="share_link_via">Share Link Via:</string>
 
 </resources>

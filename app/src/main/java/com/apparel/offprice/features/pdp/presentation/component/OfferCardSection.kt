@@ -1,6 +1,5 @@
-package com.apparel.offprice.features.pdp.presentation.screen
+package com.apparel.offprice.features.pdp.presentation.component
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,7 +19,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,21 +37,19 @@ import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.offerCardColor
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
-import com.apparel.offprice.features.home.presentation.screens.myaccounts.MyAccountViewModel
-import com.apparel.offprice.features.pdp.presentation.component.dottedBorder
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.apparel.offprice.features.pdp.presentation.screen.PDPContract
+import com.apparel.offprice.features.pdp.presentation.screen.PDPViewModel
 
 @Composable
 fun OfferCardUI(viewModel: PDPViewModel = hiltViewModel()) {
 
     var isOpenLocation by remember { mutableStateOf(false) }
-    //  val isOpenLocationState by viewModel.state.collectAsState()
 
     var selectedCity by remember { mutableStateOf("") }
 
     var (state, event, effect) = use(viewModel = viewModel)
 
-    Log.e("checkcard", "location sheet " + isOpenLocation + " , ")
+
     if (isOpenLocation) LocationSheetPDP(
         selectedCity,
         onCitySelected = {
@@ -66,7 +62,7 @@ fun OfferCardUI(viewModel: PDPViewModel = hiltViewModel()) {
         when (it) {
             is PDPContract.UiEffect.onOpenBottomSheetLocation -> isOpenLocation = true
             is PDPContract.UiEffect.onCloseBottomSheetLocation -> isOpenLocation = false
-
+            else -> {}
         }
     }
 
@@ -84,7 +80,6 @@ fun OfferCardUI(viewModel: PDPViewModel = hiltViewModel()) {
             )
             .padding(10.dp)
     ) {
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()

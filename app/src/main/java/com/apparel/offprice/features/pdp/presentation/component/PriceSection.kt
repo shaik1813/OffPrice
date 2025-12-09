@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.pdp.presentation.screen
+package com.apparel.offprice.features.pdp.presentation.component
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

@@ -7,16 +7,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
-    onNavigateToRegionSelection:() -> Unit,
-    onNavigateToHomeScreen:() -> Unit,
+    onNavigateToRegionSelection: () -> Unit,
+    onNavigateToHomeScreen: () -> Unit,
     viewModel: SplashViewModel = hiltViewModel()
-){
+) {
 
     val region by viewModel.regionPreference.collectAsStateWithLifecycle()
     Column(
@@ -24,13 +25,14 @@ fun SplashScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CircularProgressIndicator()
-        LaunchedEffect(Unit){
+        LaunchedEffect(Unit) {
             delay(1000)
-            if (region?.isEmpty() == true){
+            if (region?.isEmpty() == true) {
                 onNavigateToRegionSelection()
-            }else{
+            } else {
                 onNavigateToHomeScreen()
             }
         }
+
     }
 }

@@ -1,6 +1,5 @@
-package com.apparel.offprice.features.pdp.presentation.screen
+package com.apparel.offprice.features.pdp.presentation.component
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -23,8 +22,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
@@ -41,7 +38,6 @@ fun ProductInfoUI() {
         stringResource(com.apparel.offprice.R.string.details) to "Content",
         stringResource(com.apparel.offprice.R.string.shipping_and_returns) to " Content."
     )
-    Log.e("checkcard", "ProductInfoUI  "  + " , ")
 
     Column(
         modifier = Modifier.fillMaxWidth()
