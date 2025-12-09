@@ -23,7 +23,7 @@ Every feature screen **must** have a `Contract` file (e.g., `WishlistContract.kt
 
 ```kotlin
 // Example: WishlistContract.kt
-interface WishlistContract {
+interface WishlistContract : UnidirectionalViewModel<WishListContract.UiState, WishListContract.UiEvent, WishListContract.UiEffect> {
     data class UiState(
         val isLoading: Boolean = false,
         val products: List<Product> = emptyList(),
@@ -35,9 +35,9 @@ interface WishlistContract {
         data class OnRemoveItem(val productId: String) : UiEvent
     }
 
-    sealed interface SideEffect {
-        data class ShowToast(val message: String) : SideEffect
-        object NavigateToProductDetails : SideEffect
+    sealed interface UiEffect {
+        data class ShowToast(val message: String) : UiEffect
+        object NavigateToProductDetails : UiEffect
     }
 }
 ```
@@ -54,9 +54,9 @@ interface WishlistContract {
 -   Represents any user interaction or action that can change the state (e.g., button clicks, text input).
 -   Modeled as a `sealed interface` or `sealed class`.
 
-### 4. SideEffect
+### 4. UiEffect
 
--   Represents one-off events that should not be stored in the state (e.g., showing a Snackbar, navigation).
+-   Represents one-off events that should not be stored in the state (e.g., showing a Snack bar, navigation).
 -   Modeled as a `sealed interface` or `sealed class`.
 -   Exposed from the `ViewModel` via a `SharedFlow`.
 
@@ -64,30 +64,28 @@ interface WishlistContract {
 
 -   The `ViewModel` is the core of the MVI pattern for a screen.
 -   **State**: Exposes a single `StateFlow<UiState>`.
--   **Events**: Provides one public function `setEvent(event: UiEvent)` to receive events from the UI.
--   **Side Effects**: Exposes a `SharedFlow<SideEffect>` for one-time events.
+-   **Events**: Provides one public function `event(event: UiEvent)` to receive events from the UI.
+-   **Side Effects**: Exposes a `SharedFlow<UiEffect>` for one-time events.
 -   State updates must be atomic and thread-safe, using `MutableStateFlow.update()`.
 
 ```kotlin
 // Example: WishlistViewModel.kt
 @HiltViewModel
-class WishlistViewModel @Inject constructor(...) : ViewModel() {
+class WishlistViewModel @Inject constructor(...) : ViewModel(),WishListContract {
 
-    private val _uiState = MutableStateFlow(WishlistContract.UiState())
-    val uiState: StateFlow<WishlistContract.UiState> = _uiState.asStateFlow()
+    private val _state = MutableStateFlow(WishlistContract.UiState())
+    val state: StateFlow<WishlistContract.UiState> = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<WishlistContract.SideEffect>()
-    val effect: SharedFlow<WishlistContract.SideEffect> = _effect.asSharedFlow()
+    val effect: SharedFlow<WishlistContract.UiEffect> = _effect.asSharedFlow()
 
-    fun setEvent(event: WishlistContract.UiEvent) {
+    override fun event(event: WishlistContract.UiEvent) {
         when (event) {
             // handle events
         }
     }
     
-    private fun reduceState(reducer: (WishlistContract.UiState) -> WishlistContract.UiState) {
-        _uiState.update(reducer)
-    }
+   
 }
 ```
 
@@ -101,22 +99,58 @@ class WishlistViewModel @Inject constructor(...) : ViewModel() {
 ```kotlin
 // Example: WishlistScreen.kt
 @Composable
-fun WishlistScreen(viewModel: WishlistViewModel = hiltViewModel()) {
-    val state by viewModel.uiState.collectAsState()
+fun WishListScreen(viewModel: WishlistViewModel = hiltViewModel()) {
+    
+    val (state, event, effect) = use(viewModel = viewModel)
 
-    LaunchedEffect(Unit) {
-        viewModel.effect.collect { effect ->
-            when (effect) {
-                // handle side effects
-            }
+    effect.CollectInLaunchedEffect {
+        when (it) {
+            // handle effects
         }
     }
 
-    WishlistContent(
+    
+}
+```
+
+## UniDirectional ViewModel
+-   It combines all the state,event and effect in one way.
+
+```kotlin
+//UniDirectional ViewModel
+interface UnidirectionalViewModel<STATE, EVENT, EFFECT> {
+    val state: StateFlow<STATE>
+    val effect: SharedFlow<EFFECT>
+    fun event(event: EVENT)
+}
+
+```
+
+## Extension function for composable
+
+```kotlin
+@Composable
+inline fun <reified STATE, EVENT, EFFECT> use(
+    viewModel: UnidirectionalViewModel<STATE, EVENT, EFFECT>,
+): StateDispatchEffect<STATE, EVENT, EFFECT> {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    val dispatch: (EVENT) -> Unit = { event ->
+        viewModel.event(event)
+    }
+
+    return StateDispatchEffect(
         state = state,
-        onEvent = viewModel::setEvent
+        effectFlow = viewModel.effect,
+        dispatch = dispatch,
     )
 }
+
+data class StateDispatchEffect<STATE, EVENT, EFFECT>(
+    val state: STATE,
+    val dispatch: (EVENT) -> Unit,
+    val effectFlow: SharedFlow<EFFECT>,
+)
 ```
 
 ---
