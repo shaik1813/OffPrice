@@ -20,7 +20,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,9 +38,7 @@ import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.offerCardColor
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
-import com.apparel.offprice.features.home.presentation.screens.myaccounts.MyAccountViewModel
 import com.apparel.offprice.features.pdp.presentation.component.dottedBorder
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 @Composable
 fun OfferCardUI(viewModel: PDPViewModel = hiltViewModel()) {

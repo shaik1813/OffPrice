@@ -85,5 +85,15 @@
     <string name="label_go_to_bag">GO TO BAG</string>
     <string name="label_add_to_bag">Add to Bag</string>
     <string name="label_continue_shopping">CONTINUE SHOPPING</string>
+    <string name="label_personal">Personal</string>
+    <string name="label_personal_description">Manage Your Personal Details</string>
+    <string name="label_mysize">My Size</string>
+    <string name="label_mysize_description">Manage Your Primary Department Sizes</string>
+    <string name="label_edit_details">EDIT DETAILS</string>
+    <string name="label_personal_details">PERSONAL DETAILS</string>
+    <string name="label_change_password">CHANGE PASSWORD</string>
+    <string name="label_date_of_birth">Date Of Birth</string>
+    <string name="label_gender">Gender</string>
+    <string name="label_save">Save</string>
 
 </resources>
