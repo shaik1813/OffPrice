@@ -41,7 +41,6 @@ val Typography = Typography(
         fontFamily = wixMadeForDisplayFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp,
-        letterSpacing = (-1).sp
     ),
     titleSmall = TextStyle(
         fontFamily = wixMadeForDisplayFamily,

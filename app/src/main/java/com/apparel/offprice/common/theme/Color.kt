@@ -2,7 +2,7 @@ package com.apparel.offprice.common.theme
 
 import androidx.compose.ui.graphics.Color
 
-val primaryColor = Color(0xFF333333)
+val primaryColor = Color(0xFF000000)
 val secondaryColor = Color(0xFFFFFFFF)
 val tertiaryColor = Color(0xFFA2050D)
 

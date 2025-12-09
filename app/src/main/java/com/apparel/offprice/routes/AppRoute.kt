@@ -8,6 +8,8 @@ import androidx.navigation.compose.rememberNavController
 import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
 import com.apparel.offprice.features.home.presentation.screens.search.SearchScreen
 import com.apparel.offprice.features.pdp.presentation.screen.PDPscreen
+import com.apparel.offprice.features.profile.presentation.screen.profileDetails.ProfileDetailsScreen
+import com.apparel.offprice.features.profile.presentation.screen.profileSize.ProfileSizeScreen
 import com.apparel.offprice.features.profile.presentation.screen.userprofile.UserProfileScreen
 import com.apparel.offprice.features.storeLocator.presentation.screen.StoreLocatorScreen
 import com.apparel.offprice.features.welcome.presentation.genderCategory.GenderCategoryScreen
@@ -54,7 +56,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.OTPScreen> {
-            PDPscreen()
+
         }
 
         composable<AppScreen.ResetPasswordScreen> {
@@ -128,9 +130,26 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         composable<AppScreen.UserProfileScreen> {
             UserProfileScreen(
                 onNavigateToBack = {navController.popBackStack()},
-                onPersonalItemClicked = {},
-                onMySizeItemClicked = {}
+                onPersonalItemClicked = {
+                    navController.navigate(AppScreen.ProfileDetailScreen)
+                },
+                onMySizeItemClicked = {
+                    navController.navigate(AppScreen.ProfileSizeScreen)
+                }
             )
+        }
+
+        composable<AppScreen.ProfileDetailScreen> {
+            ProfileDetailsScreen(
+                onNavigateToBack = {
+                    navController.popBackStack()
+                },
+                onNavigateToPassword = {}
+            )
+        }
+
+        composable<AppScreen.ProfileSizeScreen> {
+            ProfileSizeScreen()
         }
 
     }

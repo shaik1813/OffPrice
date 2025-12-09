@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.buttonBorderColor
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.takeInitials
 import com.apparel.offprice.common.utils.use
@@ -239,7 +240,7 @@ fun MyAccountScreen(
                         icon = item.icon,
                         onClick = { event.invoke(MyAccountContract.UiEvent.AccountItemClick(item)) }
                     )
-                    HorizontalDivider(color = Color(0xFFEAEAEA))
+                    HorizontalDivider(color = buttonBorderColor)
                 }
             }
         }

@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.buttonBorderColor
 
 @Composable
 fun ProfileCardItem(
@@ -34,7 +35,7 @@ fun ProfileCardItem(
             containerColor = MaterialTheme.colorScheme.surface
         ),
         shape = MaterialTheme.shapes.small,
-        border = BorderStroke(1.dp, color = Color.Gray),
+        border = BorderStroke(1.dp, color = buttonBorderColor),
         modifier = Modifier
             .fillMaxWidth()
             .clickable {

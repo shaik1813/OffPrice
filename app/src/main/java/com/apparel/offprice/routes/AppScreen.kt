@@ -45,4 +45,10 @@ sealed interface AppScreen{
     @Serializable
     object UserProfileScreen : AppScreen
 
+    @Serializable
+    object ProfileDetailScreen : AppScreen
+
+    @Serializable
+    object ProfileSizeScreen : AppScreen
+
 }
