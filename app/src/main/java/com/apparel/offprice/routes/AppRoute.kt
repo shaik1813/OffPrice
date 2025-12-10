@@ -33,10 +33,9 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         composable<AppScreen.SplashScreen> {
             SplashScreen(
                 onNavigateToHomeScreen = {
-                    /*navController.navigate(AppScreen.HomeScreen) {
+                    navController.navigate(AppScreen.HomeScreen) {
                         popUpTo(0) { inclusive = true }
-                    }*/
-                    navController.navigate(AppScreen.OTPScreen)
+                    }
                 },
                 onNavigateToRegionSelection = {
                     navController.navigate(AppScreen.LocationSelectionScreen)

@@ -56,7 +56,8 @@ fun OfferCardUI(viewModel: PDPViewModel = hiltViewModel()) {
             selectedCity = it
             isOpenLocation = false
         },
-        onDismiss = { isOpenLocation = false })
+        onDismiss = { isOpenLocation = false }
+    )
 
     effect.CollectInLaunchedEffect { it ->
         when (it) {

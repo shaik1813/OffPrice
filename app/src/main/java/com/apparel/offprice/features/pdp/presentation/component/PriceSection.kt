@@ -24,14 +24,14 @@ import com.apparel.offprice.common.theme.offerTextColor
 fun PriceSection() {
     Row(modifier = Modifier.padding(top = 12.dp), verticalAlignment = Alignment.CenterVertically) {
         Text(
-            text = "D 35.00", fontSize = 16.sp, color = loginButtonColor,
+            text = "฿ 35.00", fontSize = 16.sp, color = loginButtonColor,
             style = MaterialTheme.typography.bodyLarge
         )
 
         Spacer(modifier = Modifier.size(8.dp))
 
         Text(
-            text = "D 173.00", fontSize = 12.sp, color = buttonBorderColor,
+            text = "฿ 173.00", fontSize = 12.sp, color = buttonBorderColor,
             style = MaterialTheme.typography.bodyMedium
         )
 

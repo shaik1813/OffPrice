@@ -160,7 +160,7 @@ fun SelectSizeBottomSheet(
             }
 
 
-            addToBagSection(
+            AddToBagSection(
                 Modifier
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter),
@@ -173,7 +173,7 @@ fun SelectSizeBottomSheet(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun addToBagSection(modifier: Modifier, onAddToBag: () -> Unit) {
+fun AddToBagSection(modifier: Modifier, onAddToBag: () -> Unit) {
 
 
     Column(
