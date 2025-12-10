@@ -19,7 +19,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -63,7 +62,6 @@ fun OfferCardUI(viewModel: PDPViewModel = hiltViewModel()) {
         when (it) {
             is PDPContract.UiEffect.onOpenBottomSheetLocation -> isOpenLocation = true
             is PDPContract.UiEffect.onCloseBottomSheetLocation -> isOpenLocation = false
-            else -> {}
         }
     }
 
