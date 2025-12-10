@@ -11,13 +11,15 @@ interface ProfileDetailsContract : UnidirectionalViewModel<
         val isEditing: Boolean = false,
         val isPasswordVisible: Boolean = false,
         val isCountryPickerOpen: Boolean = false,
+        val showDatePicker: Boolean = false,
 
         val name: String = "",
         val email: String = "",
         val phoneCode: Country = countryList.first(),
         val phoneNumber: String = "",
         val dob: String = "",
-        val gender: String = "",
+        val genderList: List<String> = listOf("Men","Women","Other"),
+        val gender: String = genderList.first(),
         val password: String = "",
 
         val nameError: String? = null,
@@ -29,7 +31,8 @@ interface ProfileDetailsContract : UnidirectionalViewModel<
 
     sealed interface UiEvent {
         object ToggleEdit : UiEvent
-        object ToggleCountryPicker : UiEvent
+        object ToggleDatePicker : UiEvent
+        data class OnDateSelected(val date: Long?) : UiEvent
 
         data class EnabledEditing(val isEditing: Boolean): UiEvent
 

@@ -1,5 +1,7 @@
 package com.apparel.offprice.features.profile.presentation.screen.profileDetails
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,11 +18,11 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDefaults
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -29,9 +31,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.VerticalDivider
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -53,10 +57,12 @@ import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.lineColor
 import com.apparel.offprice.common.theme.redColor
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
+import com.apparel.offprice.common.utils.PastOrPresentSelectableDates
 import com.apparel.offprice.common.utils.use
+import com.apparel.offprice.features.profile.presentation.component.CategoryDropdown
 import com.apparel.offprice.features.profile.presentation.component.CountryCodePicker
+import com.apparel.offprice.features.profile.presentation.component.LabeledField
 import com.apparel.offprice.features.profile.presentation.screen.myaccounts.ActionButtonsBar
-
 
 /**
  * A composable function that displays the user's profile details.
@@ -66,6 +72,7 @@ import com.apparel.offprice.features.profile.presentation.screen.myaccounts.Acti
  * @param viewModel The view model that provides the state and handles events for this screen.
  */
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileDetailsScreen(
@@ -88,7 +95,6 @@ fun ProfileDetailsScreen(
             }
         }
     }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -189,7 +195,7 @@ fun ProfileDetailsScreen(
 
                     // ---------------- Name ----------------
                     LabeledField(
-                        label = "Name",
+                        label = stringResource(R.string.name),
                         value = state.name,
                         enabled = state.isEditing,
                         onValueChange = {
@@ -208,9 +214,10 @@ fun ProfileDetailsScreen(
                         )
                     }
                     Spacer(Modifier.height(8.dp))
+
                     // ---------------- Email ----------------
                     LabeledField(
-                        label = "Email Address",
+                        label = stringResource(R.string.email_address),
                         value = state.email,
                         enabled = state.isEditing,
                         onValueChange = {
@@ -229,6 +236,7 @@ fun ProfileDetailsScreen(
                         )
                     }
                     Spacer(Modifier.height(8.dp))
+
                     // ---------------- Phone Number ----------------
                     Text(
                         text = stringResource(R.string.phone_no),
@@ -236,10 +244,15 @@ fun ProfileDetailsScreen(
                         color = MaterialTheme.colorScheme.primary
                     )
                     Spacer(Modifier.height(6.dp))
-
                     OutlinedTextField(
                         value = state.phoneNumber,
-                        onValueChange = { if (state.isEditing) event.invoke(ProfileDetailsContract.UiEvent.OnPhoneChange(it)) },
+                        onValueChange = {
+                            if (state.isEditing) event.invoke(
+                                ProfileDetailsContract.UiEvent.OnPhoneChange(
+                                    it
+                                )
+                            )
+                        },
                         textStyle = MaterialTheme.typography.bodySmall,
                         enabled = state.isEditing,
                         modifier = Modifier
@@ -252,9 +265,14 @@ fun ProfileDetailsScreen(
                         leadingIcon = {
                             CountryCodePicker(
                                 selected = state.phoneCode,
-                                isOpen = state.isCountryPickerOpen,
-                                onToggle = { event.invoke(ProfileDetailsContract.UiEvent.ToggleCountryPicker) },
-                                onSelect = { event.invoke(ProfileDetailsContract.UiEvent.SelectCountry(it)) }
+                                enabled = state.isEditing,
+                                onSelect = {
+                                    event.invoke(
+                                        ProfileDetailsContract.UiEvent.SelectCountry(
+                                            it
+                                        )
+                                    )
+                                }
                             )
                         },
                         shape = MaterialTheme.shapes.small,
@@ -271,8 +289,6 @@ fun ProfileDetailsScreen(
                             cursorColor = MaterialTheme.colorScheme.primary
                         )
                     )
-
-
                     if (state.phoneError != null) {
                         Text(
                             text = state.phoneError,
@@ -280,19 +296,57 @@ fun ProfileDetailsScreen(
                             style = MaterialTheme.typography.bodySmall,
                         )
                     }
-
                     Spacer(Modifier.height(8.dp))
 
                     // ---------------- DOB ----------------
-                    LabeledField(
-                        label = stringResource(R.string.label_date_of_birth),
+                    Text(
+                        text = stringResource(R.string.label_date_of_birth),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Spacer(Modifier.height(6.dp))
+                    OutlinedTextField(
                         value = state.dob,
+                        onValueChange = {},
+                        readOnly = true,
+                        textStyle = MaterialTheme.typography.bodySmall,
                         enabled = state.isEditing,
-                        onValueChange = { event.invoke(ProfileDetailsContract.UiEvent.OnDobChange(it)) }
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .border(
+                                width = 0.75.dp,
+                                color = lineColor,
+                                shape = MaterialTheme.shapes.small
+                            ),
+                        trailingIcon = {
+                            if (state.isEditing) {
+                                Icon(
+                                    painter = painterResource(R.drawable.icon_calendar),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .clickable {
+                                            event.invoke(ProfileDetailsContract.UiEvent.ToggleDatePicker)
+                                        }
+                                )
+                            }
+                        },
+                        shape = MaterialTheme.shapes.small,
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            disabledContainerColor = Color.White,
+                            focusedContainerColor = Color.White,
+                            unfocusedContainerColor = Color.White,
+                            focusedBorderColor = Color.Transparent,
+                            unfocusedBorderColor = Color.Transparent,
+                            errorBorderColor = Color.Transparent,
+                            disabledBorderColor = Color.Transparent,
+                            cursorColor = MaterialTheme.colorScheme.primary
+                        )
                     )
                     if (state.dobError != null) {
                         Text(
-                            text = state.dob,
+                            text = state.dobError,
                             color = MaterialTheme.colorScheme.error,
                             style = MaterialTheme.typography.bodySmall,
                         )
@@ -300,11 +354,12 @@ fun ProfileDetailsScreen(
                     Spacer(Modifier.height(8.dp))
 
                     // ---------------- Gender ----------------
-                    LabeledField(
+                    CategoryDropdown(
                         label = stringResource(R.string.label_gender),
-                        value = state.gender,
+                        categoriesList = state.genderList,
+                        selectedCategory = state.gender,
                         enabled = state.isEditing,
-                        onValueChange = {
+                        onCategorySelected = {
                             event.invoke(
                                 ProfileDetailsContract.UiEvent.OnGenderChange(
                                     it
@@ -324,166 +379,159 @@ fun ProfileDetailsScreen(
 
             Spacer(Modifier.height(20.dp))
 
-            // ---------------- Password Section ----------------
-
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(R.string.password).uppercase(),
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        letterSpacing = 0.1.sp
-                    )
-                )
-                Text(
-                    text = stringResource(R.string.label_change_password),
-                    modifier = Modifier.clickable {
-                        event.invoke(ProfileDetailsContract.UiEvent.ChangePasswordClick)
-                    },
-                    color = MaterialTheme.colorScheme.tertiary,
-                    textDecoration = TextDecoration.Underline,
-                    style = MaterialTheme.typography.titleMedium.copy(fontSize = 12.sp)
-                )
-            }
-            Card(
-                shape = MaterialTheme.shapes.small,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = Color(0xFFEFEFEF)
-                )
-            ) {
-                Column(Modifier.padding(16.dp)) {
-
-                    Text(
-                        text = buildAnnotatedString {
-                            append(stringResource(R.string.password))
-                            withStyle(style = SpanStyle(color = redColor)) {
-                                append("*")
-                            }
-                        },
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                    Spacer(modifier = Modifier.height(6.dp))
-                    OutlinedTextField(
-                        value = state.password,
-                        onValueChange = {},
-                        textStyle = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .border(
-                                width = 0.75.dp,
-                                color = lineColor,
-                                shape = MaterialTheme.shapes.small
-                            ),
-                        enabled = false,
-                        shape = MaterialTheme.shapes.small,
-                        singleLine = true,
-                        visualTransformation = if (state.isPasswordVisible)
-                            VisualTransformation.None else PasswordVisualTransformation(),
-                        trailingIcon = {
-                            IconButton(onClick = { event.invoke(ProfileDetailsContract.UiEvent.TogglePasswordVisibility) }) {
-                                Icon(
-                                    imageVector = if (state.isPasswordVisible)
-                                        Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                                    contentDescription = null
-                                )
-                            }
-                        },
-                        colors = OutlinedTextFieldDefaults.colors(
-                            disabledContainerColor = Color.White,
-                            focusedContainerColor = Color.White,
-                            unfocusedContainerColor = Color.White,
-                            focusedBorderColor = Color.Transparent,
-                            unfocusedBorderColor = Color.Transparent,
-                            errorBorderColor = Color.Transparent,
-                            disabledBorderColor = Color.Transparent,
-                            cursorColor = MaterialTheme.colorScheme.primary
-                        )
-                    )
-                }
-            }
-            //-----------------------Bottom Space------------------------
-            if (state.isEditing) {
-                Column(
-                    modifier = Modifier
+            if (!state.isEditing) {
+                // ---------------- Password Section ----------------
+                Row(
+                    Modifier
                         .fillMaxWidth()
                         .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    ActionButtonsBar(
-                        leftButtonText = stringResource(R.string.label_cancel).uppercase(),
-                        rightButtonText = stringResource(R.string.label_save).uppercase(),
-                        onLeftClick = {
-                            event.invoke(ProfileDetailsContract.UiEvent.EnabledEditing(false))
-                        },
-                        onRightClick = {
-                            event.invoke(ProfileDetailsContract.UiEvent.ToggleEdit)
-                        }
+                    Text(
+                        text = stringResource(R.string.password).uppercase(),
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            letterSpacing = 0.1.sp
+                        )
                     )
+                    Text(
+                        text = stringResource(R.string.label_change_password),
+                        modifier = Modifier.clickable {
+                            event.invoke(ProfileDetailsContract.UiEvent.ChangePasswordClick)
+                        },
+                        color = MaterialTheme.colorScheme.tertiary,
+                        textDecoration = TextDecoration.Underline,
+                        style = MaterialTheme.typography.titleMedium.copy(fontSize = 12.sp)
+                    )
+                }
+                Card(
+                    shape = MaterialTheme.shapes.small,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 12.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color(0xFFEFEFEF)
+                    )
+                ) {
+                    Column(Modifier.padding(16.dp)) {
+
+                        Text(
+                            text = buildAnnotatedString {
+                                append(stringResource(R.string.password))
+                                withStyle(style = SpanStyle(color = redColor)) {
+                                    append("*")
+                                }
+                            },
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        OutlinedTextField(
+                            value = state.password,
+                            onValueChange = {},
+                            textStyle = MaterialTheme.typography.bodySmall,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .border(
+                                    width = 0.75.dp,
+                                    color = lineColor,
+                                    shape = MaterialTheme.shapes.small
+                                ),
+                            enabled = false,
+                            shape = MaterialTheme.shapes.small,
+                            singleLine = true,
+                            visualTransformation = if (state.isPasswordVisible)
+                                VisualTransformation.None else PasswordVisualTransformation(),
+                            trailingIcon = {
+                                IconButton(onClick = { event.invoke(ProfileDetailsContract.UiEvent.TogglePasswordVisibility) }) {
+                                    Icon(
+                                        painter = if (state.isPasswordVisible)
+                                            painterResource(R.drawable.icon_password_visible) else painterResource(
+                                            R.drawable.icon_password_hide
+                                        ),
+                                        contentDescription = null
+                                    )
+                                }
+                            },
+                            colors = OutlinedTextFieldDefaults.colors(
+                                disabledContainerColor = Color.White,
+                                focusedContainerColor = Color.White,
+                                unfocusedContainerColor = Color.White,
+                                focusedBorderColor = Color.Transparent,
+                                unfocusedBorderColor = Color.Transparent,
+                                errorBorderColor = Color.Transparent,
+                                disabledBorderColor = Color.Transparent,
+                                cursorColor = MaterialTheme.colorScheme.primary
+                            )
+                        )
+                    }
                 }
             }
 
         }
-
+        if (state.isEditing) {
+            //-----------------------Bottom Space------------------------
+            Spacer(modifier = Modifier.weight(1f))
+            ActionButtonsBar(
+                leftButtonText = stringResource(R.string.label_cancel).uppercase(),
+                rightButtonText = stringResource(R.string.label_save).uppercase(),
+                onLeftClick = {
+                    event.invoke(ProfileDetailsContract.UiEvent.EnabledEditing(false))
+                },
+                onRightClick = {
+                    event.invoke(ProfileDetailsContract.UiEvent.ToggleEdit)
+                }
+            )
+        }
+        if (state.showDatePicker) {
+            //-----------------------Date Picker------------------------
+            val datePickerState = rememberDatePickerState(
+                selectableDates = PastOrPresentSelectableDates
+            )
+            DatePickerDialog(
+                onDismissRequest = { event.invoke(ProfileDetailsContract.UiEvent.ToggleDatePicker) },
+                confirmButton = {
+                    TextButton(onClick = {
+                        event.invoke(ProfileDetailsContract.UiEvent.OnDateSelected(datePickerState.selectedDateMillis))
+                    }) {
+                        Text(
+                            text = stringResource(R.string.label_ok),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = {
+                        event.invoke(ProfileDetailsContract.UiEvent.ToggleDatePicker)
+                    }) {
+                        Text(
+                            text = stringResource(R.string.label_cancel).uppercase(),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    }
+                },
+                colors = DatePickerDefaults.colors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                )
+            ) {
+                DatePicker(
+                    state = datePickerState,
+                    colors = DatePickerDefaults.colors(
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        selectedDayContainerColor = MaterialTheme.colorScheme.primary,
+                        selectedDayContentColor = Color.White,
+                        todayDateBorderColor = MaterialTheme.colorScheme.primary,
+                        todayContentColor = MaterialTheme.colorScheme.primary,
+                        selectedYearContainerColor = MaterialTheme.colorScheme.primary,
+                        selectedYearContentColor = Color.White
+                    )
+                )
+            }
+        }
     }
 }
 
-/**
- * A reusable composable that displays a label and an outlined text field.
- *
- * @param label The text to be displayed as the label for the field.
- * @param value The current value of the text field.
- * @param enabled A boolean to determine if the text field is enabled for user input.
- * @param onValueChange A lambda function to be invoked when the value of the text field changes.
- */
-@Composable
-fun LabeledField(
-    label: String,
-    value: String,
-    enabled: Boolean,
-    onValueChange: (String) -> Unit
-) {
-    Text(
-        text = label,
-        style = MaterialTheme.typography.bodyMedium,
-        color = MaterialTheme.colorScheme.primary
-    )
-    Spacer(Modifier.height(6.dp))
-    OutlinedTextField(
-        value = value,
-        onValueChange = { if (enabled) onValueChange(it) },
-        textStyle = MaterialTheme.typography.bodySmall,
-        enabled = enabled,
-        modifier = Modifier
-            .fillMaxWidth()
-            .border(
-                width = 0.75.dp,
-                color = lineColor,
-                shape = MaterialTheme.shapes.small
-            ),
-        shape = MaterialTheme.shapes.small,
-        singleLine = true,
-        colors = OutlinedTextFieldDefaults.colors(
-            disabledContainerColor = Color.White,
-            focusedContainerColor = Color.White,
-            unfocusedContainerColor = Color.White,
-            focusedBorderColor = Color.Transparent,
-            unfocusedBorderColor = Color.Transparent,
-            errorBorderColor = Color.Transparent,
-            disabledBorderColor = Color.Transparent,
-            cursorColor = MaterialTheme.colorScheme.primary
-        )
-    )
-    Spacer(Modifier.height(4.dp))
-
-}
-
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 fun ProfileDetailsScreenPreview() {

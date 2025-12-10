@@ -1,5 +1,7 @@
 package com.apparel.offprice.features.profile.presentation.screen.profileDetails
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,6 +13,9 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,16 +33,13 @@ class ProfileDetailsViewModel @Inject constructor(
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun event(event: ProfileDetailsContract.UiEvent) {
        when(event){
            ProfileDetailsContract.UiEvent.ToggleEdit -> _state.update {
                val validated = validateFields(it)
                if (validated.hasErrors()) validated.copy(isEditing = true)
                else it.copy(isEditing = !it.isEditing)
-           }
-
-           ProfileDetailsContract.UiEvent.ToggleCountryPicker -> _state.update {
-               it.copy(isCountryPickerOpen = !it.isCountryPickerOpen)
            }
 
            is ProfileDetailsContract.UiEvent.SelectCountry -> _state.update {
@@ -74,6 +76,15 @@ class ProfileDetailsViewModel @Inject constructor(
                it.copy(isPasswordVisible = !it.isPasswordVisible)
            }
 
+           ProfileDetailsContract.UiEvent.ToggleDatePicker -> _state.update {
+               it.copy(showDatePicker = !it.showDatePicker)
+           }
+
+           is ProfileDetailsContract.UiEvent.OnDateSelected -> _state.update { it ->
+               val date = event.date?.let { date ->  SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date(date)) } ?: it.dob
+               it.copy(dob = date, showDatePicker = false)
+           }
+
 
            ProfileDetailsContract.UiEvent.ChangePasswordClick -> {
                viewModelScope.launch {
@@ -98,7 +109,7 @@ class ProfileDetailsViewModel @Inject constructor(
             name = "John Doe",
             email = "Johndoe@example.com",
             phoneNumber = "1234567890",
-            dob = "1990-01-01",
+            dob = "15/03/1998",
             gender = "Male",
             password = "password123"
         )}
