@@ -8,6 +8,9 @@ import androidx.navigation.compose.rememberNavController
 import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
 import com.apparel.offprice.features.home.presentation.screens.search.SearchScreen
 import com.apparel.offprice.features.pdp.presentation.screen.PDPscreen
+import com.apparel.offprice.features.profile.presentation.screen.profileDetails.ProfileDetailsScreen
+import com.apparel.offprice.features.profile.presentation.screen.profileSize.ProfileSizeScreen
+import com.apparel.offprice.features.profile.presentation.screen.userprofile.UserProfileScreen
 import com.apparel.offprice.features.storeLocator.presentation.screen.StoreLocatorScreen
 import com.apparel.offprice.features.welcome.presentation.genderCategory.GenderCategoryScreen
 import com.apparel.offprice.features.welcome.presentation.location.ChooseLocationScreen
@@ -54,7 +57,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.OTPScreen> {
-            PDPscreen()
+
         }
 
         composable<AppScreen.ResetPasswordScreen> {
@@ -70,8 +73,8 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                 onSearchSubmit = { productId ->
                     // TODO : Added the PLP navigation from here
                 },
-                onNavigateToHome = {
-                    navController.navigate(AppScreen.HomeScreen) {}
+                onNavigateToBack = {
+                    navController.popBackStack()
                 }
             )
         }
@@ -81,7 +84,22 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.WishListScreen> {
-            WishListScreen()
+            WishListScreen(
+                onNavigateToBack = {
+                    navController.popBackStack()
+                },
+                onStartShoppingClicked = {
+                    navController.navigate(AppScreen.HomeScreen){
+                        popUpTo(AppScreen.HomeScreen) { inclusive = true }
+                    }
+                },
+                onNavigateToCart = {
+
+                },
+                onNavigateToPDP = { product ->
+                    navController.navigate(AppScreen.PDPScreen){}
+                }
+            )
         }
 
         composable<AppScreen.LocationSelectionScreen> {
@@ -104,6 +122,35 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                     navController.navigate(AppScreen.WishListScreen)
                 }
             )
+        }
+
+        composable<AppScreen.PDPScreen> {
+            PDPscreen()
+        }
+
+        composable<AppScreen.UserProfileScreen> {
+            UserProfileScreen(
+                onNavigateToBack = {navController.popBackStack()},
+                onPersonalItemClicked = {
+                    navController.navigate(AppScreen.ProfileDetailScreen)
+                },
+                onMySizeItemClicked = {
+                    navController.navigate(AppScreen.ProfileSizeScreen)
+                }
+            )
+        }
+
+        composable<AppScreen.ProfileDetailScreen> {
+            ProfileDetailsScreen(
+                onNavigateToBack = {
+                    navController.popBackStack()
+                },
+                onNavigateToPassword = {}
+            )
+        }
+
+        composable<AppScreen.ProfileSizeScreen> {
+            ProfileSizeScreen()
         }
 
     }

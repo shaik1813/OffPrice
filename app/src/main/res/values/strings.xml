@@ -61,8 +61,8 @@
     <string name="size_desc2">Fit is oversized, Sizing down one size is recommended.</string>
     <string name="see_all">See All</string>
     <string name="sales_ends_in">Sales Ends In</string>
-
-
+    <string name="label_wishlist" >WISHLIST (%s)</string>
+    <string name="label_wishlist_without_count" >WISHLIST</string>
     <string name="label_off_price">OFF/PRICE</string>
     <string name="selected_color">SELECTED COLOR :</string>
     <string name="returnable">Returnable</string>
@@ -89,5 +89,23 @@
     <string name="size_guide">Size Guide</string>
     <string name="share_product">SHARE PRODUCT</string>
     <string name="share_link_via">Share Link Via:</string>
+    <string name="btn_start_shopping">Start Shopping</string>
+    <string name="text_empty_wishlist">Your Wishlist is Empty</string>
+    <string name="text_empty_wishlist_description">Looks like you haven’t added anything to your \n wishlist yet</string>
+    <string name="label_remove">REMOVE</string>
+    <string name="text_remove_wishlist">Remove this item from your \nwishlist?</string>
+    <string name="label_go_to_bag">GO TO BAG</string>
+    <string name="label_add_to_bag">Add to Bag</string>
+    <string name="label_continue_shopping">CONTINUE SHOPPING</string>
+    <string name="label_personal">Personal</string>
+    <string name="label_personal_description">Manage Your Personal Details</string>
+    <string name="label_mysize">My Size</string>
+    <string name="label_mysize_description">Manage Your Primary Department Sizes</string>
+    <string name="label_edit_details">EDIT DETAILS</string>
+    <string name="label_personal_details">PERSONAL DETAILS</string>
+    <string name="label_change_password">CHANGE PASSWORD</string>
+    <string name="label_date_of_birth">Date Of Birth</string>
+    <string name="label_gender">Gender</string>
+    <string name="label_save">Save</string>
 
 </resources>
