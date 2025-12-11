@@ -1,19 +1,13 @@
 package com.apparel.offprice.features.home.presentation.screens.home
 
+import BottomNavScreen
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -53,10 +47,10 @@ fun HomeScreen(outerNavControl: NavHostController) {
         ) { innerPadding ->
             NavHost(
                 navController = navController,
-                startDestination = "HOME",
+                startDestination = BottomNavScreen.Item1,
                 modifier = Modifier.padding(innerPadding)
             ) {
-                composable("HOME") {
+                composable<BottomNavScreen.Item1> {
                     HomeContent(
                         onNavigateToSearch = {
                             outerNavControl.navigate(AppScreen.SearchScreen) {}
@@ -69,8 +63,8 @@ fun HomeScreen(outerNavControl: NavHostController) {
                         }
                     )
                 }
-                composable("CATEGORIES") {Greeting("Categories") }
-                composable("BESTPRICE") {
+                composable<BottomNavScreen.Item2> {Greeting("Categories") }
+                composable<BottomNavScreen.Item3> {
                     PLPScreen(
                         onNavigateToSearch = {
                             outerNavControl.navigate(AppScreen.SearchScreen) {}
@@ -80,8 +74,8 @@ fun HomeScreen(outerNavControl: NavHostController) {
                         }
                     )
                 }
-                composable("CART") { Greeting("Cart") }
-                composable("ACCOUNT") {
+                composable<BottomNavScreen.Item4> { Greeting("Cart") }
+                composable<BottomNavScreen.Item5>{
                     MyAccountScreen(
                         isGuestUser = false,
                         onNavigateToSearch = {
@@ -160,7 +154,7 @@ fun BottomBar(
     NavigationBar {
         bottomNavItems.forEach { item ->
             NavigationBarItem(
-                selected = currentRoute == item.route,
+                selected = currentRoute == item.route.javaClass.canonicalName,
                 onClick = {
                     navController.navigate(item.route) {
                         popUpTo(navController.graph.startDestinationId) { saveState = true }
@@ -170,7 +164,7 @@ fun BottomBar(
                 },
                 icon = {
                     val iconRes =
-                        if (currentRoute == item.route) item.filledIcon
+                        if (currentRoute == item.route.javaClass.canonicalName) item.filledIcon
                         else item.outlinedIcon
                     if (item.badgeCount > 0) {
                         BadgedBox(badge = {
