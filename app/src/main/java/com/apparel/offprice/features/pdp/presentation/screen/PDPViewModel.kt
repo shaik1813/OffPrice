@@ -79,6 +79,20 @@ class PDPViewModel @Inject constructor(
                     updateState{it.copy( isShareProductSheet = false)}
                 }
             }
+
+            PDPContract.UiEvent.onOpenSizeGuideSheet -> {
+                viewModelScope.launch {
+                    updateState { it.copy(isSizeGuideSheet = true) }
+                }
+            }
+
+            PDPContract.UiEvent.onCloseSizeGuideSheet -> {
+                viewModelScope.launch {
+                    updateState { it.copy(isSizeGuideSheet = false) }
+                }
+            }
+
+
         }
     }
 

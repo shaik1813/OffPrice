@@ -45,7 +45,7 @@ import com.apparel.offprice.features.pdp.data.model.SizeItem
 
 
 @Composable
-fun SizeSelector() {
+fun SizeSelector(onSizeGuideClick: () -> Unit) {
     val sizes = listOf(
         SizeItem("S", 4),
         SizeItem("M", 1),
@@ -63,8 +63,9 @@ fun SizeSelector() {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+            verticalAlignment = Alignment.CenterVertically,
+
+            ) {
             Text(
                 text = stringResource(com.apparel.offprice.R.string.size),
                 style = MaterialTheme.typography.titleMedium,
@@ -76,7 +77,7 @@ fun SizeSelector() {
                 text = stringResource(com.apparel.offprice.R.string.size_guide),
                 fontSize = 12.sp,
                 style = MaterialTheme.typography.titleSmall.copy(color = inputTextColor),
-                modifier = Modifier.clickable { }
+                modifier = Modifier.clickable { onSizeGuideClick() },
             )
         }
 
@@ -132,7 +133,11 @@ fun SizeSelector() {
                 )
             }
         }
+
+
     }
+
+
 }
 
 @Composable
@@ -148,7 +153,6 @@ fun SizeCard(
     }
 
     val textColor = if (isSelected) Color.Black else Color.Black
-    Log.e("sizesection", "childRow " + isSelected)
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
 

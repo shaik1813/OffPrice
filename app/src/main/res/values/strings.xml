@@ -107,5 +107,8 @@
     <string name="label_date_of_birth">Date Of Birth</string>
     <string name="label_gender">Gender</string>
     <string name="label_save">Save</string>
+    <string name="view_similar">View Similar</string>
+    <string name="cart_items">CART ITEMS</string>
+    <string name="color">Color:</string>
 
 </resources>

@@ -33,6 +33,10 @@ fun ProductImageSection(onShareClick: () -> Unit) {
             contentDescription = "App Icon",
             modifier = Modifier.align(Alignment.TopStart).padding(16.dp)
         )
+
+        ViewSimilarCard(modifier =Modifier.align(Alignment.BottomEnd).padding(16.dp),
+            onSimilarClick = {})
+
         Column(modifier = Modifier.align(Alignment.TopEnd).padding(16.dp)) {
             Image(
                 painter = painterResource(id = R.drawable.share_icon),

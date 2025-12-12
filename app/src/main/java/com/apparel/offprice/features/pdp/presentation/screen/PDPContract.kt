@@ -14,6 +14,7 @@ interface PDPContract : UnidirectionalViewModel
         var isAddBasketSheet: Boolean = false,
         var isSizeSelectSheet: Boolean = false,
         var isShareProductSheet: Boolean = false,
+        var isSizeGuideSheet: Boolean = false,
         val countryItemList: List<Country> = countryList,
         val languageItemList: List<Language> = languageList,
         val countrySelected: Country = countryItemList.first(),
@@ -32,6 +33,8 @@ interface PDPContract : UnidirectionalViewModel
         data object onCloseSizeSelectSheet : UiEvent
         data object onOpenShareProductSheet : UiEvent
         data object onCloseShareProductSheet : UiEvent
+        data object onOpenSizeGuideSheet : UiEvent
+        data object onCloseSizeGuideSheet : UiEvent
 
     }
 

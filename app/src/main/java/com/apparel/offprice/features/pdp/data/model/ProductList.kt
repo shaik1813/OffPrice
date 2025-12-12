@@ -1,6 +1,7 @@
 package com.apparel.offprice.features.pdp.data.model
 
 import com.apparel.offprice.features.plp.presentation.screens.ProductCardItems
+import com.apparel.offprice.R
 
 val productList : List<ProductCardItems> = listOf(
     ProductCardItems(

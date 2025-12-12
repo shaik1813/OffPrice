@@ -1,6 +1,5 @@
 package com.apparel.offprice.features.pdp.presentation.screen
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.common.utils.use
@@ -23,10 +21,10 @@ import com.apparel.offprice.features.pdp.presentation.component.ProductDescSecti
 import com.apparel.offprice.features.pdp.presentation.component.ProductImageSection
 import com.apparel.offprice.features.pdp.presentation.component.SelectSizeBottomSheet
 import com.apparel.offprice.features.pdp.presentation.component.ShareProductBottomSheet
+import com.apparel.offprice.features.pdp.presentation.component.SizeGuideScreen
 
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview(showBackground = true)
 @Composable
 fun PDPscreen(viewModel: PDPViewModel = hiltViewModel()) {
 
@@ -71,24 +69,39 @@ fun PDPscreen(viewModel: PDPViewModel = hiltViewModel()) {
         modifier = Modifier.fillMaxSize()
     ) {
 
-        LazyColumn(modifier = Modifier.systemBarsPadding()) {
+        if(!state.isSizeGuideSheet) {
+            LazyColumn(modifier = Modifier.systemBarsPadding()) {
 
-            item { ProductImageSection(onShareClick = {event(PDPContract.UiEvent.onOpenShareProductSheet)}) }
+                item { ProductImageSection(onShareClick = { event(PDPContract.UiEvent.onOpenShareProductSheet) }) }
 
-            item { ProductDescSection() }
+                item {
+                    ProductDescSection(onSizeGuideClick = {
+                        event(PDPContract.UiEvent.onOpenSizeGuideSheet)
+                    })
+                }
+            }
         }
 
-        Column(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-        ) {
+        SizeGuideScreen (
+            isVisible = state.isSizeGuideSheet,
+            onDismiss = { event(PDPContract.UiEvent.onCloseSizeGuideSheet) }
+        )
 
-            ElevatedLine()
+        if(!state.isSizeGuideSheet) {
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+            ) {
 
-            PDPBottomView(onSizeSelect = { viewModel.event(PDPContract.UiEvent.onOpenSizeSelectSheet)},
-                onAddToBag = { viewModel.event(PDPContract.UiEvent.onOpenAddToBagSheet) })
+                ElevatedLine()
 
+                PDPBottomView(
+                    onSizeSelect = { viewModel.event(PDPContract.UiEvent.onOpenSizeSelectSheet) },
+                    onAddToBag = { viewModel.event(PDPContract.UiEvent.onOpenAddToBagSheet) })
+
+            }
         }
+
 
     }
 

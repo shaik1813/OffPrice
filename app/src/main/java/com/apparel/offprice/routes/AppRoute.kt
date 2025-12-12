@@ -123,10 +123,10 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
             )
         }
 
-        composable<AppScreen.PDPScreen> {
+    /*    composable<AppScreen.PDPScreen> {
             PDPscreen()
         }
-
+*/
         composable<AppScreen.UserProfileScreen> {
             UserProfileScreen(
                 onNavigateToBack = {navController.popBackStack()},
@@ -151,6 +151,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         composable<AppScreen.ProfileSizeScreen> {
             ProfileSizeScreen()
         }
+
 
     }
 

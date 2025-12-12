@@ -2,7 +2,7 @@ package com.apparel.offprice.routes
 
 import kotlinx.serialization.Serializable
 
-sealed interface AppScreen{
+sealed interface AppScreen {
     @Serializable
     object SplashScreen : AppScreen
 
@@ -22,7 +22,7 @@ sealed interface AppScreen{
     object OTPScreen : AppScreen
 
     @Serializable
-    object HomeScreen: AppScreen
+    object HomeScreen : AppScreen
 
     @Serializable
     object SearchScreen : AppScreen

@@ -28,7 +28,7 @@ import com.apparel.offprice.common.theme.nonreturnTxtColor
 
 
 @Composable
-fun ProductDescSection() {
+fun ProductDescSection(onSizeGuideClick : () -> Unit) {
 
     Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
 
@@ -77,7 +77,9 @@ fun ProductDescSection() {
 
         HorizontalDivider(modifier = Modifier.height(1.dp), color = backgroundColor)
 
-        SizeSelector()
+        SizeSelector(onSizeGuideClick ={
+            onSizeGuideClick()
+        })
 
         ColorSection()
 
