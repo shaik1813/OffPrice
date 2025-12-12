@@ -10,6 +10,7 @@ import com.apparel.offprice.features.home.presentation.screens.search.SearchScre
 import com.apparel.offprice.features.pdp.presentation.screen.PDPscreen
 import com.apparel.offprice.features.profile.presentation.screen.profileDetails.ProfileDetailsScreen
 import com.apparel.offprice.features.profile.presentation.screen.profileSize.ProfileSizeScreen
+import com.apparel.offprice.features.profile.presentation.screen.profilePassword.ProfilePasswordScreen
 import com.apparel.offprice.features.profile.presentation.screen.userprofile.UserProfileScreen
 import com.apparel.offprice.features.storeLocator.presentation.screen.StoreLocatorScreen
 import com.apparel.offprice.features.welcome.presentation.genderCategory.GenderCategoryScreen
@@ -33,12 +34,9 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         composable<AppScreen.SplashScreen> {
             SplashScreen(
                 onNavigateToHomeScreen = {
-                    navController.navigate(AppScreen.HomeScreen) {
+                    navController.navigate(AppScreen.GenderCategoryScreen) {
                         popUpTo(0) { inclusive = true }
                     }
-                },
-                onNavigateToRegionSelection = {
-                    navController.navigate(AppScreen.LocationSelectionScreen)
                 }
             )
         }
@@ -123,10 +121,10 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
             )
         }
 
-    /*    composable<AppScreen.PDPScreen> {
+        composable<AppScreen.PDPScreen> {
             PDPscreen()
         }
-*/
+
         composable<AppScreen.UserProfileScreen> {
             UserProfileScreen(
                 onNavigateToBack = {navController.popBackStack()},
@@ -144,7 +142,9 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                 onNavigateToBack = {
                     navController.popBackStack()
                 },
-                onNavigateToPassword = {}
+                onNavigateToPassword = {
+                    navController.navigate(AppScreen.ProfilePasswordScreen)
+                }
             )
         }
 
@@ -152,6 +152,13 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
             ProfileSizeScreen()
         }
 
+        composable<AppScreen.ProfilePasswordScreen> {
+            ProfilePasswordScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
 
     }
 

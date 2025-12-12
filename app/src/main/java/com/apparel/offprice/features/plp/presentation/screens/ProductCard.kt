@@ -2,7 +2,7 @@ package com.apparel.offprice.features.plp.presentation.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,210 +14,267 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
+import com.apparel.offprice.common.component.carousel.ImageSliderWithIndicatorPLP
+import com.apparel.offprice.common.theme.productCardColor
 
 @Composable
 fun ProductCard(
     product: ProductCardItems,
-    isSelected: Boolean = false,
-    onWishlistClick: () -> Unit = {},
+    onWishlistClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-
-    val cardBorderColor = if (isSelected) Color(0xFF6A47FF) else Color.Transparent
-
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .border(2.dp, cardBorderColor, RoundedCornerShape(12.dp))
-            .padding(10.dp)
     ) {
-
-        // ============================
-        // IMAGE WITH TAG + WISHLIST
-        // ============================
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .aspectRatio(0.75f)   // 📌 Height = Width * 0.75  (change based on Figma)
-                .clip(RoundedCornerShape(12.dp))
-                .background(Color(0xFFF0F0F0)),
-            contentAlignment = Alignment.Center
+                .aspectRatio(0.75f)   // Height = Width * 0.75  (change based on Figma)
+                .clip(shape = MaterialTheme.shapes.small)
+                .background(brush = productCardColor)
         ) {
-
-            // PRODUCT IMAGE (Centered)
-            Image(
-                painter = painterResource(product.image),
-                contentDescription = product.title,
+            ImageSliderWithIndicatorPLP(
+                images = product.image,
                 modifier = Modifier
-                    .fillMaxWidth(0.9f)      // Image width = 90% of the card
-                    .aspectRatio(0.75f)      // Maintain the same ratio for the image
-                    .align(Alignment.Center),
-                contentScale = ContentScale.Fit
+                    .fillMaxWidth()
             )
-
-            // TAG (TOP-LEFT)
-            product.tag?.let {
-                Box(
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 6.dp)
+            ) {
+                Card(
                     modifier = Modifier
-                        .align(Alignment.TopStart)
-                        .padding(6.dp)
-                        .background(
-                            if (it == "GOLD LABEL") Color(0xFFFFD54F)
-                            else Color(0xFFE53935),
-                            RoundedCornerShape(6.dp)
-                        )
-                        .padding(horizontal = 8.dp)
+                        .padding(8.dp),
+                    shape = MaterialTheme.shapes.extraSmall,
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.tertiary,
+                        contentColor = Color.White
+                    )
                 ) {
                     Text(
-                        text = it,
-                        color = Color.White,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 12.sp
+                        text = product.tag?.uppercase() ?: "",
+                        style = MaterialTheme.typography.displaySmall,
+                        modifier = Modifier
+                            .padding(all = 4.dp)
                     )
                 }
-            }
-
-            // WISHLIST ICON (TOP-RIGHT)
-            IconButton(
-                onClick = onWishlistClick,
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(6.dp)
-            ) {
-                Icon(
+                Image(
                     painter = painterResource(
                         if (product.isWishlist) R.drawable.heart_red_icon
                         else R.drawable.heart_icon
                     ),
-                    contentDescription = "wishlist",
-                    modifier = Modifier.size(22.dp)
+                    contentDescription = product.title,
+                    modifier = Modifier
+                        .padding(6.dp)
+                        .size(18.dp)
+                        .clickable { onWishlistClick() }
                 )
             }
         }
-
-
-        // ============================
-        // SIZES ROW
-        // ============================
         Spacer(modifier = Modifier.height(12.dp))
+        //------------Product Content -------------
+        ProductCardTextContent(product)
+    }
+}
 
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            product.sizes.forEach { size ->
+@Composable
+fun ProductCardTextContent(product : ProductCardItems){
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 6.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(product.sizes) { size ->
                 Text(
                     text = size,
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.bodySmall.copy(fontSize = 10.sp),
                     color = Color.Gray
                 )
             }
         }
-
-        Spacer(modifier = Modifier.height(6.dp))
 
         // BRAND
         Text(
             text = product.brand,
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold
+            style = MaterialTheme.typography.titleLarge.copy(
+                fontSize = 12.sp,
+            ),
         )
+        Spacer(modifier = Modifier.height(6.dp))
 
         // TITLE
         Text(
             text = product.title,
-            style = MaterialTheme.typography.bodySmall.copy(color = Color.Gray),
-            maxLines = 1
+            style = MaterialTheme.typography.titleSmall.copy(
+                color = Color.Gray,
+                fontSize = 12.sp
+            ),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
 
         Spacer(modifier = Modifier.height(6.dp))
 
-        // PRICE + DISCOUNT
-        Row(verticalAlignment = Alignment.CenterVertically) {
-
+        // BASE PRICE
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = painterResource(R.drawable.icon_currency_uae),
+                contentDescription = "UAE Currency"
+            )
             Text(
-                text = "฿ ${product.price}",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
+                text = product.basePrice,
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontSize = 12.sp
+                ),
             )
 
             Spacer(modifier = Modifier.width(8.dp))
+            if (product.discountPrice.isNotEmpty()) {
+                Image(
+                    painter = painterResource(R.drawable.icon_currency_uae),
+                    contentDescription = "UAE Currency",
+                    colorFilter = ColorFilter.tint(color = Color.Gray)
+                )
+                Text(
+                    text = product.discountPrice,
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        fontSize = 10.sp,
+                        textDecoration = TextDecoration.LineThrough,
+                        color = Color.Gray
+                    )
+                )
+            }
+        }
 
+        Spacer(modifier = Modifier.height(6.dp))
+
+        //RRP
+        Row(
+            modifier = Modifier.fillMaxWidth()
+                .alpha(alpha = if (product.rrp.isEmpty()) 0f else 1f),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Text(
-                text = "฿ ${product.rrp}",
+                text = stringResource(R.string.label_rrp),
                 style = MaterialTheme.typography.bodySmall.copy(
+                    fontSize = 10.sp,
+                    color = Color.Gray
+                )
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Image(
+                painter = painterResource(R.drawable.icon_currency_uae),
+                contentDescription = "UAE Currency",
+                colorFilter = ColorFilter.tint(color = Color.Gray)
+            )
+            Text(
+                text = product.rrp,
+                style = MaterialTheme.typography.bodySmall.copy(
+                    fontSize = 10.sp,
                     textDecoration = TextDecoration.LineThrough,
                     color = Color.Gray
                 )
             )
-
             Spacer(modifier = Modifier.width(8.dp))
-
             Text(
                 text = "(${product.discount} OFF)",
-                style = MaterialTheme.typography.bodySmall.copy(
+                style = MaterialTheme.typography.titleLarge.copy(
                     color = Color(0xFFE53935),
-                    fontWeight = FontWeight.Bold
+                    fontSize = 10.sp
                 )
             )
-        }
 
+        }
         Spacer(modifier = Modifier.height(8.dp))
 
-        // DELIVERY
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                painter = painterResource(R.drawable.icon_delivery_address),
-                contentDescription = null,
-                tint = Color(0xFF6A47FF),
-                modifier = Modifier.size(18.dp)
+        // DELIVERY TIME
+        Card(
+            modifier = Modifier,
+            shape = MaterialTheme.shapes.large,
+            colors = CardDefaults.cardColors(
+                containerColor = Color(0xFFF5C518).copy(alpha = 0.2f)
             )
-
-            Spacer(modifier = Modifier.width(6.dp))
-
-            Text(
-                text = product.delivery,
-                style = MaterialTheme.typography.bodySmall.copy(
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF6A47FF)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.arrive_icon),
+                    contentDescription = "Delivery Icon",
+                    modifier = Modifier
+                        .padding(start = 4.dp, top = 4.dp, bottom = 4.dp)
                 )
-            )
+                Text(
+                    text = product.delivery,
+                    style = MaterialTheme.typography.displaySmall,
+                    modifier = Modifier
+                        .padding(all = 4.dp)
+                )
+            }
         }
+        Spacer(modifier = Modifier.height(6.dp))
     }
 }
 
 
 @Preview(showBackground = true)
 @Composable
-fun ProductCardPreview(){
+fun ProductCardPreview() {
     ProductCard(
         product = ProductCardItems(
             id = "1",
             tag = "GOLD LABEL",
-            image = R.drawable.icon_user_profile,
+            image = listOf(
+                R.drawable.product_item_1,
+                R.drawable.product_item_2,
+                R.drawable.product_item_3,
+                R.drawable.product_item_4
+            ),
             brand = "Nike",
             title = "Nike Air Max 270 React ENG",
             sizes = listOf("UK 6", "UK 7", "UK 8", "UK 9"),
-            price = "139.99",
+            basePrice = "139.99",
+            discountPrice = "149.99",
             rrp = "159.99",
             discount = "20",
             delivery = "GET IT IN 90M",
             isWishlist = false
-        )
+        ),
+        onWishlistClick = { },
+        modifier = Modifier
     )
 }

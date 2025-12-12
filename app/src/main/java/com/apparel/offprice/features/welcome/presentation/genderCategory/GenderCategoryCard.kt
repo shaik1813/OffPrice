@@ -3,12 +3,10 @@ package com.apparel.offprice.features.welcome.presentation.genderCategory
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -20,11 +18,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.apparel.offprice.common.theme.IconBackgroundColor
+import coil.request.CachePolicy
+import coil.request.ImageRequest
+import com.apparel.offprice.R
 import com.apparel.offprice.features.welcome.data.model.GenderCategoryItem
 
 @Composable
@@ -32,32 +34,42 @@ fun GenderCategoryCard(
     item: GenderCategoryItem,
     onClick: (GenderCategoryItem) -> Unit
 ) {
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(170.dp)
-            .background(IconBackgroundColor, shape = RoundedCornerShape(16.dp)) // Background with rounded corners
-            .padding(10.dp) // Padding space visible as buttonBorderColor
-    ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight()
-            .clip(RoundedCornerShape(8.dp))
+            .height(175.dp)
             .clickable { onClick(item) },
-        shape = RoundedCornerShape(8.dp),
-        elevation = CardDefaults.cardElevation(8.dp)
+        shape = MaterialTheme.shapes.small,
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.background
+        )
     ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp)
+                .clip(shape = MaterialTheme.shapes.small)
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            item.backgroundColor.first,
+                            item.backgroundColor.second
+                        )
+                    )
+                )
+        ) {
             AsyncImage(
-                model = item.img,  // String URL
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(data = item.image)
+                    .crossfade(true)
+                    .memoryCachePolicy(CachePolicy.ENABLED)
+                    .diskCachePolicy(CachePolicy.ENABLED)
+                    .build(),
                 contentDescription = item.label,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
+                contentScale = ContentScale.Fit,
+                modifier = Modifier.fillMaxWidth()
 
+            )
             // Gradient overlay bottom for text visibility
             Box(
                 modifier = Modifier
@@ -65,7 +77,10 @@ fun GenderCategoryCard(
                     .align(Alignment.BottomCenter)
                     .background(
                         Brush.verticalGradient(
-                            colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.6f))
+                            colors = listOf(
+                                Color.Transparent,
+                                Color.Black.copy(alpha = 0.6f)
+                            )
                         )
                     )
                     .padding(vertical = 10.dp)
@@ -73,8 +88,9 @@ fun GenderCategoryCard(
                 Text(
                     text = item.label,
                     color = Color.White,
-                    style = MaterialTheme.typography.headlineSmall.copy(
-                        fontWeight = FontWeight.Bold
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        fontWeight = FontWeight.W800,
+                        fontSize = 30.sp
                     ),
                     modifier = Modifier.align(Alignment.Center)
                 )
@@ -82,13 +98,16 @@ fun GenderCategoryCard(
         }
     }
 }
-}
 
 @Preview(showBackground = true)
 @Composable
 fun GenderCategoryCardPreview() {
     GenderCategoryCard(
-        item = GenderCategoryItem("1", "Men", "https://plus.unsplash.com/premium_photo-1669324357471-e33e71e3f3d8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dXJsfGVufDB8fDB8fHww"),
+        item = GenderCategoryItem(
+            id = "1",
+            label = "MEN",
+            image = R.drawable.image_men
+        ),
         onClick = {})
 }
 

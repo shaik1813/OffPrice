@@ -1,5 +1,7 @@
 package com.apparel.offprice.common.theme
 
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 val primaryColor = Color(0xFF000000)
@@ -38,4 +40,13 @@ val blueRoundColor = Color(0xFF317FCD)
 
 
 val offerCardColor = Color(0xFFB5373D)
+
+val productCardColor = Brush.linearGradient(
+    colors = listOf(
+        Color(0xFFF2F2F2),
+        Color(0xFFE8E8E8)
+    ),
+    start = Offset(0f, 0f),
+    end = Offset(1000f, 1000f)
+)
 

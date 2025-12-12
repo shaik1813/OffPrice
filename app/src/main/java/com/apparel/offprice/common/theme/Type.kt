@@ -5,6 +5,7 @@ import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
@@ -35,7 +36,6 @@ val Typography = Typography(
         fontFamily = wixMadeForDisplayFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
-        letterSpacing = (-1).sp
     ),
     titleMedium = TextStyle(
         fontFamily = wixMadeForDisplayFamily,
@@ -47,45 +47,44 @@ val Typography = Typography(
         fontWeight = FontWeight.Medium,
         fontSize = 11.sp,
         lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
     ),
     bodyLarge = TextStyle(
         fontFamily = wixMadeForDisplayFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
         lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
     ),
     bodyMedium = TextStyle(
         fontFamily = wixMadeForDisplayFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 14.sp,
-        letterSpacing = 0.sp
     ),
     bodySmall = TextStyle(
         fontFamily = wixMadeForDisplayFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 12.sp,
-        letterSpacing = 0.sp
     ),
     labelLarge = TextStyle(
         fontFamily = wixMadeForDisplayFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 14.sp,
-        letterSpacing = 0.sp
     ),
     labelMedium = TextStyle(
         fontFamily = wixMadeForDisplayFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 12.sp,
-        letterSpacing = 0.sp
     ),
     labelSmall = TextStyle(
         fontFamily = wixMadeForDisplayFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 10.sp,
         lineHeight = 14.sp,
-        letterSpacing = (-1).sp
-    )
+    ),
+    displaySmall = TextStyle(
+        fontFamily = wixMadeForTextFamily,
+        fontWeight = FontWeight.W700,
+        fontSize = 10.sp,
+        fontStyle = FontStyle.Italic,
+    ),
 
-)
+    )

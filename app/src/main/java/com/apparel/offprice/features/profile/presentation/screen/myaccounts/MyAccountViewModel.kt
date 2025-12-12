@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.home.presentation.screens.myaccounts
+package com.apparel.offprice.features.profile.presentation.screen.myaccounts
 
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
@@ -42,7 +42,7 @@ class MyAccountViewModel @Inject constructor(
         )
 
     init {
-        setRegionPreference()
+//        setRegionPreference()
         setLanguagePreference()
     }
 

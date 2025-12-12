@@ -51,4 +51,7 @@ sealed interface AppScreen {
     @Serializable
     object ProfileSizeScreen : AppScreen
 
+    @Serializable
+    object ProfilePasswordScreen : AppScreen
+
 }
