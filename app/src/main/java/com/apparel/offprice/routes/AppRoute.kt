@@ -34,12 +34,9 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         composable<AppScreen.SplashScreen> {
             SplashScreen(
                 onNavigateToHomeScreen = {
-                    navController.navigate(AppScreen.HomeScreen) {
+                    navController.navigate(AppScreen.GenderCategoryScreen) {
                         popUpTo(0) { inclusive = true }
                     }
-                },
-                onNavigateToRegionSelection = {
-                    navController.navigate(AppScreen.LocationSelectionScreen)
                 }
             )
         }

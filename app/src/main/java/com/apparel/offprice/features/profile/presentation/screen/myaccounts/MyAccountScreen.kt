@@ -66,8 +66,6 @@ import com.apparel.offprice.features.home.data.model.accountItems
 import com.apparel.offprice.features.home.presentation.component.CircularProgressbar
 import com.apparel.offprice.features.home.presentation.component.CountrySelectionBottomSheet
 import com.apparel.offprice.features.home.presentation.component.LanguageSelectionBottomSheet
-import com.apparel.offprice.features.home.presentation.screens.myaccounts.MyAccountContract
-import com.apparel.offprice.features.home.presentation.screens.myaccounts.MyAccountViewModel
 import com.apparel.offprice.routes.AppScreen
 
 

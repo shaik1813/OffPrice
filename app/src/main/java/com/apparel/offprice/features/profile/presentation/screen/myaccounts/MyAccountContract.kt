@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.home.presentation.screens.myaccounts
+package com.apparel.offprice.features.profile.presentation.screen.myaccounts
 
 import com.apparel.offprice.common.utils.UnidirectionalViewModel
 import com.apparel.offprice.features.home.data.model.Country
