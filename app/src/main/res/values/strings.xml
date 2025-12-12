@@ -98,5 +98,6 @@
     <string name="label_security">Security</string>
     <string name="label_confirm_password">Confirm Password</string>
     <string name="label_ok">OK</string>
+    <string name="label_rrp">RRP</string>
 
 </resources>
