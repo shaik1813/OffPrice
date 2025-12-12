@@ -1,6 +1,7 @@
 package com.apparel.offprice.features.pdp.presentation.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,7 +17,7 @@ import com.apparel.offprice.common.component.carousel.ImageSliderWithIndicatorPD
 
 
 @Composable
-fun ProductImageSection() {
+fun ProductImageSection(onShareClick: () -> Unit) {
     val images = listOf(
         "https://plus.unsplash.com/premium_photo-1669324357471-e33e71e3f3d8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dXJsfGVufDB8fDB8fHww",
         "https://plus.unsplash.com/premium_photo-1690303193898-f9c721d0770b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHVybHxlbnwwfHwwfHx8MA%3D%3D",
@@ -32,11 +33,17 @@ fun ProductImageSection() {
             contentDescription = "App Icon",
             modifier = Modifier.align(Alignment.TopStart).padding(16.dp)
         )
+
+        ViewSimilarCard(modifier =Modifier.align(Alignment.BottomEnd).padding(16.dp),
+            onSimilarClick = {})
+
         Column(modifier = Modifier.align(Alignment.TopEnd).padding(16.dp)) {
             Image(
                 painter = painterResource(id = R.drawable.share_icon),
                 contentDescription = "App Icon",
-                modifier = Modifier.size(40.dp).align(Alignment.End)
+                modifier = Modifier.size(40.dp).align(Alignment.End).clickable(){
+                    onShareClick()
+                }
             )
 
             Spacer(modifier = Modifier.size(12.dp))

@@ -11,19 +11,31 @@ interface PDPContract : UnidirectionalViewModel
 
     data class UiState(
         var isOpenDialog: Boolean = false,
+        var isAddBasketSheet: Boolean = false,
+        var isSizeSelectSheet: Boolean = false,
+        var isShareProductSheet: Boolean = false,
+        var isSizeGuideSheet: Boolean = false,
         val countryItemList: List<Country> = countryList,
-        val languageItemList : List<Language> = languageList,
-        val countrySelected : Country = countryItemList.first(),
-        val languageSelected : Language = languageItemList.first(),
-        val username : String = "Jack Harrington",
+        val languageItemList: List<Language> = languageList,
+        val countrySelected: Country = countryItemList.first(),
+        val languageSelected: Language = languageItemList.first(),
+        val username: String = "Jack Harrington",
         val userEmail: String = "Jackharrington21@gmail.com",
         val isLoading: Boolean = false
     )
 
     sealed interface UiEvent {
-        data class OnCountrySelected(val country: Country) : UiEvent
         data object onOpenBottomSheetLocation : UiEvent
         data object onCloseBottomSheetLocation : UiEvent
+        data object onOpenAddToBagSheet : UiEvent
+        data object onCloseAddToBagSheet : UiEvent
+        data object onOpenSizeSelectSheet : UiEvent
+        data object onCloseSizeSelectSheet : UiEvent
+        data object onOpenShareProductSheet : UiEvent
+        data object onCloseShareProductSheet : UiEvent
+        data object onOpenSizeGuideSheet : UiEvent
+        data object onCloseSizeGuideSheet : UiEvent
+
     }
 
     sealed interface UiEffect {
@@ -31,7 +43,5 @@ interface PDPContract : UnidirectionalViewModel
         object onOpenBottomSheetLocation : UiEffect
         object onCloseBottomSheetLocation : UiEffect
 
-        /* data class AccountItemClick(val item: MyAccountItems): UiEffect
-         data class ShowError(val message: String) : UiEffect*/
     }
 }

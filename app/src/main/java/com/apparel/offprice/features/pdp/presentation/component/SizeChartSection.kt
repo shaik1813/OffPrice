@@ -1,10 +1,10 @@
-package com.apparel.offprice.features.pdp.presentation.screen
+package com.apparel.offprice.features.pdp.presentation.component
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -46,14 +45,14 @@ import com.apparel.offprice.features.pdp.data.model.SizeItem
 
 
 @Composable
-fun SizeSelector() {
+fun SizeSelector(onSizeGuideClick: () -> Unit) {
     val sizes = listOf(
         SizeItem("S", 4),
         SizeItem("M", 1),
         SizeItem("L", 2),
         SizeItem("XL", 0),  // Sold out example
         SizeItem("XXL", 5),
-        SizeItem("XXXL", 0, disabled = true)
+        SizeItem("XXXL", 0, disabled = false)
     )
 
     var selectedSize by remember { mutableStateOf<String?>(null) }
@@ -64,20 +63,21 @@ fun SizeSelector() {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+            verticalAlignment = Alignment.CenterVertically,
+
+            ) {
             Text(
-                text = "SIZE :",
+                text = stringResource(com.apparel.offprice.R.string.size),
                 style = MaterialTheme.typography.titleMedium,
                 color = loginButtonColor,
                 fontSize = 16.sp
             )
 
             Text(
-                text = "Size Guide",
+                text = stringResource(com.apparel.offprice.R.string.size_guide),
                 fontSize = 12.sp,
                 style = MaterialTheme.typography.titleSmall.copy(color = inputTextColor),
-                modifier = Modifier.clickable { }
+                modifier = Modifier.clickable { onSizeGuideClick() },
             )
         }
 
@@ -87,7 +87,7 @@ fun SizeSelector() {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(13.dp)
         ) {
-            items(sizes){ item ->
+            items(sizes) { item ->
                 SizeCard(
                     sizeitem = item,
                     isSelected = selectedSize == item.label,
@@ -104,7 +104,8 @@ fun SizeSelector() {
         /** NOTES */
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
 
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(verticalAlignment = Alignment.CenterVertically)
+            {
                 Icon(
                     painter = painterResource(id = R.drawable.size_info),
                     contentDescription = null,
@@ -132,7 +133,11 @@ fun SizeSelector() {
                 )
             }
         }
+
+
     }
+
+
 }
 
 @Composable
@@ -143,23 +148,22 @@ fun SizeCard(
 ) {
     val backgroundColor = when {
         sizeitem.disabled -> sizeCardColor
-        isSelected -> Color.DarkGray
+        isSelected -> sizeCardColor
         else -> sizeCardColor
     }
 
-    val textColor = if (isSelected) Color.White else Color.Black
+    val textColor = if (isSelected) Color.Black else Color.Black
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
         Box(
             modifier = Modifier
                 .height(40.dp)
-
                 .clip(RoundedCornerShape(6.dp))
                 .background(backgroundColor)
                 .border(
-                    width = if (isSelected) 2.dp else 0.dp,
-                    color = if (isSelected) Color.Red else Color.Transparent,
+                    width = if (isSelected) 1.dp else 0.dp,
+                    color = if (isSelected) Color.Black else Color.Transparent,
                     shape = RoundedCornerShape(6.dp)
                 )
                 .clickable(enabled = !sizeitem.disabled) { onClick() },

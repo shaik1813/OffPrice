@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -26,18 +25,10 @@ import com.apparel.offprice.common.theme.backgroundColor
 import com.apparel.offprice.common.theme.inputTextColor
 import com.apparel.offprice.common.theme.nonReturnbgColor
 import com.apparel.offprice.common.theme.nonreturnTxtColor
-import com.apparel.offprice.features.pdp.presentation.screen.ColorSection
-import com.apparel.offprice.features.pdp.presentation.screen.FreeDeliveryUI
-import com.apparel.offprice.features.pdp.presentation.screen.OfferCardUI
-import com.apparel.offprice.features.pdp.presentation.screen.PaymentCardUI
-import com.apparel.offprice.features.pdp.presentation.screen.PriceSection
-import com.apparel.offprice.features.pdp.presentation.screen.ProductInfoUI
-import com.apparel.offprice.features.pdp.presentation.screen.SizeSelector
-import com.apparel.offprice.features.pdp.presentation.screen.salesEndSection
 
 
 @Composable
-fun ProductDescSection() {
+fun ProductDescSection(onSizeGuideClick : () -> Unit) {
 
     Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
 
@@ -86,7 +77,9 @@ fun ProductDescSection() {
 
         HorizontalDivider(modifier = Modifier.height(1.dp), color = backgroundColor)
 
-        SizeSelector()
+        SizeSelector(onSizeGuideClick ={
+            onSizeGuideClick()
+        })
 
         ColorSection()
 
@@ -98,7 +91,10 @@ fun ProductDescSection() {
 
         ProductInfoUI()
 
+        LikeProductsUI()
     }
+
+
 
 
 }

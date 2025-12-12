@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.pdp.presentation.screen
+package com.apparel.offprice.features.pdp.presentation.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -51,7 +51,7 @@ fun PaymentCardUI() {
             )
 
             Text(
-                text = "D 35.00",
+                text = "฿ 35.00",
                 color = loginButtonColor,
                 fontSize = 14.sp,
                 modifier = Modifier.padding(top = 8.dp),
