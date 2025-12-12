@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -19,10 +20,10 @@ fun ProductGrid(
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize()
+            .padding(8.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        /*horizontalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(16.dp)*/
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
 
         items(products) { product ->
@@ -30,7 +31,6 @@ fun ProductGrid(
             // Each card takes full width inside its column
             ProductCard(
                 product = product,
-                isSelected = false,
                 onWishlistClick = { onWishlistClick(product) },
                 modifier = Modifier
                     .fillMaxWidth()

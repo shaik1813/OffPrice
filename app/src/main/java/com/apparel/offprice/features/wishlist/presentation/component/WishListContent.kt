@@ -34,8 +34,10 @@ fun WishList(
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize()
+            .padding(all = 8.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(wishlistItem) { product ->
             Column(
@@ -43,7 +45,6 @@ fun WishList(
             ) {
                 ProductCard(
                     product = product.copy(isWishlist = true),
-                    isSelected = false,
                     onWishlistClick = {
                         onWishListClicked(product)
                     },
@@ -55,8 +56,7 @@ fun WishList(
                 )
                 OutlinedButton(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 6.dp),
+                        .fillMaxWidth(),
                     onClick = { addToCartItem(product) },
                     shape = RoundedCornerShape(8.dp)
                 ) {
