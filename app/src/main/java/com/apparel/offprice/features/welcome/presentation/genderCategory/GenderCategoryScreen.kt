@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -32,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.nonreturnTxtColor
 import com.apparel.offprice.features.welcome.data.model.genderCategories
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,7 +54,9 @@ fun GenderCategoryScreen(
             title = {
                 Image(
                     painter = painterResource(R.drawable.icon_off_price),
-                    contentDescription = "App name"
+                    contentDescription = "App name",
+                    modifier = Modifier
+                        .size(width = 100.dp , height = 20.dp)
                 )
             },
             actions = {
@@ -82,21 +86,13 @@ fun GenderCategoryScreen(
             colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = Color.White
             ),
-            windowInsets = WindowInsets(0, 0, 0, 0),
-            modifier = Modifier
-                .shadow(
-                    elevation = 6.dp,
-                    spotColor = Color.Gray
-                ),
+            windowInsets = WindowInsets(0, 0, 0, 0)
         )
-
+        HorizontalDivider()
         Spacer(modifier = Modifier.height(20.dp))
-
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White)
                 .padding(horizontal = 16.dp)
         ) {
             // Title
@@ -111,7 +107,7 @@ fun GenderCategoryScreen(
             Text(
                 text = stringResource(R.string.label_shop_by_category),
                 style = MaterialTheme.typography.bodyMedium.copy(
-                    color = Color.Gray,
+                    color = nonreturnTxtColor,
                     fontSize = 12.sp
                 )
             )

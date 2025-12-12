@@ -13,12 +13,10 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
-    onNavigateToRegionSelection:() -> Unit,
     onNavigateToHomeScreen:() -> Unit,
     viewModel: SplashViewModel = hiltViewModel()
 ){
 
-    val region by viewModel.regionPreference.collectAsStateWithLifecycle()
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -26,11 +24,7 @@ fun SplashScreen(
         CircularProgressIndicator()
         LaunchedEffect(Unit){
             delay(1000)
-            if (region?.isEmpty() == true){
-                onNavigateToRegionSelection()
-            }else{
-                onNavigateToHomeScreen()
-            }
+            onNavigateToHomeScreen()
         }
     }
 }
