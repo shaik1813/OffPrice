@@ -32,6 +32,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.apparel.offprice.features.cart.presentation.screen.CartScreen
 import com.apparel.offprice.features.home.data.model.bottomNavItems
 import com.apparel.offprice.features.plp.presentation.screens.PLPScreen
 import com.apparel.offprice.features.profile.presentation.screen.myaccounts.MyAccountScreen
@@ -79,7 +80,7 @@ fun HomeScreen(outerNavControl: NavHostController) {
                         }
                     )
                 }
-                composable<BottomNavScreen.Item4> { Greeting("Cart") }
+                composable<BottomNavScreen.Item4> { CartScreen() }
                 composable<BottomNavScreen.Item5>{
                     MyAccountScreen(
                         isGuestUser = false,
