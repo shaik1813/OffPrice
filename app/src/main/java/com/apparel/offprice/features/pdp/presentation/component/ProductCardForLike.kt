@@ -70,7 +70,7 @@ fun ProductCardForLike(
         ) {
 
             Image(
-                painter = painterResource(product.image),
+                painter = painterResource(product.image.get(0)),
                 contentDescription = product.title,
                 modifier = Modifier
                     .width(screenWidth.dp)      // Image width = 90% of the card
@@ -158,7 +158,7 @@ fun ProductCardForLike(
         Row(verticalAlignment = Alignment.CenterVertically) {
 
             Text(
-                text = "฿ ${product.price}",
+                text = "฿ ${product.basePrice}",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
