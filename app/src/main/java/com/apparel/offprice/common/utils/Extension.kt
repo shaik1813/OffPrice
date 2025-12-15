@@ -1,5 +1,6 @@
 package com.apparel.offprice.common.utils
 
+import java.util.Locale
 
 
 fun String.takeInitials(): String{
@@ -7,3 +8,17 @@ fun String.takeInitials(): String{
         .splitToSequence(" ").take(2).map{it.first()}
         .joinToString("").uppercase()
 }
+
+private fun formatTwoDecimal(value: Double): String {
+    return String.format(Locale.US, "%.2f", value)
+}
+
+fun Int.toTwoDecimalString(): String =
+    formatTwoDecimal(this.toDouble())
+
+fun Float.toTwoDecimalString(): String =
+    formatTwoDecimal(this.toDouble())
+
+fun Double.toTwoDecimalString(): String =
+    formatTwoDecimal(this)
+

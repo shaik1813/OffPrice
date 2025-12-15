@@ -121,4 +121,16 @@
     <string name="label_denim_size">Denim Size(Alpha)</string>
     <string name="label_shoe_size">Shoe Size</string>
 
+
+    <string name="store_credit_total_balance">Total Balance</string>
+    <string name="store_credit_credits_received">Credits received</string>
+    <string name="store_credit_credits_used">Credits Used</string>
+    <string name="store_credit_filter_all">All</string>
+    <string name="store_credit_filter_received">Received</string>
+    <string name="store_credit_filter_used">Used</string>
+    <string name="store_credit_order_label">Order - %1$s</string>
+    <string name="store_credit_refunded_on">Refunded on -</string>
+    <string name="store_credit_amount_positive">+%1$.0f Credits</string>
+    <string name="store_credit_amount_negative">-%1$.0f Credits</string>
+
 </resources>

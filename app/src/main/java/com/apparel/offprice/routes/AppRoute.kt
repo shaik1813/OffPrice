@@ -12,6 +12,7 @@ import com.apparel.offprice.features.profile.presentation.screen.profileDetails.
 import com.apparel.offprice.features.profile.presentation.screen.profileSize.ProfileSizeScreen
 import com.apparel.offprice.features.profile.presentation.screen.profilePassword.ProfilePasswordScreen
 import com.apparel.offprice.features.profile.presentation.screen.userprofile.UserProfileScreen
+import com.apparel.offprice.features.storeCredit.presentation.screen.StoreCreditScreen
 import com.apparel.offprice.features.storeLocator.presentation.screen.StoreLocatorScreen
 import com.apparel.offprice.features.welcome.presentation.genderCategory.GenderCategoryScreen
 import com.apparel.offprice.features.welcome.presentation.location.ChooseLocationScreen
@@ -161,6 +162,12 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                 onNavigateBack = {
                     navController.popBackStack()
                 }
+            )
+        }
+
+        composable<AppScreen.StoreCreditScreen> {
+            StoreCreditScreen(
+                onNavigateBack = {navController.popBackStack()}
             )
         }
 

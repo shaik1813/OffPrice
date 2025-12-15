@@ -115,6 +115,7 @@ fun HomeScreen(outerNavControl: NavHostController) {
 
                                 5 -> {
                                     //Store Credit
+                                    outerNavControl.navigate(AppScreen.StoreCreditScreen) {}
                                 }
 
                                 6 -> {
