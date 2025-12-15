@@ -54,4 +54,7 @@ sealed interface AppScreen {
     @Serializable
     object ProfilePasswordScreen : AppScreen
 
+    @Serializable
+    object StoreCreditScreen : AppScreen
+
 }
