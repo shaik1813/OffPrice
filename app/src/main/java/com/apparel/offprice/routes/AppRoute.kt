@@ -149,7 +149,11 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.ProfileSizeScreen> {
-            ProfileSizeScreen()
+            ProfileSizeScreen(
+                onNavigateToBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable<AppScreen.ProfilePasswordScreen> {
