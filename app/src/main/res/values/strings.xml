@@ -125,5 +125,23 @@
     <string name="are_you_sure_you_want_to_delete_this_item">ARE YOU SURE YOU WANT TO DELETE THIS ITEM?</string>
     <string name="delete">DELETE</string>
     <string name="cancel">CANCEL</string>
+    <string name="label_selected_size">Selected Size:</string>
+    <string name="label_clear_all">CLEAR ALL</string>
+    <string name="label_make_primary">Make Primary</string>
+    <string name="label_clothing_size">Clothing Size</string>
+    <string name="label_denim_size">Denim Size(Alpha)</string>
+    <string name="label_shoe_size">Shoe Size</string>
+
+
+    <string name="store_credit_total_balance">Total Balance</string>
+    <string name="store_credit_credits_received">Credits received</string>
+    <string name="store_credit_credits_used">Credits Used</string>
+    <string name="store_credit_filter_all">All</string>
+    <string name="store_credit_filter_received">Received</string>
+    <string name="store_credit_filter_used">Used</string>
+    <string name="store_credit_order_label">Order - %1$s</string>
+    <string name="store_credit_refunded_on">Refunded on -</string>
+    <string name="store_credit_amount_positive">+%1$.0f Credits</string>
+    <string name="store_credit_amount_negative">-%1$.0f Credits</string>
 
 </resources>
