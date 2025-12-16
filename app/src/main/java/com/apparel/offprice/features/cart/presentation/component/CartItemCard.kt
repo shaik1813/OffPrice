@@ -178,7 +178,7 @@ fun CartItemCard(
                                 contentDescription = "Delete",
                                 modifier = Modifier
                                     .size(24.dp)
-                                    .clickable { onDelete }
+                                    .clickable {  }
                             )
 
 
@@ -189,7 +189,7 @@ fun CartItemCard(
                                 contentDescription = "Delete",
                                 modifier = Modifier
                                     .size(24.dp)
-                                    .clickable { onDelete }
+                                    .clickable { onDelete() }
                             )
 
 
@@ -211,11 +211,10 @@ fun CartItemCard(
 
 @Composable
 fun OfferPricePart() {
-    Row() {
+    Row{
         Text(text = "RRP ฿ 172.00", color = Color(0xFF575959), fontSize = 10.sp)
         Spacer(modifier = Modifier.size(5.dp))
         Text(text = "(90% OFF)", fontSize = 10.sp, color = Color(0xFFED1D2C))
-
     }
 }
 

@@ -114,6 +114,17 @@
     <string name="label_confirm_password">Confirm Password</string>
     <string name="label_ok">OK</string>
     <string name="label_rrp">RRP</string>
+    <string name="apply_coupon">APPLY COUPON</string>
+    <string name="gift_card">GIFT CARD</string>
+    <string name="apply">Apply</string>
+    <string name="pin">Pin</string>
+    <string name="coupon_code">COUPON CODE</string>
+    <string name="view_all_offers">VIEW ALL OFFERS</string>
+    <string name="apply_code">Apply Code</string>
+    <string name="bank_coupon">BANK COUPON</string>
+    <string name="are_you_sure_you_want_to_delete_this_item">ARE YOU SURE YOU WANT TO DELETE THIS ITEM?</string>
+    <string name="delete">DELETE</string>
+    <string name="cancel">CANCEL</string>
     <string name="label_selected_size">Selected Size:</string>
     <string name="label_clear_all">CLEAR ALL</string>
     <string name="label_make_primary">Make Primary</string>
