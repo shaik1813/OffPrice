@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,12 +23,51 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
+import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.cart.presentation.component.CartItemCard
+import com.apparel.offprice.features.cart.presentation.component.CouponOfferBottomSheet
+import com.apparel.offprice.features.cart.presentation.component.DeleteConfirmationDialog
+import com.apparel.offprice.features.cart.presentation.component.FreeShipCard
+import com.apparel.offprice.features.cart.presentation.component.GiftCard
+import com.apparel.offprice.features.cart.presentation.component.PaymentCard
+import com.apparel.offprice.features.pdp.presentation.component.AddToBasketBottomSheet
+import com.apparel.offprice.features.pdp.presentation.component.CouponCard
+import com.apparel.offprice.features.pdp.presentation.screen.PDPContract
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CartScreen() {
+fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
+
+    var (state, event, effect) = use(viewModel = viewModel)
+
+    if (state.isCouponOfferSheet) {
+        CouponOfferBottomSheet(
+            sheetState = rememberModalBottomSheetState(),
+            onClose = {
+            event(CartContract.UiEvent.onCloseBottomSheetOffer)
+        }, onApply = {
+            event(CartContract.UiEvent.onCloseBottomSheetOffer)
+        })
+    }
+
+
+    if(state.isDeleteCartDialog){
+        DeleteConfirmationDialog(
+            onDelete = {
+                event(CartContract.UiEvent.onCloseDeleteCartConfirm)
+            },
+            onCancel = {
+                event(CartContract.UiEvent.onCloseDeleteCartConfirm)
+            },
+            onDismiss = {
+                event(CartContract.UiEvent.onCloseDeleteCartConfirm)
+            }
+        )
+    }
+
 
     Column(modifier = Modifier.fillMaxSize()) {
 
@@ -55,15 +96,32 @@ fun CartScreen() {
                     qty = "01",
                     deliveryText = "DELIVERY BY 06 NOV, THU",
                     image = painterResource(id = R.drawable.colorimg),
-                    onDelete = { }
+                    onDelete = {
+                        event(CartContract.UiEvent.onOpenDeleteCartConfirm)
+                    }
                 )
             }
 
+            item{
+                FreeShipCard()
+            }
 
+            item{
+                CouponCard(OfferClick = {
+                      event(CartContract.UiEvent.onOpenBottomSheetOffer)
+                })
+            }
+
+            item{
+                GiftCard()
+            }
+
+            item{
+                PaymentCard()
+            }
         }
 
 
-        Spacer(modifier = Modifier.size(24.dp))
 
     }
 

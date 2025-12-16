@@ -189,7 +189,7 @@ fun CartItemCard(
                                 contentDescription = "Delete",
                                 modifier = Modifier
                                     .size(24.dp)
-                                    .clickable { onDelete }
+                                    .clickable { onDelete() }
                             )
 
 
