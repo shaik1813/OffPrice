@@ -50,6 +50,18 @@ class CartViewModel @Inject constructor(
                 }
             }
 
+            CartContract.UiEvent.OnToggleCheckedClubPoint -> {
+                viewModelScope.launch {
+                    updateState { it.copy(isCheckedClub = !it.isCheckedClub) }
+                }
+            }
+
+            CartContract.UiEvent.OnToggleCheckedStorePoint -> {
+                viewModelScope.launch {
+                    updateState { it.copy(isCheckedStore = !it.isCheckedStore) }
+                }
+            }
+
         }
     }
 

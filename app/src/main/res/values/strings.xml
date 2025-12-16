@@ -143,5 +143,8 @@
     <string name="store_credit_refunded_on">Refunded on -</string>
     <string name="store_credit_amount_positive">+%1$.0f Credits</string>
     <string name="store_credit_amount_negative">-%1$.0f Credits</string>
+    <string name="use_credits">USE CREDITS</string>
+    <string name="ca_points">CA Points -</string>
+    <string name="store_credits">Store Credits</string>
 
 </resources>
