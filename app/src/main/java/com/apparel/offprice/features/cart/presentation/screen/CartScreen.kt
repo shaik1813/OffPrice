@@ -26,15 +26,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
 import com.apparel.offprice.common.utils.use
+import com.apparel.offprice.features.cart.data.creditsData
 import com.apparel.offprice.features.cart.presentation.component.CartItemCard
 import com.apparel.offprice.features.cart.presentation.component.CouponOfferBottomSheet
 import com.apparel.offprice.features.cart.presentation.component.DeleteConfirmationDialog
 import com.apparel.offprice.features.cart.presentation.component.FreeShipCard
-import com.apparel.offprice.features.cart.presentation.component.GiftCard
 import com.apparel.offprice.features.cart.presentation.component.PaymentCard
-import com.apparel.offprice.features.pdp.presentation.component.AddToBasketBottomSheet
+import com.apparel.offprice.features.cart.presentation.component.UseCreditsCard
 import com.apparel.offprice.features.pdp.presentation.component.CouponCard
-import com.apparel.offprice.features.pdp.presentation.screen.PDPContract
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,14 +46,14 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
         CouponOfferBottomSheet(
             sheetState = rememberModalBottomSheetState(),
             onClose = {
-            event(CartContract.UiEvent.onCloseBottomSheetOffer)
-        }, onApply = {
-            event(CartContract.UiEvent.onCloseBottomSheetOffer)
-        })
+                event(CartContract.UiEvent.onCloseBottomSheetOffer)
+            }, onApply = {
+                event(CartContract.UiEvent.onCloseBottomSheetOffer)
+            })
     }
 
 
-    if(state.isDeleteCartDialog){
+    if (state.isDeleteCartDialog) {
         DeleteConfirmationDialog(
             onDelete = {
                 event(CartContract.UiEvent.onCloseDeleteCartConfirm)
@@ -67,6 +66,7 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
             }
         )
     }
+
 
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -102,25 +102,34 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
                 )
             }
 
-            item{
+            item {
                 FreeShipCard()
             }
 
-            item{
+            item {
                 CouponCard(OfferClick = {
-                      event(CartContract.UiEvent.onOpenBottomSheetOffer)
+                    event(CartContract.UiEvent.onOpenBottomSheetOffer)
                 })
             }
 
-         /*   item{   it will be phase-2
-                GiftCard()
-            }*/
+            /*   item{   it will be phase-2
+                   GiftCard()
+               }*/
 
-            item{
+            item {
                 PaymentCard()
             }
-        }
 
+
+            item {
+                UseCreditsCard(
+                    creditsData,
+                    caPointsChecked = state.isCheckedClub,
+                    storeCreditsChecked = state.isCheckedStore,
+                    onCaPointsToggle = { event(CartContract.UiEvent.OnToggleCheckedClubPoint) },
+                    onStoreCreditsToggle = { event(CartContract.UiEvent.OnToggleCheckedStorePoint) })
+            }
+        }
 
 
     }

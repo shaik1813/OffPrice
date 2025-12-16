@@ -1,6 +1,5 @@
 package com.apparel.offprice.features.authentication.presentation.component
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -16,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.apparel.offprice.common.theme.inputTextColor
 import com.apparel.offprice.common.theme.lineColor
 
 @Composable
