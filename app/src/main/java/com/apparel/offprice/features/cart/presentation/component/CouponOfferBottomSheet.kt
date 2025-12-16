@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -27,6 +29,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.backgroundColor
+import com.apparel.offprice.features.cart.data.couponItem
+import com.apparel.offprice.features.cart.data.couponList
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,30 +65,22 @@ fun CouponOfferBottomSheet(
             Spacer(modifier = Modifier.size(10.dp))
 
             // Coupon List
-            CouponCard(
-                title = "Get ₹10 off*",
-                code = "GET10",
-                description = "Maximum Cashback Limit is ₹10 off*",
-                onApply = { onApply("GET10") }
-            )
+            LazyColumn() {
+                items(couponList){ item ->
+                    CouponCard(
+                        title = item.title,
+                        code = item.code,
+                        description = item.desc,
+                        onItemClick = { onApply(it) }
+                    )
 
-            CouponCard(
-                title = "30% Cashback",
-                code = "CASHBACK30",
-                description = "Maximum Cashback Limit is ₹10 off*",
-                onApply = { onApply("CASHBACK30") }
-            )
+                }
+            }
 
-            CouponCard(
-                title = "Extra 20% off*",
-                code = "EXTRA20",
-                description = "Maximum Cashback Limit is ₹10 off*",
-                onApply = { onApply("EXTRA20") }
-            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            BankCouponSection()
+            BankCouponSection(couponItem)
         }
     }
 }

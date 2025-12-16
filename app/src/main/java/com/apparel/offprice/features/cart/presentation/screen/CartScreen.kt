@@ -95,7 +95,7 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
                     size = "L",
                     qty = "01",
                     deliveryText = "DELIVERY BY 06 NOV, THU",
-                    image = painterResource(id = R.drawable.colorimg),
+                    image = painterResource(id = R.drawable.product_item_1),
                     onDelete = {
                         event(CartContract.UiEvent.onOpenDeleteCartConfirm)
                     }
@@ -112,9 +112,9 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
                 })
             }
 
-            item{
+         /*   item{   it will be phase-2
                 GiftCard()
-            }
+            }*/
 
             item{
                 PaymentCard()

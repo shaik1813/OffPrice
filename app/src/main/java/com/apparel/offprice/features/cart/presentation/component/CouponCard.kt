@@ -37,7 +37,7 @@ fun CouponCard(
     title: String,
     code: String,
     description: String,
-    onApply: () -> Unit
+    onItemClick: (String) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -153,7 +153,7 @@ fun CouponCard(
                         text = stringResource(R.string.apply_code),
                         style = MaterialTheme.typography.titleMedium,
                         fontSize = 13.sp,
-                        modifier = Modifier.clickable { onApply() }
+                        modifier = Modifier.clickable { onItemClick(code) }
                     )
                 }
             }

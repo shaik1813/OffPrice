@@ -26,10 +26,11 @@ import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.lineColor
 import com.apparel.offprice.common.theme.loginButtonColor
+import com.apparel.offprice.features.cart.data.BankCouponItems
 
 
 @Composable
-fun BankCouponSection() {
+fun BankCouponSection(item: BankCouponItems) {
     Column(
         modifier = Modifier.padding(horizontal = 16.dp)
     ) {
@@ -106,22 +107,17 @@ fun BankCouponSection() {
                 Column(modifier = Modifier.align(Alignment.CenterStart)
                     .padding(start = 6.dp)) {
                     Text(
-                        "With FAB Emirati Islamic Credit Card",
+                        item.title,
                         style = MaterialTheme.typography.bodyMedium,
                         fontSize = 12.sp,
                         color = loginButtonColor
                     )
-                    Text(
-                        "Valid On All Categories",
-                        fontSize = 12.sp,
-                        color = loginButtonColor,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
+
 
                     Spacer(modifier = Modifier.size(2.dp))
 
                     Text(
-                        "(Min. Purchase AED 20)",
+                        item.desc,
                         fontSize = 12.sp,
                         color = lineColor,
                         style = MaterialTheme.typography.bodyMedium
