@@ -62,13 +62,13 @@ fun CreditSummaryCard(
                     modifier = Modifier
                         .size(24.dp)
                         .clip(CircleShape)
-                        .background(accentColor),
+                        .background(Color.White),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
                         painter = painterResource(drawable),
                         contentDescription = title,
-                        tint = Color.White,
+                        tint = accentColor,
                         modifier = Modifier.size(14.dp),
                     )
                 }

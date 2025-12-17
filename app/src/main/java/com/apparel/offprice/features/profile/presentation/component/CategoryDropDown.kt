@@ -1,26 +1,30 @@
 package com.apparel.offprice.features.profile.presentation.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.apparel.offprice.R
@@ -41,6 +45,7 @@ fun CategoryDropdown(
     label: String,
     categoriesList: List<String>,
     selectedCategory: String,
+    placeholder: String = "",
     enabled: Boolean,
     onCategorySelected: (String) -> Unit
 ) {
@@ -56,47 +61,70 @@ fun CategoryDropdown(
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = {
-            if (enabled) { expanded = it }
+            if (enabled) {
+                expanded = it
+            }
         }
     ) {
-        OutlinedTextField(
-            value = selectedCategory,
-            onValueChange = {},
-            readOnly = true,
-            enabled = enabled,
-            textStyle = MaterialTheme.typography.bodySmall,
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .border(
-                    width = 0.75.dp,
-                    color = lineColor,
-                    shape = MaterialTheme.shapes.small
-                )
-                .menuAnchor(),
-            trailingIcon = {
-                if (enabled) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.down_arrow),
-                        contentDescription = "Dropdown Arrow",
-                        modifier = Modifier.size(16.dp)
-                    )
+                .background(Color.White,shape = MaterialTheme.shapes.small)
+                .height(42.dp)
+        ) {
+            BasicTextField(
+                value = selectedCategory,
+                onValueChange = { },
+                textStyle = MaterialTheme.typography.bodySmall,
+                singleLine = true,
+                enabled = enabled,
+                cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .menuAnchor(),
+                decorationBox = { innerTextField ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .border(
+                                width = 0.75.dp,
+                                color = MaterialTheme.colorScheme.background,
+                                shape = MaterialTheme.shapes.small
+                            )
+                            .padding(horizontal = 12.dp),
+                        contentAlignment = Alignment.CenterStart
+                    ) {
+                        if (selectedCategory.isEmpty()) {
+                            Text(
+                                text = placeholder,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = lineColor
+                            )
+                        }
+                        innerTextField()
+                        if (enabled) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.down_arrow),
+                                contentDescription = "Dropdown Arrow",
+                                modifier = Modifier
+                                .align(Alignment.CenterEnd)
+                                .size(16.dp)
+                            )
+                        }
+                    }
                 }
-            },
-            shape = MaterialTheme.shapes.small,
-            singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(
-                disabledContainerColor = Color.White,
-                focusedContainerColor = Color.White,
-                unfocusedContainerColor = Color.White,
-                focusedBorderColor = Color.Transparent,
-                unfocusedBorderColor = Color.Transparent,
-                errorBorderColor = Color.Transparent,
-                disabledBorderColor = Color.Transparent,
-                disabledTextColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
-                disabledTrailingIconColor = MaterialTheme.colorScheme.onSurface
             )
-        )
-
+            if (!enabled) {
+                Box(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .background(
+                            color = Color.White.copy(alpha = 0.5f),
+                            shape = MaterialTheme.shapes.small
+                        )
+                )
+            }
+        }
         ExposedDropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },

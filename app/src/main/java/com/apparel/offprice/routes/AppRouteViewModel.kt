@@ -14,4 +14,6 @@ import javax.inject.Inject
 @HiltViewModel
 class AppRouteViewModel @Inject constructor(
     private val userPreferences: UserPreferences
-) : ViewModel() {}
+) : ViewModel() {
+
+}

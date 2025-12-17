@@ -13,19 +13,19 @@ import com.apparel.offprice.R
 @Composable
 fun CartCheckboxBox(
     checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit
+    onCheckedChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = Modifier
-            .size(10.dp)
+        modifier = modifier
             .clickable { onCheckedChange(!checked) }
     ) {
         Image(
             painter = painterResource(
                 id = if (checked)
-                    R.drawable.checked
+                    R.drawable.icon_checked_checkbox
                 else
-                    R.drawable.uncheck
+                    R.drawable.icon_unchecked_checkbox
             ),
             contentDescription = null
         )
