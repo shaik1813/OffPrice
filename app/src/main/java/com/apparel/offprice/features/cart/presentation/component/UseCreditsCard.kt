@@ -113,7 +113,8 @@ fun CreditRow(
 
             CartCheckboxBox(
                 checked = checked,
-                onCheckedChange = { onCheckedChange(it) }
+                onCheckedChange = { onCheckedChange(it) },
+                modifier = Modifier.size(10.dp)
             )
 
             Image(

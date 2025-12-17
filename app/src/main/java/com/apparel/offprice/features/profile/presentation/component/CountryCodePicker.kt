@@ -55,16 +55,16 @@ fun CountryCodePicker(
                         color = MaterialTheme.colorScheme.surface,
                         shape = RoundedCornerShape(8.dp)
                     )
-                    .padding(12.dp)
+                    .padding(6.dp)
                     .menuAnchor(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
                     painter = painterResource(id = selected.countryFlag),
                     contentDescription = selected.countryName,
-                    modifier = Modifier.size(28.dp)
+                    modifier = Modifier.size(20.dp)
                 )
-                Spacer(Modifier.width(8.dp))
+                Spacer(Modifier.width(6.dp))
                 Text(
                     text = selected.countryCode,
                     color = MaterialTheme.colorScheme.primary,

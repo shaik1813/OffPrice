@@ -115,7 +115,7 @@ fun HomeScreen(outerNavControl: NavHostController) {
 
                                 5 -> {
                                     //Store Credit
-                                    outerNavControl.navigate(AppScreen.StoreCreditScreen) {}
+                                    outerNavControl.navigate(AppScreen.StoreCreditScreen)
                                 }
 
                                 6 -> {
@@ -124,6 +124,7 @@ fun HomeScreen(outerNavControl: NavHostController) {
 
                                 7 -> {
                                     //Delivery Address
+                                    outerNavControl.navigate(AppScreen.DeliveryAddressScreen)
                                 }
 
                                 8 -> {

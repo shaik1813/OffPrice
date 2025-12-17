@@ -92,7 +92,7 @@ private fun StoreCreditContent(
     ) {
         DefaultTopAppBar(
             title = stringResource(R.string.label_store_credit),
-            onBackPressed = { onBack }
+            onBackPressed = { onBack() }
         )
         HorizontalDivider(thickness = 1.dp)
         Spacer(modifier = Modifier.height(12.dp))

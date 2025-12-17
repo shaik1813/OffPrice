@@ -1,18 +1,13 @@
 package com.apparel.offprice.features.profile.presentation.component
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.apparel.offprice.common.theme.lineColor
+import com.apparel.offprice.common.component.AppBasicTextField
 
 /**
  * A reusable composable that displays a label and an outlined text field.
@@ -27,6 +22,7 @@ fun LabeledField(
     label: String,
     value: String,
     enabled: Boolean,
+    placeholder: String = "",
     onValueChange: (String) -> Unit
 ) {
     Text(
@@ -35,31 +31,13 @@ fun LabeledField(
         color = MaterialTheme.colorScheme.primary
     )
     Spacer(Modifier.height(6.dp))
-    OutlinedTextField(
+    AppBasicTextField(
         value = value,
-        onValueChange = { if (enabled) onValueChange(it) },
-        textStyle = MaterialTheme.typography.bodySmall,
         enabled = enabled,
-        modifier = Modifier
-            .fillMaxWidth()
-            .border(
-                width = 0.75.dp,
-                color = lineColor,
-                shape = MaterialTheme.shapes.small
-            ),
-        shape = MaterialTheme.shapes.small,
-        singleLine = true,
-        colors = OutlinedTextFieldDefaults.colors(
-            disabledContainerColor = Color.White,
-            focusedContainerColor = Color.White,
-            unfocusedContainerColor = Color.White,
-            focusedBorderColor = Color.Transparent,
-            unfocusedBorderColor = Color.Transparent,
-            errorBorderColor = Color.Transparent,
-            disabledBorderColor = Color.Transparent,
-            cursorColor = MaterialTheme.colorScheme.primary
-        )
+        placeholder = placeholder,
+        onValueChange = { if (enabled) onValueChange(it) },
     )
     Spacer(Modifier.height(4.dp))
-
 }
+
+
