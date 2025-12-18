@@ -13,10 +13,12 @@ interface CartContract : UnidirectionalViewModel
         var isCheckedClub: Boolean = false,
         var isCheckedStore: Boolean = false,
         var isQuantitySheet: Boolean = false,
+        var isOfferDialog: Boolean = false,
         val couponCode: String = "WELCOME",
         val isApplied: Boolean = false,
-        var isOpenShipFee: Boolean = false
-    )
+        var isOpenShipFee: Boolean = false,
+        var isCartEmpty: Boolean = false,
+        )
 
     sealed interface UiEvent {
         data object onOpenBottomSheetOffer : UiEvent
@@ -27,12 +29,13 @@ interface CartContract : UnidirectionalViewModel
         data object OnToggleCheckedStorePoint : UiEvent
         data object OnOpenQuantitySheet : UiEvent
         data object OnCloseQuantitySheet : UiEvent
-
         data class OnCouponChanged(val value: String) : UiEvent
         object OnApplyToggleClick : UiEvent
         data class OnApplyCoupon(val code: String) : UiEvent
-
         object OnShipFeeClick : UiEvent
+        data object OnOpenOfferDetailDialog : UiEvent
+        data object OnCloseOfferDetailDialog : UiEvent
+
 
     }
 

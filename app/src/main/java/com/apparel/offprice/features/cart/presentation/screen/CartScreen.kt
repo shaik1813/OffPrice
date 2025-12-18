@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -27,19 +28,26 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
 import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.cart.data.creditsData
 import com.apparel.offprice.features.cart.data.priceData
+import com.apparel.offprice.features.cart.presentation.component.CartBottomView
+import com.apparel.offprice.features.cart.presentation.component.CartEmptyScreen
 import com.apparel.offprice.features.cart.presentation.component.CartItemCard
 import com.apparel.offprice.features.cart.presentation.component.CouponOfferBottomSheet
 import com.apparel.offprice.features.cart.presentation.component.DeleteConfirmationDialog
 import com.apparel.offprice.features.cart.presentation.component.FreeShipCard
+import com.apparel.offprice.features.cart.presentation.component.OfferDetailsDialog
 import com.apparel.offprice.features.cart.presentation.component.PaymentCard
 import com.apparel.offprice.features.cart.presentation.component.QuantityBottomSheet
 import com.apparel.offprice.features.cart.presentation.component.UseCreditsCard
 import com.apparel.offprice.features.pdp.presentation.component.CouponCard
+import com.apparel.offprice.features.pdp.presentation.component.ElevatedLine
+import com.apparel.offprice.features.pdp.presentation.component.PDPBottomView
+import com.apparel.offprice.features.pdp.presentation.screen.PDPContract
 import features.cart.presentation.component.PriceSummaryCard
 
 
@@ -62,6 +70,9 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
                 event(CartContract.UiEvent.onCloseBottomSheetOffer)
                 event(CartContract.UiEvent.OnCouponChanged(it))
                 event(CartContract.UiEvent.OnApplyCoupon(it))
+            },
+            onOfferDetailClick = {
+                event(CartContract.UiEvent.OnOpenOfferDetailDialog)
             })
     }
 
@@ -94,99 +105,135 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
         )
     }
 
-    LaunchedEffect(viewModel    ) {
+    if(state.isOfferDialog){
+        OfferDetailsDialog(onDismiss = {
+            event(CartContract.UiEvent.OnCloseOfferDetailDialog)
+        })
+    }
+
+    LaunchedEffect(viewModel) {
         viewModel.effect.collect { effect ->
             when (effect) {
                 is CartContract.UiEffect.ShowMessage -> {
-                   Toast.makeText(context,effect.message,Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
 
-        CartToolBar()
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(1.dp)
-                .shadow(1.dp)
-                .background(Color.Transparent)
-        )
 
-        Spacer(modifier = Modifier.size(20.dp))
 
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
+    Box() {
+        Column(modifier = Modifier.fillMaxSize()) {
 
-            items(3) {
-                CartItemCard(
-                    brand = "ADIDAS",
-                    title = "Printed Shirt With Crew Neck And Short Sleeves",
-                    price = "฿ 35.00",
-                    oldPrice = "฿ 496.00",
-                    color = "Blue",
-                    size = "L",
-                    qty = "01",
-                    deliveryText = "DELIVERY BY 06 NOV, THU",
-                    image = painterResource(id = R.drawable.product_item_1),
-                    selectQuantity = {
-                        event(CartContract.UiEvent.OnOpenQuantitySheet)
-                    },
-                    onDelete = {
-                        event(CartContract.UiEvent.onOpenDeleteCartConfirm)
-                    }
-                )
+            CartToolBar()
+
+            ElevationBottom()
+
+            if(state.isCartEmpty) {
+                CartEmptyScreen(onStartShoppingClick = {})
+                return
             }
 
-            item {
-                FreeShipCard()
-            }
+            Spacer(modifier = Modifier.size(20.dp))
 
-            item {
-                CouponCard(
-                    state,
-                    OnApply = {
-                        event(CartContract.UiEvent.OnApplyToggleClick)
-                    },
-                    OnCouponChange = {
-                        event(CartContract.UiEvent.OnCouponChanged(it))
-                    },
-                    OfferClick = {
-                        event(CartContract.UiEvent.onOpenBottomSheetOffer)
-                    })
-            }
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
 
-            /*   item{   it will be phase-2
-                   GiftCard()
-               }*/
+                items(3) {
+                    CartItemCard(
+                        brand = "ADIDAS",
+                        title = "Printed Shirt With Crew Neck And Short Sleeves",
+                        price = "฿ 35.00",
+                        oldPrice = "฿ 496.00",
+                        color = "Blue",
+                        size = "L",
+                        qty = "01",
+                        deliveryText = "DELIVERY BY 06 NOV, THU",
+                        image = painterResource(id = R.drawable.product_item_1),
+                        selectQuantity = {
+                            event(CartContract.UiEvent.OnOpenQuantitySheet)
+                        },
+                        onDelete = {
+                            event(CartContract.UiEvent.onOpenDeleteCartConfirm)
+                        }
+                    )
+                }
 
-            item {
-                PaymentCard()
-            }
+                item {
+                    FreeShipCard()
+                }
 
-            item {
-                UseCreditsCard(
-                    creditsData,
-                    caPointsChecked = state.isCheckedClub,
-                    storeCreditsChecked = state.isCheckedStore,
-                    onCaPointsToggle = { event(CartContract.UiEvent.OnToggleCheckedClubPoint) },
-                    onStoreCreditsToggle = { event(CartContract.UiEvent.OnToggleCheckedStorePoint) })
-            }
+                item {
+                    CouponCard(
+                        state,
+                        OnApply = {
+                            event(CartContract.UiEvent.OnApplyToggleClick)
+                        },
+                        OnCouponChange = {
+                            event(CartContract.UiEvent.OnCouponChanged(it))
+                        },
+                        OfferClick = {
+                            event(CartContract.UiEvent.onOpenBottomSheetOffer)
+                        })
+                }
 
-            item {
-                PriceSummaryCard(state.isOpenShipFee,priceData,
-                    OnShipFeeClick = {
-                       event(CartContract.UiEvent.OnShipFeeClick)
-                    })
+                /*   item{   it will be phase-2
+                       GiftCard()
+                   }*/
+
+                item {
+                    PaymentCard()
+                }
+
+                item {
+                    UseCreditsCard(
+                        creditsData,
+                        caPointsChecked = state.isCheckedClub,
+                        storeCreditsChecked = state.isCheckedStore,
+                        onCaPointsToggle = { event(CartContract.UiEvent.OnToggleCheckedClubPoint) },
+                        onStoreCreditsToggle = { event(CartContract.UiEvent.OnToggleCheckedStorePoint) })
+                }
+
+                item {
+                    PriceSummaryCard(
+                        state.isOpenShipFee, priceData,
+                        OnShipFeeClick = {
+                            event(CartContract.UiEvent.OnShipFeeClick)
+                        })
+                }
             }
         }
 
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+        ) {
+
+            ElevatedLine()
+
+            CartBottomView(
+                onCheckOutClick = {}
+            )
+
+        }
     }
+
 
 }
 
+
+@Composable
+fun ElevationBottom(){
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(1.dp)
+            .shadow(1.dp)
+            .background(Color.Transparent)
+    )
+}
 
 @Composable
 fun CartToolBar() {
@@ -194,13 +241,16 @@ fun CartToolBar() {
         modifier = Modifier.padding(horizontal = 14.dp, vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
+        /*Image(
             painter = painterResource(R.drawable.back_icon),
             contentDescription = null
-        )
+        )*/
 
-        Spacer(modifier = Modifier.size(8.dp))
+        Spacer(modifier = Modifier.size(16.dp))
 
-        Text(text = stringResource(R.string.cart_items))
+        Text(text = stringResource(R.string.cart_items),
+            style = MaterialTheme.typography.titleMedium,
+            color = Color.Black,
+            fontSize = 14.sp)
     }
 }

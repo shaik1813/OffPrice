@@ -37,7 +37,8 @@ fun CouponCard(
     title: String,
     code: String,
     description: String,
-    onItemClick: (String) -> Unit
+    onItemClick: (String) -> Unit,
+    onClickOfferDetail: () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -146,7 +147,10 @@ fun CouponCard(
                         text = "T&C*",
                         fontSize = 12.sp,
                         style = MaterialTheme.typography.titleMedium,
-                        textDecoration = TextDecoration.Underline
+                        textDecoration = TextDecoration.Underline,
+                        modifier = Modifier.clickable{
+                            onClickOfferDetail()
+                        }
                     )
 
                     Text(

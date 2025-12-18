@@ -88,7 +88,7 @@ fun CreditRow(
     checked: Boolean,
     title: String,
     points: String,
-    amount: String,
+    amount: Double,
     painterResource : Painter,
     onCheckedChange: (Boolean) -> Unit
 ) {
@@ -148,7 +148,7 @@ fun CreditRow(
             }
 
             Text(
-                text = amount,
+                text = String.format("%.2f",amount),
                 style = MaterialTheme.typography.titleLarge,
                 fontSize = 12.sp,
                 color = Color(0xFF4CAF50)

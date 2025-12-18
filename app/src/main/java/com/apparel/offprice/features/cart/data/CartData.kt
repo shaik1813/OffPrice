@@ -2,7 +2,7 @@ package com.apparel.offprice.features.cart.data
 
 data class CreditItem(
     val points: String,
-    val amount: String
+    val amount: Double
 )
 
 data class Creditsdata(
@@ -24,11 +24,11 @@ data class PriceData(
 var creditsData = Creditsdata(
     clubApparelpoint = CreditItem(
        points = "1000 Points",
-        amount = "฿ 5.00"
+        amount = 05.00
     ),
     storePoint = CreditItem(
         points = "",
-        amount = "฿ 5.00"
+        amount = 05.00
     )
 )
 
@@ -44,3 +44,8 @@ var priceData = PriceData(
     grandTotal = 97.00,
     points = "1000"
 )
+
+var offerList = listOf("This coupon is valid for customers within the UAE only.",
+    "Minimum purchase value must be AED 25.",
+    "Offer cannot be combined with other promotions or discount codes.",
+    "The brand reserves the right to amend or cancel the offer without prior notice.")
