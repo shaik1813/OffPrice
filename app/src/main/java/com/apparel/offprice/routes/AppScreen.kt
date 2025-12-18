@@ -60,4 +60,7 @@ sealed interface AppScreen {
     @Serializable
     object DeliveryAddressScreen : AppScreen
 
+    @Serializable
+    object CouponScreen : AppScreen
+
 }

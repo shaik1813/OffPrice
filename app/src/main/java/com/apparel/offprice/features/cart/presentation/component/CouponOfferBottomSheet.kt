@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -29,8 +27,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.backgroundColor
-import com.apparel.offprice.features.cart.data.couponItem
-import com.apparel.offprice.features.cart.data.couponList
+import com.apparel.offprice.features.coupon.data.sampleBankCouponList
+import com.apparel.offprice.features.coupon.data.sampleCouponList
+import com.apparel.offprice.features.coupon.presentation.screen.CouponContent
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -65,24 +64,18 @@ fun CouponOfferBottomSheet(
 
             Spacer(modifier = Modifier.size(10.dp))
 
-            // Coupon List
-            LazyColumn() {
-                items(couponList){ item ->
-                    CouponCard(
-                        title = item.title,
-                        code = item.code,
-                        description = item.desc,
-                        onItemClick = { onApply(it) },
-                        onClickOfferDetail = { onOfferDetailClick()}
-                    )
-
-                }
-            }
-
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            BankCouponSection(couponItem)
+            CouponContent(
+                coupons = sampleCouponList,
+                bankCoupons = sampleBankCouponList,
+                isCodeApplied = true,
+                onApplyCoupon = { code ->
+                    onApply(code)
+                },
+                onTermsAndConditionsClicked = {
+                    onOfferDetailClick()
+                },
+                onCopyCode = {}
+            )
         }
     }
 }

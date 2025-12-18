@@ -184,5 +184,15 @@
     <string name="offer_details">OFFER DETAILS</string>
     <string name="terms_and_conditions">Terms and conditions</string>
 
+    <!-- Coupon Section -->
+    <string name="label_coupon">Coupon</string>
+    <string name="coupon_code_title">Coupon Code</string>
+    <string name="bank_coupon_title">Bank Coupon</string>
+    <string name="coupon_max_cashback_limit">Maximum Cashback Limit is</string>
+    <string name="coupon_terms_conditions">T&amp;C*</string>
+    <string name="coupon_apply_code">Apply Code</string>
+    <string name="label_terms_and_condition">Terms and conditions</string>
+    <string name="label_offer_details">OFFER DETAILS</string>
+
 
 </resources>

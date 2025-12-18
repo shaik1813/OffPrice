@@ -141,7 +141,6 @@ class CartViewModel @Inject constructor(
 
     private fun emitMessage(msg: String) {
         viewModelScope.launch {
-
             _effectFlow.emit(CartContract.UiEffect.ShowMessage(msg))
         }
     }
