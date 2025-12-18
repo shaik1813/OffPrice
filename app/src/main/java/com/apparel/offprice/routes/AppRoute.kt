@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.apparel.offprice.features.address.presentation.screen.DeliveryAddressScreen
+import com.apparel.offprice.features.coupon.presentation.screen.CouponScreen
 import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
 import com.apparel.offprice.features.home.presentation.screens.search.SearchScreen
 import com.apparel.offprice.features.pdp.presentation.screen.PDPscreen
@@ -176,6 +177,12 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
             DeliveryAddressScreen(
                 onNavigateToBack = {navController.popBackStack()}
             )
+        }
+
+        composable<AppScreen.CouponScreen> {
+            CouponScreen(onNavigateBack = {
+                navController.popBackStack()
+            })
         }
 
     }

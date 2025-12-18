@@ -1,7 +1,6 @@
 package com.apparel.offprice.features.cart.presentation.screen
 
 import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,14 +39,12 @@ import com.apparel.offprice.features.cart.presentation.component.CartItemCard
 import com.apparel.offprice.features.cart.presentation.component.CouponOfferBottomSheet
 import com.apparel.offprice.features.cart.presentation.component.DeleteConfirmationDialog
 import com.apparel.offprice.features.cart.presentation.component.FreeShipCard
-import com.apparel.offprice.features.cart.presentation.component.OfferDetailsDialog
 import com.apparel.offprice.features.cart.presentation.component.PaymentCard
 import com.apparel.offprice.features.cart.presentation.component.QuantityBottomSheet
 import com.apparel.offprice.features.cart.presentation.component.UseCreditsCard
+import com.apparel.offprice.features.coupon.presentation.component.TermsAndConditionsDialog
 import com.apparel.offprice.features.pdp.presentation.component.CouponCard
 import com.apparel.offprice.features.pdp.presentation.component.ElevatedLine
-import com.apparel.offprice.features.pdp.presentation.component.PDPBottomView
-import com.apparel.offprice.features.pdp.presentation.screen.PDPContract
 import features.cart.presentation.component.PriceSummaryCard
 
 
@@ -106,7 +103,7 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
     }
 
     if(state.isOfferDialog){
-        OfferDetailsDialog(onDismiss = {
+        TermsAndConditionsDialog(onDismiss = {
             event(CartContract.UiEvent.OnCloseOfferDetailDialog)
         })
     }
