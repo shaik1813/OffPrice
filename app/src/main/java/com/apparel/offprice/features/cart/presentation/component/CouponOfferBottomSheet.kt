@@ -38,7 +38,8 @@ import com.apparel.offprice.features.cart.data.couponList
 fun CouponOfferBottomSheet(
     sheetState: SheetState,
     onClose: () -> Unit,
-    onApply: (String) -> Unit
+    onApply: (String) -> Unit,
+    onOfferDetailClick: () -> Unit
 ) {
     ModalBottomSheet(
         sheetState = sheetState,
@@ -71,7 +72,8 @@ fun CouponOfferBottomSheet(
                         title = item.title,
                         code = item.code,
                         description = item.desc,
-                        onItemClick = { onApply(it) }
+                        onItemClick = { onApply(it) },
+                        onClickOfferDetail = { onOfferDetailClick()}
                     )
 
                 }

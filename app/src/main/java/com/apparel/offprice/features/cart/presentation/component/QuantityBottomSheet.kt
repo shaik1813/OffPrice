@@ -19,7 +19,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -33,7 +32,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -94,17 +92,22 @@ fun QuantityBottomSheet(
                 Spacer(modifier = Modifier.height(12.dp))
 
                 /*Quantity list*/
-                Box(modifier = Modifier
-                    .fillMaxWidth()
-                    .height(screenHeight / 3.8f)) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(screenHeight / 3.8f)
+                ) {
                     val state = rememberLazyListState()
 
                     LazyColumn(
-                        state = state, modifier = Modifier.padding(end = 20.dp).align(Alignment.CenterStart)
+                        state = state,
+                        modifier = Modifier
+                            .padding(end = 20.dp)
+                            .align(Alignment.CenterStart)
                     ) {
                         items(quantities) { qty ->
                             QuantityRow(
-                                value = qty,selectedQuantity, onClick = {
+                                value = qty, selectedQuantity, onClick = {
                                     onSelectItem(it)
                                     selectedQuantity = it
                                 }
@@ -181,21 +184,18 @@ fun QuantityBottomSheet(
                 Spacer(modifier = Modifier.height(10.dp))
 
                 /*Submit Button*/
-
-                Button(
-                    onClick = {
-                        onSumbit()
-                    },
+                Box(
                     modifier = Modifier
-                        .padding(horizontal = 16.dp)
                         .fillMaxWidth()
                         .height(48.dp)
-                        .background(loginButtonColor)
-                        .clip(RoundedCornerShape(6.dp)),
-                    enabled = selectedQuantity != null
+                        .background(loginButtonColor, RoundedCornerShape(6.dp))
+                        .clickable {
+                            onSumbit()
+                        },
+                    contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        stringResource(R.string.submit),
+                        text = stringResource(R.string.submit),
                         color = Color.White,
                         style = MaterialTheme.typography.titleMedium,
                         fontSize = 12.sp
@@ -203,7 +203,6 @@ fun QuantityBottomSheet(
                 }
 
             }
-
 
         }
 

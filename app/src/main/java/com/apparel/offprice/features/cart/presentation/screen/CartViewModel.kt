@@ -120,6 +120,18 @@ class CartViewModel @Inject constructor(
                     updateState { it.copy( isOpenShipFee = !it.isOpenShipFee) }
                 }
             }
+
+            CartContract.UiEvent.OnOpenOfferDetailDialog -> {
+                viewModelScope.launch {
+                    updateState { it.copy(isOfferDialog = true) }
+                }
+            }
+
+            CartContract.UiEvent.OnCloseOfferDetailDialog -> {
+                viewModelScope.launch {
+                    updateState { it.copy(isOfferDialog = false) }
+                }
+            }
         }
     }
 

@@ -177,6 +177,12 @@
     <string name="label_old_password">Old Password </string>
     <string name="label_new_password">New Password </string>
     <string name="label_re_enter_password">Re-Enter Password </string>
+    <string name="checkout">CHECKOUT</string>
+    <string name="your_cart_is_empty">Your Cart is Empty</string>
+    <string name="your_cart_is_waiting_to_be_filled_with_fashion_you_ll_love">Your cart is waiting to be filled with \nfashion you\'ll love</string>
+    <string name="start_shopping">START SHOPPING</string>
+    <string name="offer_details">OFFER DETAILS</string>
+    <string name="terms_and_conditions">Terms and conditions</string>
 
 
 </resources>
