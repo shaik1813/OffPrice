@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.apparel.offprice.features.address.presentation.screen.DeliveryAddressScreen
 import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
 import com.apparel.offprice.features.home.presentation.screens.search.SearchScreen
 import com.apparel.offprice.features.pdp.presentation.screen.PDPscreen
@@ -168,6 +169,12 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         composable<AppScreen.StoreCreditScreen> {
             StoreCreditScreen(
                 onNavigateBack = {navController.popBackStack()}
+            )
+        }
+
+        composable<AppScreen.DeliveryAddressScreen> {
+            DeliveryAddressScreen(
+                onNavigateToBack = {navController.popBackStack()}
             )
         }
 

@@ -36,7 +36,9 @@ class ProfilePasswordViewModel @Inject constructor() : ViewModel(), ProfilePassw
 
             ProfilePasswordContract.UiEvent.OnChangePasswordClicked -> {
                 viewModelScope.launch {
-                    if (_state.value.newPassword.isEmpty()){
+                    if (_state.value.oldPassword.isEmpty()){
+                        _effectFlow.emit(ShowError("Old password cannot be empty"))
+                    }else if (_state.value.newPassword.isEmpty()){
                         _effectFlow.emit(ShowError("New password cannot be empty"))
                     }else if (_state.value.confirmPassword.isEmpty()){
                         _effectFlow.emit(ShowError("Confirm password cannot be empty"))
@@ -60,6 +62,13 @@ class ProfilePasswordViewModel @Inject constructor() : ViewModel(), ProfilePassw
                 viewModelScope.launch {
                     _effectFlow.emit(NavigateBack)
                 }
+            }
+
+            is ProfilePasswordContract.UiEvent.OnOldPasswordChanged -> {
+                _state.update { it.copy(oldPassword = event.oldPass) }
+            }
+            ProfilePasswordContract.UiEvent.ToggleOldPasswordVisibility -> {
+                _state.update { it.copy(isOldPasswordVisible = !_state.value.isOldPasswordVisible) }
             }
         }
     }

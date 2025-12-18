@@ -2,9 +2,11 @@ package com.apparel.offprice.features.profile.presentation.screen.profileDetails
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,8 +17,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -26,10 +29,7 @@ import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -40,13 +40,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -54,13 +52,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
+import com.apparel.offprice.common.component.AppBasicPasswordField
+import com.apparel.offprice.common.component.AppPhoneNumberField
 import com.apparel.offprice.common.theme.lineColor
 import com.apparel.offprice.common.theme.redColor
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.PastOrPresentSelectableDates
 import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.profile.presentation.component.CategoryDropdown
-import com.apparel.offprice.features.profile.presentation.component.CountryCodePicker
 import com.apparel.offprice.features.profile.presentation.component.LabeledField
 import com.apparel.offprice.features.profile.presentation.screen.myaccounts.ActionButtonsBar
 
@@ -244,8 +243,10 @@ fun ProfileDetailsScreen(
                         color = MaterialTheme.colorScheme.primary
                     )
                     Spacer(Modifier.height(6.dp))
-                    OutlinedTextField(
+                    AppPhoneNumberField(
                         value = state.phoneNumber,
+                        enabled = state.isEditing,
+                        phoneCode = state.phoneCode,
                         onValueChange = {
                             if (state.isEditing) event.invoke(
                                 ProfileDetailsContract.UiEvent.OnPhoneChange(
@@ -253,41 +254,13 @@ fun ProfileDetailsScreen(
                                 )
                             )
                         },
-                        textStyle = MaterialTheme.typography.bodySmall,
-                        enabled = state.isEditing,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .border(
-                                width = 0.75.dp,
-                                color = lineColor,
-                                shape = MaterialTheme.shapes.small
-                            ),
-                        leadingIcon = {
-                            CountryCodePicker(
-                                selected = state.phoneCode,
-                                enabled = state.isEditing,
-                                onSelect = {
-                                    event.invoke(
-                                        ProfileDetailsContract.UiEvent.SelectCountry(
-                                            it
-                                        )
-                                    )
-                                }
+                        onCountrySelected = {
+                            event.invoke(
+                                ProfileDetailsContract.UiEvent.SelectCountry(
+                                    it
+                                )
                             )
-                        },
-                        shape = MaterialTheme.shapes.small,
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            disabledContainerColor = Color.White,
-                            focusedContainerColor = Color.White,
-                            unfocusedContainerColor = Color.White,
-                            focusedBorderColor = Color.Transparent,
-                            unfocusedBorderColor = Color.Transparent,
-                            errorBorderColor = Color.Transparent,
-                            disabledBorderColor = Color.Transparent,
-                            cursorColor = MaterialTheme.colorScheme.primary
-                        )
+                        }
                     )
                     if (state.phoneError != null) {
                         Text(
@@ -305,45 +278,60 @@ fun ProfileDetailsScreen(
                         color = MaterialTheme.colorScheme.primary
                     )
                     Spacer(Modifier.height(6.dp))
-                    OutlinedTextField(
-                        value = state.dob,
-                        onValueChange = {},
-                        readOnly = true,
-                        textStyle = MaterialTheme.typography.bodySmall,
-                        enabled = state.isEditing,
+                    Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .border(
-                                width = 0.75.dp,
-                                color = lineColor,
-                                shape = MaterialTheme.shapes.small
-                            ),
-                        trailingIcon = {
-                            if (state.isEditing) {
-                                Icon(
-                                    painter = painterResource(R.drawable.icon_calendar),
-                                    contentDescription = null,
+                            .background(Color.White, shape = MaterialTheme.shapes.small)
+                            .height(42.dp)
+                    ) {
+                        BasicTextField(
+                            value = state.dob,
+                            onValueChange = { },
+                            textStyle = MaterialTheme.typography.bodySmall,
+                            singleLine = true,
+                            enabled = state.isEditing,
+                            cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            decorationBox = { innerTextField ->
+                                Box(
                                     modifier = Modifier
-                                        .clickable {
-                                            event.invoke(ProfileDetailsContract.UiEvent.ToggleDatePicker)
-                                        }
-                                )
+                                        .fillMaxSize()
+                                        .border(
+                                            width = 0.75.dp,
+                                            color = MaterialTheme.colorScheme.background,
+                                            shape = MaterialTheme.shapes.small
+                                        )
+                                        .padding(horizontal = 12.dp),
+                                    contentAlignment = Alignment.CenterStart
+                                ) {
+                                    if (state.isEditing) {
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.icon_calendar),
+                                            contentDescription = "Dropdown Arrow",
+                                            modifier = Modifier
+                                                .align(Alignment.CenterEnd)
+                                                .size(16.dp)
+                                                .clickable {
+                                                    event.invoke(ProfileDetailsContract.UiEvent.ToggleDatePicker)
+                                                }
+                                        )
+                                    }
+                                    innerTextField()
+                                }
                             }
-                        },
-                        shape = MaterialTheme.shapes.small,
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            disabledContainerColor = Color.White,
-                            focusedContainerColor = Color.White,
-                            unfocusedContainerColor = Color.White,
-                            focusedBorderColor = Color.Transparent,
-                            unfocusedBorderColor = Color.Transparent,
-                            errorBorderColor = Color.Transparent,
-                            disabledBorderColor = Color.Transparent,
-                            cursorColor = MaterialTheme.colorScheme.primary
                         )
-                    )
+                        if (!state.isEditing) {
+                            Box(
+                                modifier = Modifier
+                                    .matchParentSize()
+                                    .background(
+                                        color = Color.White.copy(alpha = 0.5f),
+                                        shape = MaterialTheme.shapes.small
+                                    )
+                            )
+                        }
+                    }
                     if (state.dobError != null) {
                         Text(
                             text = state.dobError,
@@ -414,7 +402,6 @@ fun ProfileDetailsScreen(
                     )
                 ) {
                     Column(Modifier.padding(16.dp)) {
-
                         Text(
                             text = buildAnnotatedString {
                                 append(stringResource(R.string.password))
@@ -426,43 +413,14 @@ fun ProfileDetailsScreen(
                             color = MaterialTheme.colorScheme.primary
                         )
                         Spacer(modifier = Modifier.height(6.dp))
-                        OutlinedTextField(
+                        AppBasicPasswordField(
                             value = state.password,
-                            onValueChange = {},
-                            textStyle = MaterialTheme.typography.bodySmall,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .border(
-                                    width = 0.75.dp,
-                                    color = lineColor,
-                                    shape = MaterialTheme.shapes.small
-                                ),
                             enabled = false,
-                            shape = MaterialTheme.shapes.small,
-                            singleLine = true,
-                            visualTransformation = if (state.isPasswordVisible)
-                                VisualTransformation.None else PasswordVisualTransformation(),
-                            trailingIcon = {
-                                IconButton(onClick = { event.invoke(ProfileDetailsContract.UiEvent.TogglePasswordVisibility) }) {
-                                    Icon(
-                                        painter = if (state.isPasswordVisible)
-                                            painterResource(R.drawable.icon_password_visible) else painterResource(
-                                            R.drawable.icon_password_hide
-                                        ),
-                                        contentDescription = null
-                                    )
-                                }
-                            },
-                            colors = OutlinedTextFieldDefaults.colors(
-                                disabledContainerColor = Color.White,
-                                focusedContainerColor = Color.White,
-                                unfocusedContainerColor = Color.White,
-                                focusedBorderColor = Color.Transparent,
-                                unfocusedBorderColor = Color.Transparent,
-                                errorBorderColor = Color.Transparent,
-                                disabledBorderColor = Color.Transparent,
-                                cursorColor = MaterialTheme.colorScheme.primary
-                            )
+                            isVisible = state.isPasswordVisible,
+                            onValueChange = {},
+                            onIconToggle = {
+                                event.invoke(ProfileDetailsContract.UiEvent.TogglePasswordVisibility)
+                            }
                         )
                     }
                 }

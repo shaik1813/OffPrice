@@ -23,15 +23,16 @@ fun FilterChip(
     selected: Boolean,
     onClick: () -> Unit,
 ) {
-    val background = if (selected) Color.Black else Color.Transparent
-    val contentColor = if (selected) Color.White else Color(0xFF363939)
+    val background = if (selected) Color(0xFFA2050D) else Color.Transparent
+    val contentColor = if (selected) Color.White else Color(0xFF141414)
     Surface(
         modifier = modifier
             .height(36.dp)
             .clickable { onClick() },
         shape = RoundedCornerShape(if (selected) 8.dp else 6.dp),
         color = background,
-        border = if (selected) null else BorderStroke(1.dp, Color.Transparent),
+        border = if (selected) BorderStroke(1.dp, Color(0xFFA2050D))
+        else BorderStroke(1.dp, Color.Transparent),
     ) {
         Box(
             contentAlignment = Alignment.Center,
