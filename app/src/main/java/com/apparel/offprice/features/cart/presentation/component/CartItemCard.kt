@@ -46,6 +46,7 @@ fun CartItemCard(
     qty: String,
     deliveryText: String,
     image: Painter,
+    selectQuantity: ()-> Unit,
     onDelete: () -> Unit
 ) {
 
@@ -112,7 +113,9 @@ fun CartItemCard(
 
                     Spacer(Modifier.height(4.dp))
 
-                    ColorSizePart(color, qty)
+                    ColorSizePart(color, qty, callBackQuantity = {
+                      selectQuantity()
+                    })
 
                     Spacer(Modifier.height(2.dp))
 
@@ -219,7 +222,7 @@ fun OfferPricePart() {
 }
 
 @Composable
-fun ColorSizePart(color: String, size: String) {
+fun ColorSizePart(color: String, size: String, callBackQuantity: () -> Unit) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Text(text = stringResource(R.string.color), fontSize = 10.sp)
         Text(
@@ -244,14 +247,16 @@ fun ColorSizePart(color: String, size: String) {
 
         Text(text = "Qty:", fontSize = 10.sp)
 
-        QuantityPart()
+        QuantityPart(callBackQuantity = { callBackQuantity()})
     }
 }
 
 @Composable
-fun QuantityPart() {
+fun QuantityPart(callBackQuantity: () -> Unit) {
 
-    Column(modifier = Modifier.padding(start = 4.dp)) {
+    Column(modifier = Modifier.padding(start = 4.dp).clickable{
+        callBackQuantity()
+    }) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(text = "01", color = loginButtonColor, fontSize = 10.sp)
             Spacer(modifier = Modifier.size(3.dp))
