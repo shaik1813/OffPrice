@@ -4,6 +4,7 @@ package com.apparel.offprice.features.cart.presentation.screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -62,10 +63,74 @@ class CartViewModel @Inject constructor(
                 }
             }
 
+            CartContract.UiEvent.OnOpenQuantitySheet -> {
+                viewModelScope.launch {
+                    updateState { it.copy(isQuantitySheet = true) }
+                }
+            }
+
+            CartContract.UiEvent.OnCloseQuantitySheet -> {
+                viewModelScope.launch {
+                    updateState { it.copy(isQuantitySheet = false) }
+                }
+            }
+
+            CartContract.UiEvent.OnApplyToggleClick -> {
+                viewModelScope.launch {
+                    updateState {
+                        if (it.isApplied)
+                            it.copy(isApplied = false)
+                        else
+                            it.copy(isApplied = true)
+                    }
+                }
+            }
+
+            is CartContract.UiEvent.OnApplyCoupon -> {
+                viewModelScope.launch {
+                    delay(600)
+                    updateState {
+                        if (it.couponCode == event.code && it.isApplied) {
+
+                            emitMessage("Already applied")
+
+                            it.copy(
+                                couponCode = event.code,
+                                isApplied = true
+                            )
+
+                        } else {
+                            it.copy(
+                                couponCode = event.code,
+                                isApplied = true
+                            )
+                        }
+                    }
+                }
+            }
+
+            is CartContract.UiEvent.OnCouponChanged -> {
+                viewModelScope.launch {
+                    updateState { it.copy(couponCode = event.value) }
+                }
+            }
+
+            CartContract.UiEvent.OnShipFeeClick ->{
+                viewModelScope.launch {
+                    updateState { it.copy( isOpenShipFee = !it.isOpenShipFee) }
+                }
+            }
         }
     }
 
     private fun updateState(reducer: (CartContract.UiState) -> CartContract.UiState) {
         _state.value = reducer(_state.value)
+    }
+
+    private fun emitMessage(msg: String) {
+        viewModelScope.launch {
+
+            _effectFlow.emit(CartContract.UiEffect.ShowMessage(msg))
+        }
     }
 }

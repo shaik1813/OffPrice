@@ -1,5 +1,6 @@
 package com.apparel.offprice.features.cart.presentation.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -16,10 +17,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -27,18 +31,25 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
 import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.cart.data.creditsData
+import com.apparel.offprice.features.cart.data.priceData
 import com.apparel.offprice.features.cart.presentation.component.CartItemCard
 import com.apparel.offprice.features.cart.presentation.component.CouponOfferBottomSheet
 import com.apparel.offprice.features.cart.presentation.component.DeleteConfirmationDialog
 import com.apparel.offprice.features.cart.presentation.component.FreeShipCard
 import com.apparel.offprice.features.cart.presentation.component.PaymentCard
+import com.apparel.offprice.features.cart.presentation.component.QuantityBottomSheet
 import com.apparel.offprice.features.cart.presentation.component.UseCreditsCard
 import com.apparel.offprice.features.pdp.presentation.component.CouponCard
+import features.cart.presentation.component.PriceSummaryCard
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
+
+    val configuration = LocalConfiguration.current
+    val screenHeightDp = configuration.screenHeightDp.dp
+    val context = LocalContext.current
 
     var (state, event, effect) = use(viewModel = viewModel)
 
@@ -49,9 +60,10 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
                 event(CartContract.UiEvent.onCloseBottomSheetOffer)
             }, onApply = {
                 event(CartContract.UiEvent.onCloseBottomSheetOffer)
+                event(CartContract.UiEvent.OnCouponChanged(it))
+                event(CartContract.UiEvent.OnApplyCoupon(it))
             })
     }
-
 
     if (state.isDeleteCartDialog) {
         DeleteConfirmationDialog(
@@ -67,7 +79,30 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
         )
     }
 
+    if (state.isQuantitySheet) {
+        QuantityBottomSheet(
+            screenHeightDp,
+            onSelectItem = {
 
+            },
+            onDismiss = {
+                event(CartContract.UiEvent.OnCloseQuantitySheet)
+            },
+            onSumbit = {
+                event(CartContract.UiEvent.OnCloseQuantitySheet)
+            }
+        )
+    }
+
+    LaunchedEffect(viewModel    ) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                is CartContract.UiEffect.ShowMessage -> {
+                   Toast.makeText(context,effect.message,Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
 
@@ -96,6 +131,9 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
                     qty = "01",
                     deliveryText = "DELIVERY BY 06 NOV, THU",
                     image = painterResource(id = R.drawable.product_item_1),
+                    selectQuantity = {
+                        event(CartContract.UiEvent.OnOpenQuantitySheet)
+                    },
                     onDelete = {
                         event(CartContract.UiEvent.onOpenDeleteCartConfirm)
                     }
@@ -107,9 +145,17 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
             }
 
             item {
-                CouponCard(OfferClick = {
-                    event(CartContract.UiEvent.onOpenBottomSheetOffer)
-                })
+                CouponCard(
+                    state,
+                    OnApply = {
+                        event(CartContract.UiEvent.OnApplyToggleClick)
+                    },
+                    OnCouponChange = {
+                        event(CartContract.UiEvent.OnCouponChanged(it))
+                    },
+                    OfferClick = {
+                        event(CartContract.UiEvent.onOpenBottomSheetOffer)
+                    })
             }
 
             /*   item{   it will be phase-2
@@ -120,7 +166,6 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
                 PaymentCard()
             }
 
-
             item {
                 UseCreditsCard(
                     creditsData,
@@ -129,8 +174,14 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
                     onCaPointsToggle = { event(CartContract.UiEvent.OnToggleCheckedClubPoint) },
                     onStoreCreditsToggle = { event(CartContract.UiEvent.OnToggleCheckedStorePoint) })
             }
-        }
 
+            item {
+                PriceSummaryCard(state.isOpenShipFee,priceData,
+                    OnShipFeeClick = {
+                       event(CartContract.UiEvent.OnShipFeeClick)
+                    })
+            }
+        }
 
     }
 
