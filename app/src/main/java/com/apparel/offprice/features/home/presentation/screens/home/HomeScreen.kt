@@ -131,6 +131,7 @@ fun HomeScreen(outerNavControl: NavHostController) {
 
                                 8 -> {
                                     //Payment cards
+                                    outerNavControl.navigate(AppScreen.PaymentCardScreen)
                                 }
 
                                 9 -> {

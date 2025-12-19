@@ -63,4 +63,7 @@ sealed interface AppScreen {
     @Serializable
     object CouponScreen : AppScreen
 
+    @Serializable
+    object PaymentCardScreen : AppScreen
+
 }

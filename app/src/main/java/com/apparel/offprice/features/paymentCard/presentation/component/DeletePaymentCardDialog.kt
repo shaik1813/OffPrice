@@ -1,19 +1,19 @@
-package com.apparel.offprice.features.address.presentation.component
-
+package com.apparel.offprice.features.paymentCard.presentation.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.apparel.offprice.R
 import com.apparel.offprice.common.component.DeleteOptionDialog
 
+
 @Composable
-fun DeliveryAddressDeleteDialog(
+fun DeletePaymentCardDialog(
     onDismiss: () -> Unit,
-    onDeleteAddress: () -> Unit
+    onDeleteCard: () -> Unit
 ){
     DeleteOptionDialog(
-        message = stringResource(R.string.text_delete_dialog),
+        message = stringResource(R.string.text_delete_payment_card),
         onNegativeButtonClicked = { onDismiss() },
-        onPositiveButtonClicked = { onDeleteAddress() }
+        onPositiveButtonClicked = { onDeleteCard() }
     )
 }
