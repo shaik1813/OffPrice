@@ -32,7 +32,8 @@ import com.apparel.offprice.features.address.data.model.DeliveryAddressModel
 fun DeliveryAddressItemList(
     deliveryAddress: List<DeliveryAddressModel>,
     onEditClicked: (DeliveryAddressModel) -> Unit,
-    onDeleteClicked: (DeliveryAddressModel) -> Unit
+    onDeleteClicked: (DeliveryAddressModel) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     LazyColumn {
         items(items = deliveryAddress, key = { it.id }) { address ->

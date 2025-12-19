@@ -22,3 +22,11 @@ fun Float.toTwoDecimalString(): String =
 fun Double.toTwoDecimalString(): String =
     formatTwoDecimal(this)
 
+
+fun formatExpiryDate(raw: String): String {
+    return when {
+        raw.length <= 2 -> raw
+        else -> raw.substring(0, 2) + "/" + raw.substring(2)
+    }
+}
+
