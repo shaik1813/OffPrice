@@ -61,13 +61,6 @@ fun DeliveryAddressBottomSheet(
     onDismiss: () -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    var selectedFilter by remember { mutableStateOf(DeliveryAddressFilter.HOME) }
-    var name by remember { mutableStateOf("") }
-    var address by remember { mutableStateOf("") }
-    var phoneNumber by remember { mutableStateOf("") }
-    var city by remember { mutableStateOf("") }
-    var area by remember { mutableStateOf("") }
-    var isDefault by remember { mutableStateOf(false) }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -80,7 +73,6 @@ fun DeliveryAddressBottomSheet(
         sheetMaxWidth = BottomSheetDefaults.SheetPeekHeight,
         containerColor = MaterialTheme.colorScheme.surface
     ) {
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()

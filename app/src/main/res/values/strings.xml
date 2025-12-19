@@ -193,6 +193,15 @@
     <string name="coupon_apply_code">Apply Code</string>
     <string name="label_terms_and_condition">Terms and conditions</string>
     <string name="label_offer_details">OFFER DETAILS</string>
+    <string name="label_add_new_card">+ Add New Card</string>
+    <string name="text_delete_payment_card">Are you sure you want to delete this card?</string>
+    <string name="label_add_debit_credit_card">Add debit/Credit Card</string>
+    <string name="label_add_my_card">Add My Card</string>
+    <string name="label_card_number">Card Number</string>
+    <string name="label_expiry_date">Expiry</string>
+    <string name="label_cvv">CVV</string>
+
+
 
 
 </resources>

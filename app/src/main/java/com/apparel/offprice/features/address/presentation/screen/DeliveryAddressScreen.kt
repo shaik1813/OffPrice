@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -43,56 +45,66 @@ fun DeliveryAddressScreen(
         }
     }
 
-    Column(
+    Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .padding(WindowInsets.safeDrawing.asPaddingValues())
-    ) {
-        DefaultTopAppBar(title = stringResource(R.string.label_delivery_address)) { onNavigateToBack() }
-        HorizontalDivider(thickness = 1.dp)
-        Spacer(modifier = Modifier.height(12.dp))
-        if (state.deliveryAddress.isNotEmpty()) {
-            DeliveryAddressItemList(
-                deliveryAddress = state.deliveryAddress,
-                onEditClicked = {
-                    event.invoke(DeliveryAddressContract.UiEvent.OnEditAddress(it))
-                },
-                onDeleteClicked = {
-                    event.invoke(DeliveryAddressContract.UiEvent.OnDeleteAddress(it))
+            .padding(WindowInsets.safeDrawing.asPaddingValues()),
+        topBar = {
+            DefaultTopAppBar(title = stringResource(R.string.label_delivery_address)) { onNavigateToBack() }
+        },
+        bottomBar = {
+            // Bottom Action Buttons
+            BottomSingleActionButton(
+                title = stringResource(R.string.label_add_new_address),
+                onButtonClicked = {
+                    event.invoke(DeliveryAddressContract.UiEvent.OnAddAddressClicked)
                 }
             )
-        }
-        Spacer(modifier = Modifier.weight(1f))
-        // Bottom Action Buttons
-        BottomSingleActionButton(
-            title = stringResource(R.string.label_add_new_address),
-            onButtonClicked = {
-                event.invoke(DeliveryAddressContract.UiEvent.OnAddAddressClicked)
+        },
+        containerColor = MaterialTheme.colorScheme.surface
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            HorizontalDivider(thickness = 1.dp)
+            Spacer(modifier = Modifier.height(12.dp))
+            if (state.deliveryAddress.isNotEmpty()) {
+                DeliveryAddressItemList(
+                    deliveryAddress = state.deliveryAddress,
+                    onEditClicked = {
+                        event.invoke(DeliveryAddressContract.UiEvent.OnEditAddress(it))
+                    },
+                    onDeleteClicked = {
+                        event.invoke(DeliveryAddressContract.UiEvent.OnDeleteAddress(it))
+                    },
+                    modifier = Modifier.weight(1f)
+                )
             }
-        )
+            if (state.isAddAddressOpened) {
+                //show AddressBottomSheet
+                DeliveryAddressBottomSheet(
+                    state = state.addressForm,
+                    onEvent = {
+                        event.invoke(it)
+                    },
+                    onDismiss = {
+                        event.invoke(DeliveryAddressContract.UiEvent.OnAddAddressDismiss)
+                    }
+                )
+            }
 
-        if (state.isAddAddressOpened) {
-            //show AddressBottomSheet
-            DeliveryAddressBottomSheet(
-                state = state.addressForm,
-                onEvent = {
-                    event.invoke(it)
-                },
-                onDismiss = {
-                    event.invoke(DeliveryAddressContract.UiEvent.OnAddAddressDismiss)
-                }
-            )
-        }
-
-        if (state.isDeleteDialogOpened) { // show Delete Address Dialog
-            DeliveryAddressDeleteDialog(
-                onDismiss = {
-                    event.invoke(DeliveryAddressContract.UiEvent.OnDeleteDialogDismiss)
-                },
-                onDeleteAddress = {
-                    event.invoke(DeliveryAddressContract.UiEvent.OnDeleteAddressConfirm)
-                }
-            )
+            if (state.isDeleteDialogOpened) { // show Delete Address Dialog
+                DeliveryAddressDeleteDialog(
+                    onDismiss = {
+                        event.invoke(DeliveryAddressContract.UiEvent.OnDeleteDialogDismiss)
+                    },
+                    onDeleteAddress = {
+                        event.invoke(DeliveryAddressContract.UiEvent.OnDeleteAddressConfirm)
+                    }
+                )
+            }
         }
     }
 }

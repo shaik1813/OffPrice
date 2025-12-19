@@ -9,6 +9,7 @@ import com.apparel.offprice.features.address.presentation.screen.DeliveryAddress
 import com.apparel.offprice.features.coupon.presentation.screen.CouponScreen
 import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
 import com.apparel.offprice.features.home.presentation.screens.search.SearchScreen
+import com.apparel.offprice.features.paymentCard.presentation.screen.PaymentCardScreen
 import com.apparel.offprice.features.pdp.presentation.screen.PDPscreen
 import com.apparel.offprice.features.profile.presentation.screen.profileDetails.ProfileDetailsScreen
 import com.apparel.offprice.features.profile.presentation.screen.profileSize.ProfileSizeScreen
@@ -181,6 +182,12 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
         composable<AppScreen.CouponScreen> {
             CouponScreen(onNavigateBack = {
+                navController.popBackStack()
+            })
+        }
+
+        composable<AppScreen.PaymentCardScreen> {
+            PaymentCardScreen(onNavigateBack = {
                 navController.popBackStack()
             })
         }
