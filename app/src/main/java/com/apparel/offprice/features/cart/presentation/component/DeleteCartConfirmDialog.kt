@@ -67,7 +67,9 @@ fun DeleteConfirmationDialog(
                 ) {
 
                     OutlinedButton(
-                        onClick = onDelete,
+                        onClick = {
+                            onDelete()
+                        },
                         modifier = Modifier.weight(1f),
                         shape = RoundedCornerShape(6.dp),
                         border = BorderStroke(1.dp, Color.Black),
