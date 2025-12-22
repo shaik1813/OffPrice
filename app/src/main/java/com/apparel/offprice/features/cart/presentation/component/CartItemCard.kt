@@ -1,5 +1,6 @@
 package com.apparel.offprice.features.cart.presentation.component
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -33,22 +33,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.loginButtonColor
+import com.apparel.offprice.features.cart.data.CartProductItems
 
 
 @Composable
 fun CartItemCard(
-    brand: String,
-    title: String,
-    price: String,
-    oldPrice: String?,
-    color: String,
-    size: String,
-    qty: String,
-    deliveryText: String,
-    image: Painter,
-    selectQuantity: ()-> Unit,
-    onDelete: () -> Unit
+    itemProduct: CartProductItems,
+    selectQuantity: (pos: Int) -> Unit,
+    onDelete: (String) -> Unit
 ) {
+    Log.e("checkcount","Itemcard once")
 
     Card(
         shape = RoundedCornerShape(12.dp),
@@ -66,14 +60,13 @@ fun CartItemCard(
             Row {
 
                 Image(
-                    painter = image,
+                    painter = painterResource(itemProduct.image),
                     contentDescription = null,
                     modifier = Modifier
                         .width(90.dp)
                         .height(140.dp)
                         .clip(RoundedCornerShape(8.dp))
-                        .background(Color(0xFFE8E8E8)),
-                    contentScale = ContentScale.Crop
+                        .background(Color(0xFFE8E8E8))
                 )
 
                 Spacer(modifier = Modifier.width(10.dp))
@@ -89,7 +82,7 @@ fun CartItemCard(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = brand,
+                            text = itemProduct.brand,
                             fontSize = 12.sp,
                             style = MaterialTheme.typography.titleMedium
                         )
@@ -105,7 +98,7 @@ fun CartItemCard(
                     Spacer(modifier = Modifier.size(8.dp))
 
                     Text(
-                        text = title,
+                        text = itemProduct.title,
                         fontSize = 10.sp,
                         color = Color(0xFF545454),
                         style = MaterialTheme.typography.bodyMedium
@@ -113,23 +106,27 @@ fun CartItemCard(
 
                     Spacer(Modifier.height(4.dp))
 
-                    ColorSizePart(color, qty, callBackQuantity = {
-                      selectQuantity()
-                    })
+                    ColorSizePart(
+                        itemProduct.color,
+                        itemProduct.size,
+                        itemProduct.quantity.toString(),
+                        callBackQuantity = {
+                            selectQuantity(itemProduct.id)
+                        })
 
                     Spacer(Modifier.height(2.dp))
 
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
-                            text = price,
+                            text = String.format("%.2f", itemProduct.basePrice) ,
                             fontSize = 12.sp,
                             style = MaterialTheme.typography.titleMedium,
                             color = loginButtonColor
                         )
                         Spacer(Modifier.width(6.dp))
-                        if (oldPrice != null) {
+                        if (itemProduct.discountPrice != null) {
                             Text(
-                                text = oldPrice,
+                                text = String.format("%.2f", itemProduct.discountPrice) ,
                                 fontSize = 10.sp,
                                 color = Color(0xFF666666),
                                 textDecoration = TextDecoration.LineThrough
@@ -139,7 +136,7 @@ fun CartItemCard(
 
                     Spacer(modifier = Modifier.height(4.dp))
 
-                    OfferPricePart()
+                    OfferPricePart(String.format("%.2f", itemProduct.rrp), itemProduct.discount)
 
                     Spacer(modifier = Modifier.height(4.dp))
 
@@ -151,7 +148,7 @@ fun CartItemCard(
                     ) {
                         Row(
                             modifier = Modifier
-                                .background(Color(0xFFFDB300), RoundedCornerShape(20.dp))
+                                .background(Color(0xFFEFEFEF), RoundedCornerShape(20.dp))
                                 .padding(horizontal = 4.dp, vertical = 2.dp)
                         ) {
 
@@ -163,7 +160,7 @@ fun CartItemCard(
                             Spacer(modifier = Modifier.size(2.dp))
 
                             Text(
-                                text = deliveryText,
+                                text = itemProduct.delivery,
                                 fontSize = 10.sp,
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = Color.Black
@@ -181,7 +178,7 @@ fun CartItemCard(
                                 contentDescription = "Delete",
                                 modifier = Modifier
                                     .size(24.dp)
-                                    .clickable {  }
+                                    .clickable { }
                             )
 
 
@@ -192,7 +189,7 @@ fun CartItemCard(
                                 contentDescription = "Delete",
                                 modifier = Modifier
                                     .size(24.dp)
-                                    .clickable { onDelete() }
+                                    .clickable { onDelete(itemProduct.id.toString()) }
                             )
 
 
@@ -207,26 +204,31 @@ fun CartItemCard(
 
             }
         }
+        ///
+
+
+
+
     }
 
 }
 
 
 @Composable
-fun OfferPricePart() {
-    Row{
-        Text(text = "RRP ฿ 172.00", color = Color(0xFF575959), fontSize = 10.sp)
+fun OfferPricePart(RrpPrice: String, discount: String) {
+    Row {
+        Text(text = "RRP ฿ " + RrpPrice, color = Color(0xFF575959), fontSize = 10.sp)
         Spacer(modifier = Modifier.size(5.dp))
-        Text(text = "(90% OFF)", fontSize = 10.sp, color = Color(0xFFED1D2C))
+        Text(text = "("+discount+" OFF)", fontSize = 10.sp, color = Color(0xFFED1D2C))
     }
 }
 
 @Composable
-fun ColorSizePart(color: String, size: String, callBackQuantity: () -> Unit) {
+fun ColorSizePart(color: String, size: String, quantity: String, callBackQuantity: () -> Unit) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Text(text = stringResource(R.string.color), fontSize = 10.sp)
         Text(
-            text = color, style = MaterialTheme.typography.titleMedium,
+            text = " "+color, style = MaterialTheme.typography.titleMedium,
             color = loginButtonColor, fontSize = 10.sp
         )
 
@@ -236,7 +238,7 @@ fun ColorSizePart(color: String, size: String, callBackQuantity: () -> Unit) {
 
         Text(text = stringResource(R.string.size), fontSize = 10.sp)
         Text(
-            text = size, style = MaterialTheme.typography.titleMedium,
+            text = " "+size, style = MaterialTheme.typography.titleMedium,
             color = loginButtonColor, fontSize = 10.sp
         )
 
@@ -247,29 +249,33 @@ fun ColorSizePart(color: String, size: String, callBackQuantity: () -> Unit) {
 
         Text(text = "Qty:", fontSize = 10.sp)
 
-        QuantityPart(callBackQuantity = { callBackQuantity()})
+        QuantityPart(quantity, callBackQuantity = { callBackQuantity() })
     }
 }
 
 @Composable
-fun QuantityPart(callBackQuantity: () -> Unit) {
+fun QuantityPart(qty: String, callBackQuantity: () -> Unit) {
 
-    Column(modifier = Modifier.padding(start = 4.dp).clickable{
-        callBackQuantity()
-    }) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(text = "01", color = loginButtonColor, fontSize = 10.sp)
+    Column(modifier = Modifier
+        .padding(start = 4.dp)
+        .clickable {
+            callBackQuantity()
+        }) {
+        Row(verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.align(Alignment.CenterHorizontally)) {
+            Text(text = qty, color = loginButtonColor, fontSize = 10.sp)
             Spacer(modifier = Modifier.size(3.dp))
             Image(
                 painter = painterResource(R.drawable.down_arrow),
-                contentDescription = null, modifier = Modifier.size(10.dp)
+                contentDescription = null, modifier = Modifier.padding(start = 4.dp).size(8.dp)
             )
         }
         HorizontalDivider(
             modifier = Modifier
-                .width(29.dp)
+                .width(25.dp)
                 .height(1.dp)
                 .background(Color(0xFF040707))
+                .align(Alignment.CenterHorizontally)
         )
     }
 }
