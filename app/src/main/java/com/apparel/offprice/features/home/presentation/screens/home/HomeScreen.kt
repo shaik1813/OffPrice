@@ -55,7 +55,6 @@ fun BottomNavigationContent(
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        containerColor = MaterialTheme.colorScheme.surface,
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         bottomBar = { BottomBar(navController = navController) }
     ) { innerPadding ->
@@ -122,7 +121,7 @@ fun BottomBar(
         NavigationBar(
             modifier = Modifier
                 .fillMaxWidth(),
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = MaterialTheme.colorScheme.background
         ) {
             bottomNavItems.forEach { item ->
                 val selected = currentRoute == item.route::class.qualifiedName
