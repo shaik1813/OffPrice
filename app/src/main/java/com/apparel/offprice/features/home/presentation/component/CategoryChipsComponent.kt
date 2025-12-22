@@ -20,34 +20,33 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.apparel.offprice.features.home.data.model.SearchCategory
 
 
-@Composable
-fun CategoryChips(selected: SearchCategory, onSelect: (SearchCategory) -> Unit) {
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        SearchCategory.entries.forEach { category ->
-            FilterChip(
-                selected = category == selected,
-                onClick = { onSelect(category) },
-                label = {
-                    Text(
-                        category.title,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontSize = 12.sp,
-                        letterSpacing = 0.sp
-                    )
-                },
-                colors = FilterChipDefaults.filterChipColors(
-                    selectedContainerColor = MaterialTheme.colorScheme.primary,
-                    selectedLabelColor = Color.White
-                ),
-                modifier = Modifier
-                    .padding(vertical = 4.dp)
-            )
-        }
-    }
-}
+//@Composable
+//fun CategoryChips(selected: SearchCategory, onSelect: (SearchCategory) -> Unit) {
+//    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+//        SearchCategory.entries.forEach { category ->
+//            FilterChip(
+//                selected = category == selected,
+//                onClick = { onSelect(category) },
+//                label = {
+//                    Text(
+//                        category.title,
+//                        style = MaterialTheme.typography.titleMedium,
+//                        fontSize = 12.sp,
+//                        letterSpacing = 0.sp
+//                    )
+//                },
+//                colors = FilterChipDefaults.filterChipColors(
+//                    selectedContainerColor = MaterialTheme.colorScheme.primary,
+//                    selectedLabelColor = Color.White
+//                ),
+//                modifier = Modifier
+//                    .padding(vertical = 4.dp)
+//            )
+//        }
+//    }
+//}
 
 
 @Composable

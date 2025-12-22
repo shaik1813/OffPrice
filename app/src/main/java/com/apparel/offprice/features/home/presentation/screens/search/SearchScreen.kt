@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.TrendingUp
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,7 +30,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
-import com.apparel.offprice.features.home.presentation.component.CategoryChips
+import com.apparel.offprice.features.home.presentation.component.CategoryTabsWithIndicator
 import com.apparel.offprice.features.home.presentation.component.SearchBar
 import com.apparel.offprice.features.home.presentation.component.TagList
 import java.util.Locale
@@ -96,11 +95,18 @@ fun SearchScreen(
             )
         }
         Spacer(Modifier.height(12.dp))
-        CategoryChips(
-            selected = state.selectedCategory,
-            onSelect = { event.invoke(SearchContract.UiEvent.OnCategorySelected(it)) }
+        CategoryTabsWithIndicator(
+            categories = state.selectedCategory,
+            isHome = false,
+            onCategorySelected = {
+                event.invoke(SearchContract.UiEvent.OnCategorySelected(it))
+            }
         )
-        HorizontalDivider(thickness = 1.dp)
+//        CategoryChips(
+//            selected = state.selectedCategory,
+//            onSelect = { event.invoke(SearchContract.UiEvent.OnCategorySelected(it)) }
+//        )
+//        HorizontalDivider(thickness = 1.dp)
         Spacer(Modifier.height(20.dp))
         SectionTitle(
             title = if (state.query.isEmpty()) stringResource(R.string.title_recent_search) else stringResource(R.string.title_all_result)

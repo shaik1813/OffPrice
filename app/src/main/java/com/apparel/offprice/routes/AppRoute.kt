@@ -66,7 +66,9 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.HomeScreen> {
-            HomeScreen(outerNavControl = navController)
+            HomeScreen{ route ->
+                navController.navigate(route)
+            }
         }
 
         composable<AppScreen.SearchScreen> {

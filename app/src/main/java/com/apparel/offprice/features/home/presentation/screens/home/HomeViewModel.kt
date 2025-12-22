@@ -2,6 +2,7 @@ package com.apparel.offprice.features.home.presentation.screens.home
 
 import androidx.lifecycle.ViewModel
 import com.apparel.offprice.common.preference.AppPreference
+import com.apparel.offprice.features.home.data.model.sampleLOneCategoryItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,6 +10,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,8 +27,31 @@ class HomeViewModel @Inject constructor(
 
     override fun event(event: HomeContract.UiEvent) {
         when (event) {
+            is HomeContract.UiEvent.OnLOneCategoryItemClick -> {
+                _state.update { state ->
+                    state.copy(
+                        lOneCategoryItems = state.lOneCategoryItems.map {
+                            it.copy(
+                                isSelected = it.id == event.item.id
+                            )
+                        }
+                    )
+                }
+            }
+            HomeContract.UiEvent.OnSearch -> TODO()
+            HomeContract.UiEvent.OnWishlist -> TODO()
+        }
+    }
 
-            else -> {}
+    init {
+        loadInitialData()
+    }
+
+    private fun loadInitialData() {
+        _state.update {
+            it.copy(
+                lOneCategoryItems = sampleLOneCategoryItem
+            )
         }
     }
 

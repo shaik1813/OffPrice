@@ -34,13 +34,30 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
+import com.apparel.offprice.common.utils.CollectInLaunchedEffect
+import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.plp.data.model.samplePLPHorizontalListItems
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PLPScreen(onNavigateToSearch: () -> Unit,
-              onNavigateToWishlist: () -> Unit) {
+fun PLPScreen(
+    onNavigateToSearch: () -> Unit,
+    onNavigateToWishlist: () -> Unit,
+    viewModel: PLPViewModel = hiltViewModel()
+) {
+
+    val (state, event, effect) = use(viewModel = viewModel)
+
+
+    effect.CollectInLaunchedEffect {
+        when(it){
+            is PLPContract.UiEffect.ShowMessage -> {
+
+            }
+        }
+    }
 
     var selectedCategoryId by remember { mutableStateOf("1") }
 
@@ -188,11 +205,4 @@ fun PLPScreen(onNavigateToSearch: () -> Unit,
             }
         }
     }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun PLPScreenPreview(){
-    PLPScreen(onNavigateToSearch = {}, onNavigateToWishlist = {})
 }
