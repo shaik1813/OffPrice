@@ -40,7 +40,7 @@ import com.apparel.offprice.features.cart.data.CartProductItems
 fun CartItemCard(
     itemProduct: CartProductItems,
     selectQuantity: (pos: Int) -> Unit,
-    onDelete: (String) -> Unit
+    onDelete: (Int) -> Unit
 ) {
     Log.e("checkcount","Itemcard once")
 
@@ -189,7 +189,7 @@ fun CartItemCard(
                                 contentDescription = "Delete",
                                 modifier = Modifier
                                     .size(24.dp)
-                                    .clickable { onDelete(itemProduct.id.toString()) }
+                                    .clickable { onDelete(itemProduct.id) }
                             )
 
 

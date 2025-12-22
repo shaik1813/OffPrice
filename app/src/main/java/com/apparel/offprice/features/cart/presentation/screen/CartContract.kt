@@ -28,7 +28,7 @@ interface CartContract : UnidirectionalViewModel
     sealed interface UiEvent {
         data object onOpenBottomSheetOffer : UiEvent
         data object onCloseBottomSheetOffer : UiEvent
-        data class onOpenDeleteCartConfirm(val itemId:String) : UiEvent
+        data class onOpenDeleteCartConfirm(val itemId:Int) : UiEvent
         data object onCloseDeleteCartConfirm : UiEvent
         data object OnToggleCheckedClubPoint : UiEvent
         data object OnToggleCheckedStorePoint : UiEvent

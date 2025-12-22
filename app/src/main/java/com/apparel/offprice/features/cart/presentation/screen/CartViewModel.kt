@@ -30,7 +30,7 @@ class CartViewModel @Inject constructor(
     override val effect: SharedFlow<CartContract.UiEffect> = _effectFlow.asSharedFlow()
 
     init {
-        setInitialCart(cartProducts)
+        setInitialCart()
     }
 
     override fun event(event: CartContract.UiEvent) {
@@ -184,9 +184,10 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    fun setInitialCart(items: List<CartProductItems>) {
+    fun setInitialCart() {
+        val item = cartProducts
         _state.update {
-            it.copy(cartItems = items)
+            it.copy(cartItems = item)
         }
     }
 
