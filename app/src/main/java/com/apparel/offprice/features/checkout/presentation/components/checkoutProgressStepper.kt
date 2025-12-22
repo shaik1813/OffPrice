@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.checkout.presentation.screens
+package com.apparel.offprice.features.checkout.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -87,11 +87,13 @@ fun StepItem(
             contentColor = Color.White
             iconRes = icons.completed
         }
+
         StepState.CURRENT -> {
             backgroundColor = Color.Black
             contentColor = Color.White
             iconRes = icons.current
         }
+
         StepState.UPCOMING -> {
             backgroundColor = Color.White
             contentColor = Color.Black
@@ -99,8 +101,10 @@ fun StepItem(
         }
     }
 
-    Row(verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(10.dp)) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(10.dp)
+    ) {
 
         Box(
             modifier = Modifier
@@ -125,7 +129,6 @@ fun StepItem(
         )
     }
 }
-
 
 
 @Composable

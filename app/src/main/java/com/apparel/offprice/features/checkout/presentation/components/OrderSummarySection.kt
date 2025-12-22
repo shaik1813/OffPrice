@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.checkout.presentation.screens
+package com.apparel.offprice.features.checkout.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -66,14 +66,22 @@ fun OrderSummaryItem(product: ProductItem) {
         Spacer(modifier = Modifier.width(12.dp))
 
         Column {
-            Text(product.brand, fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.bodyMedium)
-            Text(product.title, maxLines = 2,
-                style = MaterialTheme.typography.bodyMedium)
-            Text("Color: ${product.color}  | Qty: ${product.qty} | Size: ${product.size}",
-                style = MaterialTheme.typography.bodyMedium)
-            Text("฿ ${product.price}", fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.bodyMedium)
+            Text(
+                product.brand, fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Text(
+                product.title, maxLines = 2,
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Text(
+                "Color: ${product.color}  | Qty: ${product.qty} | Size: ${product.size}",
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Text(
+                "฿ ${product.price}", fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
     }
 }

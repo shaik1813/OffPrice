@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.checkout.presentation.screens
+package com.apparel.offprice.features.checkout.presentation.components
 
 import com.apparel.offprice.R
 

@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.checkout.presentation.screens
+package com.apparel.offprice.features.checkout.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -49,7 +49,7 @@ fun PriceRow(label: String, amount: String, bold: Boolean = false, positive: Boo
         Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(label, fontWeight = FontWeight.Normal,style = MaterialTheme.typography.bodyMedium)
+        Text(label, fontWeight = FontWeight.Normal, style = MaterialTheme.typography.bodyMedium)
         Text(
             amount,
             fontWeight = FontWeight.Normal,
