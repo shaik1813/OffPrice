@@ -2,7 +2,6 @@ package com.apparel.offprice.features.home.presentation.screens.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.apparel.offprice.features.home.data.model.SearchCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,6 +9,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,7 +32,17 @@ class SearchViewModel @Inject constructor(): ViewModel(), SearchContract {
     override fun event(event: SearchContract.UiEvent) {
         when (event) {
             is SearchContract.UiEvent.OnQueryChanged -> updateQuery(query = event.query)
-            is SearchContract.UiEvent.OnCategorySelected -> updateCategory(category = event.category)
+            is SearchContract.UiEvent.OnCategorySelected -> {
+                _state.update { state ->
+                    state.copy(
+                        selectedCategory = state.selectedCategory.map {
+                            it.copy(
+                                isSelected = it.id == event.category.id
+                            )
+                        }
+                    )
+                }
+            }
             is SearchContract.UiEvent.Submit -> { submitSearch(query = event.query) }
             is SearchContract.UiEvent.RemoveRecent -> removeRecent(query = event.query)
             is SearchContract.UiEvent.OnRecentSearched -> {
@@ -55,9 +65,6 @@ class SearchViewModel @Inject constructor(): ViewModel(), SearchContract {
         _state.value = _state.value.copy(query = query , searchResults = filtered)
     }
 
-    private fun updateCategory(category: SearchCategory) {
-        _state.value = _state.value.copy(selectedCategory = category)
-    }
 
     private fun submitSearch(query: String) {
         if (query.isBlank()) return

@@ -16,7 +16,4 @@ val trendingSearch = listOf(
 
 val recentSearch = listOf("Shoes", "Shirt", "Hoodies")
 
-enum class SearchCategory(val title: String) {
-    All("ALL"), Men("MEN"), Women("WOMEN"), Kids("KIDS")
-}
 
