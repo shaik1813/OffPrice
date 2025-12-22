@@ -132,7 +132,6 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
         Column(modifier = Modifier.fillMaxSize()) {
 
             CartToolBar()
-            Log.e("checkcount","Cartpage once")
 
             ElevationBottom()
 

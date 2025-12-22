@@ -1,6 +1,5 @@
 package com.apparel.offprice.features.cart.presentation.component
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
@@ -40,10 +38,8 @@ import com.apparel.offprice.features.cart.data.CartProductItems
 fun CartItemCard(
     itemProduct: CartProductItems,
     selectQuantity: (pos: Int) -> Unit,
-    onDelete: (String) -> Unit
+    onDelete: (Int) -> Unit
 ) {
-    Log.e("checkcount","Itemcard once")
-
     Card(
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
@@ -189,7 +185,7 @@ fun CartItemCard(
                                 contentDescription = "Delete",
                                 modifier = Modifier
                                     .size(24.dp)
-                                    .clickable { onDelete(itemProduct.id.toString()) }
+                                    .clickable { onDelete(itemProduct.id) }
                             )
 
 

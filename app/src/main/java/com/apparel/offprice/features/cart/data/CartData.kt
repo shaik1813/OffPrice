@@ -1,6 +1,8 @@
 package com.apparel.offprice.features.cart.data
 
+import android.os.Parcelable
 import com.apparel.offprice.R
+import kotlinx.parcelize.Parcelize
 
 data class CreditItem(
     val points: String,
@@ -13,15 +15,15 @@ data class Creditsdata(
 )
 
 data class PriceData(
-    var quantity: Int,
-    var subTotal: Double,
-    var discount: Double,
-    var shipping_fee: Double,
-    var total: Double,
-    var caPointAmount: Double,
-    var storePointAmount: Double,
-    var grandTotal: Double,
-    var points: String
+    val quantity: Int,
+    val subTotal: Double,
+    val discount: Double,
+    val shipping_fee: Double,
+    val total: Double,
+    val caPointAmount: Double,
+    val storePointAmount: Double,
+    val grandTotal: Double,
+    val points: String
 )
 
 var creditsData = Creditsdata(
@@ -55,7 +57,7 @@ var offerList = listOf(
     "The brand reserves the right to amend or cancel the offer without prior notice."
 )
 
-
+@Parcelize
 data class CartProductItems(
     val id: Int,
     val tag: String?,
@@ -73,7 +75,7 @@ data class CartProductItems(
     val isWishlist: Boolean = false,
     val isCouponApply: Int
 
-)
+) : Parcelable
 
 
 val cartProducts = listOf(

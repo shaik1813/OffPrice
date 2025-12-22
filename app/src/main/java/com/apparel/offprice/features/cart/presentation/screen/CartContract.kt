@@ -1,5 +1,6 @@
 package com.apparel.offprice.features.cart.presentation.screen
 
+
 import com.apparel.offprice.common.utils.UnidirectionalViewModel
 import com.apparel.offprice.features.cart.data.CartProductItems
 
@@ -28,7 +29,7 @@ interface CartContract : UnidirectionalViewModel
     sealed interface UiEvent {
         data object onOpenBottomSheetOffer : UiEvent
         data object onCloseBottomSheetOffer : UiEvent
-        data class onOpenDeleteCartConfirm(val itemId:String) : UiEvent
+        data class onOpenDeleteCartConfirm(val itemId:Int) : UiEvent
         data object onCloseDeleteCartConfirm : UiEvent
         data object OnToggleCheckedClubPoint : UiEvent
         data object OnToggleCheckedStorePoint : UiEvent
