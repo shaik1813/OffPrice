@@ -1,6 +1,5 @@
 package com.apparel.offprice.features.cart.presentation.screen
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -43,7 +42,6 @@ import com.apparel.offprice.features.cart.presentation.component.FreeShipCard
 import com.apparel.offprice.features.cart.presentation.component.PaymentCard
 import com.apparel.offprice.features.cart.presentation.component.QuantityBottomSheet
 import com.apparel.offprice.features.cart.presentation.component.UseCreditsCard
-import com.apparel.offprice.features.checkout.presentation.screens.ShippingAddressScreen
 import com.apparel.offprice.features.coupon.presentation.component.TermsAndConditionsDialog
 import com.apparel.offprice.features.pdp.presentation.component.CouponCard
 import features.cart.presentation.component.PriceSummaryCard
@@ -121,7 +119,9 @@ fun CartScreen(onCheckoutClick : () -> Unit,viewModel: CartViewModel = hiltViewM
         bottomBar = {
             if(!state.isCartEmpty) {
                 CartBottomView(
-                    onCheckOutClick = {}
+                    onCheckOutClick = {
+                        onCheckoutClick()
+                    }
                 )
             }
         },
