@@ -7,22 +7,21 @@ interface CartContract : UnidirectionalViewModel
 <CartContract.UiState, CartContract.UiEvent, CartContract.UiEffect> {
 
     data class UiState(
-        var isOpenDialog: Boolean = false,
-        var isCouponOfferSheet: Boolean = false,
-        var isDeleteCartDialog: Boolean = false,
-
-        var isCheckedClub: Boolean = false,
-        var isCheckedStore: Boolean = false,
-        var isQuantitySheet: Boolean = false,
-        var isOfferDialog: Boolean = false,
+        val isOpenDialog: Boolean = false,
+        val isCouponOfferSheet: Boolean = false,
+        val isDeleteCartDialog: Boolean = false,
+        val isCheckedClub: Boolean = false,
+        val isCheckedStore: Boolean = false,
+        val isQuantitySheet: Boolean = false,
+        val isOfferDialog: Boolean = false,
         val couponCode: String = "WELCOME",
         val isApplied: Boolean = false,
-        var isOpenShipFee: Boolean = false,
-        var isCartEmpty: Boolean = false,
+        val isOpenShipFee: Boolean = false,
+        val isCartEmpty: Boolean = false,
         val cartItems: List<CartProductItems> = emptyList(),
-        var deleteItemId: Int? = null,
-        var selectedQuantity: Int = 1,
-        var selectCartPos: Int = -1
+        val deleteItemId: Int? = null,
+        val selectedQuantity: Int = 1,
+        val selectCartPos: Int = -1
     )
 
     sealed interface UiEvent {

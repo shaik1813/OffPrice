@@ -8,24 +8,24 @@ data class CreditItem(
 )
 
 data class Creditsdata(
-    var clubApparelpoint: CreditItem,
-    var storePoint: CreditItem
+    val clubApparelPoint: CreditItem,
+    val storePoint: CreditItem
 )
 
 data class PriceData(
-    var quantity: Int,
-    var subTotal: Double,
-    var discount: Double,
-    var shipping_fee: Double,
-    var total: Double,
-    var caPointAmount: Double,
-    var storePointAmount: Double,
-    var grandTotal: Double,
-    var points: String
+    val quantity: Int,
+    val subTotal: Double,
+    val discount: Double,
+    val shippingFee: Double,
+    val total: Double,
+    val caPointAmount: Double,
+    val storePointAmount: Double,
+    val grandTotal: Double,
+    val points: String
 )
 
-var creditsData = Creditsdata(
-    clubApparelpoint = CreditItem(
+val creditsData = Creditsdata(
+    clubApparelPoint = CreditItem(
         points = "1000 Points",
         amount = 05.00
     ),
@@ -36,25 +36,17 @@ var creditsData = Creditsdata(
 )
 
 
-var priceData = PriceData(
+val priceData = PriceData(
     quantity = 3,
     subTotal = 105.00,
     discount = 12.00,
-    shipping_fee = 14.00,
+    shippingFee = 14.00,
     total = 107.00,
     caPointAmount = 05.00,
     storePointAmount = 05.00,
     grandTotal = 97.00,
     points = "1000"
 )
-
-var offerList = listOf(
-    "This coupon is valid for customers within the UAE only.",
-    "Minimum purchase value must be AED 25.",
-    "Offer cannot be combined with other promotions or discount codes.",
-    "The brand reserves the right to amend or cancel the offer without prior notice."
-)
-
 
 data class CartProductItems(
     val id: Int,
@@ -64,7 +56,7 @@ data class CartProductItems(
     val title: String,
     val color: String,
     val size: String,
-    var quantity: Int,
+    val quantity: Int,
     val basePrice: Double,
     val discountPrice: Double,
     val rrp: Double,
