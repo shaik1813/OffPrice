@@ -4,12 +4,20 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
-val primaryColor = Color(0xFF000000)
-val secondaryColor = Color(0xFFFFFFFF)
-val tertiaryColor = Color(0xFFA2050D)
+val primaryColor = Color(0XFF040707)
+val secondaryColor = Color(0xFFA2050D)
+val tertiaryColor = Color(0xFF49AE56)
 
-val backgroundColor = Color(0xFFE6E6E6)
-val surfaceColor = Color(0xFFFFFFFF)
+val backgroundColor = Color(0xFFFFFFFF)
+val surfaceColor = Color(0xFFEFEFEF)
+
+val errorColor = Color(0xFFED1D2C)
+
+val warningColor = Color(0xFFFDB32F)
+
+val successColor = Color(0xFF49AE56)
+
+val borderColor = Color(0xFFE6E6E6)
 
 val redColor = Color(0xFFFB637E)
 
@@ -22,11 +30,8 @@ val buttonBorderColor = Color(0xFF8A8A8A)
 val loginGoogleColor = Color(0xFF191919)
 val loginButtonColor = Color(0xFF333333)
 
-val nonReturnbgColor = Color(0xFFEFEFEF)
-
 val IconBackgroundColor = Color(0xFFF5F5F5)
 val nonreturnTxtColor = Color(0xFF575959)
-val offerTextColor = Color(0xFFED1D2C)
 val sizeCardColor = Color(0xFFF1F1F1)
 
 val stockLeftColor = Color(0xFFC1585D)
