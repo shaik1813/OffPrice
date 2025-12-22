@@ -48,7 +48,7 @@ fun PriceSummaryCard(isOpenShipFee: Boolean, priceData: PriceData, OnShipFeeClic
 
                 PriceCardUI(
                     title = stringResource(R.string.shipping_fee),
-                    value = "" + String.format("%.2f", priceData.shipping_fee),
+                    value = "" + String.format("%.2f", priceData.shippingFee),
                     showArrow = true,
                     shipFeeClick = {
                         OnShipFeeClick()

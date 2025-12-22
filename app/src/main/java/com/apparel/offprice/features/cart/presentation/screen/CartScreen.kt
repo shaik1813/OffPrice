@@ -21,7 +21,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
+import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.cart.data.creditsData
 import com.apparel.offprice.features.cart.data.priceData
@@ -54,7 +54,7 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
 
     val context = LocalContext.current
 
-    var (state, event, effect) = use(viewModel = viewModel)
+    val (state, event, effect) = use(viewModel = viewModel)
 
     if (state.isCouponOfferSheet) {
         CouponOfferBottomSheet(
@@ -108,12 +108,10 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
         })
     }
 
-    LaunchedEffect(Unit) {
-        effect.collect { effect ->
-            when (effect) {
-                is CartContract.UiEffect.ShowMessage -> {
-                    Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
-                }
+    effect.CollectInLaunchedEffect {
+        when(it){
+            is CartContract.UiEffect.ShowMessage -> {
+                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -129,7 +127,7 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
         containerColor = MaterialTheme.colorScheme.surface
     ) { paddingValues ->
 
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
 
             CartToolBar()
 
@@ -145,7 +143,7 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
 
-                    items(items = state.cartItems,  key = { it -> it }) {  item ->
+                    items(items = state.cartItems,  key = { it -> it.id }) {  item ->
                         CartItemCard(
                             item,
                             selectQuantity = {
@@ -185,7 +183,7 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
 
                     item {
                         UseCreditsCard(
-                            creditsData,
+                            creditsdata = creditsData,
                             caPointsChecked = state.isCheckedClub,
                             storeCreditsChecked = state.isCheckedStore,
                             onCaPointsToggle = { event(CartContract.UiEvent.OnToggleCheckedClubPoint) },
@@ -194,21 +192,16 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
 
                     item {
                         PriceSummaryCard(
-                            state.isOpenShipFee, priceData,
+                            isOpenShipFee = state.isOpenShipFee,
+                            priceData = priceData,
                             OnShipFeeClick = {
                                 event(CartContract.UiEvent.OnShipFeeClick)
                             })
                     }
-
-
                 }
             }
         }
-
-
     }
-
-
 }
 
 

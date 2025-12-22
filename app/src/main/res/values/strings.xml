@@ -200,6 +200,7 @@
     <string name="label_card_number">Card Number</string>
     <string name="label_expiry_date">Expiry</string>
     <string name="label_cvv">CVV</string>
+    <string name="label_search">Search</string>
 
 
 
