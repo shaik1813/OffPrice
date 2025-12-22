@@ -1,6 +1,7 @@
 package com.apparel.offprice.features.cart.presentation.screen
 
 import com.apparel.offprice.common.utils.UnidirectionalViewModel
+import com.apparel.offprice.features.cart.data.CartProductItems
 
 interface CartContract : UnidirectionalViewModel
 <CartContract.UiState, CartContract.UiEvent, CartContract.UiEffect> {
@@ -18,16 +19,20 @@ interface CartContract : UnidirectionalViewModel
         val isApplied: Boolean = false,
         var isOpenShipFee: Boolean = false,
         var isCartEmpty: Boolean = false,
-        )
+        val cartItems: List<CartProductItems> = emptyList(),
+        var deleteItemId: Int? = null,
+        var selectedQuantity: Int = 1,
+        var selectCartPos: Int = -1
+    )
 
     sealed interface UiEvent {
         data object onOpenBottomSheetOffer : UiEvent
         data object onCloseBottomSheetOffer : UiEvent
-        data object onOpenDeleteCartConfirm : UiEvent
+        data class onOpenDeleteCartConfirm(val itemId:String) : UiEvent
         data object onCloseDeleteCartConfirm : UiEvent
         data object OnToggleCheckedClubPoint : UiEvent
         data object OnToggleCheckedStorePoint : UiEvent
-        data object OnOpenQuantitySheet : UiEvent
+        data class OnOpenQuantitySheet(val selectedPos:Int) : UiEvent
         data object OnCloseQuantitySheet : UiEvent
         data class OnCouponChanged(val value: String) : UiEvent
         object OnApplyToggleClick : UiEvent
@@ -35,8 +40,9 @@ interface CartContract : UnidirectionalViewModel
         object OnShipFeeClick : UiEvent
         data object OnOpenOfferDetailDialog : UiEvent
         data object OnCloseOfferDetailDialog : UiEvent
-
-
+        data class OnDeleteCartItem(val itemId:Int) : UiEvent
+        data class OnQuantitySelected(val quantity: Int) : UiEvent
+        object OnSubmitQuantity : UiEvent
     }
 
     sealed interface UiEffect {
