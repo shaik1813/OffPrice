@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.backgroundColor
 import com.apparel.offprice.common.theme.inputTextColor
-import com.apparel.offprice.common.theme.nonReturnbgColor
 import com.apparel.offprice.common.theme.nonreturnTxtColor
 
 
@@ -55,7 +54,7 @@ fun ProductDescSection(onSizeGuideClick : () -> Unit) {
         Card(
             shape = RoundedCornerShape(6.dp),
             colors = CardDefaults.cardColors(
-                containerColor = nonReturnbgColor
+                containerColor = MaterialTheme.colorScheme.surface
             ),
             modifier = Modifier.padding(top = 4.dp)
         )

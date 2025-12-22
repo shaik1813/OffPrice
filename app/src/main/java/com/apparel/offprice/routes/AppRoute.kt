@@ -12,8 +12,8 @@ import com.apparel.offprice.features.home.presentation.screens.search.SearchScre
 import com.apparel.offprice.features.paymentCard.presentation.screen.PaymentCardScreen
 import com.apparel.offprice.features.pdp.presentation.screen.PDPscreen
 import com.apparel.offprice.features.profile.presentation.screen.profileDetails.ProfileDetailsScreen
-import com.apparel.offprice.features.profile.presentation.screen.profileSize.ProfileSizeScreen
 import com.apparel.offprice.features.profile.presentation.screen.profilePassword.ProfilePasswordScreen
+import com.apparel.offprice.features.profile.presentation.screen.profileSize.ProfileSizeScreen
 import com.apparel.offprice.features.profile.presentation.screen.userprofile.UserProfileScreen
 import com.apparel.offprice.features.storeCredit.presentation.screen.StoreCreditScreen
 import com.apparel.offprice.features.storeLocator.presentation.screen.StoreLocatorScreen
@@ -66,7 +66,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.HomeScreen> {
-            HomeScreen{ route ->
+            HomeScreen { route ->
                 navController.navigate(route)
             }
         }
@@ -92,7 +92,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                     navController.popBackStack()
                 },
                 onStartShoppingClicked = {
-                    navController.navigate(AppScreen.HomeScreen){
+                    navController.navigate(AppScreen.HomeScreen) {
                         popUpTo(AppScreen.HomeScreen) { inclusive = true }
                     }
                 },
@@ -100,7 +100,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
                 },
                 onNavigateToPDP = { product ->
-                    navController.navigate(AppScreen.PDPScreen){}
+                    navController.navigate(AppScreen.PDPScreen) {}
                 }
             )
         }
@@ -133,7 +133,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
         composable<AppScreen.UserProfileScreen> {
             UserProfileScreen(
-                onNavigateToBack = {navController.popBackStack()},
+                onNavigateToBack = { navController.popBackStack() },
                 onPersonalItemClicked = {
                     navController.navigate(AppScreen.ProfileDetailScreen)
                 },
@@ -172,13 +172,13 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
         composable<AppScreen.StoreCreditScreen> {
             StoreCreditScreen(
-                onNavigateBack = {navController.popBackStack()}
+                onNavigateBack = { navController.popBackStack() }
             )
         }
 
         composable<AppScreen.DeliveryAddressScreen> {
             DeliveryAddressScreen(
-                onNavigateToBack = {navController.popBackStack()}
+                onNavigateToBack = { navController.popBackStack() }
             )
         }
 
@@ -193,6 +193,14 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                 navController.popBackStack()
             })
         }
+
+        composable<AppScreen.MyOrdersScreen> {}
+
+        composable<AppScreen.ReturnsScreen> {}
+
+        composable<AppScreen.ExchangeScreen> {}
+
+        composable<AppScreen.LogOutScreen> {}
 
     }
 

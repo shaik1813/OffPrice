@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.sp
 import com.apparel.offprice.common.theme.backgroundColor
 import com.apparel.offprice.common.theme.buttonBorderColor
 import com.apparel.offprice.common.theme.loginButtonColor
-import com.apparel.offprice.common.theme.offerTextColor
 
 
 @Composable
@@ -38,7 +37,7 @@ fun PriceSection() {
         Spacer(modifier = Modifier.size(8.dp))
 
         Text(
-            text = "-90% OFF", fontSize = 12.sp, color = offerTextColor,
+            text = "-90% OFF", fontSize = 12.sp, color = MaterialTheme.colorScheme.error,
             style = MaterialTheme.typography.bodyLarge
         )
 
