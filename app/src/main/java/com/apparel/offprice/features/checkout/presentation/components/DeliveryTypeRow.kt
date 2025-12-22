@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.checkout.presentation.screens
+package com.apparel.offprice.features.checkout.presentation.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -59,6 +59,6 @@ enum class ShippingAddressFilter {
 
 @Preview(showBackground = true)
 @Composable
-fun DeliveryTypeRowPreview(){
+fun DeliveryTypeRowPreview() {
     DeliveryTypeRow(selectedFilter = ShippingAddressFilter.DELIVERY, onFilterSelected = {})
 }

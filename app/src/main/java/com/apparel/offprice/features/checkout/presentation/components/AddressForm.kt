@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.checkout.presentation.screens
+package com.apparel.offprice.features.checkout.presentation.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -63,7 +63,7 @@ fun AddressForm() {
 
     }
 
-    }
+}
 
 
 @Composable
@@ -85,7 +85,8 @@ fun FormInput(value: String, height: Dp = 48.dp) {
             .border(1.dp, Color.LightGray, RoundedCornerShape(10.dp))
             .padding(14.dp)
     ) {
-        Text(value, color = Color.Black,
+        Text(
+            value, color = Color.Black,
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Normal
         )

@@ -1,6 +1,5 @@
-package com.apparel.offprice.features.checkout.presentation.screens
+package com.apparel.offprice.features.checkout.presentation.components
 
-import android.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -48,8 +46,10 @@ fun BottomBar(totalAmount: String, onSave: () -> Unit) {
                 .height(52.dp),
             shape = RoundedCornerShape(10.dp)
         ) {
-            Text("VERIFY & SAVE ADDRESS →", color = Color.White ,
-                style = MaterialTheme.typography.titleMedium)
+            Text(
+                "VERIFY & SAVE ADDRESS →", color = Color.White,
+                style = MaterialTheme.typography.titleMedium
+            )
         }
     }
 }
