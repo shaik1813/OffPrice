@@ -33,6 +33,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.apparel.offprice.features.cart.presentation.screen.CartScreen
+import com.apparel.offprice.features.checkout.presentation.screens.ShippingAddressScreen
 import com.apparel.offprice.features.home.data.model.bottomNavItems
 import com.apparel.offprice.features.plp.presentation.screens.PLPScreen
 import com.apparel.offprice.features.profile.presentation.screen.myaccounts.MyAccountScreen
@@ -81,10 +82,14 @@ fun HomeScreen(outerNavControl: NavHostController) {
                         }
                     )
                 }
-                composable<BottomNavScreen.Item4> { CartScreen() }
+                composable<BottomNavScreen.Item4> { CartScreen(onCheckoutClick = {
+                   outerNavControl.navigate(AppScreen.ShippingAddressScreen)
+                })
+                }
+
                 composable<BottomNavScreen.Item5>{
                     MyAccountScreen(
-                        isGuestUser = false,
+                        isGuestUser = true,
                         onNavigateToSearch = {
                             outerNavControl.navigate(AppScreen.SearchScreen) {}
                         },

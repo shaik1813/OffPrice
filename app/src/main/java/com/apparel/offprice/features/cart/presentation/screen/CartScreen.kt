@@ -42,6 +42,7 @@ import com.apparel.offprice.features.cart.presentation.component.FreeShipCard
 import com.apparel.offprice.features.cart.presentation.component.PaymentCard
 import com.apparel.offprice.features.cart.presentation.component.QuantityBottomSheet
 import com.apparel.offprice.features.cart.presentation.component.UseCreditsCard
+import com.apparel.offprice.features.checkout.presentation.screens.ShippingAddressScreen
 import com.apparel.offprice.features.coupon.presentation.component.TermsAndConditionsDialog
 import com.apparel.offprice.features.pdp.presentation.component.CouponCard
 import com.apparel.offprice.features.pdp.presentation.component.ElevatedLine
@@ -50,7 +51,7 @@ import features.cart.presentation.component.PriceSummaryCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
+fun CartScreen(onCheckoutClick : () -> Unit,viewModel: CartViewModel = hiltViewModel()) {
 
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp.dp
@@ -211,7 +212,9 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
             ElevatedLine()
 
             CartBottomView(
-                onCheckOutClick = {}
+                onCheckOutClick = {
+                    onCheckoutClick()
+                }
             )
 
         }
