@@ -36,7 +36,6 @@ import com.apparel.offprice.R
 import com.apparel.offprice.common.component.DefaultTopAppBar
 import com.apparel.offprice.common.theme.buttonBorderColor
 import com.apparel.offprice.common.theme.nonreturnTxtColor
-import com.apparel.offprice.common.theme.offerTextColor
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.storeCredit.data.CreditType
@@ -234,7 +233,7 @@ private fun StoreCreditTransactionRow(
     transaction: StoreCreditTransaction,
 ) {
     val isReceived = transaction.type == CreditType.RECEIVED
-    val statusColor = if (isReceived) Color(0xFF4CAF50) else offerTextColor
+    val statusColor = if (isReceived) Color(0xFF4CAF50) else MaterialTheme.colorScheme.error
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp),

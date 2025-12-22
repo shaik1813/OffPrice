@@ -15,7 +15,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,7 +25,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
-import com.apparel.offprice.features.authentication.presentation.component.CustomCheckbox
 import com.apparel.offprice.features.cart.data.Creditsdata
 
 
@@ -61,8 +59,8 @@ fun UseCreditsCard(
             CreditRow(
                 checked = caPointsChecked,
                 title = stringResource(R.string.ca_points),
-                points = creditsdata.clubApparelpoint.points,
-                amount = creditsdata.clubApparelpoint.amount,
+                points = creditsdata.clubApparelPoint.points,
+                amount = creditsdata.clubApparelPoint.amount,
                 painterResource = painterResource(R.drawable.ca_crediticon),
                 onCheckedChange = onCaPointsToggle
             )

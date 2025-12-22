@@ -70,4 +70,16 @@ sealed interface AppScreen {
     @Serializable
     object PaymentCardScreen : AppScreen
 
+    @Serializable
+    object MyOrdersScreen : AppScreen
+
+    @Serializable
+    object ReturnsScreen : AppScreen
+
+    @Serializable
+    object ExchangeScreen : AppScreen
+
+    @Serializable
+    object LogOutScreen : AppScreen
+
 }

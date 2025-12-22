@@ -2,7 +2,7 @@ package com.apparel.offprice.features.home.presentation.screens.home
 
 import BottomNavScreen
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,14 +19,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -37,127 +34,80 @@ import com.apparel.offprice.features.checkout.presentation.screens.ShippingAddre
 import com.apparel.offprice.features.home.data.model.bottomNavItems
 import com.apparel.offprice.features.plp.presentation.screens.PLPScreen
 import com.apparel.offprice.features.profile.presentation.screen.myaccounts.MyAccountScreen
-import com.apparel.offprice.routes.AppRoutes
 import com.apparel.offprice.routes.AppScreen
 
 @Composable
-fun HomeScreen(outerNavControl: NavHostController) {
-
-    val navController = rememberNavController()
-
-    Column(modifier = Modifier.fillMaxSize()) {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            containerColor = MaterialTheme.colorScheme.surface,
-            bottomBar = {
-                BottomBar(navController = navController)
-            }
-        ) { innerPadding ->
-            NavHost(
-                navController = navController,
-                startDestination = BottomNavScreen.Item1,
-                modifier = Modifier.padding(innerPadding)
-            ) {
-                composable<BottomNavScreen.Item1> {
-                    HomeContent(
-                        onNavigateToSearch = {
-                            outerNavControl.navigate(AppScreen.SearchScreen) {}
-                        },
-                        onNavigateToStore = {
-                            outerNavControl.navigate(AppScreen.StoreLocatorScreen) {}
-                        },
-                        onNavigateToWishlist = {
-                            outerNavControl.navigate(AppScreen.WishListScreen) {}
-                        }
-                    )
-                }
-                composable<BottomNavScreen.Item2> {Greeting("Categories") }
-                composable<BottomNavScreen.Item3> {
-                    PLPScreen(
-                        onNavigateToSearch = {
-                            outerNavControl.navigate(AppScreen.SearchScreen) {}
-                        },
-                        onNavigateToWishlist = {
-                            outerNavControl.navigate(AppScreen.WishListScreen) {}
-                        }
-                    )
-                }
-                composable<BottomNavScreen.Item4> { CartScreen(onCheckoutClick = {
-                   outerNavControl.navigate(AppScreen.ShippingAddressScreen)
-                })
-                }
-
-                composable<BottomNavScreen.Item5>{
-                    MyAccountScreen(
-                        isGuestUser = true,
-                        onNavigateToSearch = {
-                            outerNavControl.navigate(AppScreen.SearchScreen) {}
-                        },
-                        onNavigateToWishlist = {
-                            outerNavControl.navigate(AppScreen.WishListScreen) {}
-                        },
-                        onItemClick = { item ->
-                            when (item.categoryId) {
-                                0 -> {
-                                    //LogOut
-                                }
-
-                                1 -> {
-                                    //User Profile
-                                    outerNavControl.navigate(AppScreen.UserProfileScreen) {}
-                                }
-
-                                2 -> {
-                                    //My Orders
-                                }
-
-                                3 -> {
-                                    //Returns
-                                }
-
-                                4 -> {
-                                    //Exchange
-                                }
-
-                                5 -> {
-                                    //Store Credit
-                                    outerNavControl.navigate(AppScreen.StoreCreditScreen)
-                                }
-
-                                6 -> {
-                                    //MyCoupons
-                                    outerNavControl.navigate(AppScreen.CouponScreen)
-                                }
-
-                                7 -> {
-                                    //Delivery Address
-                                    outerNavControl.navigate(AppScreen.DeliveryAddressScreen)
-                                }
-
-                                8 -> {
-                                    //Payment cards
-                                    outerNavControl.navigate(AppScreen.PaymentCardScreen)
-                                }
-
-                                9 -> {
-                                    //Store Locator
-                                }
-
-                                else -> {
-                                    //Other case
-                                }
-                            }
-                        }
-                    )
-                }
-            }
+fun HomeScreen(
+    onNavigateToOuter: (Any) -> Unit
+) {
+    val bottomNavController = rememberNavController()
+    BottomNavigationContent(
+        navController = bottomNavController,
+        onNavigateToOuter = {
+            onNavigateToOuter(it)
         }
-    }
+    )
 }
 
 @Composable
-fun Greeting(string: String) {
-    Text(text = string)
+fun BottomNavigationContent(
+    navController: NavHostController,
+    onNavigateToOuter: (Any) -> Unit
+) {
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        bottomBar = { BottomBar(navController = navController) }
+    ) { innerPadding ->
+        NavHost(
+            navController = navController,
+            startDestination = BottomNavScreen.Item1,
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            composable<BottomNavScreen.Item1> {
+                HomeContent(
+                    onNavigateToSearch = {
+                        onNavigateToOuter(AppScreen.SearchScreen)
+                    },
+                    onNavigateToWishlist = {
+                        onNavigateToOuter(AppScreen.WishListScreen)
+                    }
+                )
+            }
+            composable<BottomNavScreen.Item2> {
+
+            }
+            composable<BottomNavScreen.Item3> {
+                PLPScreen(
+                    onNavigateToSearch = {
+                        onNavigateToOuter(AppScreen.SearchScreen)
+                    },
+                    onNavigateToWishlist = {
+                        onNavigateToOuter(AppScreen.WishListScreen)
+                    }
+                )
+            }
+            composable<BottomNavScreen.Item4> {
+                CartScreen(onCheckoutClick = {
+                   onNavigateToOuter(AppScreen.ShippingAddressScreen)
+                })
+            }
+            composable<BottomNavScreen.Item5> {
+                MyAccountScreen(
+                    isGuestUser = false,
+                    onNavigateToSearch = {
+                        onNavigateToOuter(AppScreen.SearchScreen)
+                    },
+                    onNavigateToWishlist = {
+                        onNavigateToOuter(AppScreen.WishListScreen)
+                    },
+                    onItemClick = { item ->
+                        onNavigateToOuter(item.navigation)
+                    }
+                )
+            }
+        }
+    }
 }
 
 @Composable
@@ -165,7 +115,7 @@ fun BottomBar(
     navController: NavController,
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
+    val currentRoute = navBackStackEntry?.destination?.route ?: return
 
     Surface(
         color = MaterialTheme.colorScheme.surface,
@@ -174,22 +124,26 @@ fun BottomBar(
         NavigationBar(
             modifier = Modifier
                 .fillMaxWidth(),
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = MaterialTheme.colorScheme.background
         ) {
             bottomNavItems.forEach { item ->
+                val selected = currentRoute == item.route::class.qualifiedName
+                val iconRes =
+                    if (currentRoute == item.route::class.qualifiedName) item.filledIcon
+                    else item.outlinedIcon
+
                 NavigationBarItem(
-                    selected = currentRoute == item.route.javaClass.canonicalName,
+                    selected = selected,
                     onClick = {
                         navController.navigate(item.route) {
-                            popUpTo(navController.graph.startDestinationId) { saveState = true }
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
                             launchSingleTop = true
                             restoreState = true
                         }
                     },
                     icon = {
-                        val iconRes =
-                            if (currentRoute == item.route.javaClass.canonicalName) item.filledIcon
-                            else item.outlinedIcon
                         if (item.badgeCount > 0) {
                             BadgedBox(badge = {
                                 Badge { Text("${item.badgeCount}") }
@@ -221,14 +175,4 @@ fun BottomBar(
             }
         }
     }
-
-}
-
-
-@Preview
-@Composable
-fun CategoryPreview() {
-    HomeScreen(
-        outerNavControl = rememberNavController()
-    )
 }

@@ -26,7 +26,7 @@ fun ProductGrid(
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
 
-        items(products) { product ->
+        items(products, key = { it.id}) { product ->
 
             // Each card takes full width inside its column
             ProductCard(

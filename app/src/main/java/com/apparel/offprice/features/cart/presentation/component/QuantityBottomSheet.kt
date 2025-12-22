@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -41,15 +42,19 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.loginButtonColor
+import kotlinx.serialization.json.Json.Default.configuration
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QuantityBottomSheet(
-    screenHeight: Dp, onSelectItem: (item: Int) -> Unit, onDismiss: () -> Unit, onSumbit: () -> Unit
+    selectedQuantity: Int,
+    onSelectItem: (item: Int) -> Unit, onDismiss: () -> Unit, onSumbit: () -> Unit
 ) {
+    val configuration = LocalConfiguration.current
+
+    val screenHeight = configuration.screenHeightDp.dp
 
     val quantities: List<Int> = listOf(1, 2, 3, 4, 5, 6)
-    var selectedQuantity by remember { mutableStateOf(0) }
 
     ModalBottomSheet(
         sheetState = rememberModalBottomSheetState(),
@@ -109,7 +114,6 @@ fun QuantityBottomSheet(
                             QuantityRow(
                                 value = qty, selectedQuantity, onClick = {
                                     onSelectItem(it)
-                                    selectedQuantity = it
                                 }
                             )
                         }
@@ -160,8 +164,7 @@ fun QuantityBottomSheet(
 
                 }
 
-                Spacer(modifier = Modifier.height(50.dp))
-
+                Spacer(modifier = Modifier.height(70.dp))
 
             }
 
@@ -186,6 +189,7 @@ fun QuantityBottomSheet(
                 /*Submit Button*/
                 Box(
                     modifier = Modifier
+                        .padding(horizontal = 16.dp,)
                         .fillMaxWidth()
                         .height(48.dp)
                         .background(loginButtonColor, RoundedCornerShape(6.dp))
@@ -201,6 +205,8 @@ fun QuantityBottomSheet(
                         fontSize = 12.sp
                     )
                 }
+
+                Spacer(modifier = Modifier.height(16.dp))
 
             }
 
