@@ -1,6 +1,5 @@
 package com.apparel.offprice.features.cart.presentation.screen
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -50,7 +49,7 @@ import features.cart.presentation.component.PriceSummaryCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
+fun CartScreen(onCheckoutClick : () -> Unit,viewModel: CartViewModel = hiltViewModel()) {
 
     val context = LocalContext.current
 
@@ -120,7 +119,9 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel()) {
         bottomBar = {
             if(!state.isCartEmpty) {
                 CartBottomView(
-                    onCheckOutClick = {}
+                    onCheckOutClick = {
+                        onCheckoutClick()
+                    }
                 )
             }
         },
