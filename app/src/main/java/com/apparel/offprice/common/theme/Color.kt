@@ -19,6 +19,8 @@ val successColor = Color(0xFF49AE56)
 
 val borderColor = Color(0xFFE6E6E6)
 
+val badgeColor = Color(0xFFF36872)
+
 val redColor = Color(0xFFFB637E)
 
 val inputTextColor = Color(0xFF545454)

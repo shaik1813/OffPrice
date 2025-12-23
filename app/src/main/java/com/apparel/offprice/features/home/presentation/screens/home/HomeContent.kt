@@ -17,8 +17,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PrimaryScrollableTabRow
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,7 +38,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
-import com.apparel.offprice.features.home.presentation.component.CategoryTabsWithIndicator
+import com.apparel.offprice.features.home.data.model.LOneCategoryItem
 
 @Composable
 fun HomeContent(
@@ -46,9 +50,9 @@ fun HomeContent(
 
     effect.CollectInLaunchedEffect {
         when (it) {
-            is HomeContract.UiEffect.ShowMessage -> {
-
-            }
+            is HomeContract.UiEffect.ShowMessage -> {}
+            HomeContract.UiEffect.OnSearchClicked -> onNavigateToSearch()
+            HomeContract.UiEffect.OnWishListClicked -> onNavigateToWishlist()
         }
     }
 
@@ -77,7 +81,9 @@ fun HomeContent(
                 modifier = Modifier
                     .fillMaxWidth(0.83f)
                     .height(42.dp)
-                    .clickable { onNavigateToSearch() },
+                    .clickable {
+                        event.invoke(HomeContract.UiEvent.OnSearch)
+                    },
                 shape = RoundedCornerShape(20.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = Color(0xE5F5F5F5)
@@ -112,7 +118,9 @@ fun HomeContent(
                     .size(40.dp)
                     .clip(CircleShape)
                     .background(Color(0XF5F5F5E5))
-                    .clickable { onNavigateToWishlist() },
+                    .clickable {
+                        event.invoke(HomeContract.UiEvent.OnWishlist)
+                    },
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
@@ -124,15 +132,78 @@ fun HomeContent(
 
         }
         Spacer(modifier = Modifier.height(12.dp))
-        CategoryTabsWithIndicator(
-            categories = state.lOneCategoryItems,
-            isHome = true,
-            onCategorySelected = {
-                event.invoke(HomeContract.UiEvent.OnLOneCategoryItemClick(it))
-            }
-        )
+        if (state.lOneCategoryList.isNotEmpty() && state.selectedIndex >= 0) {
+            CategoryPrimaryScrollableTabs(
+                categories = state.lOneCategoryList,
+                selectedIndex = state.selectedIndex,
+                isHome = true,
+                onTabSelected = { index, item ->
+                    event.invoke(HomeContract.UiEvent.OnLOneCategoryItemClick(index, item))
+                }
+            )
+        }
     }
 
 }
+
+@Composable
+fun CategoryPrimaryScrollableTabs(
+    categories: List<LOneCategoryItem>,
+    selectedIndex: Int,
+    isHome: Boolean,
+    onTabSelected: (index: Int, item: LOneCategoryItem) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    PrimaryScrollableTabRow(
+        selectedTabIndex = selectedIndex,
+        modifier = modifier,
+        edgePadding = 2.dp,
+        containerColor = Color.Transparent,
+        indicator = {
+            TabRowDefaults.PrimaryIndicator(
+                modifier = modifier.tabIndicatorOffset(
+                    selectedTabIndex = selectedIndex,
+                    matchContentSize = true
+                ),
+                color = if (isHome) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.secondary
+            )
+        },
+        divider = {
+            HorizontalDivider(
+                thickness = 1.dp,
+                color = if (isHome) Color(0x14FFFFFF) else Color(0xFFE5E5E5)
+            )
+        }
+    ) {
+        categories.forEachIndexed { index, category ->
+            Tab(
+                selected = index == selectedIndex,
+                onClick = { onTabSelected(index, category) },
+                text = {
+                    Text(
+                        text = category.title.uppercase(),
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontSize = 14.sp
+                        ),
+                        color = if (selectedIndex == index) {
+                            if (isHome) {
+                                MaterialTheme.colorScheme.error
+                            } else {
+                                MaterialTheme.colorScheme.secondary
+                            }
+                        } else {
+                            if (isHome) {
+                                Color.White
+                            } else {
+                                MaterialTheme.colorScheme.primary
+                            }
+                        }
+                    )
+                }
+            )
+        }
+    }
+}
+
 
 

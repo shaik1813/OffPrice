@@ -34,7 +34,7 @@ fun TagList(
                 onClick = { onClick(it) },
                 label = { Text(text = it, style = MaterialTheme.typography.labelMedium) },
                 colors = AssistChipDefaults.assistChipColors(
-                    containerColor = MaterialTheme.colorScheme.background
+                    containerColor = MaterialTheme.colorScheme.surface
                 ),
                 leadingIcon = {
                     icon?.let { ic ->
