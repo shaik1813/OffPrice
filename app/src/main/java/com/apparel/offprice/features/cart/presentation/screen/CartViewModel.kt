@@ -1,10 +1,8 @@
 package com.apparel.offprice.features.cart.presentation.screen
 
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.apparel.offprice.features.cart.data.CartProductItems
 import com.apparel.offprice.features.cart.data.cartProducts
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -170,13 +168,13 @@ class CartViewModel @Inject constructor(
             CartContract.UiEvent.OnSubmitQuantity -> {
                 viewModelScope.launch {
                     updateState {
-                        it.cartItems.map { item ->
+                       val filterlist = it.cartItems.map { item ->
                             if(item.id == it.selectCartPos){
                                 item.copy(quantity = it.selectedQuantity)
                             }
                             else item
                         }
-                        it.copy(cartItems = it.cartItems)
+                        it.copy(cartItems = filterlist)
                     }
                 }
             }
