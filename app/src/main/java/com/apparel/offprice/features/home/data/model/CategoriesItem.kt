@@ -8,9 +8,9 @@ data class TopTabItem(
 )
 
 var sampleTopTabs = listOf(
-    TopTabItem("men", "Men"),
-    TopTabItem("women", "Women"),
-    TopTabItem("kids", "Kids")
+    TopTabItem("1", "Men"),
+    TopTabItem("2", "Women"),
+    TopTabItem("3", "Kids")
 )
 
 
