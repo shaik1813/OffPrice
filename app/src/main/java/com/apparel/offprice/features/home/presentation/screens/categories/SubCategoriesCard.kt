@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.home.presentation.screens.categoriesDrawer
+package com.apparel.offprice.features.home.presentation.screens.categories
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme

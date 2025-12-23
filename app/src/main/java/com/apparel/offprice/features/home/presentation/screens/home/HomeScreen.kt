@@ -33,7 +33,9 @@ import androidx.navigation.compose.rememberNavController
 import com.apparel.offprice.common.theme.badgeColor
 import com.apparel.offprice.common.theme.nonreturnTxtColor
 import com.apparel.offprice.features.cart.presentation.screen.CartScreen
+import com.apparel.offprice.features.home.data.model.DrawerMode
 import com.apparel.offprice.features.home.data.model.bottomNavItems
+import com.apparel.offprice.features.home.presentation.screens.categories.CategoriesScreen
 import com.apparel.offprice.features.plp.presentation.screens.PLPScreen
 import com.apparel.offprice.features.profile.presentation.screen.myaccounts.MyAccountScreen
 import com.apparel.offprice.routes.AppScreen
@@ -77,7 +79,14 @@ fun BottomNavigationContent(
                 )
             }
             composable<BottomNavScreen.Item2> {
-
+                CategoriesScreen(
+                    onNavigateToSearch = {
+                        onNavigateToOuter(AppScreen.SearchScreen)
+                    },
+                    onNavigateToWishlist = {
+                        onNavigateToOuter(AppScreen.WishListScreen)
+                    }
+                )
             }
             composable<BottomNavScreen.Item3> {
                 PLPScreen(
