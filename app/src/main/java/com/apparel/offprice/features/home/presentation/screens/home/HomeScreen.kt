@@ -39,21 +39,32 @@ import com.apparel.offprice.routes.AppScreen
 
 @Composable
 fun HomeScreen(
+    onNavigateLogin: () -> Unit,
     onNavigateToOuter: (Any) -> Unit
 ) {
+
     val bottomNavController = rememberNavController()
     BottomNavigationContent(
         navController = bottomNavController,
         onNavigateToOuter = {
             onNavigateToOuter(it)
+        },
+        onOpenLoginSheet = {
+            onNavigateLogin()
         }
     )
+
+
+
+
+
 }
 
 @Composable
 fun BottomNavigationContent(
     navController: NavHostController,
-    onNavigateToOuter: (Any) -> Unit
+    onNavigateToOuter: (Any) -> Unit,
+    onOpenLoginSheet: () -> Unit
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -97,17 +108,20 @@ fun BottomNavigationContent(
             }
             composable<BottomNavScreen.Item4> {
                 CartScreen(onCheckoutClick = {
-                   onNavigateToOuter(AppScreen.ShippingAddressScreen)
+                    onNavigateToOuter(AppScreen.ShippingAddressScreen)
                 })
             }
             composable<BottomNavScreen.Item5> {
                 MyAccountScreen(
-                    isGuestUser = false,
+                    isGuestUser = true,
                     onNavigateToSearch = {
                         onNavigateToOuter(AppScreen.SearchScreen)
                     },
                     onNavigateToWishlist = {
                         onNavigateToOuter(AppScreen.WishListScreen)
+                    },
+                    onNavigateToLogin = {
+                        onOpenLoginSheet()
                     },
                     onItemClick = { item ->
                         onNavigateToOuter(item.navigation)

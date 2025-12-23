@@ -60,6 +60,7 @@ import com.apparel.offprice.common.utils.takeInitials
 import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.authentication.presentation.screen.ForgotDialog
 import com.apparel.offprice.features.authentication.presentation.screen.LoginDialog
+import com.apparel.offprice.features.authentication.presentation.screen.LoginScreen
 import com.apparel.offprice.features.authentication.presentation.screen.OTPVerifyDialog
 import com.apparel.offprice.features.authentication.presentation.screen.SignupDialog
 import com.apparel.offprice.features.home.data.model.MyAccountItems
@@ -75,6 +76,7 @@ import com.apparel.offprice.routes.AppScreen
 fun MyAccountScreen(
     onNavigateToSearch: () -> Unit,
     onNavigateToWishlist: () -> Unit,
+    onNavigateToLogin:() -> Unit,
     onItemClick: (MyAccountItems) -> Unit,
     isGuestUser: Boolean = true,
     viewModel: MyAccountViewModel = hiltViewModel()
@@ -82,7 +84,6 @@ fun MyAccountScreen(
     var showCountrySheet by remember { mutableStateOf(false) }
     var showLanguageSheet by remember { mutableStateOf(false) }
 
-    var showLoginDialog by remember { mutableStateOf(false) }
     var showSignupDialog by remember { mutableStateOf(false) }
     var showForgotDialog by remember { mutableStateOf(false) }
     var showOtpDialog by remember { mutableStateOf(false) }
@@ -102,16 +103,6 @@ fun MyAccountScreen(
         OTPVerifyDialog(onDismiss = { showOtpDialog = false })
     }
 
-    if (showLoginDialog) {
-        LoginDialog({ showLoginDialog = false }, onItemClick = { appScreen ->
-            when (appScreen) {
-                is AppScreen.RegistrationScreen -> showSignupDialog = true
-                is AppScreen.ForgetPasswordScreen -> showForgotDialog = true
-                is AppScreen.OTPScreen -> showOtpDialog = true
-                else -> {}
-            }
-        })
-    }
 
     effect.CollectInLaunchedEffect {
         when (it) {
@@ -121,7 +112,7 @@ fun MyAccountScreen(
             }
 
             MyAccountContract.UiEffect.NavigateToLogin -> {
-                showLoginDialog = true
+              onNavigateToLogin()
             }
 
             MyAccountContract.UiEffect.NavigateToRegistration -> {
@@ -339,6 +330,9 @@ fun MyAccountScreen(
             }
         }
     }
+
+
+
 }
 
 
@@ -464,7 +458,7 @@ fun AccountMenuItem(
 @Preview(showBackground = true)
 @Composable
 fun MyAccountScreenPreview() {
-    MyAccountScreen(onNavigateToSearch = {}, onNavigateToWishlist = {}, onItemClick = {})
+    MyAccountScreen(onNavigateToSearch = {}, onNavigateToWishlist = {}, onNavigateToLogin = {}, onItemClick = {})
 }
 
 

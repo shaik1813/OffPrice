@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.apparel.offprice.common.theme.borderColor
 import com.apparel.offprice.common.theme.inputTextColor
 import com.apparel.offprice.common.theme.lineColor
 
@@ -35,13 +36,15 @@ fun LoginEmailPhoneField(value: String,
             fontSize = 14.sp
         ),
         onValueChange = onValueChange,
-        placeholder = { Text(text = placeholder, fontSize = 12.sp, color = inputTextColor) },
+        placeholder = { Text(text = placeholder,
+            style = MaterialTheme.typography.bodyMedium,
+            fontSize = 12.sp, color = inputTextColor) },
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth()
             .border(
                 width = 1.dp,
-                color = lineColor,
+                color = borderColor,
                 shape = RoundedCornerShape(8.dp)
             ).padding(horizontal = 5.dp),
         shape = RoundedCornerShape(8.dp),

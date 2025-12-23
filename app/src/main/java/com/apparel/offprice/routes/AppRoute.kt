@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.apparel.offprice.features.address.presentation.screen.DeliveryAddressScreen
+import com.apparel.offprice.features.authentication.presentation.screen.LoginEmptyScreen
 import com.apparel.offprice.features.checkout.presentation.screens.ShippingAddressScreen
 import com.apparel.offprice.features.coupon.presentation.screen.CouponScreen
 import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
@@ -47,7 +48,9 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.LoginScreen> {
-
+            LoginEmptyScreen(onNavigateBack = {
+                navController.popBackStack()
+            })
         }
 
         composable<AppScreen.RegistrationScreen> {
@@ -67,9 +70,13 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.HomeScreen> {
-            HomeScreen { route ->
+            HomeScreen (onNavigateLogin ={
+                navController.navigate(AppScreen.LoginScreen)
+
+            }, onNavigateToOuter = {
+                    route ->
                 navController.navigate(route)
-            }
+            })
         }
 
         composable<AppScreen.SearchScreen> {
