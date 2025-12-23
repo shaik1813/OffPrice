@@ -28,11 +28,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.buttonBorderColor
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
-import com.apparel.offprice.features.home.presentation.component.CategoryTabsWithIndicator
 import com.apparel.offprice.features.home.presentation.component.SearchBar
 import com.apparel.offprice.features.home.presentation.component.TagList
+import com.apparel.offprice.features.home.presentation.screens.home.CategoryPrimaryScrollableTabs
 import java.util.Locale
 
 @Composable
@@ -54,7 +55,7 @@ fun SearchScreen(
             }
 
             is SearchContract.UiEffect.ShowError -> {
-                TODO()
+
             }
         }
     }
@@ -82,7 +83,8 @@ fun SearchScreen(
             )
             Text(
                 text = stringResource(R.string.label_cancel),
-                style = MaterialTheme.typography.labelLarge,
+                style = MaterialTheme.typography.labelMedium,
+                color = buttonBorderColor,
                 modifier = Modifier
                     .padding(start = 8.dp)
                     .clickable {
@@ -95,21 +97,21 @@ fun SearchScreen(
             )
         }
         Spacer(Modifier.height(12.dp))
-        CategoryTabsWithIndicator(
-            categories = state.selectedCategory,
-            isHome = false,
-            onCategorySelected = {
-                event.invoke(SearchContract.UiEvent.OnCategorySelected(it))
-            }
-        )
-//        CategoryChips(
-//            selected = state.selectedCategory,
-//            onSelect = { event.invoke(SearchContract.UiEvent.OnCategorySelected(it)) }
-//        )
-//        HorizontalDivider(thickness = 1.dp)
+        if (state.lOneCategoryList.isNotEmpty() && state.selectedIndex >= 0) {
+            CategoryPrimaryScrollableTabs(
+                categories = state.lOneCategoryList,
+                selectedIndex = state.selectedIndex,
+                isHome = false,
+                onTabSelected = { index, item ->
+                    event.invoke(SearchContract.UiEvent.OnCategorySelected(index,item))
+                }
+            )
+        }
         Spacer(Modifier.height(20.dp))
         SectionTitle(
-            title = if (state.query.isEmpty()) stringResource(R.string.title_recent_search) else stringResource(R.string.title_all_result)
+            title = if (state.query.isEmpty()) stringResource(R.string.title_recent_search) else stringResource(
+                R.string.title_all_result
+            )
         )
         if (state.query.isNotEmpty()) {
             SearchResultSection(

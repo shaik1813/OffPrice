@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -29,6 +30,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.apparel.offprice.common.theme.badgeColor
+import com.apparel.offprice.common.theme.nonreturnTxtColor
 import com.apparel.offprice.features.cart.presentation.screen.CartScreen
 import com.apparel.offprice.features.home.data.model.DrawerMode
 import com.apparel.offprice.features.home.data.model.bottomNavItems
@@ -97,7 +100,7 @@ fun BottomNavigationContent(
             }
             composable<BottomNavScreen.Item4> {
                 CartScreen(onCheckoutClick = {
-                   onNavigateToOuter(AppScreen.ShippingAddressScreen)
+                    onNavigateToOuter(AppScreen.ShippingAddressScreen)
                 })
             }
             composable<BottomNavScreen.Item5> {
@@ -154,7 +157,10 @@ fun BottomBar(
                     icon = {
                         if (item.badgeCount > 0) {
                             BadgedBox(badge = {
-                                Badge { Text("${item.badgeCount}") }
+                                Badge(
+                                    containerColor = badgeColor,
+                                    contentColor = Color.White
+                                ) { Text("${item.badgeCount}") }
                             }) {
                                 Image(
                                     painter = painterResource(id = iconRes),
@@ -171,9 +177,13 @@ fun BottomBar(
                         }
                     },
                     label = {
+                        val fontWeight = if (selected) FontWeight.W700 else FontWeight.W500
                         Text(
                             text = item.label,
-                            color = MaterialTheme.colorScheme.primary
+                            color = if (selected) MaterialTheme.colorScheme.primary else nonreturnTxtColor,
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                fontWeight = fontWeight
+                            )
                         )
                     },
                     colors = NavigationBarItemDefaults.colors(

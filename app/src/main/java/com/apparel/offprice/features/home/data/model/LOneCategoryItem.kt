@@ -12,7 +12,7 @@ val sampleLOneCategoryItem = listOf(
         id = 1,
         title = "Men",
         image = "",
-        isSelected = true
+        isSelected = false
     ),
     LOneCategoryItem(
         id = 2,
