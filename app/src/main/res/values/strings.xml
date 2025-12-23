@@ -210,5 +210,8 @@
     <string name="delivery_address">DELIVERY ADDRESS</string>
     <string name="label_order_summary">ORDER SUMMARY</string>
 
+    <!-- Categories -->
+    <string name="label_categories">CATEGORIES</string>
+
 
 </resources>
