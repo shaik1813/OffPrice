@@ -82,7 +82,7 @@ fun CartItemCard(
 
                         Row(
                             modifier = Modifier
-                                .background(Color(0xFFEFEFEF), RoundedCornerShape(12.dp))
+                                .background( Color(0x80F6E6E7), RoundedCornerShape(12.dp))
                                 .padding(horizontal = 2.dp, vertical = 1.2.dp),
                              verticalAlignment = Alignment.CenterVertically
                         ) {
