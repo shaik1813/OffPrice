@@ -126,10 +126,13 @@ fun LoginForm(onItemClick: (AppScreen) -> Unit) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable(interactionSource = null,
-                indication = null){
-                isCheck = !isCheck
-            }) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable(
+                    interactionSource = null,
+                    indication = null
+                ) {
+                    isCheck = !isCheck
+                }) {
                 CartCheckboxBox(
                     checked = isCheck,
                     onCheckedChange = { isCheck = it },
