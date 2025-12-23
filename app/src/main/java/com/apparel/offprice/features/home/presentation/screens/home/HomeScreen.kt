@@ -33,7 +33,6 @@ import androidx.navigation.compose.rememberNavController
 import com.apparel.offprice.common.theme.badgeColor
 import com.apparel.offprice.common.theme.nonreturnTxtColor
 import com.apparel.offprice.features.cart.presentation.screen.CartScreen
-import com.apparel.offprice.features.checkout.presentation.screens.ShippingAddressScreen
 import com.apparel.offprice.features.home.data.model.bottomNavItems
 import com.apparel.offprice.features.plp.presentation.screens.PLPScreen
 import com.apparel.offprice.features.profile.presentation.screen.myaccounts.MyAccountScreen

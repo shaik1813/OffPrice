@@ -1,6 +1,6 @@
 package com.apparel.offprice.features.cart.presentation.component
 
-import android.util.Log
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,17 +15,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
@@ -42,19 +40,14 @@ fun CartItemCard(
     selectQuantity: (pos: Int) -> Unit,
     onDelete: (Int) -> Unit
 ) {
-    Log.e("checkcount","Itemcard once")
-
-    Card(
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
-        elevation = CardDefaults.cardElevation(1.dp),
+    Surface(
         modifier = Modifier
             .padding(vertical = 8.dp, horizontal = 16.dp)
-            .fillMaxWidth()
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(12.dp),
+        border = BorderStroke(1.dp, Color(0xFFE0E0E0)),
+        color = Color.White
     ) {
-
         Column(modifier = Modifier.padding(12.dp)) {
 
             Row {
@@ -87,12 +80,27 @@ fun CartItemCard(
                             style = MaterialTheme.typography.titleMedium
                         )
 
-                        Text(
-                            text = "Offer ends in 11:56:38",
-                            color = Color(0xFFA2050D),
-                            fontSize = 10.sp,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
+                        Row(
+                            modifier = Modifier
+                                .background( Color(0x80F6E6E7), RoundedCornerShape(12.dp))
+                                .padding(horizontal = 2.dp, vertical = 1.2.dp),
+                             verticalAlignment = Alignment.CenterVertically
+                        ) {
+
+                            Image(
+                                painter = painterResource(R.drawable.offer_timeicon),
+                                contentDescription = null
+                            )
+
+                            Spacer(modifier = Modifier.size(2.dp))
+
+                            Text(
+                                text = "Offer ends in 11:56:38",
+                                fontSize = 10.sp,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = Color(0xFFA2050D),
+                            )
+                        }
                     }
 
                     Spacer(modifier = Modifier.size(8.dp))

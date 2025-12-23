@@ -1,5 +1,6 @@
 package com.apparel.offprice.features.pdp.presentation.component
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +16,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,17 +39,14 @@ fun CouponCard(
     OnApply : (String) -> Unit,
     OfferClick: () -> Unit
 ) {
-
-
-    Card(
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
-        elevation = CardDefaults.cardElevation(1.dp),
-        shape = RoundedCornerShape(12.dp)
+    Surface(
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(12.dp),
+        border = BorderStroke(1.dp, Color(0xFFE0E0E0)),
+        color = Color.White
     ) {
-
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
                 text = stringResource(com.apparel.offprice.R.string.apply_coupon),
@@ -57,14 +56,11 @@ fun CouponCard(
 
             Spacer(modifier = Modifier.size(10.dp))
 
-            Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = Color.White
-                ),
-                elevation = CardDefaults.cardElevation(1.dp),
+            Surface(
                 shape = RoundedCornerShape(6.dp),
-
-                ) {
+                border = BorderStroke(1.dp, Color(0xFFE0E0E0)),
+                color = Color.White
+            ) {
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
