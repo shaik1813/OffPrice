@@ -8,17 +8,20 @@ interface HomeContract :
 
     data class UiState(
         val isLoading: Boolean = false,
-        val lOneCategoryItems: List<LOneCategoryItem> = emptyList(),
+        val lOneCategoryList: List<LOneCategoryItem> = emptyList(),
+        val selectedIndex: Int = -1
 
-        )
+    )
 
     sealed interface UiEvent {
         data object OnSearch: UiEvent
         data object OnWishlist: UiEvent
-        data class OnLOneCategoryItemClick(val item: LOneCategoryItem): UiEvent
+        data class OnLOneCategoryItemClick(val index: Int, val item: LOneCategoryItem): UiEvent
     }
 
     sealed interface UiEffect {
         data object ShowMessage: UiEffect
+        data object OnSearchClicked: UiEffect
+        data object OnWishListClicked: UiEffect
     }
 }

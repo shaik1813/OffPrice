@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.welcome.presentation.genderCategory
+package com.apparel.offprice.features.welcome.presentation.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,6 +27,7 @@ import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.borderColor
 import com.apparel.offprice.features.welcome.data.model.GenderCategoryItem
 
 @Composable
@@ -37,65 +38,60 @@ fun GenderCategoryCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(175.dp)
+            .height(170.dp)
             .clickable { onClick(item) },
-        shape = MaterialTheme.shapes.small,
+        shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.background
+            containerColor = borderColor
         )
     ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(8.dp)
-                .clip(shape = MaterialTheme.shapes.small)
+                .clip(shape = MaterialTheme.shapes.medium)
                 .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
-                            item.backgroundColor.first,
-                            item.backgroundColor.second
-                        )
-                    )
+                    color = MaterialTheme.colorScheme.surface
                 )
         ) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(data = item.image)
-                    .crossfade(true)
-                    .memoryCachePolicy(CachePolicy.ENABLED)
-                    .diskCachePolicy(CachePolicy.ENABLED)
-                    .build(),
-                contentDescription = item.label,
-                contentScale = ContentScale.Fit,
-                modifier = Modifier.fillMaxWidth()
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(data = item.image)
+                .crossfade(true)
+                .memoryCachePolicy(CachePolicy.ENABLED)
+                .diskCachePolicy(CachePolicy.ENABLED)
+                .build(),
+            contentDescription = item.label,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxWidth()
 
-            )
-            // Gradient overlay bottom for text visibility
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-                    .background(
-                        Brush.verticalGradient(
-                            colors = listOf(
-                                Color.Transparent,
-                                Color.Black.copy(alpha = 0.6f)
-                            )
+        )
+        // Gradient overlay bottom for text visibility
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            Color.Transparent,
+                            Color.Black.copy(alpha = 0.6f)
                         )
                     )
-                    .padding(vertical = 10.dp)
-            ) {
-                Text(
-                    text = item.label,
-                    color = Color.White,
-                    style = MaterialTheme.typography.titleLarge.copy(
-                        fontWeight = FontWeight.W800,
-                        fontSize = 30.sp
-                    ),
-                    modifier = Modifier.align(Alignment.Center)
                 )
-            }
+                .padding(all = 8.dp)
+        ) {
+            Text(
+                text = item.label,
+                color = Color.White,
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.W800,
+                    fontSize = 30.sp
+                ),
+                modifier = Modifier.align(Alignment.Center)
+            )
         }
+    }
     }
 }
 
@@ -104,7 +100,7 @@ fun GenderCategoryCard(
 fun GenderCategoryCardPreview() {
     GenderCategoryCard(
         item = GenderCategoryItem(
-            id = "1",
+            id = 1,
             label = "MEN",
             image = R.drawable.image_men
         ),

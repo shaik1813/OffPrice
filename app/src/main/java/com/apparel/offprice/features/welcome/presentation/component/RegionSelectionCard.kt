@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.welcome.presentation.location
+package com.apparel.offprice.features.welcome.presentation.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -18,38 +17,39 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.borderColor
 import com.apparel.offprice.features.home.data.model.Country
 
 @Composable
-fun ChooseLocationCard(
+fun RegionSelectionCard(
     item: Country,
     onClick: (Country) -> Unit
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(70.dp)
+            .height(60.dp)
             .clickable { onClick(item) },
-        shape = RoundedCornerShape(10.dp),
+        shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = MaterialTheme.colorScheme.background
         ),
         border = BorderStroke(
             width = 1.dp,
-            color = Color(0xFFE0E0E0)
+            color = borderColor
         )
     ) {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 12.dp),
+                .padding(horizontal = 20.dp, vertical = 10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
 
@@ -62,15 +62,20 @@ fun ChooseLocationCard(
 
             Text(
                 text = item.countryName,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleMedium.copy(
+                    fontSize = 18.sp
+                ),
                 modifier = Modifier.weight(0.5f),
                 overflow = TextOverflow.Ellipsis
             )
 
             Text(
                 text = item.countryNameArabic,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    fontSize = 16.sp
+                ),
                 modifier = Modifier.weight(0.5f),
+                color = MaterialTheme.colorScheme.primary,
                 textAlign = TextAlign.End,
                 overflow = TextOverflow.Ellipsis
             )
@@ -81,7 +86,7 @@ fun ChooseLocationCard(
 @Preview
 @Composable
 fun CategoryCardPreview(){
-    ChooseLocationCard(
+    RegionSelectionCard(
         item = Country(
             countryName = "UAE",
             countryCode = "+971",
