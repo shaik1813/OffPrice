@@ -80,8 +80,6 @@ fun LoginForm(onItemClick: (AppScreen) -> Unit) {
 
         var email by remember { mutableStateOf("") }
 
-        //  LoginEmailPhoneField(email, { email = it }, stringResource(R.string.enter_mail))
-
         LoginBasicTextField(
             value = email,
             enabled = true,
@@ -105,7 +103,6 @@ fun LoginForm(onItemClick: (AppScreen) -> Unit) {
         var passtemp by remember { mutableStateOf("") }
         var showPasswordTemp by remember { mutableStateOf(false) }
 
-        //PasswordEditText()
         LoginBasicPasswordField(
             value = passtemp,
             enabled = true,
