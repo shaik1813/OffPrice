@@ -110,8 +110,11 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
             )
         }
         composable<AppScreen.SubCategoryScreen> {
+
+            val title = navController.previousBackStackEntry?.savedStateHandle
+                    ?.get<String>("subcategory_title") ?: ""
             SubCategoryScreen(
-                //parentCategory = it.arguments?.getParcelable("parentCategory")!!,
+                title = title,
                 onNavigateToSearch = {
                     navController.navigate(AppScreen.SearchScreen)
                 },

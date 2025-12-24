@@ -33,7 +33,7 @@ interface CategoriesContract : UnidirectionalViewModel
 
         data object OnCleared: UiEvent
 
-        data class OnNavigateToSubCategory(val categoryListItem : CategoryListItem) : UiEvent
+        data class OnNavigateToSubCategory(val title : String) : UiEvent
     }
 
     sealed interface UiEffect {
@@ -41,6 +41,7 @@ interface CategoriesContract : UnidirectionalViewModel
         data class ShowError(val message: String) : UiEffect
         object NavigateToSearch: UiEffect
         object NavigateToWishlist: UiEffect
-        object NavigateToSubCategory: UiEffect
+
+        data class NavigateToSubCategory(val title: String) : UiEffect
     }
 }

@@ -75,7 +75,9 @@ class CategoriesViewModel @Inject constructor(): ViewModel(), CategoriesContract
             }
             is CategoriesContract.UiEvent.OnNavigateToSubCategory -> {
                 viewModelScope.launch {
-                    _effectFlow.emit(CategoriesContract.UiEffect.NavigateToSubCategory)
+                    _effectFlow.emit(CategoriesContract.UiEffect.NavigateToSubCategory
+                        (title = event.title)
+                    )
                 }
             }
             is CategoriesContract.UiEvent.OnRecentSearched -> TODO()

@@ -32,13 +32,14 @@ import com.apparel.offprice.features.home.presentation.component.CircleIconButto
 import com.apparel.offprice.features.home.presentation.component.FlashSaleBanner
 import com.apparel.offprice.features.home.presentation.component.sampleCategoryBannerImages
 import com.apparel.offprice.features.home.presentation.component.sampleCategoryList
+import com.apparel.offprice.routes.AppScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoriesScreen(
     onNavigateToSearch: () -> Unit,
     onNavigateToWishlist: () -> Unit,
-    onNavigateToSubCategory: () -> Unit,
+    onNavigateToSubCategory: (String) -> Unit,
     viewModel: CategoriesViewModel = hiltViewModel()
 ) {
 
@@ -58,8 +59,8 @@ fun CategoriesScreen(
                 onNavigateToWishlist()
             }
 
-            CategoriesContract.UiEffect.NavigateToSubCategory -> {
-                onNavigateToSubCategory()
+            is CategoriesContract.UiEffect.NavigateToSubCategory -> {
+                onNavigateToSubCategory(it.title)
             }
 
             is CategoriesContract.UiEffect.ShowError -> {
@@ -142,7 +143,7 @@ fun CategoriesScreen(
             list = sampleCategoryList,
             onItemClick = { item ->
                 // Handle item click
-                event(CategoriesContract.UiEvent.OnNavigateToSubCategory(item))
+                event(CategoriesContract.UiEvent.OnNavigateToSubCategory(item.title))
             }
         )
     }
