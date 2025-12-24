@@ -34,9 +34,9 @@ fun LoginDialog(
                 .background(Color.White, RoundedCornerShape(16.dp))
                 .padding(horizontal = 16.dp, vertical = 26.dp)
         ) {
-            LoginScreen(false,onItemClick, onClose = {
+           /* LoginScreen(false,onItemClick, onClose = {
                 onDismiss()
-            })
+            })*/
         }
     }
 

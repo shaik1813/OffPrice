@@ -5,6 +5,7 @@ import com.apparel.offprice.features.pdp.presentation.screen.PDPContract
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.apparel.offprice.features.authentication.presentation.screen.LoginContract.UiEffect.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -44,7 +45,7 @@ class LoginViewModel @Inject constructor(
             is LoginContract.UiEvent.OnNavigate -> {
                 viewModelScope.launch {
                     _effect.emit(
-                        LoginContract.UiEffect.Navigate(event.screen)
+                        Navigate(event.screen)
                     )
                 }
             }
@@ -53,6 +54,24 @@ class LoginViewModel @Inject constructor(
                     _effect.emit(LoginContract.UiEffect.OnNavigateBack)
                 }
             }
+
+            LoginContract.UiEvent.OnCheckToggle -> {
+                updateState { it.copy(isRememberCheck = !it.isRememberCheck) }
+            }
+
+            is LoginContract.UiEvent.OnValueChangeEmail -> {
+                updateState { it.copy() }
+            }
+
+            is LoginContract.UiEvent.OnValueChangePassword -> {
+                updateState { it.copy(passwordValue = event.value) }
+            }
+
+            LoginContract.UiEvent.OnPasswordVisibleToggle -> {
+                updateState { it.copy(showPassword = !it.showPassword) }
+            }
+
+
         }
     }
 

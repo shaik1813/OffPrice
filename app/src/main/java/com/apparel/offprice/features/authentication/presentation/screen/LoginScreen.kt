@@ -31,7 +31,10 @@ import com.apparel.offprice.routes.AppScreen
 
 
 @Composable
-fun LoginScreen(isVisible: Boolean, onItemClick: (AppScreen) -> Unit, onClose: () -> Unit) {
+fun LoginScreen(
+    state: LoginContract.UiState, event: (LoginContract.UiEvent) -> Unit,
+    onItemClick: (AppScreen) -> Unit, onClose: () -> Unit
+) {
 
     Box(
         modifier = Modifier
@@ -40,7 +43,7 @@ fun LoginScreen(isVisible: Boolean, onItemClick: (AppScreen) -> Unit, onClose: (
     ) {
 
         AnimatedVisibility(
-            visible = isVisible,
+            visible = state.isLoginVisible,
             enter = slideInVertically { it } + fadeIn()
         ) {
 
@@ -89,7 +92,7 @@ fun LoginScreen(isVisible: Boolean, onItemClick: (AppScreen) -> Unit, onClose: (
                         .padding(horizontal = 16.dp, vertical = 26.dp)
                         .verticalScroll(rememberScrollState())
                 ) {
-                    LoginForm(onItemClick = { onItemClick(it) })
+                    LoginForm(state, event, onItemClick = { onItemClick(it) })
                 }
             }
         }

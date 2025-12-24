@@ -33,7 +33,8 @@ fun LoginEmptyScreen(onNavigateBack: () -> Unit, viewModel: LoginViewModel = hil
     Box(modifier = Modifier.fillMaxSize()
        ) {
         LoginScreen(
-            isVisible = state.isLoginVisible,
+            state = state,
+            event = event,
             onItemClick = { event(LoginContract.UiEvent.OnNavigate(it)) },
             onClose = { event(LoginContract.UiEvent.OnCloseLogin) }
         )

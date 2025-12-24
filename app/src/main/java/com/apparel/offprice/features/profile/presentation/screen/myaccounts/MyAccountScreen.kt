@@ -59,8 +59,6 @@ import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.takeInitials
 import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.authentication.presentation.screen.ForgotDialog
-import com.apparel.offprice.features.authentication.presentation.screen.LoginDialog
-import com.apparel.offprice.features.authentication.presentation.screen.LoginScreen
 import com.apparel.offprice.features.authentication.presentation.screen.OTPVerifyDialog
 import com.apparel.offprice.features.authentication.presentation.screen.SignupDialog
 import com.apparel.offprice.features.home.data.model.MyAccountItems
@@ -68,7 +66,6 @@ import com.apparel.offprice.features.home.data.model.accountItems
 import com.apparel.offprice.features.home.presentation.component.CircularProgressbar
 import com.apparel.offprice.features.home.presentation.component.CountrySelectionBottomSheet
 import com.apparel.offprice.features.home.presentation.component.LanguageSelectionBottomSheet
-import com.apparel.offprice.routes.AppScreen
 
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -19,10 +19,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,9 +43,12 @@ import com.apparel.offprice.routes.AppScreen
 
 
 @Composable
-fun LoginForm(onItemClick: (AppScreen) -> Unit) {
-    Column(
-    ) {
+fun LoginForm(
+    state: LoginContract.UiState,
+    event: (LoginContract.UiEvent) -> Unit,
+    onItemClick: (AppScreen) -> Unit
+) {
+    Column {
         Text(
             stringResource(R.string.login_account_header),
             fontSize = 16.sp,
@@ -78,13 +77,11 @@ fun LoginForm(onItemClick: (AppScreen) -> Unit) {
             modifier = Modifier.padding(top = 30.dp, bottom = 12.dp)
         )
 
-        var email by remember { mutableStateOf("") }
-
         LoginBasicTextField(
-            value = email,
+            value = state.email,
             enabled = true,
             placeholder = stringResource(R.string.enter_mail),
-            onValueChange = { email = it },
+            onValueChange = { event(LoginContract.UiEvent.OnValueChangeEmail(it)) },
         )
 
         Text(
@@ -100,23 +97,17 @@ fun LoginForm(onItemClick: (AppScreen) -> Unit) {
             modifier = Modifier.padding(top = 20.dp, bottom = 12.dp)
         )
 
-        var passtemp by remember { mutableStateOf("") }
-        var showPasswordTemp by remember { mutableStateOf(false) }
-
         LoginBasicPasswordField(
-            value = passtemp,
+            value = state.passwordValue,
             enabled = true,
-            isVisible = showPasswordTemp,
-            onValueChange = { passtemp = it },
+            isVisible = state.showPassword,
+            onValueChange = { event(LoginContract.UiEvent.OnValueChangePassword(it)) },
             onIconToggle = {
-                showPasswordTemp = !showPasswordTemp
+                event(LoginContract.UiEvent.OnPasswordVisibleToggle)
             }
         )
 
         Spacer(Modifier.height(10.dp))
-
-
-        var isCheck by remember { mutableStateOf(false) }
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -128,16 +119,15 @@ fun LoginForm(onItemClick: (AppScreen) -> Unit) {
                     interactionSource = null,
                     indication = null
                 ) {
-                    isCheck = !isCheck
+                    event(LoginContract.UiEvent.OnCheckToggle)
                 }) {
                 CartCheckboxBox(
-                    checked = isCheck,
-                    onCheckedChange = { isCheck = it },
+                    checked = state.isRememberCheck,
+                    onCheckedChange = { event(LoginContract.UiEvent.OnCheckToggle) },
                     modifier = Modifier.size(14.dp)
                 )
 
                 Spacer(modifier = Modifier.size(3.dp))
-
 
                 Text(
                     stringResource(R.string.remember_me),
@@ -150,7 +140,7 @@ fun LoginForm(onItemClick: (AppScreen) -> Unit) {
             Text(
                 modifier = Modifier
                     .wrapContentWidth()
-                    .clickable() {
+                    .clickable {
                         onItemClick(AppScreen.ForgetPasswordScreen)
                     },
                 text = stringResource(R.string.forgot_pass),
@@ -158,18 +148,15 @@ fun LoginForm(onItemClick: (AppScreen) -> Unit) {
                 style = MaterialTheme.typography.bodyMedium,
                 fontSize = 12.sp
             )
-
         }
 
         Spacer(modifier = Modifier.size(30.dp))
-
 
         AuthButton(
             text = stringResource(R.string.login_caps),
             onButtonClick = {
                 onItemClick(AppScreen.OTPScreen)
             })
-
 
         Spacer(Modifier.height(30.dp))
 
@@ -207,7 +194,6 @@ fun LoginForm(onItemClick: (AppScreen) -> Unit) {
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
 
-            // Google
             OutlinedButton(
                 onClick = {},
                 modifier = Modifier
@@ -267,7 +253,7 @@ fun LoginForm(onItemClick: (AppScreen) -> Unit) {
                 fontSize = 14.sp
             )
             Text(
-                modifier = Modifier.clickable() {
+                modifier = Modifier.clickable {
                     onItemClick(AppScreen.RegistrationScreen)
                 },
                 text = stringResource(R.string.register_now),
