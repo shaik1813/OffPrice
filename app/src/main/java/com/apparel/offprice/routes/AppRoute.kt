@@ -70,8 +70,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.HomeScreen> {
-            HomeScreen (onNavigateToOuter = {
-                    route ->
+            HomeScreen (onNavigateToOuter = { route ->
                 navController.navigate(route)
             })
         }
@@ -79,7 +78,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         composable<AppScreen.SearchScreen> {
             SearchScreen(
                 onSearchSubmit = { productId ->
-                    // TODO : Added the PLP navigation from here
+                    navController.navigate(AppScreen.PDPScreen)
                 },
                 onNavigateToBack = {
                     navController.popBackStack()
@@ -102,7 +101,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                     }
                 },
                 onNavigateToCart = {
-
+                    navController.navigate(BottomNavScreen.Item4)
                 },
                 onNavigateToPDP = { product ->
                     navController.navigate(AppScreen.PDPScreen) {}

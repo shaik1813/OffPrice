@@ -57,6 +57,7 @@ fun LanguageSelectionBottomSheet(
             .fillMaxWidth()
             .navigationBarsPadding(),
         dragHandle = null,
+        containerColor = MaterialTheme.colorScheme.background,
         shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
         sheetMaxWidth = BottomSheetDefaults.SheetPeekHeight
     ) {

@@ -107,7 +107,6 @@ fun BottomNavigationContent(
             }
             composable<BottomNavScreen.Item5> {
                 MyAccountScreen(
-                    isGuestUser = true,
                     onNavigateToSearch = {
                         onNavigateToOuter(AppScreen.SearchScreen)
                     },
@@ -118,7 +117,7 @@ fun BottomNavigationContent(
                         onNavigateToOuter(AppScreen.LoginScreen)
                     },
                     onItemClick = { item ->
-                        onNavigateToOuter(item.navigation)
+                        onNavigateToOuter(item)
                     }
                 )
             }
