@@ -1,8 +1,10 @@
 package com.apparel.offprice.features.authentication.presentation.component
 
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,29 +20,34 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
 import com.apparel.offprice.common.theme.lineColor
-
+import com.apparel.offprice.features.home.data.model.Country
 
 @Composable
-fun LoginBasicTextField(
+fun LoginBasicPhoneField(
     value: String,
     enabled: Boolean,
     placeholder: String = "",
+    phoneCode: Country,
     onValueChange: (String) -> Unit,
+    onCountrySelected: (Country) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .background(Color.White, shape = MaterialTheme.shapes.small)
             .height(42.dp)
-            .border(color = lineColor,
+            .border(
+                color = lineColor,
                 width = 1.dp,
                 shape = RoundedCornerShape(8.dp)
             )
     ) {
         BasicTextField(
             value = value,
-            onValueChange = { if (enabled) onValueChange(it) },
+            onValueChange = {
+                onValueChange(it)
+            },
             textStyle = MaterialTheme.typography.bodySmall,
             singleLine = true,
             enabled = enabled,
@@ -56,17 +63,28 @@ fun LoginBasicTextField(
                             color = MaterialTheme.colorScheme.background,
                             shape = MaterialTheme.shapes.small
                         )
-                        .padding(horizontal = 16.dp),
+                        .padding(horizontal = 12.dp),
                     contentAlignment = Alignment.CenterStart
                 ) {
-                    if (value.isEmpty()) {
-                        Text(
-                            text = placeholder,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = lineColor
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        SignupCountryCodePicker(
+                            selected = phoneCode,
+                            enabled = enabled,
+                            onSelect = { country ->
+                                onCountrySelected(country)
+                            }
                         )
+                        if (value.isEmpty()){
+                            Text(
+                                text = placeholder,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = lineColor
+                            )
+                        }
+                        innerTextField()
                     }
-                    innerTextField()
                 }
             }
         )

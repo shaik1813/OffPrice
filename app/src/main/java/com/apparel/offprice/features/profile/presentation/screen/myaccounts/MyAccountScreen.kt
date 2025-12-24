@@ -60,7 +60,6 @@ import com.apparel.offprice.common.utils.takeInitials
 import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.authentication.presentation.screen.ForgotDialog
 import com.apparel.offprice.features.authentication.presentation.screen.OTPVerifyDialog
-import com.apparel.offprice.features.authentication.presentation.screen.SignupDialog
 import com.apparel.offprice.features.home.data.model.MyAccountItems
 import com.apparel.offprice.features.home.data.model.accountItems
 import com.apparel.offprice.features.home.presentation.component.CircularProgressbar
@@ -73,7 +72,8 @@ import com.apparel.offprice.features.home.presentation.component.LanguageSelecti
 fun MyAccountScreen(
     onNavigateToSearch: () -> Unit,
     onNavigateToWishlist: () -> Unit,
-    onNavigateToLogin:() -> Unit,
+    onNavigateToLogin: () -> Unit,
+    onNavigateToSignup: () -> Unit,
     onItemClick: (MyAccountItems) -> Unit,
     isGuestUser: Boolean = true,
     viewModel: MyAccountViewModel = hiltViewModel()
@@ -81,16 +81,12 @@ fun MyAccountScreen(
     var showCountrySheet by remember { mutableStateOf(false) }
     var showLanguageSheet by remember { mutableStateOf(false) }
 
-    var showSignupDialog by remember { mutableStateOf(false) }
     var showForgotDialog by remember { mutableStateOf(false) }
     var showOtpDialog by remember { mutableStateOf(false) }
 
 
     val (state, event, effect) = use(viewModel = viewModel)
 
-    if (showSignupDialog) {
-        SignupDialog(onDismiss = { showSignupDialog = false })
-    }
 
     if (showForgotDialog) {
         ForgotDialog(onDismiss = { showForgotDialog = false })
@@ -109,11 +105,11 @@ fun MyAccountScreen(
             }
 
             MyAccountContract.UiEffect.NavigateToLogin -> {
-              onNavigateToLogin()
+                onNavigateToLogin()
             }
 
             MyAccountContract.UiEffect.NavigateToRegistration -> {
-                showSignupDialog = true
+                onNavigateToSignup()
             }
 
             MyAccountContract.UiEffect.NavigateToSearch -> {
@@ -329,7 +325,6 @@ fun MyAccountScreen(
     }
 
 
-
 }
 
 
@@ -455,7 +450,12 @@ fun AccountMenuItem(
 @Preview(showBackground = true)
 @Composable
 fun MyAccountScreenPreview() {
-    MyAccountScreen(onNavigateToSearch = {}, onNavigateToWishlist = {}, onNavigateToLogin = {}, onItemClick = {})
+    MyAccountScreen(
+        onNavigateToSearch = {},
+        onNavigateToWishlist = {},
+        onNavigateToLogin = {},
+        onNavigateToSignup = {},
+        onItemClick = {})
 }
 
 

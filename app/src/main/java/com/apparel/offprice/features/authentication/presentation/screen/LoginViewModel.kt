@@ -27,10 +27,10 @@ class LoginViewModel @Inject constructor(
     override fun event(event: LoginContract.UiEvent) {
         when (event) {
             LoginContract.UiEvent.OnCloseLogin -> {
-                updateState { it.copy(isLoginVisible = false)
+                updateState {
+                    it.copy(isLoginVisible = false)
                 }
                 viewModelScope.launch {
-                   // delay(300) // match your bottom sheet animation duration
                     _effect.emit(LoginContract.UiEffect.OnNavigateBack)
                 }
             }
@@ -46,6 +46,7 @@ class LoginViewModel @Inject constructor(
                     )
                 }
             }
+
             is LoginContract.UiEvent.OnNavigateBack -> {
                 viewModelScope.launch {
                     _effect.emit(LoginContract.UiEffect.OnNavigateBack)
@@ -68,7 +69,38 @@ class LoginViewModel @Inject constructor(
                 updateState { it.copy(showPassword = !it.showPassword) }
             }
 
+            LoginContract.UiEvent.OnAnimationToggle -> {
+                if (state.value.playEnterAnimation) {
+                    updateState { it.copy(playEnterAnimation = false) }
+                }
+            }
 
+            LoginContract.UiEvent.OnOpenSignUp -> {
+                updateState { it.copy(isLoginScreen = false, isSignUpScreen = true) }
+            }
+
+            LoginContract.UiEvent.OnOpenLogin -> {
+                updateState { it.copy(isLoginScreen = true) }
+            }
+
+            is LoginContract.UiEvent.OnValueChangeName -> {
+                updateState { it.copy(name = event.value) }
+            }
+
+            is LoginContract.UiEvent.OnPhoneChange -> {
+                updateState {
+                    it.copy(
+                        phoneNumber = event.value,
+                        phoneError = if (!event.value.matches(Regex("\\d+"))) "Digits only" else null
+                    )
+                }
+            }
+
+            is LoginContract.UiEvent.SelectCountry -> {
+                updateState {
+                    it.copy(phoneCode = event.country, isCountryPickerOpen = false)
+                }
+            }
         }
     }
 

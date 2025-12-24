@@ -1,6 +1,7 @@
 package com.apparel.offprice.features.authentication.presentation.screen
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
@@ -8,16 +9,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,17 +38,17 @@ fun LoginScreen(
     onItemClick: (AppScreen) -> Unit, onClose: () -> Unit
 ) {
 
-    Box(
+   Box(
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
+            .navigationBarsPadding()
     ) {
-
         AnimatedVisibility(
             visible = state.isLoginVisible,
-            enter = slideInVertically { it } + fadeIn()
+            enter = if (state.playEnterAnimation) slideInVertically { it } + fadeIn()
+            else EnterTransition.None
         ) {
-
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -64,8 +66,9 @@ fun LoginScreen(
                     painter = painterResource(id = R.drawable.login_bg), // your image
                     contentDescription = null,
                     modifier = Modifier
-                        .width(326.dp)
-                        .height(354.dp)
+                        .padding(top = 20.dp)
+                        .fillMaxWidth(0.83f)
+                        .fillMaxHeight(0.45f)
                         .align(Alignment.TopCenter)
 
                 )
@@ -84,16 +87,27 @@ fun LoginScreen(
 
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(0.75f)
-                        .align(Alignment.BottomCenter)
-                        .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
-                        .background(Color.White)
-                        .padding(horizontal = 16.dp, vertical = 26.dp)
-                        .verticalScroll(rememberScrollState())
+                        .fillMaxSize()
                 ) {
-                    LoginForm(state, event, onItemClick = { onItemClick(it) })
+                    Box(modifier = Modifier.fillMaxHeight(0.25f)) {}
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
+                            .background(Color.White),
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 26.dp)
+                    ) {
+                        item {
+                            if (state.isLoginScreen)
+                                LoginForm(state, event, onItemClick = { onItemClick(it) })
+                            else if (state.isSignUpScreen)
+                            SignUpForm(state, event)
+                        }
+                    }
                 }
+
+
             }
         }
     }

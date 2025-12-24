@@ -1,5 +1,6 @@
 package com.apparel.offprice.features.authentication.presentation.screen
 
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -11,40 +12,32 @@ import com.apparel.offprice.common.utils.use
 
 
 @Composable
-fun LoginEmptyScreen(
-    onNavigateBack: () -> Unit, onNavigateToOuter: (Any) -> Unit,
-    viewModel: LoginViewModel = hiltViewModel()
-) {
+fun SignupEmptyScreen(onNavigateBack: () -> Unit, viewModel: SignUpViewModel = hiltViewModel()) {
 
     val (state, event, effect) = use(viewModel = viewModel)
 
     LaunchedEffect(Unit) {
-        if (!state.isLoginVisible) {
-            event(LoginContract.UiEvent.OnLoginClick)
-        }
+        event(SignUpContract.UiEvent.OnLoginClick)
     }
 
     effect.CollectInLaunchedEffect {
-        when (it) {
-            is LoginContract.UiEffect.Navigate -> {
-                onNavigateToOuter(it.screen)
+        when(it){
+            is SignUpContract.UiEffect.Navigate -> {
             }
-
-            is LoginContract.UiEffect.OnNavigateBack -> {
+            is SignUpContract.UiEffect.OnNavigateBack -> {
                 onNavigateBack()
             }
         }
     }
 
 
-    Box(
-        modifier = Modifier.fillMaxSize()
+    Box(modifier = Modifier.fillMaxSize()
     ) {
-        LoginScreen(
+        SignupScreen(
             state = state,
             event = event,
-            onItemClick = { event(LoginContract.UiEvent.OnNavigate(it)) },
-            onClose = { event(LoginContract.UiEvent.OnCloseLogin) }
+            onItemClick = { event(SignUpContract.UiEvent.OnNavigate(it)) },
+            onClose = { event(SignUpContract.UiEvent.OnCloseLogin) }
         )
     }
 }

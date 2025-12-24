@@ -37,6 +37,7 @@ import com.apparel.offprice.features.home.data.model.bottomNavItems
 import com.apparel.offprice.features.home.presentation.screens.categories.CategoriesScreen
 import com.apparel.offprice.features.plp.presentation.screens.PLPScreen
 import com.apparel.offprice.features.profile.presentation.screen.myaccounts.MyAccountScreen
+import com.apparel.offprice.routes.AppRoutes
 import com.apparel.offprice.routes.AppScreen
 
 @Composable
@@ -116,6 +117,9 @@ fun BottomNavigationContent(
                     },
                     onNavigateToLogin = {
                         onNavigateToOuter(AppScreen.LoginScreen)
+                    },
+                    onNavigateToSignup = {
+                        onNavigateToOuter(AppScreen.RegistrationScreen)
                     },
                     onItemClick = { item ->
                         onNavigateToOuter(item.navigation)

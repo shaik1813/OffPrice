@@ -48,6 +48,7 @@ fun LoginForm(
     event: (LoginContract.UiEvent) -> Unit,
     onItemClick: (AppScreen) -> Unit
 ) {
+
     Column {
         Text(
             stringResource(R.string.login_account_header),
@@ -254,7 +255,7 @@ fun LoginForm(
             )
             Text(
                 modifier = Modifier.clickable {
-                    onItemClick(AppScreen.RegistrationScreen)
+                    event(LoginContract.UiEvent.OnOpenSignUp)
                 },
                 text = stringResource(R.string.register_now),
                 fontSize = 14.sp,
