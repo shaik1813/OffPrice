@@ -33,7 +33,6 @@ import androidx.navigation.compose.rememberNavController
 import com.apparel.offprice.common.theme.badgeColor
 import com.apparel.offprice.common.theme.nonreturnTxtColor
 import com.apparel.offprice.features.cart.presentation.screen.CartScreen
-import com.apparel.offprice.features.home.data.model.DrawerMode
 import com.apparel.offprice.features.home.data.model.bottomNavItems
 import com.apparel.offprice.features.home.presentation.screens.categories.CategoriesScreen
 import com.apparel.offprice.features.plp.presentation.screens.PLPScreen
@@ -44,6 +43,7 @@ import com.apparel.offprice.routes.AppScreen
 fun HomeScreen(
     onNavigateToOuter: (Any) -> Unit
 ) {
+
     val bottomNavController = rememberNavController()
     BottomNavigationContent(
         navController = bottomNavController,
@@ -51,6 +51,8 @@ fun HomeScreen(
             onNavigateToOuter(it)
         }
     )
+
+
 }
 
 @Composable
@@ -105,12 +107,15 @@ fun BottomNavigationContent(
             }
             composable<BottomNavScreen.Item5> {
                 MyAccountScreen(
-                    isGuestUser = false,
+                    isGuestUser = true,
                     onNavigateToSearch = {
                         onNavigateToOuter(AppScreen.SearchScreen)
                     },
                     onNavigateToWishlist = {
                         onNavigateToOuter(AppScreen.WishListScreen)
+                    },
+                    onNavigateToLogin = {
+                        onNavigateToOuter(AppScreen.LoginScreen)
                     },
                     onItemClick = { item ->
                         onNavigateToOuter(item.navigation)
