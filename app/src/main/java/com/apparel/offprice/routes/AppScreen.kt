@@ -82,4 +82,6 @@ sealed interface AppScreen {
     @Serializable
     object LogOutScreen : AppScreen
 
+    @Serializable
+    object SubCategoryScreen : AppScreen
 }

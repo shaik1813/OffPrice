@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.apparel.offprice.features.address.presentation.screen.DeliveryAddressScreen
 import com.apparel.offprice.features.checkout.presentation.screens.ShippingAddressScreen
 import com.apparel.offprice.features.coupon.presentation.screen.CouponScreen
+import com.apparel.offprice.features.home.presentation.screens.categories.SubCategoryScreen
 import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
 import com.apparel.offprice.features.home.presentation.screens.search.SearchScreen
 import com.apparel.offprice.features.paymentCard.presentation.screen.PaymentCardScreen
@@ -101,6 +102,23 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
                 },
                 onNavigateToPDP = { product ->
+                    navController.navigate(AppScreen.PDPScreen) {}
+                }
+            )
+        }
+        composable<AppScreen.SubCategoryScreen> {
+            SubCategoryScreen(
+                //parentCategory = it.arguments?.getParcelable("parentCategory")!!,
+                onNavigateToSearch = {
+                    navController.navigate(AppScreen.SearchScreen)
+                },
+                onNavigateToWishlist = {
+                    navController.navigate(AppScreen.WishListScreen)
+                },
+                onBack = {
+                    navController.popBackStack()
+                },
+                onNavigateToPLP = { product ->
                     navController.navigate(AppScreen.PDPScreen) {}
                 }
             )

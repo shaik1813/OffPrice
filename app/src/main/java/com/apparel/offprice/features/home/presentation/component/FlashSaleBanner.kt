@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.errorColor
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -44,9 +45,7 @@ fun FlashSaleBanner(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        // =========================
         // BANNER WITH GRADIENT
-        // =========================
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -72,7 +71,7 @@ fun FlashSaleBanner(
                         modifier = Modifier.fillMaxSize()
                     )
 
-                    // 🔥 GRADIENT OVERLAY
+                    // GRADIENT OVERLAY
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -92,9 +91,7 @@ fun FlashSaleBanner(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // =========================
         // DOT INDICATOR (BELOW)
-        // =========================
         if (safeImages.size > 1) {
             Row(
                 horizontalArrangement = Arrangement.Center,
@@ -108,7 +105,7 @@ fun FlashSaleBanner(
                             .size(if (isSelected) 8.dp else 6.dp)
                             .clip(CircleShape)
                             .background(
-                                if (isSelected) Color.Red else Color.LightGray
+                                if (isSelected) errorColor else Color.LightGray
                             )
                     )
                 }
