@@ -54,14 +54,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
 import com.apparel.offprice.common.component.AppBasicPasswordField
 import com.apparel.offprice.common.component.AppPhoneNumberField
-import com.apparel.offprice.common.theme.lineColor
 import com.apparel.offprice.common.theme.redColor
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.PastOrPresentSelectableDates
 import com.apparel.offprice.common.utils.use
+import com.apparel.offprice.features.profile.presentation.component.ActionButtonsBar
 import com.apparel.offprice.features.profile.presentation.component.CategoryDropdown
 import com.apparel.offprice.features.profile.presentation.component.LabeledField
-import com.apparel.offprice.features.profile.presentation.screen.myaccounts.ActionButtonsBar
 
 /**
  * A composable function that displays the user's profile details.

@@ -61,6 +61,7 @@ fun CountrySelectionBottomSheet(
         modifier = Modifier
             .fillMaxWidth()
             .navigationBarsPadding(),
+        containerColor = MaterialTheme.colorScheme.background,
         dragHandle = null,
         shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
         sheetMaxWidth = BottomSheetDefaults.SheetPeekHeight

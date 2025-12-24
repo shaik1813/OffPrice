@@ -6,6 +6,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,8 +36,8 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun CircularProgressbar(
     name: String = "",
-    size: Dp = 110.dp,
-    foregroundIndicatorColor: Color = MaterialTheme.colorScheme.primary,
+    size: Dp = 85.dp,
+    foregroundIndicatorColor: Color = MaterialTheme.colorScheme.secondary,
     shadowColor: Color = MaterialTheme.colorScheme.background,
     indicatorThickness: Dp = 4.dp,
     dataUsage: Float = 75f,
@@ -54,7 +55,7 @@ fun CircularProgressbar(
     LaunchedEffect(Unit) { dataUsageRemember = dataUsage }
 
     Box(
-        modifier = Modifier.size(size),
+        modifier = Modifier.size(size + 12.dp),
         contentAlignment = Alignment.Center
     ) {
         Canvas(
@@ -62,7 +63,7 @@ fun CircularProgressbar(
         ) {
             drawCircle(
                 brush = Brush.radialGradient(
-                    colors = listOf(shadowColor, Color.LightGray),
+                    colors = listOf(shadowColor, Color.White),
                     center = Offset(x = this.size.width / 2, y = this.size.height / 2),
                     radius = this.size.height / 2
                 ),
@@ -71,7 +72,7 @@ fun CircularProgressbar(
             )
 
             drawCircle(
-                color = Color(0xFFB0B0B0),
+                color = Color(0xFFFFEEEE),
                 radius = (size / 2 - indicatorThickness).toPx(),
                 center = Offset(x = this.size.width / 2, y = this.size.height / 2)
             )
@@ -96,11 +97,10 @@ fun CircularProgressbar(
         }
         Text(
             text = name,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.titleLarge,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            color = Color.White,
-            fontSize = 24.sp
+            color = MaterialTheme.colorScheme.secondary,
         )
         Text(
             text = (dataUsageAnimate.value).toInt().toString() + "%",

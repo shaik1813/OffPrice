@@ -45,8 +45,10 @@ val sizeDescColor = Color(0xFF363939)
 
 val blueRoundColor = Color(0xFF317FCD)
 
-
 val offerCardColor = Color(0xFFB5373D)
+
+val profileBackgroundCardColor = Color(0xFFFFEEEE)
+
 
 val productCardColor = Brush.linearGradient(
     colors = listOf(
