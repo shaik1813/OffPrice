@@ -2,25 +2,23 @@ package com.apparel.offprice.features.home.presentation.screens.search
 
 import com.apparel.offprice.common.utils.UnidirectionalViewModel
 import com.apparel.offprice.features.home.data.model.LOneCategoryItem
-import com.apparel.offprice.features.home.data.model.recentSearch
-import com.apparel.offprice.features.home.data.model.sampleLOneCategoryItem
-import com.apparel.offprice.features.home.data.model.trendingSearch
 
 interface SearchContract : UnidirectionalViewModel
 <SearchContract.UiState, SearchContract.UiEvent, SearchContract.UiEffect> {
 
     data class UiState(
         val query: String = "",
-        val selectedCategory: List<LOneCategoryItem> = sampleLOneCategoryItem,
-        val recentSearches: List<String> = recentSearch,
-        val trendingSearches: List<String> = trendingSearch,
+        val lOneCategoryList: List<LOneCategoryItem> = emptyList(),
+        val recentSearches: List<String> = emptyList(),
+        val trendingSearches: List<String> = emptyList(),
         val searchResults: List<String> = emptyList(),
+        val selectedIndex: Int = -1,
         val isLoading: Boolean = false
     )
 
     sealed interface UiEvent {
         data class OnQueryChanged(val query: String) : UiEvent
-        data class OnCategorySelected(val category: LOneCategoryItem) : UiEvent
+        data class OnCategorySelected(val index: Int,val category: LOneCategoryItem) : UiEvent
         data class RemoveRecent(val query: String) : UiEvent
         data class Submit(val query: String) : UiEvent
 

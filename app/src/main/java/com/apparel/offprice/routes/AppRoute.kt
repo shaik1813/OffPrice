@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.apparel.offprice.features.address.presentation.screen.DeliveryAddressScreen
+import com.apparel.offprice.features.authentication.presentation.screen.LoginEmptyScreen
 import com.apparel.offprice.features.checkout.presentation.screens.ShippingAddressScreen
 import com.apparel.offprice.features.coupon.presentation.screen.CouponScreen
 import com.apparel.offprice.features.home.presentation.screens.categories.SubCategoryScreen
@@ -20,7 +21,7 @@ import com.apparel.offprice.features.profile.presentation.screen.userprofile.Use
 import com.apparel.offprice.features.storeCredit.presentation.screen.StoreCreditScreen
 import com.apparel.offprice.features.storeLocator.presentation.screen.StoreLocatorScreen
 import com.apparel.offprice.features.welcome.presentation.genderCategory.GenderCategoryScreen
-import com.apparel.offprice.features.welcome.presentation.location.ChooseLocationScreen
+import com.apparel.offprice.features.welcome.presentation.region.RegionSelectionScreen
 import com.apparel.offprice.features.welcome.presentation.splash.SplashScreen
 import com.apparel.offprice.features.wishlist.presentation.screen.WishListScreen
 
@@ -40,7 +41,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         composable<AppScreen.SplashScreen> {
             SplashScreen(
                 onNavigateToHomeScreen = {
-                    navController.navigate(AppScreen.GenderCategoryScreen) {
+                    navController.navigate(AppScreen.LocationSelectionScreen) {
                         popUpTo(0) { inclusive = true }
                     }
                 }
@@ -48,7 +49,9 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.LoginScreen> {
-
+            LoginEmptyScreen(onNavigateBack = {
+                navController.popBackStack()
+            })
         }
 
         composable<AppScreen.RegistrationScreen> {
@@ -68,15 +71,15 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.HomeScreen> {
-            HomeScreen { route ->
+            HomeScreen (onNavigateToOuter = { route ->
                 navController.navigate(route)
-            }
+            })
         }
 
         composable<AppScreen.SearchScreen> {
             SearchScreen(
                 onSearchSubmit = { productId ->
-                    // TODO : Added the PLP navigation from here
+                    navController.navigate(AppScreen.PDPScreen)
                 },
                 onNavigateToBack = {
                     navController.popBackStack()
@@ -99,7 +102,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                     }
                 },
                 onNavigateToCart = {
-
+                    navController.navigate(BottomNavScreen.Item4)
                 },
                 onNavigateToPDP = { product ->
                     navController.navigate(AppScreen.PDPScreen) {}
@@ -125,7 +128,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.LocationSelectionScreen> {
-            ChooseLocationScreen(onNavigateToNextScreen = {
+            RegionSelectionScreen(onNavigateToNextScreen = {
                 navController.navigate(AppScreen.GenderCategoryScreen)
             })
         }

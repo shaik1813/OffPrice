@@ -11,6 +11,7 @@
     <string name="label_delivery_address">Delivery Addresses</string>
     <string name="label_payment_cards">Payment Cards</string>
     <string name="label_store_locator">Store Locator</string>
+    <string name="label_customer_support">Customer Support &amp; Policies</string>
     <string name="label_log_out">Log Out</string>
 
     <string name="login_account_header">LOGIN YOUR ACCOUNT</string>
@@ -209,9 +210,14 @@
     <string name="pick_up_at_store">Pickup at store</string>
     <string name="delivery_address">DELIVERY ADDRESS</string>
     <string name="label_order_summary">ORDER SUMMARY</string>
+    <string name="enter_password">Enter password</string>
 
     <!-- Categories -->
     <string name="label_categories">CATEGORIES</string>
+    <string name="label_account_settings">Account Settings</string>
+    <string name="label_my_shopping">My Shopping</string>
+    <string name="label_about_and_support">About &amp; Support</string>
+    <string name="label_support_and_others">Support &amp; Others</string>
 
 
 </resources>

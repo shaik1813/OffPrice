@@ -36,7 +36,7 @@ import com.apparel.offprice.common.theme.OffPriceTheme
 import com.apparel.offprice.common.theme.redColor
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
-import com.apparel.offprice.features.profile.presentation.screen.myaccounts.ActionButtonsBar
+import com.apparel.offprice.features.profile.presentation.component.ActionButtonsBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

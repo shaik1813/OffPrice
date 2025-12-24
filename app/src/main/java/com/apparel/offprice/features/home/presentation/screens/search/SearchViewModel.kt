@@ -2,6 +2,10 @@ package com.apparel.offprice.features.home.presentation.screens.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.apparel.offprice.common.preference.UserPreferences
+import com.apparel.offprice.features.home.data.model.recentSearch
+import com.apparel.offprice.features.home.data.model.sampleLOneCategoryItem
+import com.apparel.offprice.features.home.data.model.trendingSearch
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +18,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(): ViewModel(), SearchContract {
+class SearchViewModel @Inject constructor(
+    private val userPreferences: UserPreferences
+) : ViewModel(), SearchContract {
 
     private val _state = MutableStateFlow(SearchContract.UiState())
     override val state: StateFlow<SearchContract.UiState> = _state.asStateFlow()
@@ -35,24 +41,46 @@ class SearchViewModel @Inject constructor(): ViewModel(), SearchContract {
             is SearchContract.UiEvent.OnCategorySelected -> {
                 _state.update { state ->
                     state.copy(
-                        selectedCategory = state.selectedCategory.map {
-                            it.copy(
-                                isSelected = it.id == event.category.id
-                            )
-                        }
+                        selectedIndex = event.index
                     )
                 }
             }
-            is SearchContract.UiEvent.Submit -> { submitSearch(query = event.query) }
+
+            is SearchContract.UiEvent.Submit -> {
+                submitSearch(query = event.query)
+            }
+
             is SearchContract.UiEvent.RemoveRecent -> removeRecent(query = event.query)
             is SearchContract.UiEvent.OnRecentSearched -> {
                 viewModelScope.launch {
                     _effectFlow.emit(SearchContract.UiEffect.NavigateToSearchResult(event.query))
                 }
             }
+
             SearchContract.UiEvent.OnCleared -> {
                 viewModelScope.launch {
                     _effectFlow.emit(SearchContract.UiEffect.NavigateToHome)
+                }
+            }
+        }
+    }
+
+    init {
+        loadInitialData()
+    }
+
+
+    private fun loadInitialData() {
+        viewModelScope.launch {
+            userPreferences.levelOneCategory.collect { id ->
+                val index = sampleLOneCategoryItem.indexOfFirst { it.id == id }
+                _state.update {
+                    it.copy(
+                        lOneCategoryList = sampleLOneCategoryItem,
+                        recentSearches = recentSearch,
+                        trendingSearches = trendingSearch,
+                        selectedIndex = index.coerceAtLeast(0)
+                    )
                 }
             }
         }
@@ -62,7 +90,7 @@ class SearchViewModel @Inject constructor(): ViewModel(), SearchContract {
         val filtered = if (query.isBlank()) emptyList() else {
             allProducts.filter { it.contains(query, ignoreCase = true) }
         }
-        _state.value = _state.value.copy(query = query , searchResults = filtered)
+        _state.value = _state.value.copy(query = query, searchResults = filtered)
     }
 
 
