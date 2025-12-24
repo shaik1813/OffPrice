@@ -1,13 +1,10 @@
 package com.apparel.offprice.features.authentication.presentation.screen
 
-import com.apparel.offprice.features.pdp.presentation.screen.PDPContract
-
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.apparel.offprice.features.authentication.presentation.screen.LoginContract.UiEffect.*
+import com.apparel.offprice.features.authentication.presentation.screen.LoginContract.UiEffect.Navigate
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -60,7 +57,7 @@ class LoginViewModel @Inject constructor(
             }
 
             is LoginContract.UiEvent.OnValueChangeEmail -> {
-                updateState { it.copy() }
+                updateState { it.copy(email = event.value) }
             }
 
             is LoginContract.UiEvent.OnValueChangePassword -> {

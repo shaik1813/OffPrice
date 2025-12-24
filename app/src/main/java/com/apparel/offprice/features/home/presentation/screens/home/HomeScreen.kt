@@ -41,7 +41,6 @@ import com.apparel.offprice.routes.AppScreen
 
 @Composable
 fun HomeScreen(
-    onNavigateLogin: () -> Unit,
     onNavigateToOuter: (Any) -> Unit
 ) {
 
@@ -50,9 +49,6 @@ fun HomeScreen(
         navController = bottomNavController,
         onNavigateToOuter = {
             onNavigateToOuter(it)
-        },
-        onOpenLoginSheet = {
-            onNavigateLogin()
         }
     )
 
@@ -62,8 +58,7 @@ fun HomeScreen(
 @Composable
 fun BottomNavigationContent(
     navController: NavHostController,
-    onNavigateToOuter: (Any) -> Unit,
-    onOpenLoginSheet: () -> Unit
+    onNavigateToOuter: (Any) -> Unit
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -120,7 +115,7 @@ fun BottomNavigationContent(
                         onNavigateToOuter(AppScreen.WishListScreen)
                     },
                     onNavigateToLogin = {
-                        onOpenLoginSheet()
+                        onNavigateToOuter(AppScreen.LoginScreen)
                     },
                     onItemClick = { item ->
                         onNavigateToOuter(item.navigation)

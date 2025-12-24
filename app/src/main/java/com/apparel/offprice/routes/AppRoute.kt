@@ -70,10 +70,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.HomeScreen> {
-            HomeScreen (onNavigateLogin ={
-                navController.navigate(AppScreen.LoginScreen)
-
-            }, onNavigateToOuter = {
+            HomeScreen (onNavigateToOuter = {
                     route ->
                 navController.navigate(route)
             })
