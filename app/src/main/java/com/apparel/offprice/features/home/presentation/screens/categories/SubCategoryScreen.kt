@@ -23,12 +23,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
-import com.apparel.offprice.common.theme.IconBackgroundColor
-import com.apparel.offprice.common.theme.primaryColor
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.home.presentation.component.CategoriesList
-import com.apparel.offprice.features.home.presentation.component.CategoryListItem
 import com.apparel.offprice.features.home.presentation.component.CircleIconButton
 import com.apparel.offprice.features.home.presentation.component.sampleSubCategoryList
 

@@ -43,6 +43,9 @@ sealed interface AppScreen {
     object PDPScreen : AppScreen
 
     @Serializable
+    object PLPScreen : AppScreen
+
+    @Serializable
     object UserProfileScreen : AppScreen
 
     @Serializable

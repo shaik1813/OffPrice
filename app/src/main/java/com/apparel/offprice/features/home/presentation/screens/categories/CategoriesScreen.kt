@@ -27,12 +27,11 @@ import com.apparel.offprice.R
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.home.presentation.component.CategoriesList
-import com.apparel.offprice.features.home.presentation.component.CategoryTabsWithIndicator
 import com.apparel.offprice.features.home.presentation.component.CircleIconButton
 import com.apparel.offprice.features.home.presentation.component.FlashSaleBanner
 import com.apparel.offprice.features.home.presentation.component.sampleCategoryBannerImages
 import com.apparel.offprice.features.home.presentation.component.sampleCategoryList
-import com.apparel.offprice.routes.AppScreen
+import com.apparel.offprice.features.home.presentation.screens.home.CategoryPrimaryScrollableTabs
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -119,13 +118,24 @@ fun CategoriesScreen(
                 .fillMaxWidth()
         )
 
-        CategoryTabsWithIndicator(
+        /*CategoryTabsWithIndicator(
             categories = state.selectedCategory,
             isHome = false,
             onCategorySelected = {
                 event.invoke(CategoriesContract.UiEvent.OnCategorySelected(it))
             }
-        )
+        )*/
+
+        if (state.lOneCategoryList.isNotEmpty() && state.selectedIndex >= 0) {
+            CategoryPrimaryScrollableTabs(
+                categories = state.lOneCategoryList,
+                selectedIndex = state.selectedIndex,
+                isHome = false,
+                onTabSelected = { index, item ->
+                    event.invoke(CategoriesContract.UiEvent.OnCategorySelected(index, item))
+                }
+            )
+        }
 
         Spacer(
             modifier = Modifier
@@ -142,7 +152,6 @@ fun CategoriesScreen(
         CategoriesList(
             list = sampleCategoryList,
             onItemClick = { item ->
-                // Handle item click
                 event(CategoriesContract.UiEvent.OnNavigateToSubCategory(item.title))
             }
         )
