@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,18 +27,10 @@ class LoginViewModel @Inject constructor(
     override fun event(event: LoginContract.UiEvent) {
         when (event) {
             LoginContract.UiEvent.OnCloseLogin -> {
-                updateState {
-                    it.copy(isLoginVisible = false)
-                }
                 viewModelScope.launch {
                     _effect.emit(LoginContract.UiEffect.OnNavigateBack)
                 }
             }
-
-            LoginContract.UiEvent.OnLoginClick -> {
-                updateState { it.copy(isLoginVisible = true) }
-            }
-
             is LoginContract.UiEvent.OnNavigate -> {
                 viewModelScope.launch {
                     _effect.emit(
@@ -47,7 +38,6 @@ class LoginViewModel @Inject constructor(
                     )
                 }
             }
-
             is LoginContract.UiEvent.OnNavigateBack -> {
                 viewModelScope.launch {
                     _effect.emit(LoginContract.UiEffect.OnNavigateBack)

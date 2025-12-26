@@ -50,9 +50,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
         composable<AppScreen.LoginScreen> {
             LoginEmptyScreen(
-                onNavigateToOuter = { route ->
-                    navController.navigate(route)
-                },
+
                 onNavigateBack = {
                     navController.popBackStack()
                 })

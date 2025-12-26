@@ -9,7 +9,6 @@ interface LoginContract : UnidirectionalViewModel
 <LoginContract.UiState, LoginContract.UiEvent, LoginContract.UiEffect> {
 
     data class UiState(
-        val isLoginVisible: Boolean = false,
         val isRememberCheck: Boolean = false,
         val passwordValue: String = "",
         val email: String = "",
@@ -28,7 +27,6 @@ interface LoginContract : UnidirectionalViewModel
     )
 
     sealed interface UiEvent {
-        object OnLoginClick : UiEvent
         object OnCloseLogin : UiEvent
         object OnNavigateBack : UiEvent
         object OnCheckToggle : UiEvent

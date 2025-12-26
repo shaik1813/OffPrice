@@ -58,7 +58,6 @@ import com.apparel.offprice.common.theme.buttonBorderColor
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.takeInitials
 import com.apparel.offprice.common.utils.use
-import com.apparel.offprice.features.authentication.presentation.screen.ForgotDialog
 import com.apparel.offprice.features.home.data.model.MyAccountItems
 import com.apparel.offprice.features.home.data.model.accountItems
 import com.apparel.offprice.features.home.presentation.component.CircularProgressbar
@@ -80,16 +79,12 @@ fun MyAccountScreen(
     var showCountrySheet by remember { mutableStateOf(false) }
     var showLanguageSheet by remember { mutableStateOf(false) }
 
-    var showForgotDialog by remember { mutableStateOf(false) }
     var showOtpDialog by remember { mutableStateOf(false) }
 
 
     val (state, event, effect) = use(viewModel = viewModel)
 
 
-    if (showForgotDialog) {
-        ForgotDialog(onDismiss = { showForgotDialog = false })
-    }
 
     if (showOtpDialog) {
         //OTPVerifyDialog(onDismiss = { showOtpDialog = false })

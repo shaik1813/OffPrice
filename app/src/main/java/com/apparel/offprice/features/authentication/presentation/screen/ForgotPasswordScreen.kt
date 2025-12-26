@@ -45,11 +45,13 @@ import com.apparel.offprice.features.authentication.presentation.component.Login
 import java.util.Locale.getDefault
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.saleCardColor
+import com.apparel.offprice.common.theme.saleEndTextColor
+import com.apparel.offprice.features.authentication.presentation.component.LoginBasicTextField
 import com.apparel.offprice.routes.AppScreen
 
 
 @Composable
-fun ForgotPasswordScreen(onItemClick: (AppScreen) -> Unit,onDismiss:()->Unit) {
+fun ForgotPasswordScreen(onItemClick: (AppScreen) -> Unit,onClickLogin:()->Unit) {
 
     var otpValues by remember { mutableStateOf(List(6) { "" }) }
     val focusRequesters = List(6) { FocusRequester() }
@@ -65,14 +67,7 @@ fun ForgotPasswordScreen(onItemClick: (AppScreen) -> Unit,onDismiss:()->Unit) {
         focusRequesters[0].requestFocus()
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth(0.85f)
-            .wrapContentHeight()
-            .statusBarsPadding()
-            .padding(horizontal = 16.dp, vertical = 26.dp),
-    ) {
-
+    Column{
             Column() {
                 Text(
                     text = stringResource(com.apparel.offprice.R.string.forgot_your_password),
@@ -98,13 +93,22 @@ fun ForgotPasswordScreen(onItemClick: (AppScreen) -> Unit,onDismiss:()->Unit) {
                     },
                     fontSize = 14.sp,
                         style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black,
+                    color = saleCardColor,
                     modifier = Modifier.padding(top = 30.dp, bottom = 12.dp)
                 )
 
                 var email by remember { mutableStateOf("") }
 
-                LoginEmailPhoneField(email, { email = it }, stringResource(R.string.enter_mail))
+                LoginBasicTextField(
+                    value = email,
+                    enabled = true,
+                    placeholder = stringResource(R.string.enter_mail),
+                    onValueChange = {
+                        email = it
+                   //     event(LoginContract.UiEvent.OnValueChangeEmail(it))
+                                    },
+                )
+
 
                 Button(
                     onClick = { showResetDialog = true },
@@ -112,7 +116,7 @@ fun ForgotPasswordScreen(onItemClick: (AppScreen) -> Unit,onDismiss:()->Unit) {
                         .fillMaxWidth()
                         .padding(top=30.dp)
                         .height(48.dp),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(6.dp)
                 ) {
                     Text(
                         text = stringResource(R.string.continue_txt).uppercase(getDefault()),
@@ -124,10 +128,11 @@ fun ForgotPasswordScreen(onItemClick: (AppScreen) -> Unit,onDismiss:()->Unit) {
 
                 Text(
                     text = stringResource(R.string.back_to_login),
-                    color = loginButtonColor,
+                    color = saleEndTextColor,
                     fontSize = 14.sp,
                     style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.padding(top=30.dp).align(Alignment.CenterHorizontally)
+                    modifier = Modifier.padding(top = 20.dp).align(Alignment.CenterHorizontally)
+                        .clickable(indication = null, interactionSource = null){onClickLogin()}
                 )
             }
 

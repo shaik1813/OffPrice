@@ -35,7 +35,6 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -51,7 +50,6 @@ fun OTPVerifyScreen(onVerifyClick:() -> Unit, onDismiss: () -> Unit) {
 
     var otpValues by remember { mutableStateOf(List(6) { "" }) }
     val focusRequesters = List(6) { FocusRequester() }
-    val focusManager = LocalFocusManager.current
     LaunchedEffect(Unit) {
         focusRequesters[0].requestFocus()
     }
@@ -191,8 +189,6 @@ fun OTPVerifyScreen(onVerifyClick:() -> Unit, onDismiss: () -> Unit) {
                     }
                 }
 
-
-
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Row(
@@ -200,7 +196,6 @@ fun OTPVerifyScreen(onVerifyClick:() -> Unit, onDismiss: () -> Unit) {
                     modifier = Modifier
                         .align(Alignment.Bottom)
                         .weight(0.2f)
-
                 ) {
 
                     Text(
@@ -237,9 +232,7 @@ fun OTPVerifyScreen(onVerifyClick:() -> Unit, onDismiss: () -> Unit) {
 
         }
 
-
     }
-
 
 }
 

@@ -38,7 +38,6 @@ import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.authentication.presentation.component.LoginBasicPasswordField
 import com.apparel.offprice.features.authentication.presentation.component.LoginBasicPhoneField
 import com.apparel.offprice.features.authentication.presentation.component.LoginBasicTextField
-import kotlinx.coroutines.flow.SharedFlow
 
 
 @Composable
@@ -220,6 +219,5 @@ fun SignUpForm(
             )
         }
     }
-
 
 }

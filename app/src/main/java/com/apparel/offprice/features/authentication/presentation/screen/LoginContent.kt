@@ -143,7 +143,7 @@ fun LoginForm(
                 modifier = Modifier
                     .wrapContentWidth()
                     .clickable {
-                       onForgotClick()
+                        onForgotClick()
                     },
                 text = stringResource(R.string.forgot_pass),
                 color = MaterialTheme.colorScheme.primary,
@@ -195,7 +195,6 @@ fun LoginForm(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-
             OutlinedButton(
                 onClick = {},
                 modifier = Modifier

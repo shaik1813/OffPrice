@@ -41,7 +41,7 @@ fun LoginBasicTextField(
         BasicTextField(
             value = value,
             onValueChange = { if (enabled) onValueChange(it) },
-            textStyle = MaterialTheme.typography.bodySmall,
+            textStyle = MaterialTheme.typography.bodyMedium,
             singleLine = true,
             enabled = enabled,
             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
@@ -62,7 +62,7 @@ fun LoginBasicTextField(
                     if (value.isEmpty()) {
                         Text(
                             text = placeholder,
-                            style = MaterialTheme.typography.bodySmall,
+                            style = MaterialTheme.typography.bodyMedium,
                             color = lineColor
                         )
                     }

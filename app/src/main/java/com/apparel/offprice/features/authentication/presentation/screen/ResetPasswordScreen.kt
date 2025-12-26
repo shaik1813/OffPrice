@@ -38,7 +38,6 @@ import java.util.Locale.getDefault
 @Composable
 fun ResetPasswordScreen(onDismiss: () -> Unit) {
 
-
     Column(
         modifier = Modifier
             .fillMaxWidth(0.85f)
@@ -116,10 +115,7 @@ fun ResetPasswordScreen(onDismiss: () -> Unit) {
                     .align(Alignment.CenterHorizontally)
             )
 
-
-
     }
-
 
 }
 
