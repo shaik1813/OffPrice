@@ -39,6 +39,7 @@ class SubCategoryViewModel @Inject constructor() : ViewModel(), SubCategoryContr
                     _effect.emit(SubCategoryContract.UiEffect.NavigateToSearch)
                 }
             }
+
             SubCategoryContract.UiEvent.NavigateToWishlist -> {
                 viewModelScope.launch {
                     _effect.emit(SubCategoryContract.UiEffect.NavigateToWishlist)

@@ -14,6 +14,7 @@ import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
 import com.apparel.offprice.features.home.presentation.screens.search.SearchScreen
 import com.apparel.offprice.features.paymentCard.presentation.screen.PaymentCardScreen
 import com.apparel.offprice.features.pdp.presentation.screen.PDPscreen
+import com.apparel.offprice.features.plp.presentation.screens.PLPScreen
 import com.apparel.offprice.features.profile.presentation.screen.profileDetails.ProfileDetailsScreen
 import com.apparel.offprice.features.profile.presentation.screen.profilePassword.ProfilePasswordScreen
 import com.apparel.offprice.features.profile.presentation.screen.profileSize.ProfileSizeScreen
@@ -73,7 +74,15 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         composable<AppScreen.HomeScreen> {
             HomeScreen (onNavigateToOuter = { route ->
                 navController.navigate(route)
-            })
+            },
+                onNavigateToSubCategory = { title ->
+                    navController.currentBackStackEntry
+                        ?.savedStateHandle
+                        ?.set("subcategory_title", title)
+
+                    navController.navigate(AppScreen.SubCategoryScreen)
+                }
+            )
         }
 
         composable<AppScreen.SearchScreen> {
@@ -124,8 +133,13 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                 onBack = {
                     navController.popBackStack()
                 },
-                onNavigateToPLP = { product ->
-                    navController.navigate(AppScreen.PDPScreen) {}
+                /*onNavigateToPLP = {
+                    navController.navigate(AppScreen.PLPScreen)
+                },*/
+                onNavigateToPLP = { id ->
+                    navController.currentBackStackEntry?.savedStateHandle
+                        ?.set("plp_id", id)
+                    navController.navigate(AppScreen.PLPScreen)
                 }
             )
         }
@@ -230,6 +244,17 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         composable<AppScreen.ExchangeScreen> {}
 
         composable<AppScreen.LogOutScreen> {}
+
+        composable<AppScreen.PLPScreen> {
+            PLPScreen(
+                onNavigateToSearch = {
+                    navController.navigate(AppScreen.SearchScreen)
+                },
+                onNavigateToWishlist = {
+                    navController.navigate(AppScreen.WishListScreen)
+                }
+            )
+        }
 
     }
 

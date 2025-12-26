@@ -41,7 +41,8 @@ import com.apparel.offprice.routes.AppScreen
 
 @Composable
 fun HomeScreen(
-    onNavigateToOuter: (Any) -> Unit
+    onNavigateToOuter: (Any) -> Unit,
+    onNavigateToSubCategory: (String) -> Unit
 ) {
 
     val bottomNavController = rememberNavController()
@@ -49,6 +50,9 @@ fun HomeScreen(
         navController = bottomNavController,
         onNavigateToOuter = {
             onNavigateToOuter(it)
+        },
+        onNavigateToSubCategory = {
+            onNavigateToSubCategory(it)
         }
     )
 
@@ -58,7 +62,8 @@ fun HomeScreen(
 @Composable
 fun BottomNavigationContent(
     navController: NavHostController,
-    onNavigateToOuter: (Any) -> Unit
+    onNavigateToOuter: (Any) -> Unit,
+    onNavigateToSubCategory: (String) -> Unit
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -88,8 +93,8 @@ fun BottomNavigationContent(
                     onNavigateToWishlist = {
                         onNavigateToOuter(AppScreen.WishListScreen)
                     },
-                    onNavigateToSubCategory = {
-                        onNavigateToOuter(AppScreen.SubCategoryScreen)
+                    onNavigateToSubCategory = { title ->
+                        onNavigateToSubCategory(title)
                     }
                 )
             }
