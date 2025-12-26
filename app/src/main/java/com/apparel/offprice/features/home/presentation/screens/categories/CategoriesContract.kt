@@ -5,6 +5,7 @@ import com.apparel.offprice.features.home.data.model.LOneCategoryItem
 import com.apparel.offprice.features.home.data.model.recentSearch
 import com.apparel.offprice.features.home.data.model.sampleLOneCategoryItem
 import com.apparel.offprice.features.home.data.model.trendingSearch
+import com.apparel.offprice.features.home.presentation.component.CategoryListItem
 
 interface CategoriesContract : UnidirectionalViewModel
 <CategoriesContract.UiState, CategoriesContract.UiEvent, CategoriesContract.UiEffect> {
@@ -31,6 +32,8 @@ interface CategoriesContract : UnidirectionalViewModel
         data class OnRecentSearched(val query: String): UiEvent
 
         data object OnCleared: UiEvent
+
+        data class OnNavigateToSubCategory(val title : String) : UiEvent
     }
 
     sealed interface UiEffect {
@@ -38,5 +41,7 @@ interface CategoriesContract : UnidirectionalViewModel
         data class ShowError(val message: String) : UiEffect
         object NavigateToSearch: UiEffect
         object NavigateToWishlist: UiEffect
+
+        data class NavigateToSubCategory(val title: String) : UiEffect
     }
 }

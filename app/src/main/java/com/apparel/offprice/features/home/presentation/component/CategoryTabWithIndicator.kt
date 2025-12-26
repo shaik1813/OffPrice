@@ -30,6 +30,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.apparel.offprice.common.theme.errorColor
+import com.apparel.offprice.common.theme.primaryColor
 import com.apparel.offprice.features.home.data.model.LOneCategoryItem
 
 @Composable
@@ -112,11 +114,11 @@ fun CategoryTabItem(
             style = MaterialTheme.typography.titleMedium.copy(
                 fontSize = 14.sp
             ),
-            color = if (categoryItem.isSelected) Color(0xFFED1D2C) else {
+            color = if (categoryItem.isSelected) errorColor else {
                 if (isHome) {
                     Color.White
                 } else {
-                    Color(0xFF040707)
+                    primaryColor
                 }
             },
             textAlign = TextAlign.Center,

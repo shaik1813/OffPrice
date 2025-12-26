@@ -26,20 +26,20 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.apparel.offprice.R
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
-import com.apparel.offprice.features.home.presentation.component.CategoriesBanner
 import com.apparel.offprice.features.home.presentation.component.CategoriesList
 import com.apparel.offprice.features.home.presentation.component.CategoryTabsWithIndicator
 import com.apparel.offprice.features.home.presentation.component.CircleIconButton
 import com.apparel.offprice.features.home.presentation.component.FlashSaleBanner
 import com.apparel.offprice.features.home.presentation.component.sampleCategoryBannerImages
 import com.apparel.offprice.features.home.presentation.component.sampleCategoryList
-import com.apparel.offprice.features.home.presentation.screens.home.HomeViewModel
+import com.apparel.offprice.routes.AppScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoriesScreen(
     onNavigateToSearch: () -> Unit,
     onNavigateToWishlist: () -> Unit,
+    onNavigateToSubCategory: (String) -> Unit,
     viewModel: CategoriesViewModel = hiltViewModel()
 ) {
 
@@ -57,6 +57,10 @@ fun CategoriesScreen(
 
             CategoriesContract.UiEffect.NavigateToWishlist -> {
                 onNavigateToWishlist()
+            }
+
+            is CategoriesContract.UiEffect.NavigateToSubCategory -> {
+                onNavigateToSubCategory(it.title)
             }
 
             is CategoriesContract.UiEffect.ShowError -> {
@@ -129,11 +133,6 @@ fun CategoriesScreen(
                 .fillMaxWidth()
         )
 
-        // ✅ BANNER (Reused Slider)
-        /*CategoriesBanner(
-            banners = sampleCategoryBannerImages
-        )*/
-
         FlashSaleBanner(
             images = sampleCategoryBannerImages
         )
@@ -142,8 +141,9 @@ fun CategoriesScreen(
 
         CategoriesList(
             list = sampleCategoryList,
-            onItemClick = { clickedItem ->
-                // TODO: navigate to category listing
+            onItemClick = { item ->
+                // Handle item click
+                event(CategoriesContract.UiEvent.OnNavigateToSubCategory(item.title))
             }
         )
     }
@@ -155,6 +155,7 @@ fun CategoriesScreenPreview() {
     CategoriesScreen(
         onNavigateToSearch = {},
         onNavigateToWishlist = {},
+        onNavigateToSubCategory = {},
         viewModel = viewModel()
     )
 }

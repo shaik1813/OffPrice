@@ -33,3 +33,14 @@ val sampleCategoryBannerImages = listOf(
     R.drawable.bank_couponbg,
     R.drawable.best_price_outline_icon
 )
+
+
+//SubCategory
+val sampleSubCategoryList = listOf(
+    CategoryListItem("1", "T-SHIRT", R.drawable.best_price_outline_icon),
+    CategoryListItem("2", "POLO T-SHIRT", R.drawable.best_price_outline_icon),
+    CategoryListItem("3", "SHIRTS", R.drawable.best_price_outline_icon),
+    CategoryListItem("4", "JEANS", R.drawable.best_price_outline_icon),
+    CategoryListItem("5", "JOGGERS", R.drawable.best_price_outline_icon),
+    CategoryListItem("6", "PANTS & CHINOS", R.drawable.best_price_outline_icon)
+)
