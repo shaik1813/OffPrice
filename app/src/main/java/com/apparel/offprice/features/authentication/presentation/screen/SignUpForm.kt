@@ -14,28 +14,54 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.inputTextColor
 import com.apparel.offprice.common.theme.redColor
 import com.apparel.offprice.common.theme.surfaceColor
+import com.apparel.offprice.common.utils.CollectInLaunchedEffect
+import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.authentication.presentation.component.LoginBasicPasswordField
 import com.apparel.offprice.features.authentication.presentation.component.LoginBasicPhoneField
 import com.apparel.offprice.features.authentication.presentation.component.LoginBasicTextField
+import kotlinx.coroutines.flow.SharedFlow
 
 
 @Composable
 fun SignUpForm(
-    state: LoginContract.UiState,
-    event: (LoginContract.UiEvent) -> Unit,
-) {
+    onLoginClick: () -> Unit,
+    viewModel: SignUpViewModel = hiltViewModel()
+    ) {
+
+    val (state, event, effect) = use(viewModel = viewModel)
+
+    effect.CollectInLaunchedEffect {
+        when (it) {
+            is SignUpContract.UiEffect.Navigate -> {}
+            SignUpContract.UiEffect.OnNavigateBack -> {}
+        }
+    }
+    
+    var showOtpDialog by remember { mutableStateOf(false) }
+
+
+    if (showOtpDialog) {
+        OTPVerifyDialog(onVerifyClick = {}, onDismiss = { showOtpDialog = false })
+    }
 
     Column(
         modifier = Modifier
@@ -73,7 +99,7 @@ fun SignUpForm(
             value = state.email,
             enabled = true,
             placeholder = stringResource(R.string.enter_mail),
-            onValueChange = { event(LoginContract.UiEvent.OnValueChangeEmail(it)) },
+            onValueChange = { event(SignUpContract.UiEvent.OnValueChangeEmail(it)) },
         )
 
         Text(
@@ -93,7 +119,7 @@ fun SignUpForm(
             value = state.name,
             enabled = true,
             placeholder = stringResource(R.string.enter_name),
-            onValueChange = { event(LoginContract.UiEvent.OnValueChangeName(it)) },
+            onValueChange = { event(SignUpContract.UiEvent.OnValueChangeName(it)) },
         )
 
         Text(
@@ -113,9 +139,9 @@ fun SignUpForm(
             value = state.passwordValue,
             enabled = true,
             isVisible = state.showPassword,
-            onValueChange = { event(LoginContract.UiEvent.OnValueChangePassword(it)) },
+            onValueChange = { event(SignUpContract.UiEvent.OnValueChangePassword(it)) },
             onIconToggle = {
-                event(LoginContract.UiEvent.OnPasswordVisibleToggle)
+                event(SignUpContract.UiEvent.OnPasswordVisibleToggle)
             }
         )
 
@@ -138,14 +164,14 @@ fun SignUpForm(
             phoneCode = state.phoneCode,
             onValueChange = {
                 event.invoke(
-                    LoginContract.UiEvent.OnPhoneChange(
+                    SignUpContract.UiEvent.OnPhoneChange(
                         it
                     )
                 )
             },
             onCountrySelected = {
                 event.invoke(
-                    LoginContract.UiEvent.SelectCountry(
+                    SignUpContract.UiEvent.SelectCountry(
                         it
                     )
                 )
@@ -154,7 +180,7 @@ fun SignUpForm(
         Spacer(Modifier.height(20.dp))
 
         Button(
-            onClick = { },
+            onClick = { showOtpDialog = true },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 15.dp),
@@ -164,7 +190,7 @@ fun SignUpForm(
             )
         ) {
             Text(
-                stringResource(R.string.continue_txt),
+                stringResource(R.string.continue_txt).toUpperCase(Locale.current),
                 color = surfaceColor,
                 style = MaterialTheme.typography.titleLarge,
                 fontSize = 14.sp
@@ -177,7 +203,7 @@ fun SignUpForm(
         Row(
             modifier = Modifier.fillMaxWidth().clickable(indication = null,
                 interactionSource = null){
-                event(LoginContract.UiEvent.OnOpenLogin)
+                onLoginClick()
             },
             horizontalArrangement = Arrangement.Center
         ) {

@@ -14,7 +14,7 @@ import com.apparel.offprice.common.utils.use
 @Composable
 fun SignupEmptyScreen(onNavigateBack: () -> Unit, viewModel: SignUpViewModel = hiltViewModel()) {
 
-    val (state, event, effect) = use(viewModel = viewModel)
+  /*  val (state, event, effect) = use(viewModel = viewModel)
 
     LaunchedEffect(Unit) {
         event(SignUpContract.UiEvent.OnLoginClick)
@@ -28,10 +28,10 @@ fun SignupEmptyScreen(onNavigateBack: () -> Unit, viewModel: SignUpViewModel = h
                 onNavigateBack()
             }
         }
-    }
+    }*/
 
 
-    Box(modifier = Modifier.fillMaxSize()
+    /*Box(modifier = Modifier.fillMaxSize()
     ) {
         SignupScreen(
             state = state,
@@ -39,5 +39,5 @@ fun SignupEmptyScreen(onNavigateBack: () -> Unit, viewModel: SignUpViewModel = h
             onItemClick = { event(SignUpContract.UiEvent.OnNavigate(it)) },
             onClose = { event(SignUpContract.UiEvent.OnCloseLogin) }
         )
-    }
+    }*/
 }

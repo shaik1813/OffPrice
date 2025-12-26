@@ -46,7 +46,8 @@ import com.apparel.offprice.routes.AppScreen
 fun LoginForm(
     state: LoginContract.UiState,
     event: (LoginContract.UiEvent) -> Unit,
-    onItemClick: (AppScreen) -> Unit
+    onItemClick: (AppScreen) -> Unit,
+    onForgotClick: () -> Unit
 ) {
 
     Column {
@@ -142,7 +143,7 @@ fun LoginForm(
                 modifier = Modifier
                     .wrapContentWidth()
                     .clickable {
-                        onItemClick(AppScreen.ForgetPasswordScreen)
+                       onForgotClick()
                     },
                 text = stringResource(R.string.forgot_pass),
                 color = MaterialTheme.colorScheme.primary,

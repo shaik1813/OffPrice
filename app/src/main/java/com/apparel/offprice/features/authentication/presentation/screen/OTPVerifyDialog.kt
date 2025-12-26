@@ -17,7 +17,7 @@ import com.apparel.offprice.routes.AppScreen
 @Composable
 fun OTPVerifyDialog(
     onDismiss: () -> Unit,
-    onItemClick: (AppScreen) -> Unit = {}
+    onVerifyClick: () -> Unit
 ) {
 
     Dialog(
@@ -31,10 +31,10 @@ fun OTPVerifyDialog(
         Box(
             modifier = Modifier
                 .wrapContentSize()
-                .background(Color.White, RoundedCornerShape(16.dp))
-                .padding(horizontal = 16.dp, vertical = 26.dp)
+                .background(Color.White, RoundedCornerShape(10.dp))
+                .padding(horizontal = 16.dp, vertical = 10.dp)
         ) {
-            OTPVerifyScreen(onDismiss = { onDismiss()})
+            OTPVerifyScreen(onVerifyClick = {}, onDismiss = { onDismiss()})
         }
     }
 

@@ -18,6 +18,7 @@ interface LoginContract : UnidirectionalViewModel
         val showPassword: Boolean = false,
         val playEnterAnimation: Boolean = true,
         val isLoginScreen: Boolean = true,
+        val isForgotScreen: Boolean = true,
         val isSignUpScreen: Boolean = false,
         val isCountryPickerOpen: Boolean = false,
         val phoneCode: Country = countryList.first(),
@@ -36,6 +37,8 @@ interface LoginContract : UnidirectionalViewModel
         object OnPasswordVisibleToggle : UiEvent
         object OnOpenSignUp : UiEvent
         object OnOpenLogin : UiEvent
+        object OnOpenForgot : UiEvent
+
         data class OnPhoneChange(val value: String) : UiEvent
         data class SelectCountry(val country: Country) : UiEvent
 
@@ -44,6 +47,7 @@ interface LoginContract : UnidirectionalViewModel
         data class OnValueChangeEmail(val value: String) : UiEvent
         data class OnValueChangePassword(val value: String) : UiEvent
         data class OnNavigate(val screen: AppScreen) : UiEvent
+
     }
 
     sealed interface UiEffect {

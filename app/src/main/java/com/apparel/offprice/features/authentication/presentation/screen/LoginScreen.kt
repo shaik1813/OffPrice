@@ -1,5 +1,6 @@
 package com.apparel.offprice.features.authentication.presentation.screen
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.fadeIn
@@ -28,24 +29,46 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
+import com.apparel.offprice.common.utils.CollectInLaunchedEffect
+import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.routes.AppScreen
+import kotlinx.coroutines.flow.SharedFlow
 
 
 @Composable
 fun LoginScreen(
-    state: LoginContract.UiState, event: (LoginContract.UiEvent) -> Unit,
-    onItemClick: (AppScreen) -> Unit, onClose: () -> Unit
+    onNavigateBack: () -> Unit,
+    onItemClick: (AppScreen) -> Unit,
+    onClose: () -> Unit,
+    isVisible: Boolean,
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
+    val (state, event, effect) = use(viewModel = viewModel)
 
-   Box(
+    effect.CollectInLaunchedEffect {
+        when (it) {
+            is LoginContract.UiEffect.Navigate -> {
+               // onNavigateToOuter(it.screen)
+            }
+
+            is LoginContract.UiEffect.OnNavigateBack -> {
+                onNavigateBack()
+            }
+        }
+    }
+
+
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
             .navigationBarsPadding()
     ) {
+        Log.e("checkworking", isVisible.toString())
         AnimatedVisibility(
-            visible = state.isLoginVisible,
+            visible = isVisible,
             enter = if (state.playEnterAnimation) slideInVertically { it } + fadeIn()
             else EnterTransition.None
         ) {
@@ -82,7 +105,8 @@ fun LoginScreen(
                         .height(22.dp)
                         .align(Alignment.TopEnd)
                         .clickable {
-                            onClose()
+                          //  onClose()
+                            event(LoginContract.UiEvent.OnCloseLogin)
                         })
 
                 Column(
@@ -100,9 +124,16 @@ fun LoginScreen(
                     ) {
                         item {
                             if (state.isLoginScreen)
-                                LoginForm(state, event, onItemClick = { onItemClick(it) })
+                                LoginForm(state, event, onItemClick = { event(LoginContract.UiEvent.OnNavigate(it)) },
+                                    onForgotClick = {
+                                        event(LoginContract.UiEvent.OnOpenForgot)
+                                    })
                             else if (state.isSignUpScreen)
-                            SignUpForm(state, event)
+                                SignUpForm(onLoginClick = {
+                                    event(LoginContract.UiEvent.OnOpenLogin)
+                                })
+                            else if(state.isForgotScreen)
+                                ForgotPasswordScreen(onItemClick = {}, onDismiss = {})
                         }
                     }
                 }

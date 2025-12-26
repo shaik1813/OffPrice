@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -100,6 +101,10 @@ class LoginViewModel @Inject constructor(
                 updateState {
                     it.copy(phoneCode = event.country, isCountryPickerOpen = false)
                 }
+            }
+
+            LoginContract.UiEvent.OnOpenForgot -> {
+                updateState { it.copy(isForgotScreen = true, isLoginScreen = false, isSignUpScreen = false) }
             }
         }
     }

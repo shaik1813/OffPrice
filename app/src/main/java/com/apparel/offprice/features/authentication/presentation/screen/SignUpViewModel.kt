@@ -25,7 +25,8 @@ class SignUpViewModel @Inject constructor(
     override fun event(event: SignUpContract.UiEvent) {
         when (event) {
             SignUpContract.UiEvent.OnCloseLogin -> {
-                updateState { it.copy(isLoginVisible = false)
+                updateState {
+                    it.copy(isLoginVisible = false)
                 }
                 viewModelScope.launch {
                     _effect.emit(SignUpContract.UiEffect.OnNavigateBack)
@@ -43,7 +44,6 @@ class SignUpViewModel @Inject constructor(
             }
 
             SignUpContract.UiEvent.OnCheckToggle -> {
-                updateState { it.copy(isRememberCheck = !it.isRememberCheck) }
             }
 
             is SignUpContract.UiEvent.OnValueChangeEmail -> {
@@ -64,6 +64,24 @@ class SignUpViewModel @Inject constructor(
 
             is SignUpContract.UiEvent.OnValueChangeName -> {
                 updateState { it.copy(name = event.value) }
+            }
+
+            SignUpContract.UiEvent.OnOpenLogin -> {
+                updateState { it.copy(isLoginScreen = true) }
+            }
+
+            is SignUpContract.UiEvent.OnPhoneChange -> {
+                updateState {
+                    it.copy(
+                        phoneNumber = event.value,
+                        phoneError = if (!event.value.matches(Regex("\\d+"))) "Digits only" else null
+                    )
+                }
+            }
+            is SignUpContract.UiEvent.SelectCountry -> {
+                updateState {
+                    it.copy(phoneCode = event.country, isCountryPickerOpen = false)
+                }
             }
         }
     }

@@ -44,6 +44,7 @@ import com.apparel.offprice.common.theme.redColor
 import com.apparel.offprice.features.authentication.presentation.component.LoginEmailPhoneField
 import java.util.Locale.getDefault
 import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.saleCardColor
 import com.apparel.offprice.routes.AppScreen
 
 
@@ -68,40 +69,25 @@ fun ForgotPasswordScreen(onItemClick: (AppScreen) -> Unit,onDismiss:()->Unit) {
         modifier = Modifier
             .fillMaxWidth(0.85f)
             .wrapContentHeight()
-            .statusBarsPadding(),
+            .statusBarsPadding()
+            .padding(horizontal = 16.dp, vertical = 26.dp),
     ) {
 
             Column() {
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = "close",
-                        modifier = Modifier.clickable{
-                            onDismiss()
-                        }
+                Text(
+                    text = stringResource(com.apparel.offprice.R.string.forgot_your_password),
+                    style = MaterialTheme.typography.titleLarge.copy(fontSize = 16.sp, lineHeight = 19.sp,
+                        color = saleCardColor
                     )
-                }
+                )
 
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
-                    text = stringResource(com.apparel.offprice.R.string.forgot_your_password),
-                    fontSize = 16.sp,
-                    style = MaterialTheme.typography.bodyLarge
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
                     text = stringResource(com.apparel.offprice.R.string.forgot_msg_details),
-                    fontSize = 10.sp,
+                    fontSize = 12.sp,
                     color = inputTextColor,
                     style = MaterialTheme.typography.titleSmall)
-
 
                 Text(
                     buildAnnotatedString {
@@ -111,7 +97,7 @@ fun ForgotPasswordScreen(onItemClick: (AppScreen) -> Unit,onDismiss:()->Unit) {
                         }
                     },
                     fontSize = 14.sp,
-                        style = MaterialTheme.typography.titleSmall,
+                        style = MaterialTheme.typography.bodyMedium,
                     color = Color.Black,
                     modifier = Modifier.padding(top = 30.dp, bottom = 12.dp)
                 )

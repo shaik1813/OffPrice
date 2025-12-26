@@ -213,6 +213,7 @@
 
     <!-- Categories -->
     <string name="label_categories">CATEGORIES</string>
+    <string name="resend_code">Resend Code</string>
 
 
 </resources>
