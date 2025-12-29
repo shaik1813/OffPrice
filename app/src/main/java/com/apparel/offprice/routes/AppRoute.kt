@@ -12,7 +12,7 @@ import com.apparel.offprice.features.coupon.presentation.screen.CouponScreen
 import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
 import com.apparel.offprice.features.home.presentation.screens.search.SearchScreen
 import com.apparel.offprice.features.paymentCard.presentation.screen.PaymentCardScreen
-import com.apparel.offprice.features.pdp.presentation.screen.PDPscreen
+import com.apparel.offprice.features.pdp.presentation.screen.PDPScreen
 import com.apparel.offprice.features.profile.presentation.screen.profileDetails.ProfileDetailsScreen
 import com.apparel.offprice.features.profile.presentation.screen.profilePassword.ProfilePasswordScreen
 import com.apparel.offprice.features.profile.presentation.screen.profileSize.ProfileSizeScreen
@@ -78,7 +78,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         composable<AppScreen.SearchScreen> {
             SearchScreen(
                 onSearchSubmit = { productId ->
-                    navController.navigate(AppScreen.PDPScreen)
+                    navController.navigate(AppScreen.PDPScreen(productId))
                 },
                 onNavigateToBack = {
                     navController.popBackStack()
@@ -104,7 +104,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                     navController.navigate(BottomNavScreen.Item4)
                 },
                 onNavigateToPDP = { product ->
-                    navController.navigate(AppScreen.PDPScreen) {}
+                    navController.navigate(AppScreen.PDPScreen(product.id))
                 }
             )
         }
@@ -135,8 +135,9 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
             )
         }
 
-        composable<AppScreen.PDPScreen> {
-            PDPscreen()
+        composable<AppScreen.PDPScreen> { backStack ->
+            val productId = backStack.arguments?.getString("id")
+            PDPScreen(productId)
         }
 
         composable<AppScreen.UserProfileScreen> {

@@ -42,7 +42,7 @@ fun ImageSliderWithIndicatorPLP(
     selectedIndicatorColor: Color = Color.White,
     unSelectedIndicatorColor: Color = Color.LightGray,
     modifier: Modifier = Modifier,
-    placeholder: Int = R.drawable.icon_successful
+    placeholder: Int = R.drawable.icon_empty_product
 ) {
     val safeImages = images.ifEmpty { listOf(placeholder) }
     val pagerState = rememberPagerState(pageCount = { safeImages.size })
@@ -150,6 +150,7 @@ fun ImageSliderWithIndicatorPDP(
                         .crossfade(true)
                         .memoryCachePolicy(CachePolicy.ENABLED)
                         .diskCachePolicy(CachePolicy.ENABLED)
+                        .placeholder(R.drawable.icon_empty_product)
                         .build(),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,

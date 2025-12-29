@@ -7,6 +7,8 @@ val productList : List<ProductCardItems> = listOf(
     ProductCardItems(
         id = "1",
         tag = "GOLD LABEL",
+        tagContainerColor = "#FFB47F00",
+        tagContentColor = "#FFFFFFFF",
         image = listOf(R.drawable.product_item_1),
         brand = "Nike",
         title = "Nike Air Max 270 React ENG",
@@ -22,6 +24,8 @@ val productList : List<ProductCardItems> = listOf(
     ProductCardItems(
         id = "1",
         tag = "GOLD LABEL",
+        tagContainerColor = "#FFB47F00",
+        tagContentColor = "#FFFFFFFF",
         image = listOf(R.drawable.product_item_1),
         brand = "Nike",
         title = "Nike Air Max 270 React ENG",
@@ -36,6 +40,8 @@ val productList : List<ProductCardItems> = listOf(
     ProductCardItems(
         id = "1",
         tag = "GOLD LABEL",
+        tagContainerColor = "#FFB47F00",
+        tagContentColor = "#FFFFFFFF",
         image = listOf(R.drawable.product_item_1),
         brand = "Nike",
         title = "Nike Air Max 270 React ENG",
@@ -50,6 +56,8 @@ val productList : List<ProductCardItems> = listOf(
     ProductCardItems(
         id = "1",
         tag = "GOLD LABEL",
+        tagContainerColor = "#FFB47F00",
+        tagContentColor = "#FFFFFFFF",
         image = listOf(R.drawable.product_item_1),
         brand = "Nike",
         title = "Nike Air Max 270 React ENG",
@@ -64,6 +72,8 @@ val productList : List<ProductCardItems> = listOf(
     ProductCardItems(
         id = "1",
         tag = "GOLD LABEL",
+        tagContainerColor = "#FFB47F00",
+        tagContentColor = "#FFFFFFFF",
         image = listOf(R.drawable.icon_user_profile),
         brand = "Nike",
         title = "Nike Air Max 270 React ENG",

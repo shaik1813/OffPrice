@@ -218,6 +218,7 @@
     <string name="label_my_shopping">My Shopping</string>
     <string name="label_about_and_support">About &amp; Support</string>
     <string name="label_support_and_others">Support &amp; Others</string>
+    <string name="label_best_price">Best Price</string>
 
 
 </resources>
