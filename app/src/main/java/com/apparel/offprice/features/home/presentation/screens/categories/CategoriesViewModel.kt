@@ -2,7 +2,6 @@ package com.apparel.offprice.features.home.presentation.screens.categories
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.apparel.offprice.features.home.presentation.screens.search.SearchContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoriesViewModel @Inject constructor(): ViewModel(), CategoriesContract {
+class CategoriesViewModel @Inject constructor() : ViewModel(), CategoriesContract {
 
     private val _state = MutableStateFlow(CategoriesContract.UiState())
     override val state: StateFlow<CategoriesContract.UiState> = _state.asStateFlow()
@@ -36,14 +35,11 @@ class CategoriesViewModel @Inject constructor(): ViewModel(), CategoriesContract
             is CategoriesContract.UiEvent.OnQueryChanged -> {
                 //updateQuery(query = event.query)
             }
+
             is CategoriesContract.UiEvent.OnCategorySelected -> {
                 _state.update { state ->
                     state.copy(
-                        selectedCategory = state.selectedCategory.map {
-                            it.copy(
-                                isSelected = it.id == event.category.id
-                            )
-                        }
+                        selectedIndex = event.index
                     )
                 }
             }
@@ -68,11 +64,22 @@ class CategoriesViewModel @Inject constructor(): ViewModel(), CategoriesContract
                     _effectFlow.emit(CategoriesContract.UiEffect.NavigateToSearch)
                 }
             }
+
             CategoriesContract.UiEvent.NavigateToWishlist -> {
                 viewModelScope.launch {
                     _effectFlow.emit(CategoriesContract.UiEffect.NavigateToWishlist)
                 }
             }
+
+            is CategoriesContract.UiEvent.OnNavigateToSubCategory -> {
+                viewModelScope.launch {
+                    _effectFlow.emit(
+                        CategoriesContract.UiEffect.NavigateToSubCategory
+                            (title = event.title)
+                    )
+                }
+            }
+
             is CategoriesContract.UiEvent.OnRecentSearched -> TODO()
         }
     }

@@ -88,6 +88,9 @@ fun BottomNavigationContent(
                     },
                     onNavigateToWishlist = {
                         onNavigateToOuter(AppScreen.WishListScreen)
+                    },
+                    onNavigateToSubCategory = { title ->
+                        onNavigateToOuter(AppScreen.SubCategoryScreen(title))
                     }
                 )
             }

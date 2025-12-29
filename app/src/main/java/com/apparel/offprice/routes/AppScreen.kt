@@ -43,6 +43,9 @@ sealed interface AppScreen {
     data class PDPScreen(val id: String) : AppScreen
 
     @Serializable
+    object PLPScreen : AppScreen
+
+    @Serializable
     object UserProfileScreen : AppScreen
 
     @Serializable
@@ -82,4 +85,6 @@ sealed interface AppScreen {
     @Serializable
     object LogOutScreen : AppScreen
 
+    @Serializable
+    data class SubCategoryScreen(val title: String) : AppScreen
 }
