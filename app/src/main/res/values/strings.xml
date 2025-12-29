@@ -55,6 +55,7 @@
     <string name="back_to_login">Back To Login</string>
     <string name="reset_your_password">RESET YOUR PASSWORD</string>
     <string name="new_password">New Password</string>
+    <string name="reenter_new_password">Re-Enter New Password</string>
     <string name="label_exclusive_collection">Discover Our Exclusive Collection</string>
     <string name="label_shop_by_category">Shop by category and choose what you love</string>
     <string name="size_desc">Sizes shown are International. Please refer to the size chart</string>
@@ -214,6 +215,7 @@
     <!-- Categories -->
     <string name="label_categories">CATEGORIES</string>
     <string name="resend_code">Resend Code</string>
+    <string name="reset_password">RESET PASSWORD</string>
 
 
 </resources>

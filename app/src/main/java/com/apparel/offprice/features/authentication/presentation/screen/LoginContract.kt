@@ -1,6 +1,7 @@
 package com.apparel.offprice.features.authentication.presentation.screen
 
 import com.apparel.offprice.common.utils.UnidirectionalViewModel
+import com.apparel.offprice.features.authentication.data.AuthPage
 import com.apparel.offprice.features.home.data.model.Country
 import com.apparel.offprice.features.home.data.model.countryList
 import com.apparel.offprice.routes.AppScreen
@@ -9,6 +10,7 @@ interface LoginContract : UnidirectionalViewModel
 <LoginContract.UiState, LoginContract.UiEvent, LoginContract.UiEffect> {
 
     data class UiState(
+        val currentPage: AuthPage = AuthPage.LOGIN,
         val isRememberCheck: Boolean = false,
         val passwordValue: String = "",
         val email: String = "",
@@ -17,8 +19,9 @@ interface LoginContract : UnidirectionalViewModel
         val showPassword: Boolean = false,
         val playEnterAnimation: Boolean = true,
         val isLoginScreen: Boolean = true,
-        val isForgotScreen: Boolean = true,
+        val isForgotScreen: Boolean = false,
         val isSignUpScreen: Boolean = false,
+        val isResetPasswordScreen: Boolean = false,
         val isCountryPickerOpen: Boolean = false,
         val phoneCode: Country = countryList.first(),
         val nameError: String? = null,
@@ -29,6 +32,7 @@ interface LoginContract : UnidirectionalViewModel
     sealed interface UiEvent {
         object OnCloseLogin : UiEvent
         object OnNavigateBack : UiEvent
+        object OnBackClick: UiEvent
         object OnCheckToggle : UiEvent
         object OnAnimationToggle : UiEvent
 
@@ -36,6 +40,7 @@ interface LoginContract : UnidirectionalViewModel
         object OnOpenSignUp : UiEvent
         object OnOpenLogin : UiEvent
         object OnOpenForgot : UiEvent
+        object OnOpenResetPassword : UiEvent
 
         data class OnPhoneChange(val value: String) : UiEvent
         data class SelectCountry(val country: Country) : UiEvent

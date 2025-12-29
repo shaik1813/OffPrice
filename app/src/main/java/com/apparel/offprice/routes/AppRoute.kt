@@ -1,5 +1,7 @@
 package com.apparel.offprice.routes
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -7,7 +9,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.apparel.offprice.features.address.presentation.screen.DeliveryAddressScreen
 import com.apparel.offprice.features.authentication.presentation.screen.LoginEmptyScreen
-import com.apparel.offprice.features.authentication.presentation.screen.SignupEmptyScreen
 import com.apparel.offprice.features.checkout.presentation.screens.ShippingAddressScreen
 import com.apparel.offprice.features.coupon.presentation.screen.CouponScreen
 import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
@@ -26,6 +27,7 @@ import com.apparel.offprice.features.welcome.presentation.splash.SplashScreen
 import com.apparel.offprice.features.wishlist.presentation.screen.WishListScreen
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
@@ -50,16 +52,13 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
         composable<AppScreen.LoginScreen> {
             LoginEmptyScreen(
-
                 onNavigateBack = {
                     navController.popBackStack()
                 })
         }
 
         composable<AppScreen.RegistrationScreen> {
-            SignupEmptyScreen(onNavigateBack = {
-                navController.popBackStack()
-            })
+
         }
 
         composable<AppScreen.ForgetPasswordScreen> {

@@ -1,5 +1,6 @@
 package com.apparel.offprice.features.authentication.presentation.screen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.fadeIn
@@ -32,6 +33,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
+import com.apparel.offprice.features.authentication.data.AuthPage
+import com.apparel.offprice.routes.AppScreen
 
 
 @Composable
@@ -53,6 +56,13 @@ fun LoginScreen(
             }
         }
     }
+
+    BackHandler(
+        enabled = state.currentPage != AuthPage.LOGIN
+    ) {
+        event(LoginContract.UiEvent.OnBackClick)
+    }
+
 
     Box(
         modifier = Modifier
@@ -107,33 +117,45 @@ fun LoginScreen(
                         .fillMaxSize()
                 ) {
                     Box(modifier = Modifier.fillMaxHeight(0.25f)) {}
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .fillMaxHeight()
-                            .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
-                            .background(Color.White),
-                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 26.dp)
-                    ) {
-                        item {
-                            if (state.isLoginScreen)
-                                LoginForm(
-                                    state,
-                                    event,
-                                    onItemClick = { event(LoginContract.UiEvent.OnNavigate(it)) },
-                                    onForgotClick = {
-                                        event(LoginContract.UiEvent.OnOpenForgot)
+
+                    if (state.isResetPasswordScreen) {
+                        ResetPasswordScreen(onDismiss = {
+                            event(LoginContract.UiEvent.OnOpenForgot)
+                        })
+                    } else if (state.isForgotScreen)
+                        ForgotPasswordScreen(
+                            onClickContinue = { event(LoginContract.UiEvent.OnOpenResetPassword) },
+                            onClickLogin = {
+                                event(LoginContract.UiEvent.OnOpenLogin)
+                            })
+                    else {
+
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(0.75f)
+                                .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
+                                .background(Color.White),
+                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 26.dp)
+                        ) {
+                            item {
+                                if (state.isLoginScreen)
+                                    LoginForm(
+                                        state,
+                                        event,
+                                        onItemClick = { event(LoginContract.UiEvent.OnNavigate(it)) },
+                                        onForgotClick = {
+                                            event(LoginContract.UiEvent.OnOpenForgot)
+                                        })
+                                else if (state.isSignUpScreen)
+                                    SignUpForm(onLoginClick = {
+                                        event(LoginContract.UiEvent.OnOpenLogin)
                                     })
-                            else if (state.isSignUpScreen)
-                                SignUpForm(onLoginClick = {
-                                    event(LoginContract.UiEvent.OnOpenLogin)
-                                })
-                            else if (state.isForgotScreen)
-                                ForgotPasswordScreen(onItemClick = {}, onClickLogin = {
-                                    event(LoginContract.UiEvent.OnOpenLogin)
-                                })
+
+                            }
                         }
                     }
+
                 }
 
             }

@@ -46,7 +46,7 @@ import com.apparel.offprice.common.theme.otpLineColor
 import com.apparel.offprice.common.theme.saleCardColor
 
 @Composable
-fun OTPVerifyScreen(onVerifyClick:() -> Unit, onDismiss: () -> Unit) {
+fun OTPVerifyScreen(onEditClick:() -> Unit, onDismiss: () -> Unit) {
 
     var otpValues by remember { mutableStateOf(List(6) { "" }) }
     val focusRequesters = List(6) { FocusRequester() }
@@ -110,7 +110,10 @@ fun OTPVerifyScreen(onVerifyClick:() -> Unit, onDismiss: () -> Unit) {
                 Image(
                     painter = painterResource(R.drawable.icon_edit_address),
                     contentDescription = null,
-                    modifier = Modifier.padding(start = 6.dp)
+                    modifier = Modifier.padding(start = 6.dp).size(13.dp)
+                        .clickable{
+                            onEditClick()
+                        }
                 )
             }
 
@@ -218,11 +221,11 @@ fun OTPVerifyScreen(onVerifyClick:() -> Unit, onDismiss: () -> Unit) {
             Spacer(modifier = Modifier.height(30.dp))
 
             Button(
-                onClick = { onVerifyClick() },
+                onClick = { onDismiss() },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 16.dp)
-                    .height(48.dp),
+                    .height(46.dp),
                 shape = RoundedCornerShape(6.dp)
             ) {
                 Text(text = stringResource(R.string.verify),

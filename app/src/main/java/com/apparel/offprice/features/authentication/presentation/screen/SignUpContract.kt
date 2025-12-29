@@ -23,12 +23,16 @@ interface SignUpContract : UnidirectionalViewModel
         val nameError: String? = null,
         val emailError: String? = null,
         val phoneError: String? = null,
+        var showOtpDialog: Boolean = false
     )
 
     sealed interface UiEvent {
         object OnLoginClick : UiEvent
         object OnCloseLogin : UiEvent
         object OnOpenLogin : UiEvent
+
+        object OnOpenOtp : UiEvent
+        object OnCloseOtp : UiEvent
 
         object OnNavigateBack : UiEvent
         object OnCheckToggle : UiEvent

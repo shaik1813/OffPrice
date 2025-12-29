@@ -22,9 +22,18 @@ class ForgotViewModel @Inject constructor(
     override fun event(event: ForgotContract.UiEvent) {
        when(event){
            ForgotContract.UiEvent.OnNavigateBack -> {}
-           is ForgotContract.UiEvent.OnValueChangeEmail -> {}
+           is ForgotContract.UiEvent.OnValueChangeEmail -> {
+               updateState { it.copy(email = event.value) }
+           }
        }
 
     }
+
+
+    private fun updateState(reducer: (ForgotContract.UiState) -> ForgotContract.UiState) {
+        _state.value = reducer(_state.value)
+    }
+
+
 
 }

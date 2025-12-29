@@ -83,6 +83,14 @@ class SignUpViewModel @Inject constructor(
                     it.copy(phoneCode = event.country, isCountryPickerOpen = false)
                 }
             }
+
+            SignUpContract.UiEvent.OnOpenOtp -> {
+                updateState { it.copy(showOtpDialog = true) }
+            }
+
+            SignUpContract.UiEvent.OnCloseOtp -> {
+                updateState { it.copy(showOtpDialog = false) }
+            }
         }
     }
 

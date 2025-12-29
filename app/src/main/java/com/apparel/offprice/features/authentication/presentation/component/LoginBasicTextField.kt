@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
+import com.apparel.offprice.common.theme.borderColor
 import com.apparel.offprice.common.theme.lineColor
 
 
@@ -33,7 +34,7 @@ fun LoginBasicTextField(
             .fillMaxWidth()
             .background(Color.White, shape = MaterialTheme.shapes.small)
             .height(42.dp)
-            .border(color = lineColor,
+            .border(color = borderColor,
                 width = 1.dp,
                 shape = RoundedCornerShape(8.dp)
             )

@@ -14,11 +14,10 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -44,7 +43,7 @@ import com.apparel.offprice.features.authentication.presentation.component.Login
 fun SignUpForm(
     onLoginClick: () -> Unit,
     viewModel: SignUpViewModel = hiltViewModel()
-    ) {
+) {
 
     val (state, event, effect) = use(viewModel = viewModel)
 
@@ -54,12 +53,16 @@ fun SignUpForm(
             SignUpContract.UiEffect.OnNavigateBack -> {}
         }
     }
-    
-    var showOtpDialog by remember { mutableStateOf(false) }
 
 
-    if (showOtpDialog) {
-        OTPVerifyDialog(onVerifyClick = {}, onDismiss = { showOtpDialog = false })
+    val phoneFocusRequester = remember { FocusRequester() }
+
+
+    if (state.showOtpDialog) {
+        OTPVerifyDialog(onEditPhone = {
+            event(SignUpContract.UiEvent.OnCloseOtp)
+            phoneFocusRequester.requestFocus()
+        }, onDismiss = { event(SignUpContract.UiEvent.OnCloseOtp) })
     }
 
     Column(
@@ -158,6 +161,7 @@ fun SignUpForm(
         )
 
         LoginBasicPhoneField(
+            modifier = Modifier.focusRequester(phoneFocusRequester),
             value = state.phoneNumber,
             enabled = true,
             phoneCode = state.phoneCode,
@@ -179,11 +183,11 @@ fun SignUpForm(
         Spacer(Modifier.height(20.dp))
 
         Button(
-            onClick = { showOtpDialog = true },
+            onClick = { event(SignUpContract.UiEvent.OnOpenOtp) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 15.dp),
-            shape = RoundedCornerShape(8.dp),
+            shape = RoundedCornerShape(6.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Black
             )
@@ -200,10 +204,14 @@ fun SignUpForm(
 
 
         Row(
-            modifier = Modifier.fillMaxWidth().clickable(indication = null,
-                interactionSource = null){
-                onLoginClick()
-            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(
+                    indication = null,
+                    interactionSource = null
+                ) {
+                    onLoginClick()
+                },
             horizontalArrangement = Arrangement.Center
         ) {
             Text(

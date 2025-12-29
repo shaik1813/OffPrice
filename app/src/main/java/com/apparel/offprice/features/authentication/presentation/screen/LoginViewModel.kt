@@ -3,6 +3,7 @@ package com.apparel.offprice.features.authentication.presentation.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.apparel.offprice.features.authentication.data.AuthPage
 import com.apparel.offprice.features.authentication.presentation.screen.LoginContract.UiEffect.Navigate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -31,6 +32,7 @@ class LoginViewModel @Inject constructor(
                     _effect.emit(LoginContract.UiEffect.OnNavigateBack)
                 }
             }
+
             is LoginContract.UiEvent.OnNavigate -> {
                 viewModelScope.launch {
                     _effect.emit(
@@ -38,6 +40,13 @@ class LoginViewModel @Inject constructor(
                     )
                 }
             }
+
+            LoginContract.UiEvent.OnBackClick -> {
+                viewModelScope.launch {
+                    updateState { it.copy(currentPage = AuthPage.LOGIN, isLoginScreen = true, isForgotScreen = false) }
+                }
+            }
+
             is LoginContract.UiEvent.OnNavigateBack -> {
                 viewModelScope.launch {
                     _effect.emit(LoginContract.UiEffect.OnNavigateBack)
@@ -94,7 +103,18 @@ class LoginViewModel @Inject constructor(
             }
 
             LoginContract.UiEvent.OnOpenForgot -> {
-                updateState { it.copy(isForgotScreen = true, isLoginScreen = false, isSignUpScreen = false) }
+                updateState {
+                    it.copy(
+                        isForgotScreen = true,
+                        isLoginScreen = false,
+                        isSignUpScreen = false,
+                        currentPage = AuthPage.FORGOT_PASSWORD
+                    )
+                }
+            }
+
+            LoginContract.UiEvent.OnOpenResetPassword -> {
+                updateState { it.copy(isResetPasswordScreen = true, isForgotScreen = false, isLoginScreen = false) }
             }
         }
     }

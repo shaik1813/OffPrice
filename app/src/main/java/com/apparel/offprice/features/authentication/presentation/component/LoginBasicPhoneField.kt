@@ -19,18 +19,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
+import com.apparel.offprice.common.theme.borderColor
 import com.apparel.offprice.common.theme.lineColor
 import com.apparel.offprice.features.home.data.model.Country
 
 @Composable
 fun LoginBasicPhoneField(
+    modifier: Modifier,
     value: String,
     enabled: Boolean,
     placeholder: String = "",
     phoneCode: Country,
     onValueChange: (String) -> Unit,
-    onCountrySelected: (Country) -> Unit,
-    modifier: Modifier = Modifier
+    onCountrySelected: (Country) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -38,7 +39,7 @@ fun LoginBasicPhoneField(
             .background(Color.White, shape = MaterialTheme.shapes.small)
             .height(42.dp)
             .border(
-                color = lineColor,
+                color = borderColor,
                 width = 1.dp,
                 shape = RoundedCornerShape(8.dp)
             )
@@ -52,8 +53,7 @@ fun LoginBasicPhoneField(
             singleLine = true,
             enabled = enabled,
             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             decorationBox = { innerTextField ->
                 Box(
                     modifier = Modifier
