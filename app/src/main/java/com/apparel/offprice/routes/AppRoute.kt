@@ -1,10 +1,12 @@
 package com.apparel.offprice.routes
 
+import BottomNavScreen
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.apparel.offprice.features.address.presentation.screen.DeliveryAddressScreen
 import com.apparel.offprice.features.authentication.presentation.screen.LoginEmptyScreen
 import com.apparel.offprice.features.checkout.presentation.screens.ShippingAddressScreen
@@ -72,17 +74,9 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.HomeScreen> {
-            HomeScreen (onNavigateToOuter = { route ->
+            HomeScreen(onNavigateToOuter = { route ->
                 navController.navigate(route)
-            },
-                onNavigateToSubCategory = { title ->
-                    navController.currentBackStackEntry
-                        ?.savedStateHandle
-                        ?.set("subcategory_title", title)
-
-                    navController.navigate(AppScreen.SubCategoryScreen)
-                }
-            )
+            })
         }
 
         composable<AppScreen.SearchScreen> {
@@ -118,12 +112,11 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                 }
             )
         }
-        composable<AppScreen.SubCategoryScreen> {
+        composable<AppScreen.SubCategoryScreen> { backStackEntry ->
 
-            val title = navController.previousBackStackEntry?.savedStateHandle
-                    ?.get<String>("subcategory_title") ?: ""
+            val args = backStackEntry.toRoute<AppScreen.SubCategoryScreen>()
             SubCategoryScreen(
-                title = title,
+                title = args.title,
                 onNavigateToSearch = {
                     navController.navigate(AppScreen.SearchScreen)
                 },
@@ -133,12 +126,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                 onBack = {
                     navController.popBackStack()
                 },
-                /*onNavigateToPLP = {
-                    navController.navigate(AppScreen.PLPScreen)
-                },*/
-                onNavigateToPLP = { id ->
-                    navController.currentBackStackEntry?.savedStateHandle
-                        ?.set("plp_id", id)
+                onNavigateToPLP = {
                     navController.navigate(AppScreen.PLPScreen)
                 }
             )
@@ -245,7 +233,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
         composable<AppScreen.LogOutScreen> {}
 
-        composable<AppScreen.PLPScreen> {
+        composable<AppScreen.PLPScreen> { backStack ->
             PLPScreen(
                 onNavigateToSearch = {
                     navController.navigate(AppScreen.SearchScreen)
