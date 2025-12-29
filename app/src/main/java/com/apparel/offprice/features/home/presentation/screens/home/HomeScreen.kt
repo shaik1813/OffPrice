@@ -1,6 +1,5 @@
 package com.apparel.offprice.features.home.presentation.screens.home
 
-
 import BottomNavScreen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.WindowInsets
