@@ -53,13 +53,13 @@ fun AddressForm() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        FormLabel("Area")
-        DropdownField("Adhen Village")
+        FormLabel("City")
+        DropdownField("Abu Dhabi")
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        FormLabel("City")
-        DropdownField("Abu Dhabi")
+        FormLabel("Area")
+        DropdownField("Adhen Village")
 
     }
 

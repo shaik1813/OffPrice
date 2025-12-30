@@ -11,56 +11,85 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.apparel.offprice.common.utils.CollectInLaunchedEffect
+import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.checkout.presentation.components.AddressForm
 import com.apparel.offprice.features.checkout.presentation.components.BottomBar
 import com.apparel.offprice.features.checkout.presentation.components.CheckoutProgressStepper
 import com.apparel.offprice.features.checkout.presentation.components.DeliveryTypeRow
 import com.apparel.offprice.features.checkout.presentation.components.OrderSummarySection
+import com.apparel.offprice.features.checkout.presentation.components.PickupStoreSection
 import com.apparel.offprice.features.checkout.presentation.components.PriceBreakdownCard
 import com.apparel.offprice.features.checkout.presentation.components.ShippingAddressFilter
 import com.apparel.offprice.features.checkout.presentation.components.TopBar
 
 @Composable
 fun ShippingAddressScreen(
-    onBack: () -> Unit,
+    viewModel: CheckOutViewModel = hiltViewModel(),
+    onNavigateBack: () -> Unit,
     onSaveAddress: () -> Unit
 ) {
 
+
+    val (state, event, effect) = use(viewModel = viewModel)
+
+    effect.CollectInLaunchedEffect {
+        when (it) {
+            CheckOutContract.UiEffect.OnNavigateToBack -> {
+                onNavigateBack()
+            }
+        }
+    }
+
     Column(
-        modifier = Modifier.fillMaxSize().statusBarsPadding()
+        modifier = Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
     ) {
 
         // 🔹 FIXED TOP BAR
-        TopBar(onBack = onBack)
+        TopBar(onBack = onNavigateBack)
 
         // 🔹 SCROLLABLE CONTENT
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f)      // scrolls between top & bottom
-
+                .weight(1f)
         ) {
 
             // Stepper
             item {
                 CheckoutProgressStepper(
-                    currentStep = 2
+                    currentStep = 1
                 )
             }
 
             item { Spacer(modifier = Modifier.height(16.dp)) }
 
             // Delivery / Pickup Toggle
-            item { /*DeliveryToggle()*/
+            item {
                 DeliveryTypeRow(
-                    selectedFilter = ShippingAddressFilter.DELIVERY,
-                    onFilterSelected = {})
+                    selectedFilter = state.selectedFilter,
+                    onFilterSelected = { filter ->
+                        event(CheckOutContract.UiEvent.OnFilterSelected(filter))
+                    }
+                )
             }
 
             item { Spacer(modifier = Modifier.height(20.dp)) }
 
-            // Address Form
-            item { AddressForm() }
+            item {
+                when (state.selectedFilter) {
+                    ShippingAddressFilter.DELIVERY -> {
+                        AddressForm()
+                    }
+
+                    ShippingAddressFilter.PICKUPATSTORE -> {
+                        PickupStoreSection()
+                    }
+                }
+            }
 
             item { Spacer(modifier = Modifier.height(20.dp)) }
 
@@ -84,10 +113,11 @@ fun ShippingAddressScreen(
 }
 
 
-
-
 @Preview(showBackground = true)
 @Composable
-fun ShippingAddressScreenPreview(){
-    ShippingAddressScreen(onBack = {}, onSaveAddress = {})
+fun ShippingAddressScreenPreview() {
+    ShippingAddressScreen(
+        onNavigateBack = {},
+        onSaveAddress = {}
+    )
 }

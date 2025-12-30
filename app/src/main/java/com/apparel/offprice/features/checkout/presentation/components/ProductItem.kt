@@ -6,47 +6,60 @@ data class ProductItem(
     val id: String,
     val brand: String,
     val title: String,
-    val price: Double,
-    val oldPrice: Double? = null,
+    val image: Int,
     val color: String,
-    val qty: Int,
     val size: String,
-    val image: Int
+    val qty: Int,
+    val price: String,
+    val mrp: String,
+    val discountText: String,
+    val deliveryText: String
 )
 
 
 val sampleProductsOSS = listOf(
     ProductItem(
         id = "1",
-        brand = "ADIDAS",
+        brand = "ZARA",
         title = "Printed Shirt With Crew Neck And Short Sleeves",
-        price = 35.00,
-        oldPrice = 172.00,
+        image = R.drawable.product_item_1,
         color = "Blue",
-        qty = 1,
         size = "L",
-        image = R.drawable.best_price_fill_icon // Replace with real image
+        qty = 1,
+        price = "35.00",
+        mrp = "172.00",
+        discountText = "90% OFF",
+        deliveryText = "DELIVERY BY 06 NOV, THU"
     ),
     ProductItem(
         id = "2",
         brand = "NIKE",
         title = "Printed Shirt With Crew Neck And Short Sleeves",
-        price = 35.00,
-        oldPrice = 172.00,
-        color = "Black",
-        qty = 1,
+        image = R.drawable.product_item_2,
+        color = "Blue",
         size = "L",
-        image = R.drawable.best_price_fill_icon
+        qty = 1,
+        price = "35.00",
+        mrp = "172.00",
+        discountText = "90% OFF",
+        deliveryText = "GET IT TODAY"
     ),
     ProductItem(
-        id = "3",
-        brand = "PUMA",
+        id = "1",
+        brand = "MAXX",
         title = "Printed Shirt With Crew Neck And Short Sleeves",
-        price = 35.00,
-        oldPrice = 172.00,
-        color = "Gray",
-        qty = 1,
+        image = R.drawable.product_item_3,
+        color = "Blue",
         size = "L",
-        image = R.drawable.best_price_fill_icon
+        qty = 1,
+        price = "35.00",
+        mrp = "172.00",
+        discountText = "90% OFF",
+        deliveryText = "DELIVERY BY 06 NOV, THU"
     )
 )
+
+
+enum class ShippingAddressFilter {
+    DELIVERY, PICKUPATSTORE
+}
