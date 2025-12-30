@@ -29,7 +29,6 @@ class ForgotViewModel @Inject constructor(
 
     }
 
-
     private fun updateState(reducer: (ForgotContract.UiState) -> ForgotContract.UiState) {
         _state.value = reducer(_state.value)
     }

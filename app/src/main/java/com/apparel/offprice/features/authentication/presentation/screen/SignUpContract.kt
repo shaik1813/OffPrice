@@ -42,7 +42,6 @@ interface SignUpContract : UnidirectionalViewModel
         data class OnValueChangeName(val value: String) : UiEvent
         data class OnValueChangeEmail(val value: String) : UiEvent
         data class OnValueChangePassword(val value: String) : UiEvent
-        data class OnNavigate(val screen: AppScreen) : UiEvent
     }
 
     sealed interface UiEffect {

@@ -43,7 +43,8 @@ class LoginViewModel @Inject constructor(
 
             LoginContract.UiEvent.OnBackClick -> {
                 viewModelScope.launch {
-                    updateState { it.copy(currentPage = AuthPage.LOGIN, isLoginScreen = true, isForgotScreen = false) }
+                    updateState { it.copy(currentPage = AuthPage.LOGIN, isLoginScreen = true, isForgotScreen = false,
+                        isResetPasswordScreen = false) }
                 }
             }
 

@@ -39,14 +39,12 @@ import com.apparel.offprice.features.authentication.presentation.component.AuthB
 import com.apparel.offprice.features.authentication.presentation.component.LoginBasicPasswordField
 import com.apparel.offprice.features.authentication.presentation.component.LoginBasicTextField
 import com.apparel.offprice.features.cart.presentation.component.CartCheckboxBox
-import com.apparel.offprice.routes.AppScreen
 
 
 @Composable
 fun LoginForm(
     state: LoginContract.UiState,
     event: (LoginContract.UiEvent) -> Unit,
-    onItemClick: (AppScreen) -> Unit,
     onForgotClick: () -> Unit
 ) {
 
@@ -157,7 +155,6 @@ fun LoginForm(
         AuthButton(
             text = stringResource(R.string.login_caps),
             onButtonClick = {
-                onItemClick(AppScreen.OTPScreen)
             })
 
         Spacer(Modifier.height(30.dp))

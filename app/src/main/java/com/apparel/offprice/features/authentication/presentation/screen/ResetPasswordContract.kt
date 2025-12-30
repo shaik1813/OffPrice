@@ -2,7 +2,6 @@ package com.apparel.offprice.features.authentication.presentation.screen
 
 
 import com.apparel.offprice.common.utils.UnidirectionalViewModel
-import com.apparel.offprice.routes.AppScreen
 
 interface ResetPasswordContract : UnidirectionalViewModel
 <ResetPasswordContract.UiState, ResetPasswordContract.UiEvent, ResetPasswordContract.UiEffect> {
@@ -12,7 +11,6 @@ interface ResetPasswordContract : UnidirectionalViewModel
         val repasswordValue: String = "",
         val showPassword: Boolean = false,
         val reshowPassword: Boolean = false,
-
         )
 
     sealed interface UiEvent {
@@ -25,7 +23,6 @@ interface ResetPasswordContract : UnidirectionalViewModel
     }
 
     sealed interface UiEffect {
-        data class Navigate(val screen: AppScreen) : UiEffect
         data object OnNavigateBack : UiEffect
     }
 }

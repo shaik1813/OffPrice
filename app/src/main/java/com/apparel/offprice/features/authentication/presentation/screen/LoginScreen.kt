@@ -34,7 +34,6 @@ import com.apparel.offprice.R
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.authentication.data.AuthPage
-import com.apparel.offprice.routes.AppScreen
 
 
 @Composable
@@ -143,7 +142,6 @@ fun LoginScreen(
                                     LoginForm(
                                         state,
                                         event,
-                                        onItemClick = { event(LoginContract.UiEvent.OnNavigate(it)) },
                                         onForgotClick = {
                                             event(LoginContract.UiEvent.OnOpenForgot)
                                         })

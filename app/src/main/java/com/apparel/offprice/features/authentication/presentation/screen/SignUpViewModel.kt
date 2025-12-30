@@ -58,10 +58,6 @@ class SignUpViewModel @Inject constructor(
                 updateState { it.copy(showPassword = !it.showPassword) }
             }
 
-            is SignUpContract.UiEvent.OnNavigate -> {
-
-            }
-
             is SignUpContract.UiEvent.OnValueChangeName -> {
                 updateState { it.copy(name = event.value) }
             }

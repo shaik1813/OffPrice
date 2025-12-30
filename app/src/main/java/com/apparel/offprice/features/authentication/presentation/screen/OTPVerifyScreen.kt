@@ -50,6 +50,7 @@ fun OTPVerifyScreen(onEditClick:() -> Unit, onDismiss: () -> Unit) {
 
     var otpValues by remember { mutableStateOf(List(6) { "" }) }
     val focusRequesters = List(6) { FocusRequester() }
+
     LaunchedEffect(Unit) {
         focusRequesters[0].requestFocus()
     }

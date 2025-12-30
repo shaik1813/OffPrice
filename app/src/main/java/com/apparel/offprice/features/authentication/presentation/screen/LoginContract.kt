@@ -44,7 +44,6 @@ interface LoginContract : UnidirectionalViewModel
 
         data class OnPhoneChange(val value: String) : UiEvent
         data class SelectCountry(val country: Country) : UiEvent
-
         data class OnValueChangeName(val value: String) : UiEvent
 
         data class OnValueChangeEmail(val value: String) : UiEvent
