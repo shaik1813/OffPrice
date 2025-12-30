@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -25,7 +26,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -36,7 +36,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
 import com.apparel.offprice.common.component.carousel.ImageSliderWithIndicatorPLP
+import com.apparel.offprice.common.theme.buttonBorderColor
+import com.apparel.offprice.common.theme.inputTextColor
+import com.apparel.offprice.common.theme.nonreturnTxtColor
 import com.apparel.offprice.common.theme.productCardColor
+import com.apparel.offprice.common.utils.toComposeColorSafe
 
 @Composable
 fun ProductCard(
@@ -72,8 +76,8 @@ fun ProductCard(
                         .padding(8.dp),
                     shape = MaterialTheme.shapes.extraSmall,
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.tertiary,
-                        contentColor = Color.White
+                        containerColor = product.tagContainerColor.toComposeColorSafe(),
+                        contentColor = product.tagContentColor.toComposeColorSafe()
                     )
                 ) {
                     Text(
@@ -103,7 +107,7 @@ fun ProductCard(
 }
 
 @Composable
-fun ProductCardTextContent(product : ProductCardItems){
+fun ProductCardTextContent(product: ProductCardItems) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -118,8 +122,8 @@ fun ProductCardTextContent(product : ProductCardItems){
             items(product.sizes) { size ->
                 Text(
                     text = size,
-                    style = MaterialTheme.typography.bodySmall.copy(fontSize = 10.sp),
-                    color = Color.Gray
+                    style = MaterialTheme.typography.bodySmall,
+                    color = buttonBorderColor
                 )
             }
         }
@@ -127,21 +131,17 @@ fun ProductCardTextContent(product : ProductCardItems){
         // BRAND
         Text(
             text = product.brand,
-            style = MaterialTheme.typography.titleLarge.copy(
-                fontSize = 12.sp,
-            ),
+            style = MaterialTheme.typography.labelLarge,
         )
         Spacer(modifier = Modifier.height(6.dp))
 
         // TITLE
         Text(
             text = product.title,
-            style = MaterialTheme.typography.titleSmall.copy(
-                color = Color.Gray,
-                fontSize = 12.sp
-            ),
+            style = MaterialTheme.typography.bodyMedium,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
+            color = inputTextColor,
         )
 
         Spacer(modifier = Modifier.height(6.dp))
@@ -153,13 +153,17 @@ fun ProductCardTextContent(product : ProductCardItems){
         ) {
             Image(
                 painter = painterResource(R.drawable.icon_currency_uae),
-                contentDescription = "UAE Currency"
+                contentDescription = "UAE Currency",
+                colorFilter = ColorFilter.tint(
+                    color = if (product.rrp.isNotEmpty() && product.discountPrice.isNotEmpty()) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
+                ),
+                modifier = Modifier.size(8.dp)
             )
+            Spacer(modifier = Modifier.width(2.dp))
             Text(
                 text = product.basePrice,
-                style = MaterialTheme.typography.titleLarge.copy(
-                    fontSize = 12.sp
-                ),
+                style = MaterialTheme.typography.bodyLarge,
+                color = if (product.rrp.isNotEmpty() && product.discountPrice.isNotEmpty()) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
             )
 
             Spacer(modifier = Modifier.width(8.dp))
@@ -167,15 +171,16 @@ fun ProductCardTextContent(product : ProductCardItems){
                 Image(
                     painter = painterResource(R.drawable.icon_currency_uae),
                     contentDescription = "UAE Currency",
-                    colorFilter = ColorFilter.tint(color = Color.Gray)
+                    colorFilter = ColorFilter.tint(color = nonreturnTxtColor),
+                    modifier = Modifier.size(8.dp)
                 )
+                Spacer(modifier = Modifier.width(2.dp))
                 Text(
                     text = product.discountPrice,
                     style = MaterialTheme.typography.bodySmall.copy(
-                        fontSize = 10.sp,
-                        textDecoration = TextDecoration.LineThrough,
-                        color = Color.Gray
-                    )
+                        textDecoration = TextDecoration.LineThrough
+                    ),
+                    color = nonreturnTxtColor
                 )
             }
         }
@@ -184,7 +189,8 @@ fun ProductCardTextContent(product : ProductCardItems){
 
         //RRP
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .alpha(alpha = if (product.rrp.isEmpty()) 0f else 1f),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -192,28 +198,26 @@ fun ProductCardTextContent(product : ProductCardItems){
                 text = stringResource(R.string.label_rrp),
                 style = MaterialTheme.typography.bodySmall.copy(
                     fontSize = 10.sp,
-                    color = Color.Gray
+                    color = nonreturnTxtColor
                 )
             )
             Spacer(modifier = Modifier.width(8.dp))
             Image(
                 painter = painterResource(R.drawable.icon_currency_uae),
                 contentDescription = "UAE Currency",
-                colorFilter = ColorFilter.tint(color = Color.Gray)
+                colorFilter = ColorFilter.tint(color = nonreturnTxtColor)
             )
+            Spacer(modifier = Modifier.width(2.dp))
             Text(
                 text = product.rrp,
-                style = MaterialTheme.typography.bodySmall.copy(
-                    fontSize = 10.sp,
-                    textDecoration = TextDecoration.LineThrough,
-                    color = Color.Gray
-                )
+                style = MaterialTheme.typography.bodySmall,
+                color = nonreturnTxtColor
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = "(${product.discount} OFF)",
-                style = MaterialTheme.typography.titleLarge.copy(
-                    color = Color(0xFFE53935),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = MaterialTheme.colorScheme.error,
                     fontSize = 10.sp
                 )
             )
@@ -226,7 +230,7 @@ fun ProductCardTextContent(product : ProductCardItems){
             modifier = Modifier,
             shape = MaterialTheme.shapes.large,
             colors = CardDefaults.cardColors(
-                containerColor = Color(0xFFF5C518).copy(alpha = 0.2f)
+                containerColor = MaterialTheme.colorScheme.surface
             )
         ) {
             Row(
@@ -258,6 +262,8 @@ fun ProductCardPreview() {
         product = ProductCardItems(
             id = "1",
             tag = "GOLD LABEL",
+            tagContainerColor = "0xFFB47F00",
+            tagContentColor = "0xFFFFFFFF",
             image = listOf(
                 R.drawable.product_item_1,
                 R.drawable.product_item_2,

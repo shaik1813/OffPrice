@@ -1,6 +1,5 @@
 package com.apparel.offprice.routes
 
-import BottomNavScreen
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -15,7 +14,7 @@ import com.apparel.offprice.features.home.presentation.screens.categories.SubCat
 import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
 import com.apparel.offprice.features.home.presentation.screens.search.SearchScreen
 import com.apparel.offprice.features.paymentCard.presentation.screen.PaymentCardScreen
-import com.apparel.offprice.features.pdp.presentation.screen.PDPscreen
+import com.apparel.offprice.features.pdp.presentation.screen.PDPScreen
 import com.apparel.offprice.features.plp.presentation.screens.PLPScreen
 import com.apparel.offprice.features.profile.presentation.screen.profileDetails.ProfileDetailsScreen
 import com.apparel.offprice.features.profile.presentation.screen.profilePassword.ProfilePasswordScreen
@@ -82,7 +81,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         composable<AppScreen.SearchScreen> {
             SearchScreen(
                 onSearchSubmit = { productId ->
-                    navController.navigate(AppScreen.PDPScreen)
+                    navController.navigate(AppScreen.PDPScreen(productId))
                 },
                 onNavigateToBack = {
                     navController.popBackStack()
@@ -108,12 +107,11 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                     navController.navigate(BottomNavScreen.Item4)
                 },
                 onNavigateToPDP = { product ->
-                    navController.navigate(AppScreen.PDPScreen) {}
+                    navController.navigate(AppScreen.PDPScreen(product.id))
                 }
             )
         }
         composable<AppScreen.SubCategoryScreen> { backStackEntry ->
-
             val args = backStackEntry.toRoute<AppScreen.SubCategoryScreen>()
             SubCategoryScreen(
                 title = args.title,
@@ -158,8 +156,9 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
             )
         }
 
-        composable<AppScreen.PDPScreen> {
-            PDPscreen()
+        composable<AppScreen.PDPScreen> { backStack ->
+            val args = backStack.toRoute<AppScreen.PDPScreen>()
+            PDPScreen(args.id)
         }
 
         composable<AppScreen.UserProfileScreen> {
