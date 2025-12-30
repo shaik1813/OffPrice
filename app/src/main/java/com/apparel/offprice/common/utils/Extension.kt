@@ -1,6 +1,9 @@
 package com.apparel.offprice.common.utils
 
+import androidx.compose.ui.graphics.Color
+import android.graphics.Color as AndroidColor
 import java.util.Locale
+import androidx.core.graphics.toColorInt
 
 
 fun String.takeInitials(): String{
@@ -29,4 +32,14 @@ fun formatExpiryDate(raw: String): String {
         else -> raw.substring(0, 2) + "/" + raw.substring(2)
     }
 }
+
+fun String.toComposeColorSafe(default: Color = Color.Transparent): Color {
+    val hex = if (startsWith("#")) this else "#$this"
+    return try {
+        Color(hex.toColorInt())
+    } catch (e: Exception) {
+        default
+    }
+}
+
 

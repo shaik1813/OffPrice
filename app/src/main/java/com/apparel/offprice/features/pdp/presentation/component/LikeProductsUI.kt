@@ -58,6 +58,8 @@ fun LikeProductsUI() {
                 product = ProductCardItems(
                     id = "1",
                     tag = "GOLD LABEL",
+                    tagContainerColor = "#FFB47F00",
+                    tagContentColor = "#FFFFFFFF",
                     image = listOf(R.drawable.colorimg),
                     brand = "Nike",
                     title = "Nike Air Max 270 React ENG",

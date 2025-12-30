@@ -1,5 +1,6 @@
 package com.apparel.offprice.features.pdp.presentation.screen
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,12 +27,16 @@ import com.apparel.offprice.features.pdp.presentation.component.SizeGuideScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PDPscreen(viewModel: PDPViewModel = hiltViewModel()) {
+fun PDPScreen(
+    productId: String?,
+    viewModel: PDPViewModel = hiltViewModel()) {
 
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp.dp
 
-    var (state, event, effect) = use(viewModel = viewModel)
+    val (state, event, effect) = use(viewModel = viewModel)
+
+    Log.e("TAG", "PDPScreen: $productId" )
 
     if (state.isAddBasketSheet) {
 

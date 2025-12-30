@@ -9,16 +9,17 @@ import com.apparel.offprice.features.home.data.model.Country
 import com.apparel.offprice.features.home.data.model.Language
 import com.apparel.offprice.features.home.data.model.countryList
 import com.apparel.offprice.features.home.data.model.languageList
+import com.apparel.offprice.features.profile.data.accountSettingItems
+import com.apparel.offprice.features.profile.data.myShoppingItems
+import com.apparel.offprice.features.profile.presentation.screen.myaccounts.MyAccountContract.UiEffect.AccountItemClick
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,15 +35,8 @@ class MyAccountViewModel @Inject constructor(
     private val _effectFlow = MutableSharedFlow<MyAccountContract.UiEffect>()
     override val effect: SharedFlow<MyAccountContract.UiEffect> = _effectFlow.asSharedFlow()
 
-    val languagePreference : StateFlow<String?> = appPreference.languagePreference
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = null
-        )
-
     init {
-//        setRegionPreference()
+        initialData()
         setLanguagePreference()
     }
 
@@ -58,6 +52,20 @@ class MyAccountViewModel @Inject constructor(
         }
     }
 
+    private fun initialData(){
+        _state.update {
+            it.copy(
+                countryItemList = countryList,
+                languageItemList = languageList,
+                isGuestUser = false,
+                username = "Jack Harrington",
+                userEmail = "Jackharrington21@gmail.com",
+                accountSettingItem = accountSettingItems,
+                myShoppingItem = myShoppingItems
+            )
+        }
+    }
+
     override fun event(event: MyAccountContract.UiEvent) {
         when (event) {
             MyAccountContract.UiEvent.OnCleared -> {
@@ -66,17 +74,17 @@ class MyAccountViewModel @Inject constructor(
 
             is MyAccountContract.UiEvent.OnCountrySelected -> {
                 saveRegionPreference(event.country)
-                _state.update { it.copy(countrySelected = event.country) }
+                _state.update { it.copy(countrySelected = event.country , isCountryBottomSheetOpened = false) }
             }
 
             is MyAccountContract.UiEvent.OnLanguageSelected -> {
                 saveLanguagePreference(event.language)
-                _state.update { it.copy(languageSelected = event.language) }
+                _state.update { it.copy(languageSelected = event.language , isLanguageBottomSheetOpened = false) }
             }
 
             is MyAccountContract.UiEvent.AccountItemClick -> {
                 viewModelScope.launch {
-                    _effectFlow.emit(MyAccountContract.UiEffect.AccountItemClick(event.item))
+                    _effectFlow.emit(AccountItemClick(event.item))
                 }
             }
 
@@ -101,6 +109,17 @@ class MyAccountViewModel @Inject constructor(
             MyAccountContract.UiEvent.NavigateToWishlist -> {
                 viewModelScope.launch {
                     _effectFlow.emit(MyAccountContract.UiEffect.NavigateToWishlist)
+                }
+            }
+
+            MyAccountContract.UiEvent.OnCountryToggle -> {
+                _state.update {
+                    it.copy(isCountryBottomSheetOpened = !it.isCountryBottomSheetOpened)
+                }
+            }
+            MyAccountContract.UiEvent.OnLanguageToggle -> {
+                _state.update {
+                    it.copy(isLanguageBottomSheetOpened = !it.isLanguageBottomSheetOpened)
                 }
             }
         }

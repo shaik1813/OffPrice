@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -51,6 +52,8 @@ fun PLPScreen(
 
     val (state, event, effect) = use(viewModel = viewModel)
 
+    val gridState = rememberLazyGridState()
+
 
     effect.CollectInLaunchedEffect {
         when(it){
@@ -60,7 +63,7 @@ fun PLPScreen(
         }
     }
 
-    var selectedCategoryId by remember { mutableStateOf("1") }
+    var selectedCategoryId by remember { mutableStateOf(1) }
 
     // Bottom Sheet State
     val sheetState = rememberModalBottomSheetState(
@@ -156,6 +159,7 @@ fun PLPScreen(
 
         ProductGrid(
             products = sampleProducts,
+            gridState = gridState,
             onWishlistClick = { clickedProduct ->
                 // handle wishlist toggle
             },

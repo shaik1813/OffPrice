@@ -12,6 +12,7 @@
     <string name="label_delivery_address">عناوين التسليم</string>
     <string name="label_payment_cards">بطاقات الدفع</string>
     <string name="label_store_locator">محدد موقع المتجر</string>
+    <string name="label_customer_support">دعم العملاء والسياسات</string>
     <string name="label_log_out">تسجيل الخروج</string>
 
 </resources>
