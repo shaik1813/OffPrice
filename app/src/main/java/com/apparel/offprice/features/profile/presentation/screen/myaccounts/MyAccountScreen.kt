@@ -1,6 +1,5 @@
 package com.apparel.offprice.features.profile.presentation.screen.myaccounts
 
-import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -68,7 +67,6 @@ fun MyAccountScreen(
     onItemClick: (AppScreen) -> Unit,
     viewModel: MyAccountViewModel = hiltViewModel()
 ) {
-
 
     val (state, event, effect) = use(viewModel = viewModel)
 

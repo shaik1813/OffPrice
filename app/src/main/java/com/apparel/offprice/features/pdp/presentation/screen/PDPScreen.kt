@@ -22,6 +22,7 @@ import com.apparel.offprice.features.pdp.presentation.component.ProductDescSecti
 import com.apparel.offprice.features.pdp.presentation.component.ProductImageSection
 import com.apparel.offprice.features.pdp.presentation.component.SelectSizeBottomSheet
 import com.apparel.offprice.features.pdp.presentation.component.ShareProductBottomSheet
+import com.apparel.offprice.features.pdp.presentation.component.SimilarPLPSheet
 import com.apparel.offprice.features.pdp.presentation.component.SizeGuideScreen
 
 
@@ -69,15 +70,27 @@ fun PDPScreen(
         )
     }
 
+    if(state.isSimilarPLPSheet){
+        SimilarPLPSheet(
+            sheetState = rememberModalBottomSheetState(),
+            onDismiss = { event(PDPContract.UiEvent.onCloseSimilarProductSheet) })
+    }
+
 
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
 
-        if(!state.isSizeGuideSheet) {
+        if (!state.isSizeGuideSheet) {
             LazyColumn(modifier = Modifier.systemBarsPadding()) {
 
-                item { ProductImageSection(onShareClick = { event(PDPContract.UiEvent.onOpenShareProductSheet) }) }
+                item {
+                    ProductImageSection(
+                        onShareClick = { event(PDPContract.UiEvent.onOpenShareProductSheet) },
+                        onClickSimilar = {
+                            event(PDPContract.UiEvent.onOpenSimilarProductSheet)
+                        })
+                }
 
                 item {
                     ProductDescSection(onSizeGuideClick = {
@@ -87,12 +100,12 @@ fun PDPScreen(
             }
         }
 
-        SizeGuideScreen (
+        SizeGuideScreen(
             isVisible = state.isSizeGuideSheet,
             onDismiss = { event(PDPContract.UiEvent.onCloseSizeGuideSheet) }
         )
 
-        if(!state.isSizeGuideSheet) {
+        if (!state.isSizeGuideSheet) {
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
