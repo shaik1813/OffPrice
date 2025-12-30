@@ -1,5 +1,6 @@
 package com.apparel.offprice.features.profile.presentation.screen.myaccounts
 
+import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -393,8 +394,13 @@ fun AccountUserScreen(
             item {
                 MyAccountSection(
                     title = stringResource(id = R.string.label_about_and_support),
-                    items =  listOf(
-                        MyAccountItems(R.string.label_customer_support, R.drawable.icon_info,9 , AppScreen.StoreLocatorScreen),
+                    items = listOf(
+                        MyAccountItems(
+                            R.string.label_customer_support,
+                            R.drawable.icon_info,
+                            9,
+                            AppScreen.StoreLocatorScreen
+                        ),
                     ),
                     onItemClick = { item ->
                         event.invoke(MyAccountContract.UiEvent.AccountItemClick(item.navigation))
@@ -405,7 +411,12 @@ fun AccountUserScreen(
                 MyAccountSection(
                     title = stringResource(id = R.string.label_support_and_others),
                     items = listOf(
-                        MyAccountItems(R.string.label_log_out, R.drawable.icon_log_out,1 , AppScreen.LogOutScreen),
+                        MyAccountItems(
+                            R.string.label_log_out,
+                            R.drawable.icon_log_out,
+                            1,
+                            AppScreen.LogOutScreen
+                        ),
                     ),
                     onItemClick = { item ->
                         event.invoke(MyAccountContract.UiEvent.AccountItemClick(item.navigation))
