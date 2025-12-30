@@ -77,7 +77,7 @@ class LoginViewModel @Inject constructor(
             }
 
             LoginContract.UiEvent.OnOpenSignUp -> {
-                updateState { it.copy(isLoginScreen = false, isSignUpScreen = true) }
+                updateState { it.copy(isLoginScreen = false, isSignUpScreen = true, currentPage = AuthPage.SIGNUP) }
             }
 
             LoginContract.UiEvent.OnOpenLogin -> {
@@ -115,7 +115,8 @@ class LoginViewModel @Inject constructor(
             }
 
             LoginContract.UiEvent.OnOpenResetPassword -> {
-                updateState { it.copy(isResetPasswordScreen = true, isForgotScreen = false, isLoginScreen = false) }
+                updateState { it.copy(isResetPasswordScreen = true, isForgotScreen = false, isLoginScreen = false,
+                    currentPage = AuthPage.RESET_PASSWORD) }
             }
         }
     }

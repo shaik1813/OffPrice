@@ -62,7 +62,6 @@ fun LoginScreen(
         event(LoginContract.UiEvent.OnBackClick)
     }
 
-
     Box(
         modifier = Modifier
             .fillMaxSize()
