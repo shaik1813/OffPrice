@@ -35,7 +35,6 @@ import com.apparel.offprice.common.theme.nonreturnTxtColor
 import com.apparel.offprice.features.cart.presentation.screen.CartScreen
 import com.apparel.offprice.features.home.data.model.bottomNavItems
 import com.apparel.offprice.features.home.presentation.screens.categories.CategoriesScreen
-import com.apparel.offprice.features.plp.presentation.screens.PLPScreen
 import com.apparel.offprice.features.plp.presentation.screens.bestPrice.BestPriceScreen
 import com.apparel.offprice.features.profile.presentation.screen.myaccounts.MyAccountScreen
 import com.apparel.offprice.routes.AppScreen

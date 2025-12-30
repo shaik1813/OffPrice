@@ -4,39 +4,30 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.apparel.offprice.common.utils.CollectInLaunchedEffect
-import com.apparel.offprice.common.utils.use
 
 
 @Composable
-fun LoginEmptyScreen(onNavigateBack: () -> Unit, viewModel: LoginViewModel = hiltViewModel()) {
-
-    val (state, event, effect) = use(viewModel = viewModel)
+fun LoginEmptyScreen(
+    onNavigateBack: () -> Unit
+) {
+    var loginVisible by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        event(LoginContract.UiEvent.OnLoginClick)
+        loginVisible = true
     }
 
-    effect.CollectInLaunchedEffect {
-      when(it){
-          is LoginContract.UiEffect.Navigate -> {
-          }
-          is LoginContract.UiEffect.OnNavigateBack -> {
-              onNavigateBack()
-          }
-      }
-    }
-
-
-    Box(modifier = Modifier.fillMaxSize()
-       ) {
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
         LoginScreen(
-            state = state,
-            event = event,
-            onItemClick = { event(LoginContract.UiEvent.OnNavigate(it)) },
-            onClose = { event(LoginContract.UiEvent.OnCloseLogin) }
+            isVisible = loginVisible,
+            onNavigateBack = {
+                onNavigateBack() }
         )
     }
 }

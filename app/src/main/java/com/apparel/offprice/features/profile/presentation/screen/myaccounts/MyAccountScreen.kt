@@ -34,10 +34,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -51,12 +47,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.borderColor
-import com.apparel.offprice.common.theme.buttonBorderColor
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
-import com.apparel.offprice.features.authentication.presentation.screen.ForgotDialog
-import com.apparel.offprice.features.authentication.presentation.screen.OTPVerifyDialog
-import com.apparel.offprice.features.authentication.presentation.screen.SignupDialog
 import com.apparel.offprice.features.home.presentation.component.CountrySelectionBottomSheet
 import com.apparel.offprice.features.home.presentation.component.LanguageSelectionBottomSheet
 import com.apparel.offprice.features.profile.data.MyAccountItems
@@ -76,24 +68,9 @@ fun MyAccountScreen(
     viewModel: MyAccountViewModel = hiltViewModel()
 ) {
 
-    var showSignupDialog by remember { mutableStateOf(false) }
-    var showForgotDialog by remember { mutableStateOf(false) }
-    var showOtpDialog by remember { mutableStateOf(false) }
-
 
     val (state, event, effect) = use(viewModel = viewModel)
 
-    if (showSignupDialog) {
-        SignupDialog(onDismiss = { showSignupDialog = false })
-    }
-
-    if (showForgotDialog) {
-        ForgotDialog(onDismiss = { showForgotDialog = false })
-    }
-
-    if (showOtpDialog) {
-        OTPVerifyDialog(onDismiss = { showOtpDialog = false })
-    }
 
 
     effect.CollectInLaunchedEffect {
@@ -111,7 +88,6 @@ fun MyAccountScreen(
             }
 
             MyAccountContract.UiEffect.NavigateToRegistration -> {
-                showSignupDialog = true
             }
 
             MyAccountContract.UiEffect.NavigateToSearch -> {

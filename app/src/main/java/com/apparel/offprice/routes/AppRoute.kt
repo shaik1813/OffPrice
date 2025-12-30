@@ -1,5 +1,7 @@
 package com.apparel.offprice.routes
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -28,6 +30,7 @@ import com.apparel.offprice.features.welcome.presentation.splash.SplashScreen
 import com.apparel.offprice.features.wishlist.presentation.screen.WishListScreen
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
@@ -51,9 +54,10 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.LoginScreen> {
-            LoginEmptyScreen(onNavigateBack = {
-                navController.popBackStack()
-            })
+            LoginEmptyScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                })
         }
 
         composable<AppScreen.RegistrationScreen> {
