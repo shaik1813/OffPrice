@@ -141,7 +141,10 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.ShippingAddressScreen> {
-            ShippingAddressScreen(onBack = {}) { }
+            ShippingAddressScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onSaveAddress = {}
+            )
         }
 
         composable<AppScreen.GenderCategoryScreen> {

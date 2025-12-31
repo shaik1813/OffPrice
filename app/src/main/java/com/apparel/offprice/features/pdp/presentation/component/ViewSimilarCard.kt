@@ -1,6 +1,7 @@
 package com.apparel.offprice.features.pdp.presentation.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
 
 @Composable
@@ -28,10 +30,12 @@ fun ViewSimilarCard(modifier: Modifier,onSimilarClick: () -> Unit) {
         ),
         elevation = CardDefaults.cardElevation(1.dp),
         shape = RoundedCornerShape(6.dp),
-        modifier = modifier
+        modifier = modifier.clickable(indication = null, interactionSource = null){onSimilarClick()}
         ) {
         Box() {
-            Row(modifier = Modifier.align(Alignment.Center).padding(vertical = 6.dp, horizontal = 12.dp)) {
+            Row(modifier = Modifier.align(Alignment.Center)
+                .padding(vertical = 6.dp, horizontal = 12.dp),
+                verticalAlignment = Alignment.CenterVertically) {
 
                 Image(
                     painter = painterResource(R.drawable.similar_icon),
@@ -39,8 +43,10 @@ fun ViewSimilarCard(modifier: Modifier,onSimilarClick: () -> Unit) {
                 )
 
                 Spacer(modifier = Modifier.size(5.dp))
+
                 Text(
                     text = stringResource(com.apparel.offprice.R.string.view_similar),
+                    fontSize = 12.sp,
                     color = Color.Black, style = MaterialTheme.typography.labelMedium
                 )
 

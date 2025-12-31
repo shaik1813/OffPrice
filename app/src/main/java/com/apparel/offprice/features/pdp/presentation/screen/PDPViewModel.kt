@@ -92,6 +92,17 @@ class PDPViewModel @Inject constructor(
                 }
             }
 
+            PDPContract.UiEvent.onOpenSimilarProductSheet -> {
+                viewModelScope.launch {
+                    updateState { it.copy(isSimilarPLPSheet = true) }
+                }
+            }
+
+            PDPContract.UiEvent.onCloseSimilarProductSheet -> {
+                viewModelScope.launch {
+                    updateState { it.copy(isSimilarPLPSheet = false) }
+                }
+            }
 
         }
     }

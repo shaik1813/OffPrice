@@ -1,6 +1,7 @@
 package com.apparel.offprice.features.checkout.presentation.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,7 +30,7 @@ fun DeliveryTypeRow(
             .padding(horizontal = 16.dp),
         shape = RoundedCornerShape(8.dp),
         border = BorderStroke(1.dp, buttonBorderColor.copy(alpha = 0.4f)),
-        color = MaterialTheme.colorScheme.surface,
+        color = Color.White,
     ) {
         Row(
             modifier = Modifier
@@ -42,20 +44,20 @@ fun DeliveryTypeRow(
                 selected = selectedFilter == ShippingAddressFilter.DELIVERY,
                 onClick = { onFilterSelected(ShippingAddressFilter.DELIVERY) },
             )
+            // PICK UP AT STORE → text + icon
             FilterChip(
                 modifier = Modifier.weight(1f),
                 text = stringResource(R.string.pick_up_at_store),
                 selected = selectedFilter == ShippingAddressFilter.PICKUPATSTORE,
-                onClick = { onFilterSelected(ShippingAddressFilter.PICKUPATSTORE) },
+                trailingIcon = R.drawable.info_circle_icon,
+                onClick = { onFilterSelected(ShippingAddressFilter.PICKUPATSTORE) }
             )
         }
     }
 }
 
 
-enum class ShippingAddressFilter {
-    DELIVERY, PICKUPATSTORE
-}
+
 
 @Preview(showBackground = true)
 @Composable

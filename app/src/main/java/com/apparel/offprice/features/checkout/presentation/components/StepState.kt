@@ -15,9 +15,9 @@ data class StepIcons(
 )
 
 val shippingIcons = StepIcons(
-    upcoming = R.drawable.shipping_icon,
-    current = R.drawable.shipping_icon,
-    completed = R.drawable.shipping_icon
+    upcoming = R.drawable.location_tick_icon,
+    current = R.drawable.location_tick_icon,
+    completed = R.drawable.location_tick_icon
 )
 
 val paymentIcons = StepIcons(
