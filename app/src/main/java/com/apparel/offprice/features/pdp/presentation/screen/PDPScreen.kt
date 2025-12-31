@@ -38,8 +38,6 @@ fun PDPScreen(
 
     val (state, event, effect) = use(viewModel = viewModel)
 
-    Log.e("TAG", "PDPScreen: $productId" )
-
     if (state.isAddBasketSheet) {
 
         AddToBasketBottomSheet(
