@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.loginButtonColor
 import com.apparel.offprice.features.pdp.data.model.productList
-import com.apparel.offprice.features.plp.presentation.screens.ProductCardItems
+import com.apparel.offprice.features.plp.data.model.ProductCardItems
 
 
 @Composable
@@ -69,6 +69,7 @@ fun LikeProductsUI() {
                     rrp = "159.99",
                     discount = "20",
                     delivery = "GET IT IN 90M",
+                    deliveryType = "IN 90MINS",
                     isWishlist = false
                 ),
                 onWishlistClick = {}

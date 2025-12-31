@@ -222,6 +222,9 @@
     <string name="label_about_and_support">About &amp; Support</string>
     <string name="label_support_and_others">Support &amp; Others</string>
     <string name="label_best_price">Best Price</string>
+    <string name="label_view_product">View Products</string>
+    <string name="label_no_item_found">No Item Found</string>
+    <string name="label_sort">SORT</string>
 
 
 </resources>

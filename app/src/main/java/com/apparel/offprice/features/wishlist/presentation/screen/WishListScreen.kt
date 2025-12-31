@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -29,7 +27,7 @@ import com.apparel.offprice.R
 import com.apparel.offprice.common.component.home.PLPScreenShimmer
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
-import com.apparel.offprice.features.plp.presentation.screens.ProductCardItems
+import com.apparel.offprice.features.plp.data.model.ProductCardItems
 import com.apparel.offprice.features.wishlist.presentation.component.EmptyWishListScreen
 import com.apparel.offprice.features.wishlist.presentation.component.RemoveWishListDialog
 import com.apparel.offprice.features.wishlist.presentation.component.SuccessfullyAddedToBasketBottomSheet

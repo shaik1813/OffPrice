@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.plp.presentation.screens
+package com.apparel.offprice.features.plp.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -26,11 +25,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,6 +44,7 @@ import com.apparel.offprice.common.theme.inputTextColor
 import com.apparel.offprice.common.theme.nonreturnTxtColor
 import com.apparel.offprice.common.theme.productCardColor
 import com.apparel.offprice.common.utils.toComposeColorSafe
+import com.apparel.offprice.features.plp.data.model.ProductCardItems
 
 @Composable
 fun ProductCard(
@@ -131,7 +135,9 @@ fun ProductCardTextContent(product: ProductCardItems) {
         // BRAND
         Text(
             text = product.brand,
-            style = MaterialTheme.typography.labelLarge,
+            style = MaterialTheme.typography.labelLarge.copy(
+                fontSize = 12.sp
+            ),
         )
         Spacer(modifier = Modifier.height(6.dp))
 
@@ -236,6 +242,20 @@ fun ProductCardTextContent(product: ProductCardItems) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
+                val annotatedString = buildAnnotatedString {
+                    withStyle(
+                        style = MaterialTheme.typography.displaySmall.toSpanStyle()
+                    ) {
+                        append(product.delivery)
+                    }
+                    append(" ")
+                    withStyle(style = MaterialTheme.typography.displaySmall.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
+                    ).toSpanStyle()){
+                        append(product.deliveryType)
+                    }
+                }
                 Image(
                     painter = painterResource(R.drawable.arrive_icon),
                     contentDescription = "Delivery Icon",
@@ -243,7 +263,7 @@ fun ProductCardTextContent(product: ProductCardItems) {
                         .padding(start = 4.dp, top = 4.dp, bottom = 4.dp)
                 )
                 Text(
-                    text = product.delivery,
+                    text = annotatedString,
                     style = MaterialTheme.typography.displaySmall,
                     modifier = Modifier
                         .padding(all = 4.dp)
@@ -277,7 +297,8 @@ fun ProductCardPreview() {
             discountPrice = "149.99",
             rrp = "159.99",
             discount = "20",
-            delivery = "GET IT IN 90M",
+            delivery = "GET IT ",
+            deliveryType = "IN 90M",
             isWishlist = false
         ),
         onWishlistClick = { },
