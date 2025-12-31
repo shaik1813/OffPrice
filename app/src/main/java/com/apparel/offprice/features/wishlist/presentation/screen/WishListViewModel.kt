@@ -2,9 +2,8 @@ package com.apparel.offprice.features.wishlist.presentation.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.apparel.offprice.features.home.presentation.screens.search.SearchContract
-import com.apparel.offprice.features.plp.presentation.screens.ProductCardItems
-import com.apparel.offprice.features.plp.presentation.screens.sampleProducts
+import com.apparel.offprice.features.plp.data.model.ProductCardItems
+import com.apparel.offprice.features.plp.data.model.sampleProducts
 import com.apparel.offprice.features.wishlist.presentation.screen.WishListContract.UiEffect.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay

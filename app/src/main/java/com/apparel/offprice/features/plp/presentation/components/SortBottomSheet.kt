@@ -1,13 +1,12 @@
-package com.apparel.offprice.features.plp.presentation.screens
+package com.apparel.offprice.features.plp.presentation.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -18,10 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.borderColor
 
 @Composable
 fun SortBottomSheet(
@@ -53,42 +51,10 @@ fun SortBottomSheet(
                 )
             }
         }
-
+        HorizontalDivider(color = borderColor, thickness = 1.dp)
         Spacer(modifier = Modifier.height(12.dp))
 
-        // SORT OPTIONS
-        SortOptionItem("Price: High to Low") { onSortSelected("high_to_low") }
-        SortOptionItem("Price: Low to High") { onSortSelected("low_to_high") }
-        SortOptionItem("New Arrivals") { onSortSelected("new_arrivals") }
 
         Spacer(modifier = Modifier.height(30.dp))
     }
-}
-
-@Composable
-fun SortOptionItem(
-    title: String,
-    onClick: () -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() }
-    ) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier
-                .padding(vertical = 16.dp)
-        )
-
-        Divider(color = Color(0xFFE0E0E0), thickness = 1.dp)
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun SortBottomSheetPreview() {
-    SortBottomSheet(onClose = {}, onSortSelected = {})
 }

@@ -1,8 +1,7 @@
 package com.apparel.offprice.features.wishlist.presentation.screen
 
 import com.apparel.offprice.common.utils.UnidirectionalViewModel
-import com.apparel.offprice.features.plp.presentation.screens.ProductCardItems
-import com.apparel.offprice.features.plp.presentation.screens.sampleProducts
+import com.apparel.offprice.features.plp.data.model.ProductCardItems
 
 interface WishListContract :
     UnidirectionalViewModel<WishListContract.UiState, WishListContract.UiEvent, WishListContract.UiEffect> {

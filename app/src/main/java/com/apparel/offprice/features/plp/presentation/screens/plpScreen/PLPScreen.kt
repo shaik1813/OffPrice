@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.plp.presentation.screens
+package com.apparel.offprice.features.plp.presentation.screens.plpScreen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,14 +33,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
+import com.apparel.offprice.features.plp.data.model.filterList
 import com.apparel.offprice.features.plp.data.model.samplePLPHorizontalListItems
+import com.apparel.offprice.features.plp.presentation.components.FilterScreen
+import com.apparel.offprice.features.plp.presentation.components.FilterStrip
+import com.apparel.offprice.features.plp.presentation.components.PLPCategoryHorizontalList
+import com.apparel.offprice.features.plp.presentation.components.ProductGrid
+import com.apparel.offprice.features.plp.presentation.components.SortBottomSheet
+import com.apparel.offprice.features.plp.data.model.sampleProducts
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -153,6 +159,8 @@ fun PLPScreen(
         Spacer(modifier = Modifier.height(20.dp))
 
         FilterStrip(
+            brandCount = 0,
+            sizeCount = 0,
             onFilterClick = { isFilterSheetOpen = true },
             onSortClick = { isSortSheetOpen = true }
         )
@@ -165,7 +173,12 @@ fun PLPScreen(
             },
             onProductClick = { clickedProduct ->
                 // navigate to product details
-            }
+            },
+            inlineFilters = filterList,
+            onFilterClick = { filterType, filterItem ->
+                // handle filter click
+
+            },
         )
 
         // Bottom Sheet (filter)
@@ -181,13 +194,13 @@ fun PLPScreen(
                         .fillMaxHeight()    // ⬅️ Force content to full height
                         .fillMaxWidth()
                 ) {
-                    FilterScreen(
-                        onClose = { isFilterSheetOpen = false },
-                        onApply = { isFilterSheetOpen = false },
-                        onClearAll = {
-                            // TODO: clear all selected filters from ViewModel/State
-                        }
-                    )
+//                    FilterScreen(
+//                        onClose = { isFilterSheetOpen = false },
+//                        onApply = { isFilterSheetOpen = false },
+//                        onClearAll = {
+//                            // TODO: clear all selected filters from ViewModel/State
+//                        }
+//                    )
                 }
             }
         }
