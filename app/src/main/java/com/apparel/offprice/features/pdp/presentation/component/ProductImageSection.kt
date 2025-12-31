@@ -1,5 +1,6 @@
 package com.apparel.offprice.features.pdp.presentation.component
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -17,7 +18,7 @@ import com.apparel.offprice.common.component.carousel.ImageSliderWithIndicatorPD
 
 
 @Composable
-fun ProductImageSection(onShareClick: () -> Unit, onClickSimilar: () -> Unit) {
+fun ProductImageSection(modifier : Modifier, onShareClick: () -> Unit, onClickSimilar: () -> Unit) {
     val images = listOf(
         "https://plus.unsplash.com/premium_photo-1669324357471-e33e71e3f3d8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dXJsfGVufDB8fDB8fHww",
         "https://plus.unsplash.com/premium_photo-1690303193898-f9c721d0770b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHVybHxlbnwwfHwwfHx8MA%3D%3D",
@@ -25,7 +26,8 @@ fun ProductImageSection(onShareClick: () -> Unit, onClickSimilar: () -> Unit) {
         "https://media.istockphoto.com/id/2194166576/photo/three-accessibility-icon-on-computer-keyboard.webp?a=1&b=1&s=612x612&w=0&k=20&c=HwJp5u5WJ49JKrIz2de_E--J5Vidi4HRKFfWgfzwa-U="
     )
 
-    Box() {
+    Log.e("recomposeImg","everytime")
+    Box(modifier = modifier) {
         ImageSliderWithIndicatorPDP(images)
 
         Image(
@@ -34,7 +36,7 @@ fun ProductImageSection(onShareClick: () -> Unit, onClickSimilar: () -> Unit) {
             modifier = Modifier.align(Alignment.TopStart).padding(16.dp)
         )
 
-        ViewSimilarCard(modifier =Modifier.align(Alignment.BottomEnd).padding(16.dp),
+        ViewSimilarCard(modifier =Modifier.align(Alignment.BottomEnd).padding(horizontal = 16.dp, vertical = 30.dp),
             onSimilarClick = {
                 onClickSimilar()
             })

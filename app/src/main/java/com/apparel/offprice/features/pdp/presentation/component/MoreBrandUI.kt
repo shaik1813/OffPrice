@@ -1,77 +1,70 @@
 package com.apparel.offprice.features.pdp.presentation.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.loginButtonColor
-import com.apparel.offprice.features.pdp.data.model.productList
+import com.apparel.offprice.common.theme.saleCardColor
 import com.apparel.offprice.features.plp.presentation.screens.ProductCardItems
+import com.apparel.offprice.features.plp.presentation.screens.sampleProducts
 
 
 @Composable
-fun LikeProductsUI() {
+fun MoreBrandUI(onWishlistClick: (ProductCardItems) -> Unit, onProductClick: (ProductCardItems) -> Unit) {
+
+    val heightOfList = LocalConfiguration.current.screenWidthDp.dp - 44.dp
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 30.dp, bottom = 30.dp),
+            .padding(top = 24.dp, bottom = 16.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = stringResource(com.apparel.offprice.R.string.you_may_also_like),
+            text = stringResource(com.apparel.offprice.R.string.more_from_brand),
             style = MaterialTheme.typography.titleLarge,
             fontSize = 14.sp,
-            color = loginButtonColor
+            color = saleCardColor
         )
 
         Text(
             text = stringResource(com.apparel.offprice.R.string.view_all),
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.titleMedium,
             fontSize = 14.sp,
             color = loginButtonColor
         )
     }
 
-    Spacer(modifier = Modifier.size(16.dp))
-
     LazyRow(
-        modifier = Modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(horizontal = 4.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        items(productList) { product ->
-            ProductCardForLike(
-                product = ProductCardItems(
-                    id = "1",
-                    tag = "GOLD LABEL",
-                    tagContainerColor = "#FFB47F00",
-                    tagContentColor = "#FFFFFFFF",
-                    image = listOf(R.drawable.colorimg),
-                    brand = "Nike",
-                    title = "Nike Air Max 270 React ENG",
-                    sizes = listOf("UK 6", "UK 7", "UK 8", "UK 9"),
-                    basePrice = "139.99",
-                    discountPrice = "",
-                    rrp = "159.99",
-                    discount = "20",
-                    delivery = "GET IT IN 90M",
-                    isWishlist = false
-                ),
-                onWishlistClick = {}
+        items(sampleProducts) { product ->
+            // Each card takes full width inside its column
+            SimilarProductCard(
+                heightOfList,
+                product = product,
+                onWishlistClick = { onWishlistClick(product) },
+                modifier = Modifier
+                    .clickable { onProductClick(product) }
             )
         }
     }

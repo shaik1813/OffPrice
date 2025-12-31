@@ -102,7 +102,7 @@ fun SimilarPLPSheet(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(sampleProducts) { product ->
                     // Each card takes full width inside its column
