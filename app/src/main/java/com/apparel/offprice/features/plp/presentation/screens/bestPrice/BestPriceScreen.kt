@@ -48,10 +48,11 @@ import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.plp.presentation.components.ShowFilterBottomSheet
 import com.apparel.offprice.features.plp.presentation.components.ShowSortBottomSheet
-import com.apparel.offprice.features.plp.presentation.screens.FilterStrip
-import com.apparel.offprice.features.plp.presentation.screens.PLPCategoryHorizontalList
-import com.apparel.offprice.features.plp.presentation.screens.ProductGrid
+import com.apparel.offprice.features.plp.presentation.components.FilterStrip
+import com.apparel.offprice.features.plp.presentation.components.PLPCategoryHorizontalList
+import com.apparel.offprice.features.plp.presentation.components.ProductGrid
 import kotlinx.coroutines.flow.distinctUntilChanged
+import androidx.compose.runtime.collectAsState
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -65,6 +66,8 @@ fun BestPriceScreen(
 
     val (state, event, effect) = use(viewModel = viewModel)
     val gridState = rememberLazyGridState()
+    val brandCount = viewModel.brandSelectedCount.collectAsState()
+    val sizeCount = viewModel.sizeSelectedCount.collectAsState()
 
     effect.CollectInLaunchedEffect {
         when (it) {
@@ -204,8 +207,10 @@ fun BestPriceScreen(
             )
             Spacer(modifier = Modifier.height(20.dp))
             FilterStrip(
+                brandCount = brandCount.value,
+                sizeCount = sizeCount.value,
                 onFilterClick = {
-                    event.invoke(BestPriceContract.UiEvent.ToggleFilterSheet)
+                    event.invoke(BestPriceContract.UiEvent.FilterSheetOpen(it))
                 },
                 onSortClick = {
                     event.invoke(BestPriceContract.UiEvent.ToggleSortSheet)
@@ -214,6 +219,10 @@ fun BestPriceScreen(
             ProductGrid(
                 products = state.productList,
                 gridState = gridState,
+                inlineFilters = state.inlineFilters,
+                onFilterClick = { filterType, filterItem ->
+                    event.invoke(BestPriceContract.UiEvent.OnInlineFilterItemClicked(filterType, filterItem))
+                },
                 onWishlistClick = { clickedProduct ->
                     event.invoke(BestPriceContract.UiEvent.WishlistClicked(clickedProduct))
                 },
@@ -224,19 +233,19 @@ fun BestPriceScreen(
 
             if (state.isFilterSheetOpen) {
                 ShowFilterBottomSheet(
+                    state = state,
                     onEvent = {
                         event.invoke(it)
                     },
                     onDismiss = {
-                        event.invoke(BestPriceContract.UiEvent.ToggleFilterSheet)
+                        event.invoke(BestPriceContract.UiEvent.FilterSheetClosed)
                     })
             }
 
             if (state.isSortSheetOpen) {
                 ShowSortBottomSheet(
-                    onEvent = {
-                        event.invoke(it)
-                    },
+                    sortList = state.sortList,
+                    onEvent = { event.invoke(it) },
                     onDismiss = {
                         event.invoke(BestPriceContract.UiEvent.ToggleSortSheet)
                     }

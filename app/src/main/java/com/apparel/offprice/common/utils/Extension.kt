@@ -4,6 +4,8 @@ import androidx.compose.ui.graphics.Color
 import android.graphics.Color as AndroidColor
 import java.util.Locale
 import androidx.core.graphics.toColorInt
+import com.apparel.offprice.features.plp.data.model.FilterGroup
+import com.apparel.offprice.features.plp.data.model.FilterType
 
 
 fun String.takeInitials(): String{
@@ -40,6 +42,14 @@ fun String.toComposeColorSafe(default: Color = Color.Transparent): Color {
     } catch (e: Exception) {
         default
     }
+}
+
+fun List<FilterGroup>.selectedCount(type: FilterType): Int {
+    return this
+        .firstOrNull { it.type == type }
+        ?.items
+        ?.count { it.isSelected }
+        ?: 0
 }
 
 

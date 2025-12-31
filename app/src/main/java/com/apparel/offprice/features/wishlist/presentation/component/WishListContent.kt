@@ -21,8 +21,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
-import com.apparel.offprice.features.plp.presentation.screens.ProductCard
-import com.apparel.offprice.features.plp.presentation.screens.ProductCardItems
+import com.apparel.offprice.features.plp.presentation.components.ProductCard
+import com.apparel.offprice.features.plp.data.model.ProductCardItems
 
 
 @Composable

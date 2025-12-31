@@ -17,7 +17,7 @@ import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
 import com.apparel.offprice.features.home.presentation.screens.search.SearchScreen
 import com.apparel.offprice.features.paymentCard.presentation.screen.PaymentCardScreen
 import com.apparel.offprice.features.pdp.presentation.screen.PDPScreen
-import com.apparel.offprice.features.plp.presentation.screens.PLPScreen
+import com.apparel.offprice.features.plp.presentation.screens.plpScreen.PLPScreen
 import com.apparel.offprice.features.profile.presentation.screen.profileDetails.ProfileDetailsScreen
 import com.apparel.offprice.features.profile.presentation.screen.profilePassword.ProfilePasswordScreen
 import com.apparel.offprice.features.profile.presentation.screen.profileSize.ProfileSizeScreen

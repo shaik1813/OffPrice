@@ -32,7 +32,7 @@ fun BottomSingleActionButton(
                 elevation = 14.dp,
                 spotColor = Color(0x17000000)
             ),
-        colors = CardDefaults.cardColors(containerColor = secondaryColor),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
         shape = RoundedCornerShape(topStart = 0.dp, topEnd = 0.dp)
     ) {
         Column(

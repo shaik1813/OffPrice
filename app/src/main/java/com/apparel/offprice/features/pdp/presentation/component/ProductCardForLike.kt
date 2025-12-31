@@ -32,7 +32,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
-import com.apparel.offprice.features.plp.presentation.screens.ProductCardItems
+import com.apparel.offprice.features.plp.data.model.ProductCardItems
 
 @Composable
 fun ProductCardForLike(

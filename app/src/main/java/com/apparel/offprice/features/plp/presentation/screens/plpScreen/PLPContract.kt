@@ -1,6 +1,7 @@
-package com.apparel.offprice.features.plp.presentation.screens
+package com.apparel.offprice.features.plp.presentation.screens.plpScreen
 
 import com.apparel.offprice.common.utils.UnidirectionalViewModel
+import com.apparel.offprice.features.plp.data.model.ProductCardItems
 
 interface PLPContract :
     UnidirectionalViewModel<

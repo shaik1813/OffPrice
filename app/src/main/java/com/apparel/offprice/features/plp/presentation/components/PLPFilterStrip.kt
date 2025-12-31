@@ -1,7 +1,6 @@
-package com.apparel.offprice.features.plp.presentation.screens
+package com.apparel.offprice.features.plp.presentation.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -24,17 +23,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.badgeColor
 import com.apparel.offprice.common.theme.borderColor
+import com.apparel.offprice.features.plp.data.model.FilterType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FilterStrip(
-    onFilterClick: () -> Unit,
+    brandCount : Int,
+    sizeCount : Int,
+    onFilterClick: (FilterType) -> Unit,
     onSortClick: () -> Unit
 ) {
     Row(
@@ -49,7 +50,7 @@ fun FilterStrip(
             label = "Filter",
             count = 0,
             showDropdown = false,
-            onClick = { onFilterClick() }
+            onClick = { onFilterClick(FilterType.BRAND) }
         )
 
         FilterCell(
@@ -63,17 +64,17 @@ fun FilterStrip(
         FilterCell(
             icon = null,
             label = "Brand",
-            count = 4,
+            count = brandCount,
             showDropdown = true,
-            onClick = { onFilterClick() }
+            onClick = { onFilterClick(FilterType.BRAND) }
         )
 
         FilterCell(
             icon = null,
             label = "Size",
-            count = 2,
+            count = sizeCount,
             showDropdown = true,
-            onClick = { onFilterClick() }
+            onClick = { onFilterClick(FilterType.CLOTHING_SIZE) }
         )
     }
 
