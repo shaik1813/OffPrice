@@ -1,6 +1,7 @@
 package com.apparel.offprice.features.checkout.presentation.components
 
 import com.apparel.offprice.R
+import com.apparel.offprice.features.cart.data.PriceData
 
 data class ProductItem(
     val id: String,
@@ -16,6 +17,32 @@ data class ProductItem(
     val deliveryText: String
 )
 
+data class PriceData(
+    val quantity: Int,
+    val subTotal: Double,
+    val discount: Double,
+    val shippingFee: Double,
+    val total: Double,
+    val caPointAmount: Double,
+    val storePointAmount: Double,
+    val grandTotal: Double,
+    val points: String,
+    var isAutoCoupon : Boolean
+)
+
+
+val priceData = PriceData(
+    quantity = 3,
+    subTotal = 105.00,
+    discount = 12.00,
+    shippingFee = 14.00,
+    total = 107.00,
+    caPointAmount = 05.00,
+    storePointAmount = 05.00,
+    grandTotal = 97.00,
+    points = "1000",
+    isAutoCoupon = false
+)
 
 val sampleProductsOSS = listOf(
     ProductItem(
@@ -63,3 +90,40 @@ val sampleProductsOSS = listOf(
 enum class ShippingAddressFilter {
     DELIVERY, PICKUPATSTORE
 }
+
+enum class CheckoutStep {
+    ADDRESS,
+    SUMMARY
+}
+
+enum class AddAddressFilter {
+    Home, Office, Other
+}
+
+
+data class AddressUiModel(
+    val id: String,
+    val label: String,          // Home / Office
+    val name: String,           // Hazel / Sheikh Mohammed
+    val addressLine: String,    // Flat 402, Al Zahra Building...
+    val phone: String
+) {
+    val shortText: String
+        get() = "$label · $addressLine"
+}
+val sampleAddresses = listOf(
+    AddressUiModel(
+        id = "1",
+        label = "Home",
+        name = "Hazel",
+        addressLine = "Flat 402, Al Zahra Building Al Nahda Street, Dubai, UAE",
+        phone = "+971 436842594"
+    ),
+    AddressUiModel(
+        id = "2",
+        label = "Office",
+        name = "Sheikh Mohammed",
+        addressLine = "Flat 402, Al Zahra Building Al Nahda Street, Dubai, UAE",
+        phone = "+971 436842594"
+    )
+)

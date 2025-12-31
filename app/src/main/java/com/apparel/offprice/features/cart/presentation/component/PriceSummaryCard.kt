@@ -41,7 +41,9 @@ fun PriceSummaryCard(isOpenShipFee: Boolean, priceData: PriceData, OnShipFeeClic
                 )
 
                 PriceCardUI(
-                    title = stringResource(R.string.discount),
+                    title = if(priceData.isAutoCoupon){
+                        stringResource(R.string.discount)+" AUTO COUPON, COUPON"
+                    } else stringResource(R.string.discount),
                     value = "-" + String.format("%.2f", priceData.discount),
                     valueColor = Color(0xFF2E7D32)
                 )

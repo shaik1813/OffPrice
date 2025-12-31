@@ -21,7 +21,8 @@ data class PriceData(
     val caPointAmount: Double,
     val storePointAmount: Double,
     val grandTotal: Double,
-    val points: String
+    val points: String,
+    var isAutoCoupon : Boolean
 )
 
 val creditsData = Creditsdata(
@@ -45,7 +46,8 @@ val priceData = PriceData(
     caPointAmount = 05.00,
     storePointAmount = 05.00,
     grandTotal = 97.00,
-    points = "1000"
+    points = "1000",
+    isAutoCoupon = false
 )
 
 data class CartProductItems(

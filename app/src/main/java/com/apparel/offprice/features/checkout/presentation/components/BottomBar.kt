@@ -1,5 +1,6 @@
 package com.apparel.offprice.features.checkout.presentation.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,16 +19,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
+import com.apparel.offprice.features.checkout.presentation.screens.CheckOutContract
 
 @Composable
-fun BottomBar(totalAmount: String, onSave: () -> Unit) {
-
+fun BottomBar(
+    onSave: () -> Unit,
+    buttonText: String,
+    showArrow: Boolean,
+    grandTotal: Double,
+    onOpenAddressSheet: () -> Unit,
+    state: CheckOutContract.UiState
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -35,15 +43,15 @@ fun BottomBar(totalAmount: String, onSave: () -> Unit) {
             .padding(16.dp)
     ) {
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text("GRAND TOTAL", style = MaterialTheme.typography.titleMedium)
-            Text("฿ $totalAmount", style = MaterialTheme.typography.titleMedium)
+        if (state.checkoutStep == CheckoutStep.SUMMARY && state.selectedAddress != null) {
+            SelectedAddressRow(
+                address = state.selectedAddress,
+                onClick = onOpenAddressSheet
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
         }
 
-        Spacer(modifier = Modifier.height(12.dp))
 
         Button(
             onClick = onSave,
@@ -58,20 +66,43 @@ fun BottomBar(totalAmount: String, onSave: () -> Unit) {
             ) {
 
                 Text(
-                    text = stringResource(R.string.label_verify_save_address),
+                    text = buttonText,
                     color = Color.White,
                     style = MaterialTheme.typography.titleSmall
                 )
 
-                Spacer(modifier = Modifier.width(2.dp))
+                // 👉 SHOW ICON ONLY FOR SAVE ADDRESS
+                if (showArrow) {
+                    Spacer(modifier = Modifier.width(6.dp))
 
-                Icon(
-                    painter = painterResource(id = R.drawable.right_arrow),
-                    contentDescription = null,
-                    tint = Color.White,
-                    modifier = Modifier.size(16.dp)
-                )
+                    Icon(
+                        painter = painterResource(id = R.drawable.right_arrow),
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier.size(16.dp)
+                    )
+                } else {
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Image(
+                        colorFilter = ColorFilter.tint(Color.White),
+                        painter = painterResource(R.drawable.icon_currency_uae),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .width(12.dp)
+                            .height(10.dp)
+                            .align(Alignment.CenterVertically)
+                    )
+                    Text(
+                        text = grandTotal.toString(),
+                        fontSize = 14.sp,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = Color.White,
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    )
+
+                }
             }
         }
     }
 }
+
