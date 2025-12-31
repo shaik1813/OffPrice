@@ -25,6 +25,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.borderColor
 import com.apparel.offprice.common.theme.lineColor
 
 @Composable
@@ -43,7 +44,7 @@ fun LoginBasicPasswordField(
             .background(Color.White, shape = MaterialTheme.shapes.small)
             .height(42.dp)
             .border(
-                color = lineColor,
+                color = borderColor,
                 width = 1.dp,
                 shape = RoundedCornerShape(8.dp)
             )
@@ -51,7 +52,7 @@ fun LoginBasicPasswordField(
         BasicTextField(
             value = value,
             onValueChange = { if (enabled) onValueChange(it) },
-            textStyle = MaterialTheme.typography.bodySmall,
+            textStyle = MaterialTheme.typography.bodyMedium,
             singleLine = true,
             enabled = enabled,
             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
@@ -74,7 +75,7 @@ fun LoginBasicPasswordField(
                     if (value.isEmpty()) {
                         Text(
                             text = placeholder,
-                            style = MaterialTheme.typography.bodySmall,
+                            style = MaterialTheme.typography.bodyMedium,
                             color = lineColor
                         )
                     }

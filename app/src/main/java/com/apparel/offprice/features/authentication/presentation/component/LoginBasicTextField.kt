@@ -14,10 +14,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
+import com.apparel.offprice.common.theme.borderColor
 import com.apparel.offprice.common.theme.lineColor
 
 
@@ -34,7 +34,7 @@ fun LoginBasicTextField(
             .fillMaxWidth()
             .background(Color.White, shape = MaterialTheme.shapes.small)
             .height(42.dp)
-            .border(color = lineColor,
+            .border(color = borderColor,
                 width = 1.dp,
                 shape = RoundedCornerShape(8.dp)
             )
@@ -42,7 +42,7 @@ fun LoginBasicTextField(
         BasicTextField(
             value = value,
             onValueChange = { if (enabled) onValueChange(it) },
-            textStyle = MaterialTheme.typography.bodySmall,
+            textStyle = MaterialTheme.typography.bodyMedium,
             singleLine = true,
             enabled = enabled,
             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
@@ -63,7 +63,7 @@ fun LoginBasicTextField(
                     if (value.isEmpty()) {
                         Text(
                             text = placeholder,
-                            style = MaterialTheme.typography.bodySmall,
+                            style = MaterialTheme.typography.bodyMedium,
                             color = lineColor
                         )
                     }

@@ -1,8 +1,10 @@
 package com.apparel.offprice.features.pdp.presentation.screen
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,17 +23,20 @@ import com.apparel.offprice.features.pdp.presentation.component.ProductDescSecti
 import com.apparel.offprice.features.pdp.presentation.component.ProductImageSection
 import com.apparel.offprice.features.pdp.presentation.component.SelectSizeBottomSheet
 import com.apparel.offprice.features.pdp.presentation.component.ShareProductBottomSheet
+import com.apparel.offprice.features.pdp.presentation.component.SimilarPLPSheet
 import com.apparel.offprice.features.pdp.presentation.component.SizeGuideScreen
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PDPscreen(viewModel: PDPViewModel = hiltViewModel()) {
+fun PDPScreen(
+    productId: String?,
+    viewModel: PDPViewModel = hiltViewModel()) {
 
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp.dp
 
-    var (state, event, effect) = use(viewModel = viewModel)
+    val (state, event, effect) = use(viewModel = viewModel)
 
     if (state.isAddBasketSheet) {
 
@@ -64,15 +69,29 @@ fun PDPscreen(viewModel: PDPViewModel = hiltViewModel()) {
         )
     }
 
+    if(state.isSimilarPLPSheet){
+        SimilarPLPSheet(
+            sheetState = rememberModalBottomSheetState(),
+            onDismiss = { event(PDPContract.UiEvent.onCloseSimilarProductSheet) },
+            onWishlistClick = {},
+            onProductClick = {})
+    }
+
 
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().systemBarsPadding().navigationBarsPadding()
     ) {
 
-        if(!state.isSizeGuideSheet) {
-            LazyColumn(modifier = Modifier.systemBarsPadding()) {
+        if (!state.isSizeGuideSheet) {
+            LazyColumn{
 
-                item { ProductImageSection(onShareClick = { event(PDPContract.UiEvent.onOpenShareProductSheet) }) }
+                item {
+                    ProductImageSection(
+                        onShareClick = { event(PDPContract.UiEvent.onOpenShareProductSheet) },
+                        onClickSimilar = {
+                            event(PDPContract.UiEvent.onOpenSimilarProductSheet)
+                        })
+                }
 
                 item {
                     ProductDescSection(onSizeGuideClick = {
@@ -82,12 +101,12 @@ fun PDPscreen(viewModel: PDPViewModel = hiltViewModel()) {
             }
         }
 
-        SizeGuideScreen (
+        SizeGuideScreen(
             isVisible = state.isSizeGuideSheet,
             onDismiss = { event(PDPContract.UiEvent.onCloseSizeGuideSheet) }
         )
 
-        if(!state.isSizeGuideSheet) {
+        if (!state.isSizeGuideSheet) {
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
@@ -101,7 +120,6 @@ fun PDPscreen(viewModel: PDPViewModel = hiltViewModel()) {
 
             }
         }
-
 
     }
 

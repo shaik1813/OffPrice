@@ -1,0 +1,51 @@
+package com.apparel.offprice.features.authentication.presentation.screen
+
+
+import com.apparel.offprice.common.utils.UnidirectionalViewModel
+import com.apparel.offprice.features.home.data.model.Country
+import com.apparel.offprice.features.home.data.model.countryList
+import com.apparel.offprice.routes.AppScreen
+
+interface SignUpContract : UnidirectionalViewModel
+<SignUpContract.UiState, SignUpContract.UiEvent, SignUpContract.UiEffect> {
+
+    data class UiState(
+        val isLoginVisible: Boolean = false,
+        val passwordValue: String = "",
+        val email: String = "",
+        val name: String = "",
+        val phoneNumber: String = "",
+        val showPassword: Boolean = false,
+        val isLoginScreen: Boolean = true,
+        val isSignUpScreen: Boolean = false,
+        val isCountryPickerOpen: Boolean = false,
+        val phoneCode: Country = countryList.first(),
+        val nameError: String? = null,
+        val emailError: String? = null,
+        val phoneError: String? = null,
+        var showOtpDialog: Boolean = false
+    )
+
+    sealed interface UiEvent {
+        object OnLoginClick : UiEvent
+        object OnCloseLogin : UiEvent
+        object OnOpenLogin : UiEvent
+
+        object OnOpenOtp : UiEvent
+        object OnCloseOtp : UiEvent
+
+        object OnNavigateBack : UiEvent
+        object OnCheckToggle : UiEvent
+        object OnPasswordVisibleToggle : UiEvent
+        data class OnPhoneChange(val value: String) : UiEvent
+        data class SelectCountry(val country: Country) : UiEvent
+        data class OnValueChangeName(val value: String) : UiEvent
+        data class OnValueChangeEmail(val value: String) : UiEvent
+        data class OnValueChangePassword(val value: String) : UiEvent
+    }
+
+    sealed interface UiEffect {
+        data class Navigate(val screen: AppScreen) : UiEffect
+        data object OnNavigateBack : UiEffect
+    }
+}

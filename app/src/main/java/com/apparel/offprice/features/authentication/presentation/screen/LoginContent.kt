@@ -39,15 +39,15 @@ import com.apparel.offprice.features.authentication.presentation.component.AuthB
 import com.apparel.offprice.features.authentication.presentation.component.LoginBasicPasswordField
 import com.apparel.offprice.features.authentication.presentation.component.LoginBasicTextField
 import com.apparel.offprice.features.cart.presentation.component.CartCheckboxBox
-import com.apparel.offprice.routes.AppScreen
 
 
 @Composable
 fun LoginForm(
     state: LoginContract.UiState,
     event: (LoginContract.UiEvent) -> Unit,
-    onItemClick: (AppScreen) -> Unit
+    onForgotClick: () -> Unit
 ) {
+
     Column {
         Text(
             stringResource(R.string.login_account_header),
@@ -141,7 +141,7 @@ fun LoginForm(
                 modifier = Modifier
                     .wrapContentWidth()
                     .clickable {
-                        onItemClick(AppScreen.ForgetPasswordScreen)
+                        onForgotClick()
                     },
                 text = stringResource(R.string.forgot_pass),
                 color = MaterialTheme.colorScheme.primary,
@@ -155,7 +155,6 @@ fun LoginForm(
         AuthButton(
             text = stringResource(R.string.login_caps),
             onButtonClick = {
-                onItemClick(AppScreen.OTPScreen)
             })
 
         Spacer(Modifier.height(30.dp))
@@ -193,7 +192,6 @@ fun LoginForm(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-
             OutlinedButton(
                 onClick = {},
                 modifier = Modifier
@@ -254,7 +252,7 @@ fun LoginForm(
             )
             Text(
                 modifier = Modifier.clickable {
-                    onItemClick(AppScreen.RegistrationScreen)
+                    event(LoginContract.UiEvent.OnOpenSignUp)
                 },
                 text = stringResource(R.string.register_now),
                 fontSize = 14.sp,

@@ -3,6 +3,7 @@ package com.apparel.offprice.features.authentication.presentation.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.apparel.offprice.features.authentication.data.AuthPage
 import com.apparel.offprice.features.authentication.presentation.screen.LoginContract.UiEffect.Navigate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -27,16 +28,9 @@ class LoginViewModel @Inject constructor(
     override fun event(event: LoginContract.UiEvent) {
         when (event) {
             LoginContract.UiEvent.OnCloseLogin -> {
-                updateState { it.copy(isLoginVisible = false)
-                }
                 viewModelScope.launch {
-                   // delay(300) // match your bottom sheet animation duration
                     _effect.emit(LoginContract.UiEffect.OnNavigateBack)
                 }
-            }
-
-            LoginContract.UiEvent.OnLoginClick -> {
-                updateState { it.copy(isLoginVisible = true) }
             }
 
             is LoginContract.UiEvent.OnNavigate -> {
@@ -46,6 +40,14 @@ class LoginViewModel @Inject constructor(
                     )
                 }
             }
+
+            LoginContract.UiEvent.OnBackClick -> {
+                viewModelScope.launch {
+                    updateState { it.copy(currentPage = AuthPage.LOGIN, isLoginScreen = true, isForgotScreen = false,
+                        isResetPasswordScreen = false) }
+                }
+            }
+
             is LoginContract.UiEvent.OnNavigateBack -> {
                 viewModelScope.launch {
                     _effect.emit(LoginContract.UiEffect.OnNavigateBack)
@@ -68,7 +70,54 @@ class LoginViewModel @Inject constructor(
                 updateState { it.copy(showPassword = !it.showPassword) }
             }
 
+            LoginContract.UiEvent.OnAnimationToggle -> {
+                if (state.value.playEnterAnimation) {
+                    updateState { it.copy(playEnterAnimation = false) }
+                }
+            }
 
+            LoginContract.UiEvent.OnOpenSignUp -> {
+                updateState { it.copy(isLoginScreen = false, isSignUpScreen = true, currentPage = AuthPage.SIGNUP) }
+            }
+
+            LoginContract.UiEvent.OnOpenLogin -> {
+                updateState { it.copy(isLoginScreen = true) }
+            }
+
+            is LoginContract.UiEvent.OnValueChangeName -> {
+                updateState { it.copy(name = event.value) }
+            }
+
+            is LoginContract.UiEvent.OnPhoneChange -> {
+                updateState {
+                    it.copy(
+                        phoneNumber = event.value,
+                        phoneError = if (!event.value.matches(Regex("\\d+"))) "Digits only" else null
+                    )
+                }
+            }
+
+            is LoginContract.UiEvent.SelectCountry -> {
+                updateState {
+                    it.copy(phoneCode = event.country, isCountryPickerOpen = false)
+                }
+            }
+
+            LoginContract.UiEvent.OnOpenForgot -> {
+                updateState {
+                    it.copy(
+                        isForgotScreen = true,
+                        isLoginScreen = false,
+                        isSignUpScreen = false,
+                        currentPage = AuthPage.FORGOT_PASSWORD
+                    )
+                }
+            }
+
+            LoginContract.UiEvent.OnOpenResetPassword -> {
+                updateState { it.copy(isResetPasswordScreen = true, isForgotScreen = false, isLoginScreen = false,
+                    currentPage = AuthPage.RESET_PASSWORD) }
+            }
         }
     }
 
