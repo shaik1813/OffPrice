@@ -23,13 +23,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.apparel.offprice.common.theme.surfaceColor
+import com.apparel.offprice.common.theme.tertiaryColor
 
 @Composable
 fun CheckoutProgressStepper(currentStep: Int) {
 
     Row(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .background(surfaceColor),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -41,7 +44,7 @@ fun CheckoutProgressStepper(currentStep: Int) {
         )
 
         Spacer(modifier = Modifier.width(2.dp))
-        StepDivider()
+        DashedDivider(modifier = Modifier.weight(1f))
         Spacer(modifier = Modifier.width(2.dp))
 
         StepItem(
@@ -51,7 +54,7 @@ fun CheckoutProgressStepper(currentStep: Int) {
         )
 
         Spacer(modifier = Modifier.width(2.dp))
-        StepDivider()
+        DashedDivider(modifier = Modifier.weight(1f))
         Spacer(modifier = Modifier.width(2.dp))
 
         StepItem(
