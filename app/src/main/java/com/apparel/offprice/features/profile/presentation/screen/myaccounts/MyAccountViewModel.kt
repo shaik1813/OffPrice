@@ -57,7 +57,7 @@ class MyAccountViewModel @Inject constructor(
             it.copy(
                 countryItemList = countryList,
                 languageItemList = languageList,
-                isGuestUser = false,
+                isGuestUser = true,
                 username = "Jack Harrington",
                 userEmail = "Jackharrington21@gmail.com",
                 accountSettingItem = accountSettingItems,
