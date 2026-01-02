@@ -2,6 +2,8 @@ package com.apparel.offprice.features.checkout.presentation.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.apparel.offprice.features.checkout.presentation.components.AddAddressFilter
+import com.apparel.offprice.features.checkout.presentation.components.AddressSheetMode
 import com.apparel.offprice.features.checkout.presentation.components.CheckoutStep
 import com.apparel.offprice.features.checkout.presentation.components.ShippingAddressFilter
 import com.apparel.offprice.features.checkout.presentation.components.sampleAddresses
@@ -40,11 +42,14 @@ class CheckOutViewModel @Inject constructor() : ViewModel(), CheckOutContract {
             }
 
             CheckOutContract.UiEvent.OnCleared -> TODO()
+
             is CheckOutContract.UiEvent.OnFilterSelected -> {
                 _state.update { current ->
 
-                    if (event.filter == ShippingAddressFilter.DELIVERY) {
-                        // ⬅ Coming BACK to delivery
+                    if (current.checkoutStep == CheckoutStep.PAYMENT) {
+                        //Toggle disabled once payment starts
+                        current
+                    } else if (event.filter == ShippingAddressFilter.DELIVERY) {
                         current.copy(
                             selectedFilter = event.filter,
                             checkoutStep =
@@ -54,13 +59,11 @@ class CheckOutViewModel @Inject constructor() : ViewModel(), CheckOutContract {
                                     CheckoutStep.ADDRESS
                         )
                     } else {
-                        // ⬅ Pickup — no checkout step logic
-                        current.copy(
-                            selectedFilter = event.filter
-                        )
+                        current.copy(selectedFilter = event.filter)
                     }
                 }
             }
+
 
             //SAVE ADDRESS
             CheckOutContract.UiEvent.OnSaveAddressClicked -> {
@@ -77,8 +80,11 @@ class CheckOutViewModel @Inject constructor() : ViewModel(), CheckOutContract {
 
             //PROCEED TO PAYMENT
             CheckOutContract.UiEvent.OnProceedToPaymentClicked -> {
-                viewModelScope.launch {
-                    _effect.emit(CheckOutContract.UiEffect.NavigateToPayment)
+                _state.update {
+                    it.copy(
+                        checkoutStep = CheckoutStep.PAYMENT,
+                        currentStep = 2
+                    )
                 }
             }
 
@@ -100,11 +106,23 @@ class CheckOutViewModel @Inject constructor() : ViewModel(), CheckOutContract {
                 }
             }
             CheckOutContract.UiEvent.OnOpenAddAddress -> {
-                //close address list first
                 _state.update {
                     it.copy(
-                        isAddressSheetOpen = false,
-                        isAddAddressSheetOpen = true
+                        isAddAddressSheetOpen = true,
+                        addressSheetMode = AddressSheetMode.ADD,
+                        editingAddress = null
+                    )
+                }
+            }
+
+            is CheckOutContract.UiEvent.OnEditAddress -> {
+                _state.update {
+                    it.copy(
+                        isAddAddressSheetOpen = true,
+                        addressSheetMode = AddressSheetMode.EDIT,
+                        editingAddress = event.address,
+                        selectedAddType = AddAddressFilter.valueOf(event.address.label.uppercase()),
+                        isDefaultAddress = false // or map from model
                     )
                 }
             }
@@ -112,6 +130,29 @@ class CheckOutViewModel @Inject constructor() : ViewModel(), CheckOutContract {
             CheckOutContract.UiEvent.OnCloseAddAddress -> {
                 _state.update {
                     it.copy(isAddAddressSheetOpen = false)
+                }
+            }
+
+            is CheckOutContract.UiEvent.OnAddAddressTypeSelected -> {
+                _state.update {
+                    it.copy(addAddressType = event.type)
+                }
+            }
+
+            is CheckOutContract.UiEvent.OnDefaultAddressChecked -> {
+                _state.update {
+                    it.copy(markAsDefault = event.checked)
+                }
+            }
+
+            CheckOutContract.UiEvent.OnSaveNewAddress -> {
+                // Simulate saving address
+                _state.update {
+                    it.copy(
+                        isAddAddressSheetOpen = false,
+                        isAddressSaved = true,
+                        selectedAddress = sampleAddresses.first() // replace with real one later
+                    )
                 }
             }
         }

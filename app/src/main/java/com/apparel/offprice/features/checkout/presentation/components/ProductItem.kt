@@ -93,11 +93,21 @@ enum class ShippingAddressFilter {
 
 enum class CheckoutStep {
     ADDRESS,
-    SUMMARY
+    SUMMARY,
+    PAYMENT
 }
 
 enum class AddAddressFilter {
-    Home, Office, Other
+    HOME, OFFICE, OTHER
+}
+
+enum class AddressSheetMode {
+    ADD,
+    EDIT
+}
+
+enum class PaymentMethod {
+    HSBC, NBD, COD
 }
 
 
@@ -123,7 +133,19 @@ val sampleAddresses = listOf(
         id = "2",
         label = "Office",
         name = "Sheikh Mohammed",
-        addressLine = "Flat 402, Al Zahra Building Al Nahda Street, Dubai, UAE",
+        addressLine = "Flat 704, Al Hafsa Building Al Nahda Street, Dubai, UAE",
         phone = "+971 436842594"
     )
+)
+
+data class AddAddressUiState(
+    val selectedType: AddAddressFilter = AddAddressFilter.HOME,
+    val name: String = "",
+    val phone: String = "",
+    val email: String = "",
+    val address: String = "",
+    val city: String = "",
+    val area: String = "",
+    val isDefault: Boolean = false,
+    val isLoading: Boolean = false
 )

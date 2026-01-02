@@ -1,6 +1,8 @@
 package com.apparel.offprice.features.checkout.presentation.screens
 
 import com.apparel.offprice.common.utils.UnidirectionalViewModel
+import com.apparel.offprice.features.checkout.presentation.components.AddAddressFilter
+import com.apparel.offprice.features.checkout.presentation.components.AddressSheetMode
 import com.apparel.offprice.features.checkout.presentation.components.AddressUiModel
 import com.apparel.offprice.features.checkout.presentation.components.CheckoutStep
 import com.apparel.offprice.features.checkout.presentation.components.ProductItem
@@ -24,13 +26,20 @@ interface CheckOutContract : UnidirectionalViewModel<
         val isAddressSheetOpen: Boolean = false,
         val isAddAddressSheetOpen: Boolean = false,
         val selectedAddress: AddressUiModel? = null,
+        val addAddressType: AddAddressFilter = AddAddressFilter.HOME,
+        val markAsDefault: Boolean = false,
+        val addressSheetMode: AddressSheetMode = AddressSheetMode.ADD,
+        val editingAddress: AddressUiModel? = null,
+        val selectedAddType: AddAddressFilter = AddAddressFilter.HOME,
+        val isDefaultAddress: Boolean = false,
+        val currentStep: Int = 1
     )
 
     sealed interface UiEvent {
         data class OnFilterSelected(val filter: ShippingAddressFilter) : UiEvent
         data object OnBackPressed : UiEvent
         data object OnCleared : UiEvent
-        object OnShipFeeClick : UiEvent
+        data object OnShipFeeClick : UiEvent
         data object OnSaveAddressClicked : UiEvent
         data object OnProceedToPaymentClicked : UiEvent
 
@@ -40,6 +49,10 @@ interface CheckOutContract : UnidirectionalViewModel<
         // Add address
         object OnOpenAddAddress : UiEvent
         object OnCloseAddAddress : UiEvent
+        data class OnEditAddress(val address: AddressUiModel) : UiEvent
+        data class OnAddAddressTypeSelected(val type: AddAddressFilter) : UiEvent
+        data class OnDefaultAddressChecked(val checked: Boolean) : UiEvent
+        data object OnSaveNewAddress : UiEvent
 
     }
 

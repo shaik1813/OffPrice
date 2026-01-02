@@ -19,7 +19,7 @@ import com.apparel.offprice.R
 
 
 @Composable
-fun TopBar(onBack: () -> Unit) {
+fun TopBar(title: String, onBack: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -35,7 +35,7 @@ fun TopBar(onBack: () -> Unit) {
         }
 
         Text(
-            text = stringResource(id = R.string.shipping_address_label),
+            text = title,
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.padding(start = 4.dp)
         )
@@ -45,5 +45,5 @@ fun TopBar(onBack: () -> Unit) {
 @Preview
 @Composable
 fun TopBarPreview() {
-    TopBar(onBack = {})
+    TopBar(title = "", onBack = {})
 }

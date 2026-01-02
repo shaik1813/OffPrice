@@ -38,20 +38,20 @@ fun AddressTypeRow(
             FilterChip(
                 modifier = Modifier.weight(1f),
                 text = stringResource(R.string.label_delivery_address_home),
-                selected = selectedFilter == AddAddressFilter.Home,
-                onClick = { onFilterSelected(AddAddressFilter.Home) },
+                selected = selectedFilter == AddAddressFilter.HOME,
+                onClick = { onFilterSelected(AddAddressFilter.HOME) },
             )
             FilterChip(
                 modifier = Modifier.weight(1f),
                 text = stringResource(R.string.label_office),
-                selected = selectedFilter == AddAddressFilter.Office,
-                onClick = { onFilterSelected(AddAddressFilter.Office) }
+                selected = selectedFilter == AddAddressFilter.OFFICE,
+                onClick = { onFilterSelected(AddAddressFilter.OFFICE) }
             )
             FilterChip(
                 modifier = Modifier.weight(1f),
                 text = stringResource(R.string.label_other),
-                selected = selectedFilter == AddAddressFilter.Other,
-                onClick = { onFilterSelected(AddAddressFilter.Other,) },
+                selected = selectedFilter == AddAddressFilter.OTHER,
+                onClick = { onFilterSelected(AddAddressFilter.OTHER) },
             )
         }
     }

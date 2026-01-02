@@ -217,6 +217,10 @@
     <string name="add_address">ADD ADDRESS</string>
     <string name="label_office">Office</string>
     <string name="label_other">Other</string>
+    <string name="label_add_new_address_1">Add New Address</string>
+    <string name="label_mark_as_default_address">Mark as default address</string>
+    <string name="label_edit_address">Edit Address</string>
+    <string name="label_payment">Payment</string>
 
     <!-- Categories -->
     <string name="label_categories">CATEGORIES</string>
