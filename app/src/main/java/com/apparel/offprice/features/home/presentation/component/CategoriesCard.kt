@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.home.presentation.screens.categories
+package com.apparel.offprice.features.home.presentation.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -28,11 +28,11 @@ fun CategoryCard(
             .clickable { onClick(item) },
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White     // ✔ Pure white
+            containerColor = Color.White
         ),
         border = BorderStroke(
             width = 1.dp,
-            color = Color(0xFFE0E0E0)        // ✔ Light grey outline (#E0E0E0)
+            color = Color(0xFFE0E0E0)
         )
     ) {
 

@@ -40,7 +40,7 @@ fun PLPCategoryHorizontalList(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp)
+            .padding(start = 16.dp, top = 12.dp)
     ) {
 
         items(categories, key = { it.id }) { item ->

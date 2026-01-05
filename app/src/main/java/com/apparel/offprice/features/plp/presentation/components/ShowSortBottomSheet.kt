@@ -39,7 +39,7 @@ import com.apparel.offprice.features.plp.presentation.screens.bestPrice.BestPric
 @Composable
 fun ShowSortBottomSheet(
     sortList: List<SortProductItem>,
-    onEvent: (BestPriceContract.UiEvent) -> Unit,
+    onClicked: (SortProductItem) -> Unit,
     onDismiss: () -> Unit
 ) {
     val sortSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -86,7 +86,7 @@ fun ShowSortBottomSheet(
                         selected = item.isSelected,
                         showDivider = index != sortList.lastIndex
                     ) {
-                        onEvent(BestPriceContract.UiEvent.OnSortSelected(item))
+                        onClicked(item)
                         onDismiss()
                     }
                 }

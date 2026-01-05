@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.home.presentation.screens.categories
+package com.apparel.offprice.features.home.presentation.screens.subcategory
 
 import com.apparel.offprice.common.utils.UnidirectionalViewModel
 import com.apparel.offprice.features.home.presentation.component.CategoryListItem
@@ -21,7 +21,7 @@ interface SubCategoryContract : UnidirectionalViewModel
 
     sealed interface UiEffect {
         object NavigateBack : UiEffect
-        data class NavigateToPLP(val categoryId: String) : UiEffect
+        data class NavigateToPLP(val category: String) : UiEffect
 
         object NavigateToSearch : UiEffect
         object NavigateToWishlist : UiEffect

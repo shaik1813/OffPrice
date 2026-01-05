@@ -61,8 +61,8 @@ fun InlineFilterRow(
         Spacer(Modifier.height(16.dp))
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             val filterType = filters[selectedIndex].type
             when (filterType) {

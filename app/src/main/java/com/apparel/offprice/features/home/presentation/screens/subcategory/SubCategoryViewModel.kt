@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.home.presentation.screens.categories
+package com.apparel.offprice.features.home.presentation.screens.subcategory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,7 +14,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SubCategoryViewModel @Inject constructor() : ViewModel(), SubCategoryContract {
+class SubCategoryViewModel @Inject constructor(
+
+) : ViewModel(), SubCategoryContract {
 
     private val _state = MutableStateFlow(SubCategoryContract.UiState())
     override val state: StateFlow<SubCategoryContract.UiState> = _state
@@ -22,13 +24,8 @@ class SubCategoryViewModel @Inject constructor() : ViewModel(), SubCategoryContr
     private val _effect = MutableSharedFlow<SubCategoryContract.UiEffect>()
     override val effect: SharedFlow<SubCategoryContract.UiEffect> = _effect
 
-    fun loadSubCategories(parentCategory: CategoryListItem) {
-        _state.update {
-            it.copy(
-                parentCategoryTitle = parentCategory.title,
-                subCategories = sampleSubCategoryList   // replace with API later
-            )
-        }
+    init {
+        loadSubCategories()
     }
 
     override fun event(event: SubCategoryContract.UiEvent) {
@@ -55,10 +52,18 @@ class SubCategoryViewModel @Inject constructor() : ViewModel(), SubCategoryContr
             is SubCategoryContract.UiEvent.OnSubCategoryClicked -> {
                 viewModelScope.launch {
                     _effect.emit(
-                        SubCategoryContract.UiEffect.NavigateToPLP(event.item.id)
+                        SubCategoryContract.UiEffect.NavigateToPLP(event.item.title)
                     )
                 }
             }
+        }
+    }
+
+    fun loadSubCategories() {
+        _state.update {
+            it.copy(
+                subCategories = sampleSubCategoryList   // replace with API later
+            )
         }
     }
 }

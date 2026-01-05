@@ -55,6 +55,7 @@ fun ProductCard(
     Column(
         modifier = modifier
             .fillMaxWidth()
+            .padding(horizontal = 8.dp)
     ) {
         Box(
             modifier = Modifier
