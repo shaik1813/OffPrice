@@ -32,7 +32,7 @@ fun AppBasicSearchField(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .background(Color(0xFFDAD9D7), shape = MaterialTheme.shapes.medium)
+            .background(Color(0xFFF7F7F7), shape = MaterialTheme.shapes.medium)
             .height(42.dp)
     ) {
         BasicTextField(

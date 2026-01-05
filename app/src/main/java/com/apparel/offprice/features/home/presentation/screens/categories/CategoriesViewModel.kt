@@ -2,6 +2,10 @@ package com.apparel.offprice.features.home.presentation.screens.categories
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.apparel.offprice.common.preference.UserPreferences
+import com.apparel.offprice.features.home.data.model.sampleLOneCategoryItem
+import com.apparel.offprice.features.home.presentation.component.sampleCategoryBannerImages
+import com.apparel.offprice.features.home.presentation.component.sampleCategoryList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,12 +13,15 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoriesViewModel @Inject constructor() : ViewModel(), CategoriesContract {
+class CategoriesViewModel @Inject constructor(
+    private val userPreferences: UserPreferences
+) : ViewModel(), CategoriesContract {
 
     private val _state = MutableStateFlow(CategoriesContract.UiState())
     override val state: StateFlow<CategoriesContract.UiState> = _state.asStateFlow()
@@ -22,19 +29,29 @@ class CategoriesViewModel @Inject constructor() : ViewModel(), CategoriesContrac
     private val _effectFlow = MutableSharedFlow<CategoriesContract.UiEffect>()
     override val effect: SharedFlow<CategoriesContract.UiEffect> = _effectFlow.asSharedFlow()
 
-    //Dummy data , replace with the actual API calls
-    private val allProducts = listOf(
-        "Shirt", "T Shirt", "Polo Shirts", "Night T-Shirts", "Shorts", "Shoes",
-        "Cargo Pants", "Luggage", "American Eagle Shirt"
-    )
+
+    init {
+        initialLoadingData()
+    }
+
+    private fun initialLoadingData() {
+        viewModelScope.launch {
+            val index = userPreferences.levelOneCategory.first()
+            _state.update {
+                it.copy(
+                    lOneCategoryList = sampleLOneCategoryItem,
+                    selectedIndex = index,
+                    categoryList = sampleCategoryList,
+                    bannerList = sampleCategoryBannerImages
+                )
+            }
+        }
+
+    }
 
 
     override fun event(event: CategoriesContract.UiEvent) {
         when (event) {
-
-            is CategoriesContract.UiEvent.OnQueryChanged -> {
-                //updateQuery(query = event.query)
-            }
 
             is CategoriesContract.UiEvent.OnCategorySelected -> {
                 _state.update { state ->
@@ -42,21 +59,7 @@ class CategoriesViewModel @Inject constructor() : ViewModel(), CategoriesContrac
                         selectedIndex = event.index
                     )
                 }
-            }
-
-            is CategoriesContract.UiEvent.Submit -> {
-                //submitSearch(query = event.query)
-            }
-
-            is CategoriesContract.UiEvent.RemoveRecent -> {
-                //removeRecent(query = event.query)
-            }
-
-
-            CategoriesContract.UiEvent.OnCleared -> {
-                viewModelScope.launch {
-                    _effectFlow.emit(CategoriesContract.UiEffect.NavigateToHome)
-                }
+                saveLevelOneCategory(event.index)
             }
 
             CategoriesContract.UiEvent.NavigateToSearch -> {
@@ -79,8 +82,12 @@ class CategoriesViewModel @Inject constructor() : ViewModel(), CategoriesContrac
                     )
                 }
             }
+        }
+    }
 
-            is CategoriesContract.UiEvent.OnRecentSearched -> TODO()
+    private fun saveLevelOneCategory(id: Int) {
+        viewModelScope.launch {
+            userPreferences.saveLevelOneCategory(id)
         }
     }
 }

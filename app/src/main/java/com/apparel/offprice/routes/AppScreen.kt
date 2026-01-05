@@ -43,7 +43,7 @@ sealed interface AppScreen {
     data class PDPScreen(val id: String) : AppScreen
 
     @Serializable
-    object PLPScreen : AppScreen
+    data class PLPScreen(val title: String) : AppScreen
 
     @Serializable
     object UserProfileScreen : AppScreen
