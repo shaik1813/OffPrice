@@ -1,5 +1,6 @@
 package com.apparel.offprice.features.plp.presentation.components
 
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -28,6 +29,7 @@ fun ShowFilterBottomSheet(
         dragHandle = null,
         modifier = Modifier
             .fillMaxWidth()
+            .fillMaxHeight()
             .navigationBarsPadding()
             .statusBarsPadding(),
         sheetMaxWidth = BottomSheetDefaults.SheetPeekHeight,
@@ -71,6 +73,7 @@ fun ShowPLPFilterBottomSheet(
         dragHandle = null,
         modifier = Modifier
             .fillMaxWidth()
+            .fillMaxHeight()
             .navigationBarsPadding()
             .statusBarsPadding(),
         sheetMaxWidth = BottomSheetDefaults.SheetPeekHeight,
