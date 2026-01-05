@@ -114,7 +114,7 @@ fun ImageSliderWithIndicatorPLP(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ImageSliderWithIndicatorPDP(
-    images: List<String>,
+    images: List<Int>,
     selectedIndicatorColor: Color = Color.White,
     unSelectedIndicatorColor: Color = Color.LightGray,
     modifier: Modifier = Modifier
@@ -152,7 +152,7 @@ fun ImageSliderWithIndicatorPDP(
                         .placeholder(R.drawable.icon_empty_product)
                         .build(),
                     contentDescription = null,
-                    contentScale = ContentScale.Crop,
+                    contentScale = ContentScale.Fit,
 
                     modifier = Modifier
                         .fillMaxWidth()

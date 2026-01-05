@@ -1,6 +1,5 @@
 package com.apparel.offprice.features.pdp.presentation.component
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -15,39 +14,47 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.apparel.offprice.R
 import com.apparel.offprice.common.component.carousel.ImageSliderWithIndicatorPDP
+import com.apparel.offprice.features.pdp.data.model.ProductDetailItem
 
 
 @Composable
-fun ProductImageSection(modifier : Modifier, onShareClick: () -> Unit, onClickSimilar: () -> Unit) {
-    val images = listOf(
-        "https://plus.unsplash.com/premium_photo-1669324357471-e33e71e3f3d8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dXJsfGVufDB8fDB8fHww",
-        "https://plus.unsplash.com/premium_photo-1690303193898-f9c721d0770b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHVybHxlbnwwfHwwfHx8MA%3D%3D",
-        "https://media.istockphoto.com/id/2231090399/photo/wifi-over-modern-american-houses-internet-connected-broadband-in-suburban-town-graphic.webp?a=1&b=1&s=612x612&w=0&k=20&c=GuzBrIeOTxYknGMxVgODdbvlUPAFFhUN6UeXTkKGamA=",
-        "https://media.istockphoto.com/id/2194166576/photo/three-accessibility-icon-on-computer-keyboard.webp?a=1&b=1&s=612x612&w=0&k=20&c=HwJp5u5WJ49JKrIz2de_E--J5Vidi4HRKFfWgfzwa-U="
-    )
-
-    Log.e("recomposeImg","everytime")
+fun ProductImageSection(
+    pdpdetail: ProductDetailItem,
+    modifier: Modifier,
+    onShareClick: () -> Unit,
+    onClickSimilar: () -> Unit
+) {
     Box(modifier = modifier) {
-        ImageSliderWithIndicatorPDP(images)
+        ImageSliderWithIndicatorPDP(pdpdetail.image)
 
         Image(
             painter = painterResource(id = R.drawable.back_icon),
             contentDescription = "App Icon",
-            modifier = Modifier.align(Alignment.TopStart).padding(16.dp)
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(16.dp)
         )
 
-        ViewSimilarCard(modifier =Modifier.align(Alignment.BottomEnd).padding(horizontal = 16.dp, vertical = 30.dp),
+        ViewSimilarCard(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(horizontal = 16.dp, vertical = 30.dp),
             onSimilarClick = {
                 onClickSimilar()
             })
 
-        Column(modifier = Modifier.align(Alignment.TopEnd).padding(16.dp)) {
+        Column(modifier = Modifier
+            .align(Alignment.TopEnd)
+            .padding(16.dp)) {
             Image(
                 painter = painterResource(id = R.drawable.share_icon),
                 contentDescription = "App Icon",
-                modifier = Modifier.size(40.dp).align(Alignment.End).clickable(){
-                    onShareClick()
-                }
+                modifier = Modifier
+                    .size(40.dp)
+                    .align(Alignment.End)
+                    .clickable() {
+                        onShareClick()
+                    }
             )
 
             Spacer(modifier = Modifier.size(12.dp))
@@ -55,7 +62,9 @@ fun ProductImageSection(modifier : Modifier, onShareClick: () -> Unit, onClickSi
             Image(
                 painter = painterResource(id = R.drawable.heart_pdpicon),
                 contentDescription = "App Icon",
-                modifier = Modifier.size(40.dp).align(Alignment.End)
+                modifier = Modifier
+                    .size(40.dp)
+                    .align(Alignment.End)
             )
 
             Spacer(modifier = Modifier.size(12.dp))
@@ -63,7 +72,9 @@ fun ProductImageSection(modifier : Modifier, onShareClick: () -> Unit, onClickSi
             Image(
                 painter = painterResource(id = R.drawable.cart_icon),
                 contentDescription = "share Icon",
-                modifier = Modifier.size(40.dp).align(Alignment.End)
+                modifier = Modifier
+                    .size(40.dp)
+                    .align(Alignment.End)
             )
         }
 

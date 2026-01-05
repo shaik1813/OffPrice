@@ -5,6 +5,7 @@ import com.apparel.offprice.features.home.data.model.Country
 import com.apparel.offprice.features.home.data.model.Language
 import com.apparel.offprice.features.home.data.model.countryList
 import com.apparel.offprice.features.home.data.model.languageList
+import com.apparel.offprice.features.pdp.data.model.ProductDetailItem
 
 interface PDPContract : UnidirectionalViewModel
 <PDPContract.UiState, PDPContract.UiEvent, PDPContract.UiEffect> {
@@ -16,14 +17,18 @@ interface PDPContract : UnidirectionalViewModel
         var isShareProductSheet: Boolean = false,
         var isSizeGuideSheet: Boolean = false,
         var isSimilarPLPSheet: Boolean = false,
+        var tabbySheet: Boolean = false,
+        var tamaraSheet: Boolean = false,
         val countryItemList: List<Country> = countryList,
         val languageItemList: List<Language> = languageList,
         val countrySelected: Country = countryItemList.first(),
         val languageSelected: Language = languageItemList.first(),
         val username: String = "Jack Harrington",
         val userEmail: String = "Jackharrington21@gmail.com",
-        val isLoading: Boolean = false
-    )
+        val isLoading: Boolean = false,
+        val pdpDetail: ProductDetailItem ?= null,
+        val selectedColorImg : Int = -1
+        )
 
     sealed interface UiEvent {
         data object onOpenBottomSheetLocation : UiEvent
@@ -37,13 +42,13 @@ interface PDPContract : UnidirectionalViewModel
         data object onOpenSizeGuideSheet : UiEvent
         data object onCloseSizeGuideSheet : UiEvent
         data object onOpenSimilarProductSheet : UiEvent
-
         data object onCloseSimilarProductSheet : UiEvent
-
+        data class onChooseColorImg(val value: Int) : UiEvent
+        data object onOpenTabbySheet : UiEvent
+        data object onCloseTabbySheet : UiEvent
     }
 
     sealed interface UiEffect {
-
         object onOpenBottomSheetLocation : UiEffect
         object onCloseBottomSheetLocation : UiEffect
 

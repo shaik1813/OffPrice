@@ -27,12 +27,26 @@ import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.backgroundColor
 import com.apparel.offprice.common.theme.inputTextColor
 import com.apparel.offprice.common.theme.nonreturnTxtColor
+import com.apparel.offprice.features.pdp.data.model.ProductDetailItem
+import com.apparel.offprice.features.pdp.presentation.screen.PDPContract
 
 
 @Composable
-fun ProductDescSection(modifier: Modifier, onSizeGuideClick: () -> Unit) {
+fun ProductDescSection(
+    pdpDetail: ProductDetailItem,
+    modifier: Modifier,
+    onSizeGuideClick: () -> Unit,
+    onTabbyInfoClick: () -> Unit,
+    event: (PDPContract.UiEvent) -> Unit,
+    state: PDPContract.UiState
+) {
 
-    Column(modifier.clip(shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)).background(Color.White).padding(horizontal = 16.dp, vertical = 12.dp)) {
+    Column(
+        modifier
+            .clip(shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
+            .background(Color.White)
+            .padding(horizontal = 16.dp, vertical = 12.dp)
+    ) {
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
 
@@ -44,7 +58,6 @@ fun ProductDescSection(modifier: Modifier, onSizeGuideClick: () -> Unit) {
                 modifier = Modifier.size(30.dp)
             )
         }
-
 
         Text(
             text = "Printed Shirt with Crew Neck and Short Sleeves",
@@ -83,11 +96,16 @@ fun ProductDescSection(modifier: Modifier, onSizeGuideClick: () -> Unit) {
             onSizeGuideClick()
         })
 
-        ColorSection()
+        ColorSection(
+            pdpDetail,
+            selectedColorImg = state.selectedColorImg,
+            onColorSelected = { img ->
+                event(PDPContract.UiEvent.onChooseColorImg(img))
+            })
 
         OfferCardUI()
 
-        PaymentCardUI()
+        PaymentCardUI(onTabbyClick = { onTabbyInfoClick() })
 
         FreeDeliveryUI()
 

@@ -2,6 +2,7 @@ package com.apparel.offprice.features.pdp.presentation.component
 
 import android.util.Log
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -73,12 +74,20 @@ fun SizeSelector(onSizeGuideClick: () -> Unit) {
                 fontSize = 16.sp
             )
 
-            Text(
-                text = stringResource(com.apparel.offprice.R.string.size_guide),
-                fontSize = 12.sp,
-                style = MaterialTheme.typography.titleSmall.copy(color = inputTextColor),
-                modifier = Modifier.clickable { onSizeGuideClick() },
-            )
+            Row(verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.clickable { onSizeGuideClick() }) {
+                Image(
+                    painter = painterResource(R.drawable.sizeguide_icon),
+                    contentDescription = null,
+                    modifier = Modifier.size(18.dp)
+                )
+                Text(
+                    text = stringResource(com.apparel.offprice.R.string.size_guide),
+                    fontSize = 12.sp,
+                    style = MaterialTheme.typography.titleSmall.copy(color = inputTextColor),
+                    modifier = Modifier.padding(start = 6.dp),
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -152,7 +161,7 @@ fun SizeCard(
         else -> sizeCardColor
     }
 
-    val textColor = if (isSelected) Color.Black else Color.Black
+    val textColor = if (isSelected) loginButtonColor else loginButtonColor
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
@@ -196,7 +205,7 @@ fun SizeCard(
                 text = "${sizeitem.stock} Left",
                 color = stockLeftColor,
                 fontSize = 10.sp,
-                style = MaterialTheme.typography.labelSmall
+                style = MaterialTheme.typography.titleMedium
             )
         }
     }
