@@ -25,6 +25,7 @@ import com.apparel.offprice.features.checkout.presentation.components.CheckoutPr
 import com.apparel.offprice.features.checkout.presentation.components.CheckoutStep
 import com.apparel.offprice.features.checkout.presentation.components.DeliveryTypeRow
 import com.apparel.offprice.features.checkout.presentation.components.OrderSummarySection
+import com.apparel.offprice.features.checkout.presentation.components.PaymentResult
 import com.apparel.offprice.features.checkout.presentation.components.PaymentScreenContent
 import com.apparel.offprice.features.checkout.presentation.components.PickupStoreSection
 import com.apparel.offprice.features.checkout.presentation.components.ShippingAddressFilter
@@ -40,6 +41,42 @@ fun ShippingAddressScreen(
 
 
     val (state, event, effect) = use(viewModel = viewModel)
+
+    // 🔹 PAYMENT RESULT (SUCCESS / FAILURE)
+    when (val result = state.paymentResult) {
+
+        is PaymentResult.Success -> {
+            PaymentSuccessScreen(
+                orderId = result.orderId,
+                address = state.selectedAddress,
+                onContinueShopping = {
+                    event(CheckOutContract.UiEvent.OnContinueShopping)
+                },
+                onMyOrders = {
+                    event(CheckOutContract.UiEvent.OnMyOrders)
+                },
+                onViewAll = {
+                    //event(CheckOutContract.UiEvent.OnViewAll)
+                }
+            )
+            return
+        }
+
+        is PaymentResult.Failure -> {
+            PaymentFailureScreen(
+                result = result,
+                onRetry = {
+                    event(CheckOutContract.UiEvent.OnRetryPayment)
+                }
+            )
+            return
+        }
+
+        null -> {
+            // continue normal checkout UI
+        }
+    }
+
 
     effect.CollectInLaunchedEffect {
         when (it) {
@@ -83,6 +120,8 @@ fun ShippingAddressScreen(
             }
         )
     }
+
+
 
     Column(
         modifier = Modifier
@@ -161,6 +200,8 @@ fun ShippingAddressScreen(
 
                             CheckoutStep.PAYMENT -> {
                                 PaymentScreenContent(
+                                    state = state,
+                                    event = event,
                                     orderSummary = { OrderSummarySection() },
                                     priceSummary = {
                                         PriceSummaryCard(

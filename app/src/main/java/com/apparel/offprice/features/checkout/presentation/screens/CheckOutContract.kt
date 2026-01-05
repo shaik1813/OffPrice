@@ -5,6 +5,8 @@ import com.apparel.offprice.features.checkout.presentation.components.AddAddress
 import com.apparel.offprice.features.checkout.presentation.components.AddressSheetMode
 import com.apparel.offprice.features.checkout.presentation.components.AddressUiModel
 import com.apparel.offprice.features.checkout.presentation.components.CheckoutStep
+import com.apparel.offprice.features.checkout.presentation.components.PaymentMethod
+import com.apparel.offprice.features.checkout.presentation.components.PaymentResult
 import com.apparel.offprice.features.checkout.presentation.components.ProductItem
 import com.apparel.offprice.features.checkout.presentation.components.ShippingAddressFilter
 
@@ -32,7 +34,15 @@ interface CheckOutContract : UnidirectionalViewModel<
         val editingAddress: AddressUiModel? = null,
         val selectedAddType: AddAddressFilter = AddAddressFilter.HOME,
         val isDefaultAddress: Boolean = false,
-        val currentStep: Int = 1
+        val currentStep: Int = 1,
+
+        // PAYMENT
+        val selectedSavedCardId: String? = null,
+        val selectedPayment: PaymentMethod = PaymentMethod.SAVED,
+        val expandedPayment: PaymentMethod? = PaymentMethod.SAVED,
+
+        // Result
+        val paymentResult: PaymentResult? = null
     )
 
     sealed interface UiEvent {
@@ -46,6 +56,7 @@ interface CheckOutContract : UnidirectionalViewModel<
         data object OnOpenAddressSheet : UiEvent
         data object OnCloseAddressSheet : UiEvent
         data class OnAddressSelected(val address: AddressUiModel) : UiEvent
+
         // Add address
         object OnOpenAddAddress : UiEvent
         object OnCloseAddAddress : UiEvent
@@ -53,6 +64,19 @@ interface CheckOutContract : UnidirectionalViewModel<
         data class OnAddAddressTypeSelected(val type: AddAddressFilter) : UiEvent
         data class OnDefaultAddressChecked(val checked: Boolean) : UiEvent
         data object OnSaveNewAddress : UiEvent
+
+        // PAYMENT
+        data class OnSavedCardSelected(val id: String) : UiEvent
+        data class OnPaymentMethodClicked(val method: PaymentMethod) : UiEvent
+
+        // Payment action
+        object OnPayClicked : UiEvent
+
+
+        // Result actions
+        object OnContinueShopping : UiEvent
+        object OnMyOrders : UiEvent
+        object OnRetryPayment : UiEvent
 
     }
 

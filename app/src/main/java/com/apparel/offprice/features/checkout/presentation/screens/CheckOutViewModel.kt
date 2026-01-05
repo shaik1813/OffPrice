@@ -5,9 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.apparel.offprice.features.checkout.presentation.components.AddAddressFilter
 import com.apparel.offprice.features.checkout.presentation.components.AddressSheetMode
 import com.apparel.offprice.features.checkout.presentation.components.CheckoutStep
+import com.apparel.offprice.features.checkout.presentation.components.PaymentMethod
+import com.apparel.offprice.features.checkout.presentation.components.PaymentResult
 import com.apparel.offprice.features.checkout.presentation.components.ShippingAddressFilter
 import com.apparel.offprice.features.checkout.presentation.components.sampleAddresses
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -155,6 +158,66 @@ class CheckOutViewModel @Inject constructor() : ViewModel(), CheckOutContract {
                     )
                 }
             }
+
+            //Payment
+            is CheckOutContract.UiEvent.OnSavedCardSelected -> {
+                _state.update {
+                    it.copy(selectedSavedCardId = event.id)
+                }
+            }
+
+            is CheckOutContract.UiEvent.OnPaymentMethodClicked -> {
+                _state.update {
+                    it.copy(
+                        selectedPayment = event.method,
+                        expandedPayment =
+                            if (it.expandedPayment == event.method) null
+                            else event.method
+                    )
+                }
+            }
+
+            CheckOutContract.UiEvent.OnPayClicked -> {
+                viewModelScope.launch {
+
+                    //Simulate payment
+                    delay(1500)
+
+                    val success = true // replace with real API result
+
+                    _state.update {
+                        it.copy(
+                            paymentResult =
+                                if (success)
+                                    PaymentResult.Success(orderId = "296724720911582")
+                                else
+                                    PaymentResult.Failure(orderId = "296724720911582")
+                        )
+                    }
+                }
+            }
+
+            //Payment Result
+            is CheckOutContract.UiEvent.OnRetryPayment -> {
+                _state.update {
+                    it.copy(
+                        paymentResult = null,
+                        checkoutStep = CheckoutStep.PAYMENT
+                    )
+                }
+            }
+
+            CheckOutContract.UiEvent.OnContinueShopping -> {
+                // Navigate to Home / Clear checkout stack
+            }
+
+            CheckOutContract.UiEvent.OnMyOrders -> {
+                // Navigate to Orders screen
+            }
+
+
+
+
         }
     }
 

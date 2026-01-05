@@ -107,9 +107,24 @@ enum class AddressSheetMode {
 }
 
 enum class PaymentMethod {
-    HSBC, NBD, COD
+    SAVED,
+    CARD,
+    TAMARA,
+    TABBY,
+    GOOGLE_PAY,
+    COD
 }
 
+
+sealed interface PaymentResult {
+    data class Success(
+        val orderId: String
+    ) : PaymentResult
+
+    data class Failure(
+        val orderId: String
+    ) : PaymentResult
+}
 
 data class AddressUiModel(
     val id: String,
