@@ -27,7 +27,8 @@ interface BestPriceContract : UnidirectionalViewModel<
         val filters: List<FilterGroup> = emptyList(),
         val inlineFilters: List<FilterGroup> = emptyList(),
         val selectedFilterType : FilterType = FilterType.BRAND,
-        val showScrollToTop: Boolean = false
+        val showScrollToTop: Boolean = false,
+        val isSaleBannerShown : Boolean = false
     )
 
     sealed interface UiEvent{

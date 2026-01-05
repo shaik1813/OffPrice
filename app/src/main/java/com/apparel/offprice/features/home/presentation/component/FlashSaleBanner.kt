@@ -49,7 +49,7 @@ fun FlashSaleBanner(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(120.dp)
+                .height(80.dp)
                 .padding(horizontal = 16.dp)
                 .clip(RoundedCornerShape(10.dp))
         ) {
@@ -59,17 +59,6 @@ fun FlashSaleBanner(
                 modifier = Modifier.fillMaxSize()
             ) { page ->
                 Box(modifier = Modifier.fillMaxSize()) {
-
-                    // IMAGE
-                    AsyncImage(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(safeImages[page])
-                            .crossfade(true)
-                            .build(),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
-                    )
 
                     // GRADIENT OVERLAY
                     Box(
@@ -84,6 +73,17 @@ fun FlashSaleBanner(
                                     )
                                 )
                             )
+                    )
+
+                    // IMAGE
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(safeImages[page])
+                            .crossfade(true)
+                            .build(),
+                        contentDescription = null,
+                        contentScale = ContentScale.FillWidth,
+                        modifier = Modifier.fillMaxSize()
                     )
                 }
             }

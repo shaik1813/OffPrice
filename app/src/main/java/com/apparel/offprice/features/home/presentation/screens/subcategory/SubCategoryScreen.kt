@@ -1,5 +1,4 @@
-package com.apparel.offprice.features.home.presentation.screens.categories
-
+package com.apparel.offprice.features.home.presentation.screens.subcategory
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -12,15 +11,19 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,59 +32,66 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.borderColor
+import com.apparel.offprice.common.theme.nonreturnTxtColor
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.home.presentation.component.CategoriesList
-import com.apparel.offprice.features.home.presentation.component.FlashSaleBanner
-import com.apparel.offprice.features.home.presentation.screens.home.CategoryPrimaryScrollableTabs
+import com.apparel.offprice.features.home.presentation.component.CircleIconButton
+import com.apparel.offprice.features.home.presentation.component.sampleSubCategoryList
+import com.apparel.offprice.features.plp.presentation.screens.bestPrice.BestPriceContract
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CategoriesScreen(
+fun SubCategoryScreen(
+    title: String,
     onNavigateToSearch: () -> Unit,
     onNavigateToWishlist: () -> Unit,
-    onNavigateToSubCategory: (String) -> Unit,
-    viewModel: CategoriesViewModel = hiltViewModel()
+    onBack: () -> Unit,
+    onNavigateToPLP: (String) -> Unit,
+    viewModel: SubCategoryViewModel = hiltViewModel()
 ) {
-
-    val (state, event, effect) = use(viewModel = viewModel)
+    val (state, event, effect) = use(viewModel)
 
     effect.CollectInLaunchedEffect {
         when (it) {
-            CategoriesContract.UiEffect.NavigateToHome -> {
-                //onNavigateToBack()
+            SubCategoryContract.UiEffect.NavigateBack -> onBack()
+
+            is SubCategoryContract.UiEffect.NavigateToPLP -> {
+                onNavigateToPLP(it.category)
             }
 
-            CategoriesContract.UiEffect.NavigateToSearch -> {
+            SubCategoryContract.UiEffect.NavigateToSearch -> {
                 onNavigateToSearch()
             }
 
-            CategoriesContract.UiEffect.NavigateToWishlist -> {
+            SubCategoryContract.UiEffect.NavigateToWishlist -> {
                 onNavigateToWishlist()
-            }
-
-            is CategoriesContract.UiEffect.NavigateToSubCategory -> {
-                onNavigateToSubCategory(it.title)
-            }
-
-            is CategoriesContract.UiEffect.ShowError -> {
-                TODO()
             }
         }
     }
 
-    Scaffold(
+    Scaffold (
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        text = stringResource(R.string.label_categories).uppercase(),
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.padding(start = 4.dp)
+                        text = title,
+                        style = MaterialTheme.typography.titleMedium
                     )
+                },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        event(SubCategoryContract.UiEvent.OnBackClicked)
+                    }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.arrow_left),
+                            contentDescription = "Back"
+                        )
+                    }
                 },
                 actions = {
                     Box(
@@ -94,7 +104,7 @@ fun CategoriesScreen(
                                 shape = CircleShape
                             )
                             .clickable {
-                                event.invoke(CategoriesContract.UiEvent.NavigateToSearch)
+                                event.invoke(SubCategoryContract.UiEvent.NavigateToSearch)
                             },
                         contentAlignment = Alignment.Center
                     ) {
@@ -115,7 +125,7 @@ fun CategoriesScreen(
                                 shape = CircleShape
                             )
                             .clickable {
-                                event.invoke(CategoriesContract.UiEvent.NavigateToWishlist)
+                                event.invoke(SubCategoryContract.UiEvent.NavigateToWishlist)
                             },
                         contentAlignment = Alignment.Center
                     ) {
@@ -131,42 +141,27 @@ fun CategoriesScreen(
                     containerColor = Color.White
                 ),
                 windowInsets = WindowInsets(0, 0, 0, 0),
+                modifier = Modifier.shadow(
+                    elevation = 6.dp,
+                    spotColor = Color.Black
+                )
             )
         },
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding(),
         contentWindowInsets = WindowInsets(bottom = 0),
-    ) { paddingValues ->
+    ){ paddingValues ->
         Column(
             modifier = Modifier
+                .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            if (state.lOneCategoryList.isNotEmpty() && state.selectedIndex >= 0) {
-                CategoryPrimaryScrollableTabs(
-                    categories = state.lOneCategoryList,
-                    selectedIndex = state.selectedIndex,
-                    isHome = false,
-                    onTabSelected = { index, item ->
-                        event.invoke(CategoriesContract.UiEvent.OnCategorySelected(index, item))
-                    }
-                )
-            }
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            if (state.bannerList.isNotEmpty()) {
-                FlashSaleBanner(
-                    images = state.bannerList.map { it.image },
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
+            // SUBCATEGORY LIST (REUSED)
             CategoriesList(
-                list = state.categoryList,
-                onItemClick = { item ->
-                    event(CategoriesContract.UiEvent.OnNavigateToSubCategory(item.title))
+                list = state.subCategories,
+                onItemClick = {
+                    event(SubCategoryContract.UiEvent.OnSubCategoryClicked(it))
                 }
             )
         }
