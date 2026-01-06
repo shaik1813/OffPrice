@@ -79,7 +79,7 @@
     <string name="filter_label">Filter</string>
     <string name="clear_all_label">ClearAll</string>
     <string name="recommended_label">Recommended</string>
-    <string name="you_may_also_like">YOU MAY ALSO LIKE</string>
+    <string name="more_from_brand">MORE FROM BRAND</string>
     <string name="view_all">View all</string>
     <string name="add_to_bag">ADD TO BAG</string>
     <string name="select_size">SELECT SIZE</string>
@@ -217,6 +217,17 @@
     <string name="add_address">ADD ADDRESS</string>
     <string name="label_office">Office</string>
     <string name="label_other">Other</string>
+    <string name="label_add_new_address_1">Add New Address</string>
+    <string name="label_mark_as_default_address">Mark as default address</string>
+    <string name="label_edit_address">Edit Address</string>
+    <string name="label_payment">Payment</string>
+    <string name="label_save_payment_option">Save Payment Option</string>
+    <string name="label_order_placed_successfully">Order Placed Successfully</string>
+    <string name="order_confirmation_email">we ll email you an order confirmation with details</string>
+    <string name="label_payment_method">Payment Method</string>
+    <string name="label_delivery_details">Delivery Details</string>
+    <string name="label_paid">Paid</string>
+    <string name="label_credit_debit_card">Credit / Debit Card</string>
 
     <!-- Categories -->
     <string name="label_categories">CATEGORIES</string>
@@ -231,6 +242,7 @@
     <string name="label_no_item_found">No Item Found</string>
     <string name="label_sort">SORT</string>
     <string name="label_move_to_bag">Move To Bag</string>
+    <string name="you_may_also_like">YOU MAY ALSO LIKE</string>
 
 
 </resources>

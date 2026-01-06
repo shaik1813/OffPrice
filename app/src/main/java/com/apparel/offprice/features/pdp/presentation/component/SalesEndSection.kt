@@ -47,7 +47,7 @@ fun TimeBox(
 ) {
     Card(
         shape = RoundedCornerShape(6.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.Black),
+        colors = CardDefaults.cardColors(containerColor = saleEndTextColor),
         modifier = Modifier.padding(horizontal = 3.dp, vertical = 6.5.dp)
     ) {
         Column(

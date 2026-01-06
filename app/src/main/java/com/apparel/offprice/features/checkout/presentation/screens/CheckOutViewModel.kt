@@ -2,10 +2,16 @@ package com.apparel.offprice.features.checkout.presentation.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.apparel.offprice.features.checkout.presentation.components.AddAddressFilter
+import com.apparel.offprice.features.checkout.presentation.components.AddressSheetMode
 import com.apparel.offprice.features.checkout.presentation.components.CheckoutStep
+import com.apparel.offprice.features.checkout.presentation.components.PaymentMethod
+import com.apparel.offprice.features.checkout.presentation.components.PaymentResult
 import com.apparel.offprice.features.checkout.presentation.components.ShippingAddressFilter
 import com.apparel.offprice.features.checkout.presentation.components.sampleAddresses
+import com.apparel.offprice.features.checkout.presentation.components.savedCards
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -40,11 +46,14 @@ class CheckOutViewModel @Inject constructor() : ViewModel(), CheckOutContract {
             }
 
             CheckOutContract.UiEvent.OnCleared -> TODO()
+
             is CheckOutContract.UiEvent.OnFilterSelected -> {
                 _state.update { current ->
 
-                    if (event.filter == ShippingAddressFilter.DELIVERY) {
-                        // ⬅ Coming BACK to delivery
+                    if (current.checkoutStep == CheckoutStep.PAYMENT) {
+                        //Toggle disabled once payment starts
+                        current
+                    } else if (event.filter == ShippingAddressFilter.DELIVERY) {
                         current.copy(
                             selectedFilter = event.filter,
                             checkoutStep =
@@ -54,13 +63,11 @@ class CheckOutViewModel @Inject constructor() : ViewModel(), CheckOutContract {
                                     CheckoutStep.ADDRESS
                         )
                     } else {
-                        // ⬅ Pickup — no checkout step logic
-                        current.copy(
-                            selectedFilter = event.filter
-                        )
+                        current.copy(selectedFilter = event.filter)
                     }
                 }
             }
+
 
             //SAVE ADDRESS
             CheckOutContract.UiEvent.OnSaveAddressClicked -> {
@@ -77,8 +84,11 @@ class CheckOutViewModel @Inject constructor() : ViewModel(), CheckOutContract {
 
             //PROCEED TO PAYMENT
             CheckOutContract.UiEvent.OnProceedToPaymentClicked -> {
-                viewModelScope.launch {
-                    _effect.emit(CheckOutContract.UiEffect.NavigateToPayment)
+                _state.update {
+                    it.copy(
+                        checkoutStep = CheckoutStep.PAYMENT,
+                        currentStep = 2
+                    )
                 }
             }
 
@@ -100,11 +110,23 @@ class CheckOutViewModel @Inject constructor() : ViewModel(), CheckOutContract {
                 }
             }
             CheckOutContract.UiEvent.OnOpenAddAddress -> {
-                //close address list first
                 _state.update {
                     it.copy(
-                        isAddressSheetOpen = false,
-                        isAddAddressSheetOpen = true
+                        isAddAddressSheetOpen = true,
+                        addressSheetMode = AddressSheetMode.ADD,
+                        editingAddress = null
+                    )
+                }
+            }
+
+            is CheckOutContract.UiEvent.OnEditAddress -> {
+                _state.update {
+                    it.copy(
+                        isAddAddressSheetOpen = true,
+                        addressSheetMode = AddressSheetMode.EDIT,
+                        editingAddress = event.address,
+                        selectedAddType = AddAddressFilter.valueOf(event.address.label.uppercase()),
+                        isDefaultAddress = false // or map from model
                     )
                 }
             }
@@ -114,6 +136,93 @@ class CheckOutViewModel @Inject constructor() : ViewModel(), CheckOutContract {
                     it.copy(isAddAddressSheetOpen = false)
                 }
             }
+
+            is CheckOutContract.UiEvent.OnAddAddressTypeSelected -> {
+                _state.update {
+                    it.copy(addAddressType = event.type)
+                }
+            }
+
+            is CheckOutContract.UiEvent.OnDefaultAddressChecked -> {
+                _state.update {
+                    it.copy(markAsDefault = event.checked)
+                }
+            }
+
+            CheckOutContract.UiEvent.OnSaveNewAddress -> {
+                // Simulate saving address
+                _state.update {
+                    it.copy(
+                        isAddAddressSheetOpen = false,
+                        isAddressSaved = true,
+                        selectedAddress = sampleAddresses.first() // replace with real one later
+                    )
+                }
+            }
+
+            //Payment
+            is CheckOutContract.UiEvent.OnSavedCardSelected -> {
+                _state.update {
+                    it.copy(selectedSavedCardId = event.id)
+                }
+            }
+
+            is CheckOutContract.UiEvent.OnPaymentMethodClicked -> {
+                _state.update {
+                    it.copy(
+                        selectedPayment = event.method,
+                        expandedPayment =
+                            if (it.expandedPayment == event.method) null else event.method,
+                        selectedSavedCardId =
+                            if (event.method == PaymentMethod.SAVED && it.selectedSavedCardId == null)
+                                savedCards.first().id
+                            else it.selectedSavedCardId
+                    )
+                }
+            }
+
+
+            CheckOutContract.UiEvent.OnPayClicked -> {
+                viewModelScope.launch {
+
+                    //Simulate payment
+                    delay(1500)
+
+                    val success = true // replace with real API result
+
+                    _state.update {
+                        it.copy(
+                            paymentResult =
+                                if (success)
+                                    PaymentResult.Success(orderId = "296724720911582")
+                                else
+                                    PaymentResult.Failure(orderId = "296724720911582")
+                        )
+                    }
+                }
+            }
+
+            //Payment Result
+            is CheckOutContract.UiEvent.OnRetryPayment -> {
+                _state.update {
+                    it.copy(
+                        paymentResult = null,
+                        checkoutStep = CheckoutStep.PAYMENT
+                    )
+                }
+            }
+
+            CheckOutContract.UiEvent.OnContinueShopping -> {
+                // Navigate to Home / Clear checkout stack
+            }
+
+            CheckOutContract.UiEvent.OnMyOrders -> {
+                // Navigate to Orders screen
+            }
+
+
+
+
         }
     }
 

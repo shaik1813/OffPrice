@@ -28,7 +28,8 @@ import com.apparel.offprice.R
 fun AddressRow(
     address: AddressUiModel,
     selected: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onEdit: (AddressUiModel) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -111,6 +112,9 @@ fun AddressRow(
                 painter = painterResource(R.drawable.icon_edit_address),
                 contentDescription = null,
                 modifier = Modifier.size(20.dp)
+                    .clickable {
+                        onEdit(address)
+                    }
             )
             Spacer(modifier = Modifier.width(12.dp))
             Icon(

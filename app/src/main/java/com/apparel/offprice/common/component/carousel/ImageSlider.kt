@@ -114,8 +114,8 @@ fun ImageSliderWithIndicatorPLP(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ImageSliderWithIndicatorPDP(
-    images: List<String>,
-    selectedIndicatorColor: Color = Color.DarkGray,
+    images: List<Int>,
+    selectedIndicatorColor: Color = Color.White,
     unSelectedIndicatorColor: Color = Color.LightGray,
     modifier: Modifier = Modifier
 ) {
@@ -130,8 +130,7 @@ fun ImageSliderWithIndicatorPDP(
     val screenHeight = remember(configuration) {
         configuration.screenHeightDp.dp / 2
     }
-//    BoxWithConstraints(modifier = modifier.height(screenHeight)) {
-    Box() {
+    Box {
         HorizontalPager(
             state = pagerState,
             modifier = Modifier
@@ -153,7 +152,7 @@ fun ImageSliderWithIndicatorPDP(
                         .placeholder(R.drawable.icon_empty_product)
                         .build(),
                     contentDescription = null,
-                    contentScale = ContentScale.Crop,
+                    contentScale = ContentScale.Fit,
 
                     modifier = Modifier
                         .fillMaxWidth()
@@ -168,13 +167,13 @@ fun ImageSliderWithIndicatorPDP(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
-                .padding(bottom = screenHeight * 0.02f)
+                .padding(bottom = screenHeight * 0.05f)
         ) {
             Row(
                 modifier = Modifier
                     .padding(horizontal = 2.dp)
                     .background(
-                        color = MaterialTheme.colorScheme.surface,
+                        color = Color(0x29141414),
                         shape = RoundedCornerShape(8.dp)
                     )
             ) {
@@ -185,7 +184,7 @@ fun ImageSliderWithIndicatorPDP(
                     Box(
                         modifier = Modifier
                             .padding(3.dp)
-                            .size(if (isSelected) 10.dp else 8.dp)
+                            .size(if (isSelected) 6.dp else 4.dp)
                             .clip(CircleShape)
                             .background(
                                 if (isSelected) selectedIndicatorColor else unSelectedIndicatorColor

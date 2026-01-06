@@ -93,13 +93,60 @@ enum class ShippingAddressFilter {
 
 enum class CheckoutStep {
     ADDRESS,
-    SUMMARY
+    SUMMARY,
+    PAYMENT
 }
 
 enum class AddAddressFilter {
-    Home, Office, Other
+    HOME, OFFICE, OTHER
 }
 
+enum class AddressSheetMode {
+    ADD,
+    EDIT
+}
+
+enum class PaymentMethod {
+    SAVED,
+    CARD,
+    TAMARA,
+    TABBY,
+    GOOGLE_PAY,
+    COD
+}
+
+
+sealed interface PaymentResult {
+    data class Success(
+        val orderId: String
+    ) : PaymentResult
+
+    data class Failure(
+        val orderId: String
+    ) : PaymentResult
+}
+
+data class SavedCardUiModel(
+    val id: String,
+    val title: String,
+    val subtitle: String,
+    val logo: Int
+)
+
+val savedCards = listOf(
+    SavedCardUiModel(
+        id = "hsbc",
+        title = "HSBC Ending with 6766",
+        subtitle = "CVV is not required for this secured card",
+        logo = R.drawable.hsbc_1
+    ),
+    SavedCardUiModel(
+        id = "nbd",
+        title = "Emirates NBD Ending with 2694",
+        subtitle = "",
+        logo = R.drawable.emirates_nbd_icon
+    )
+)
 
 data class AddressUiModel(
     val id: String,
@@ -123,7 +170,19 @@ val sampleAddresses = listOf(
         id = "2",
         label = "Office",
         name = "Sheikh Mohammed",
-        addressLine = "Flat 402, Al Zahra Building Al Nahda Street, Dubai, UAE",
+        addressLine = "Flat 704, Al Hafsa Building Al Nahda Street, Dubai, UAE",
         phone = "+971 436842594"
     )
+)
+
+data class AddAddressUiState(
+    val selectedType: AddAddressFilter = AddAddressFilter.HOME,
+    val name: String = "",
+    val phone: String = "",
+    val email: String = "",
+    val address: String = "",
+    val city: String = "",
+    val area: String = "",
+    val isDefault: Boolean = false,
+    val isLoading: Boolean = false
 )
