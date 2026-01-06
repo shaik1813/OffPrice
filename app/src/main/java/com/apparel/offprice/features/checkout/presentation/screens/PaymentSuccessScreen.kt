@@ -103,8 +103,10 @@ fun PaymentSuccessScreen(
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(10.dp)
                 ) {
-                    Text(stringResource(R.string.continue_shopping),
-                        style = MaterialTheme.typography.bodyMedium)
+                    Text(
+                        stringResource(R.string.continue_shopping),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
                 }
 
                 OutlinedButton(
@@ -112,8 +114,10 @@ fun PaymentSuccessScreen(
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(10.dp)
                 ) {
-                    Text(stringResource(R.string.label_my_orders),
-                        style = MaterialTheme.typography.bodyMedium)
+                    Text(
+                        stringResource(R.string.label_my_orders),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
                 }
             }
         }
@@ -129,13 +133,15 @@ fun PaymentSuccessScreen(
 
         // ✅ DELIVERY DETAILS
         item {
-            DeliveryDetailsSection(address = address ?: AddressUiModel(
-                name = "John Doe",
-                addressLine = "123 Main Street",
-                phone = "123-456-7890",
-                label = "Home",
-                id = "123456789"
-            ))
+            DeliveryDetailsSection(
+                address = address ?: AddressUiModel(
+                    name = "John Doe",
+                    addressLine = "123 Main Street",
+                    phone = "123-456-7890",
+                    label = "Home",
+                    id = "123456789"
+                )
+            )
         }
 
         item { Spacer(Modifier.height(24.dp)) }
@@ -206,7 +212,6 @@ fun DeliveryDetailsSection(address: AddressUiModel) {
         }
     }
 }
-
 
 
 @Composable
