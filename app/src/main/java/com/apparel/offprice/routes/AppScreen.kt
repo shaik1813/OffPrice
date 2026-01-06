@@ -22,7 +22,7 @@ sealed interface AppScreen {
     object OTPScreen : AppScreen
 
     @Serializable
-    object HomeScreen : AppScreen
+    data class HomeScreen(val navId:Int = 0) : AppScreen
 
     @Serializable
     object SearchScreen : AppScreen
