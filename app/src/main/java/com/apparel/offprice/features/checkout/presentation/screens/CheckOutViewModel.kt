@@ -9,6 +9,7 @@ import com.apparel.offprice.features.checkout.presentation.components.PaymentMet
 import com.apparel.offprice.features.checkout.presentation.components.PaymentResult
 import com.apparel.offprice.features.checkout.presentation.components.ShippingAddressFilter
 import com.apparel.offprice.features.checkout.presentation.components.sampleAddresses
+import com.apparel.offprice.features.checkout.presentation.components.savedCards
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -171,11 +172,15 @@ class CheckOutViewModel @Inject constructor() : ViewModel(), CheckOutContract {
                     it.copy(
                         selectedPayment = event.method,
                         expandedPayment =
-                            if (it.expandedPayment == event.method) null
-                            else event.method
+                            if (it.expandedPayment == event.method) null else event.method,
+                        selectedSavedCardId =
+                            if (event.method == PaymentMethod.SAVED && it.selectedSavedCardId == null)
+                                savedCards.first().id
+                            else it.selectedSavedCardId
                     )
                 }
             }
+
 
             CheckOutContract.UiEvent.OnPayClicked -> {
                 viewModelScope.launch {

@@ -126,6 +126,28 @@ sealed interface PaymentResult {
     ) : PaymentResult
 }
 
+data class SavedCardUiModel(
+    val id: String,
+    val title: String,
+    val subtitle: String,
+    val logo: Int
+)
+
+val savedCards = listOf(
+    SavedCardUiModel(
+        id = "hsbc",
+        title = "HSBC Ending with 6766",
+        subtitle = "CVV is not required for this secured card",
+        logo = R.drawable.hsbc_1
+    ),
+    SavedCardUiModel(
+        id = "nbd",
+        title = "Emirates NBD Ending with 2694",
+        subtitle = "",
+        logo = R.drawable.emirates_nbd_icon
+    )
+)
+
 data class AddressUiModel(
     val id: String,
     val label: String,          // Home / Office

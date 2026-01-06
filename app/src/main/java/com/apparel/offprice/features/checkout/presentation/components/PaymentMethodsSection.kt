@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,13 +18,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
-import androidx.compose.material3.SegmentedButtonDefaults.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -55,7 +53,7 @@ fun PaymentMethodsSection(
 
             // 🔹 SAVED PAYMENT
             PaymentOptionRow(
-                title = "Saved Payment Option",
+                title = stringResource(R.string.label_save_payment_option),
                 selected = state.selectedPayment == PaymentMethod.SAVED,
                 onClick = {
                     event(CheckOutContract.UiEvent.OnPaymentMethodClicked(PaymentMethod.SAVED))
@@ -70,7 +68,7 @@ fun PaymentMethodsSection(
 
             // 🔹 CREDIT / DEBIT CARD
             PaymentOptionRow(
-                title = "Credit / Debit Card",
+                title = stringResource(R.string.label_credit_debit_card),
                 trailingLogo = R.drawable.visa_icon,
                 selected = state.selectedPayment == PaymentMethod.CARD,
                 onClick = {
@@ -141,8 +139,6 @@ fun PaymentMethodsSection(
 }
 
 
-
-
 @Composable
 fun PaymentOptionRow(
     title: String,
@@ -184,29 +180,37 @@ fun PaymentOptionRow(
 
 
 @Composable
-fun SavedPaymentExpanded(state: CheckOutContract.UiState, event: (CheckOutContract.UiEvent) -> Unit) {
-    Column(Modifier.padding(12.dp)) {
+fun SavedPaymentExpanded(
+    state: CheckOutContract.UiState,
+    event: (CheckOutContract.UiEvent) -> Unit,
+    cards: List<SavedCardUiModel> = savedCards
+) {
+    Column(
+        modifier = Modifier.padding(12.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        cards.forEach { card ->
 
-        PaymentCardRow(
-            title = "HSBC Ending with 6766",
-            subtitle = "CVV is not required for this secured card",
-            logo = R.drawable.hsbc_1
-        )
+            val isSelected = state.selectedSavedCardId == card.id
 
-        Spacer(Modifier.height(12.dp))
-        PayButton(97.00, event)
-
-        Spacer(Modifier.height(8.dp))
-
-        PaymentCardRow(
-            title = "Emirates NBD Ending with 2694",
-            subtitle = "",
-            logo = R.drawable.emirates_nbd_icon
-        )
+            SavedCardRow(
+                card = card,
+                selected = isSelected,
+                onClick = {
+                    event(CheckOutContract.UiEvent.OnSavedCardSelected(card.id))
+                },
+                event = event
+            )
+        }
     }
 }
+
+
 @Composable
-fun CardPaymentExpanded(state: CheckOutContract.UiState, event: (CheckOutContract.UiEvent) -> Unit) {
+fun CardPaymentExpanded(
+    state: CheckOutContract.UiState,
+    event: (CheckOutContract.UiEvent) -> Unit
+) {
     Column(Modifier.padding(16.dp)) {
 
         OutlinedTextField(
@@ -238,8 +242,13 @@ fun CardPaymentExpanded(state: CheckOutContract.UiState, event: (CheckOutContrac
         PayButton(97.00, event)
     }
 }
+
 @Composable
-fun InstallmentExpanded(provider: String, state: CheckOutContract.UiState, event: (CheckOutContract.UiEvent) -> Unit) {
+fun InstallmentExpanded(
+    provider: String,
+    state: CheckOutContract.UiState,
+    event: (CheckOutContract.UiEvent) -> Unit
+) {
     Column(Modifier.padding(16.dp)) {
 
         Row(
@@ -272,56 +281,68 @@ fun InstallmentExpanded(provider: String, state: CheckOutContract.UiState, event
 }
 
 
-
-
-
-
-
-
-
-
-
 @Composable
-fun PaymentCardRow(
-    title: String,
-    subtitle: String,
-    logo: Int,
-    modifier: Modifier = Modifier
+fun SavedCardRow(
+    card: SavedCardUiModel,
+    selected: Boolean,
+    onClick: () -> Unit,
+    event: (CheckOutContract.UiEvent) -> Unit
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
-            .background(Color(0xFFF7F7F7))
-            .padding(12.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
+    Column {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp))
+                .background(
+                    if (selected) Color(0xFFF7F7F7) else Color.White
+                )
+                .border(
+                    width = 1.dp,
+                    color = if (selected) Color.Transparent else Color(0xFFE5E5E5),
+                    shape = RoundedCornerShape(8.dp)
+                )
+                .clickable { onClick() }
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
 
-        Column(modifier = Modifier.weight(1f)) {
-
-            Text(
-                text = title,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Medium
+            // 🔘 CHILD RADIO BUTTON
+            RadioButton(
+                selected = selected,
+                onClick = onClick
             )
 
-            if (subtitle.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(4.dp))
+            Spacer(Modifier.width(8.dp))
+
+            Column(modifier = Modifier.weight(1f)) {
+
                 Text(
-                    text = subtitle,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = Color.Gray
+                    text = card.title,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Medium
                 )
+
+                if (card.subtitle.isNotEmpty()) {
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        text = card.subtitle,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = Color.Gray
+                    )
+                }
             }
+
+            Image(
+                painter = painterResource(card.logo),
+                contentDescription = null,
+                modifier = Modifier.height(22.dp)
+            )
+        }
+        // ✅ PAY BUTTON ONLY FOR SELECTED CARD
+        if (selected) {
+            PayButton(amount = 97.00, event = event)
         }
 
-        Spacer(modifier = Modifier.width(12.dp))
-
-        Image(
-            painter = painterResource(logo),
-            contentDescription = null,
-            modifier = Modifier.height(22.dp)
-        )
     }
 }
 
