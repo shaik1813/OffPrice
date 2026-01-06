@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.loginButtonColor
 import com.apparel.offprice.common.theme.saleCardColor
-import com.apparel.offprice.features.plp.presentation.screens.ProductCardItems
-import com.apparel.offprice.features.plp.presentation.screens.sampleProducts
+import com.apparel.offprice.features.plp.data.model.ProductCardItems
+import com.apparel.offprice.features.plp.data.model.sampleProducts
 
 
 @Composable

@@ -34,7 +34,6 @@ import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.borderColor
 import com.apparel.offprice.features.pdp.data.model.TabbyPaymentInfo
 import com.apparel.offprice.features.pdp.data.model.tabbyPaymentDetail
-import com.apparel.offprice.features.plp.presentation.screens.ProductCardItems
 
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -35,81 +35,38 @@ import com.apparel.offprice.R
 @Composable
 fun ImageSliderForRowPLP(
     images: List<Int>,
-    selectedIndicatorColor: Color = Color.White,
-    unSelectedIndicatorColor: Color = Color.LightGray,
     modifier: Modifier = Modifier,
     placeholder: Int = R.drawable.icon_empty_product
 ) {
     val safeImages = images.ifEmpty { listOf(placeholder) }
-    val pagerState = rememberPagerState(pageCount = { safeImages.size })
+    val pagerState = rememberPagerState(pageCount = { 1 })
     val coroutineScope = rememberCoroutineScope()
-    
+
     Box(modifier = modifier) {
-        HorizontalPager(
-            state = pagerState,
+        Card(
             modifier = Modifier
-                .fillMaxWidth()
-        ) { page ->
-            Card(
+                .fillMaxSize(),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.Transparent
+            )
+        ) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(safeImages[0])
+                    .crossfade(true)
+                    .memoryCachePolicy(CachePolicy.ENABLED)
+                    .diskCachePolicy(CachePolicy.ENABLED)
+                    .error(placeholder)
+                    .placeholder(placeholder)
+                    .build(),
+                contentDescription = null,
+                contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .fillMaxSize(),
-                colors = CardDefaults.cardColors(
-                    containerColor = Color.Transparent
-                )
-            ) {
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(safeImages[page])
-                        .crossfade(true)
-                        .memoryCachePolicy(CachePolicy.ENABLED)
-                        .diskCachePolicy(CachePolicy.ENABLED)
-                        .error(placeholder)
-                        .placeholder(placeholder)
-                        .build(),
-                    contentDescription = null,
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .fillMaxSize(),
-                )
-            }
+            )
         }
-        if (safeImages.size > 1 && images.isNotEmpty()) { //shows only when there are more than one Images
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 16.dp)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .padding(horizontal = 2.dp)
-                        .background(
-                            color = Color.Transparent.copy(0.2f),
-                            shape = RoundedCornerShape(8.dp)
-                        )
-                ) {
-                    images.forEachIndexed { index, _ ->
-                        val isSelected = pagerState.currentPage == index
-                        Box(
-                            modifier = Modifier
-                                .padding(2.dp)
-                                .size(6.dp)
-                                .clip(CircleShape)
-                                .background(
-                                    if (isSelected) selectedIndicatorColor else unSelectedIndicatorColor
-                                )
-                                .clickable {
-                                    coroutineScope.launch {
-                                        pagerState.animateScrollToPage(index)
-                                    }
-                                }
-                        )
-                    }
-                }
-            }
-        }
+
+
     }
 }
 
