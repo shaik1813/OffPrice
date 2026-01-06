@@ -46,7 +46,8 @@ fun SuccessfullyAddedToBasketBottomSheet(
             .navigationBarsPadding(),
         dragHandle = null,
         shape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp),
-        sheetMaxWidth = BottomSheetDefaults.SheetPeekHeight
+        sheetMaxWidth = BottomSheetDefaults.SheetPeekHeight,
+        containerColor = MaterialTheme.colorScheme.background
     ) {
 
         Column(
@@ -60,11 +61,11 @@ fun SuccessfullyAddedToBasketBottomSheet(
 
             Image(
                 painter = painterResource(R.drawable.icon_successful),
-                contentDescription = "Basket Successfully added to basket"
+                contentDescription = ""
             )
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = "Successfully Added To Your Basket".uppercase(),
+                text = stringResource(R.string.success_add_bag).uppercase(),
                 style = MaterialTheme.typography.titleMedium
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -84,7 +85,7 @@ fun SuccessfullyAddedToBasketBottomSheet(
                 ) {
                     Text(
                         text = stringResource(R.string.label_continue_shopping),
-                        style = MaterialTheme.typography.titleMedium.copy(fontSize = 12.sp, letterSpacing = 0.2.sp),
+                        style = MaterialTheme.typography.titleMedium.copy(fontSize = 12.sp),
                         color = Color.Black
                     )
                 }
@@ -104,7 +105,7 @@ fun SuccessfullyAddedToBasketBottomSheet(
                 ) {
                     Text(
                         text = stringResource(R.string.label_go_to_bag),
-                        style = MaterialTheme.typography.titleMedium.copy(fontSize = 12.sp, letterSpacing = 0.2.sp)
+                        style = MaterialTheme.typography.titleMedium.copy(fontSize = 12.sp)
                     )
                 }
             }

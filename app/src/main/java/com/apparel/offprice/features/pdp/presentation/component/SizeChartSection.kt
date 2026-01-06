@@ -47,12 +47,12 @@ import com.apparel.offprice.features.pdp.data.model.SizeItem
 @Composable
 fun SizeSelector(onSizeGuideClick: () -> Unit) {
     val sizes = listOf(
-        SizeItem("S", 4),
-        SizeItem("M", 1),
-        SizeItem("L", 2),
-        SizeItem("XL", 0),  // Sold out example
-        SizeItem("XXL", 5),
-        SizeItem("XXXL", 0, disabled = false)
+        SizeItem(id ="1","S", 4),
+        SizeItem(id ="1","M", 1),
+        SizeItem(id ="1","L", 2),
+        SizeItem(id ="1","XL", 0),  // Sold out example
+        SizeItem(id ="1","XXL", 5),
+        SizeItem(id ="1","XXXL", 0, disabled = false)
     )
 
     var selectedSize by remember { mutableStateOf<String?>(null) }

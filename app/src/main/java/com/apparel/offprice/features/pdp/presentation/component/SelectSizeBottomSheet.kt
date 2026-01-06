@@ -78,12 +78,12 @@ fun SelectSizeBottomSheet(
                 Spacer(Modifier.height(24.dp))
 
                 val sizeList = listOf(
-                    SizeItem("S", 4),
-                    SizeItem("M", 1),
-                    SizeItem("L", 2),
-                    SizeItem("XL", 0),  // Sold out example
-                    SizeItem("XXL", 5),
-                    SizeItem("XXXL", 0, disabled = true)
+                    SizeItem(id = "1","S", 4),
+                    SizeItem(id = "2","M", 1),
+                    SizeItem(id = "3","L", 2),
+                    SizeItem(id = "4","XL", 0),  // Sold out example
+                    SizeItem(id = "5","XXL", 5),
+                    SizeItem(id = "6","XXXL", 0, disabled = true )
                 )
 
                 var selectedItem by remember { mutableStateOf(0) }
