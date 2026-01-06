@@ -23,7 +23,9 @@ import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
 
 @Composable
-fun AddressForm() {
+fun AddressForm(
+    prefill: AddressUiModel? = null
+) {
 
 
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
@@ -53,13 +55,13 @@ fun AddressForm() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        FormLabel("Area")
-        DropdownField("Adhen Village")
+        FormLabel("City")
+        DropdownField("Abu Dhabi")
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        FormLabel("City")
-        DropdownField("Abu Dhabi")
+        FormLabel("Area")
+        DropdownField("Adhen Village")
 
     }
 

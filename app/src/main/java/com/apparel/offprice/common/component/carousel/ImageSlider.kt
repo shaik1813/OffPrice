@@ -42,7 +42,7 @@ fun ImageSliderWithIndicatorPLP(
     selectedIndicatorColor: Color = Color.White,
     unSelectedIndicatorColor: Color = Color.LightGray,
     modifier: Modifier = Modifier,
-    placeholder: Int = R.drawable.icon_empty_product
+    placeholder: Int = R.drawable.empty_product_placeholder
 ) {
     val safeImages = images.ifEmpty { listOf(placeholder) }
     val pagerState = rememberPagerState(pageCount = { safeImages.size })

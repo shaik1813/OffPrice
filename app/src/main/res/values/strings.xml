@@ -212,6 +212,21 @@
     <string name="delivery_address">DELIVERY ADDRESS</string>
     <string name="label_order_summary">ORDER SUMMARY</string>
     <string name="enter_password">Enter password</string>
+    <string name="proceed_to_payment">PROCEED TO PAYMENT</string>
+    <string name="select_shipping_address">SELECT SHIPPING ADDRESS</string>
+    <string name="add_address">ADD ADDRESS</string>
+    <string name="label_office">Office</string>
+    <string name="label_other">Other</string>
+    <string name="label_add_new_address_1">Add New Address</string>
+    <string name="label_mark_as_default_address">Mark as default address</string>
+    <string name="label_edit_address">Edit Address</string>
+    <string name="label_payment">Payment</string>
+    <string name="label_save_payment_option">Save Payment Option</string>
+    <string name="label_order_placed_successfully">Order Placed Successfully</string>
+    <string name="order_confirmation_email">we ll email you an order confirmation with details</string>
+    <string name="label_payment_method">Payment Method</string>
+    <string name="label_delivery_details">Delivery Details</string>
+    <string name="label_paid">Paid</string>
 
     <!-- Categories -->
     <string name="label_categories">CATEGORIES</string>
@@ -222,6 +237,9 @@
     <string name="label_about_and_support">About &amp; Support</string>
     <string name="label_support_and_others">Support &amp; Others</string>
     <string name="label_best_price">Best Price</string>
+    <string name="label_view_product">View Products</string>
+    <string name="label_no_item_found">No Item Found</string>
+    <string name="label_sort">SORT</string>
 
 
 </resources>

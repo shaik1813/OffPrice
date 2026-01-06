@@ -44,7 +44,7 @@ import com.apparel.offprice.common.theme.inputTextColor
 import com.apparel.offprice.common.theme.nonreturnTxtColor
 import com.apparel.offprice.common.theme.productCardColor
 import com.apparel.offprice.common.utils.toComposeColorSafe
-import com.apparel.offprice.features.plp.presentation.screens.ProductCardItems
+import com.apparel.offprice.features.plp.data.model.ProductCardItems
 
 
 @Composable

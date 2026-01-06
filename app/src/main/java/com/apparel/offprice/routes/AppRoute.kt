@@ -12,12 +12,12 @@ import com.apparel.offprice.features.address.presentation.screen.DeliveryAddress
 import com.apparel.offprice.features.authentication.presentation.screen.LoginEmptyScreen
 import com.apparel.offprice.features.checkout.presentation.screens.ShippingAddressScreen
 import com.apparel.offprice.features.coupon.presentation.screen.CouponScreen
-import com.apparel.offprice.features.home.presentation.screens.categories.SubCategoryScreen
+import com.apparel.offprice.features.home.presentation.screens.subcategory.SubCategoryScreen
 import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
 import com.apparel.offprice.features.home.presentation.screens.search.SearchScreen
 import com.apparel.offprice.features.paymentCard.presentation.screen.PaymentCardScreen
 import com.apparel.offprice.features.pdp.presentation.screen.PDPScreen
-import com.apparel.offprice.features.plp.presentation.screens.PLPScreen
+import com.apparel.offprice.features.plp.presentation.screens.plpScreen.PLPScreen
 import com.apparel.offprice.features.profile.presentation.screen.profileDetails.ProfileDetailsScreen
 import com.apparel.offprice.features.profile.presentation.screen.profilePassword.ProfilePasswordScreen
 import com.apparel.offprice.features.profile.presentation.screen.profileSize.ProfileSizeScreen
@@ -129,7 +129,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                     navController.popBackStack()
                 },
                 onNavigateToPLP = {
-                    navController.navigate(AppScreen.PLPScreen)
+                    navController.navigate(AppScreen.PLPScreen(it))
                 }
             )
         }
@@ -141,7 +141,10 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.ShippingAddressScreen> {
-            ShippingAddressScreen(onBack = {}) { }
+            ShippingAddressScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onSaveAddress = {}
+            )
         }
 
         composable<AppScreen.GenderCategoryScreen> {
@@ -237,13 +240,21 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         composable<AppScreen.LogOutScreen> {}
 
         composable<AppScreen.PLPScreen> { backStack ->
+            val args = backStack.toRoute<AppScreen.PLPScreen>()
             PLPScreen(
                 onNavigateToSearch = {
                     navController.navigate(AppScreen.SearchScreen)
                 },
                 onNavigateToWishlist = {
                     navController.navigate(AppScreen.WishListScreen)
-                }
+                },
+                onBackPressed = {
+                    navController.popBackStack()
+                },
+                onNavigateToPDP = {
+                    navController.navigate(AppScreen.PDPScreen(it))
+                },
+                title = args.title
             )
         }
 

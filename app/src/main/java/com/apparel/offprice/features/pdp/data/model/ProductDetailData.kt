@@ -1,6 +1,6 @@
 package com.apparel.offprice.features.pdp.data.model
 
-import com.apparel.offprice.features.plp.presentation.screens.ProductCardItems
+import com.apparel.offprice.features.plp.data.model.ProductCardItems
 import com.apparel.offprice.R
 
 val productList : List<ProductCardItems> = listOf(
@@ -17,7 +17,8 @@ val productList : List<ProductCardItems> = listOf(
         discountPrice = "",
         rrp = "159.99",
         discount = "20",
-        delivery = "GET IT IN 90M",
+        delivery = "GET IT IN 90MINS",
+        deliveryType = "IN 90MINS",
         isWishlist = false
     )
 ,
@@ -34,7 +35,8 @@ val productList : List<ProductCardItems> = listOf(
         discountPrice = "",
         rrp = "159.99",
         discount = "20",
-        delivery = "GET IT IN 90M",
+        delivery = "GET IT IN 90MINS",
+        deliveryType = "IN 90MINS",
         isWishlist = false
     ),
     ProductCardItems(
@@ -50,7 +52,8 @@ val productList : List<ProductCardItems> = listOf(
         discountPrice = "",
         rrp = "159.99",
         discount = "20",
-        delivery = "GET IT IN 90M",
+        delivery = "GET IT IN 90MINS",
+        deliveryType = "IN 90MINS",
         isWishlist = false
     ),
     ProductCardItems(
@@ -66,7 +69,8 @@ val productList : List<ProductCardItems> = listOf(
         discountPrice = "",
         rrp = "159.99",
         discount = "20",
-        delivery = "GET IT IN 90M",
+        delivery = "GET IT IN 90MINS",
+        deliveryType = "IN 90MINS",
         isWishlist = false
     ),
     ProductCardItems(
@@ -82,7 +86,8 @@ val productList : List<ProductCardItems> = listOf(
         discountPrice = "",
         rrp = "159.99",
         discount = "20",
-        delivery = "GET IT IN 90M",
+        delivery = "GET IT IN 90MINS",
+        deliveryType = "IN 90MINS",
         isWishlist = false
     ))
 
