@@ -2,6 +2,7 @@ package com.apparel.offprice.features.pdp.presentation.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.apparel.offprice.features.pdp.data.model.pdpDetail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -23,6 +24,15 @@ class PDPViewModel @Inject constructor(
     private val _effectFlow = MutableSharedFlow<PDPContract.UiEffect>()
     override val effect: SharedFlow<PDPContract.UiEffect> = _effectFlow.asSharedFlow()
 
+    init {
+        setInitial()
+    }
+
+    fun setInitial() {
+        val item = pdpDetail
+        updateState { it.copy(pdpDetail = item) }
+    }
+
     override fun event(event: PDPContract.UiEvent) {
         when (event) {
 
@@ -40,43 +50,45 @@ class PDPViewModel @Inject constructor(
 
             PDPContract.UiEvent.onOpenAddToBagSheet -> {
                 viewModelScope.launch {
-                    updateState{it.copy(
-                        isSizeSelectSheet = false)
+                    updateState {
+                        it.copy(
+                            isSizeSelectSheet = false
+                        )
                     }
 
                     delay(350)
 
-                    updateState { it.copy( isAddBasketSheet = true ) }
+                    updateState { it.copy(isAddBasketSheet = true) }
                 }
             }
 
             PDPContract.UiEvent.onCloseAddToBagSheet -> {
                 viewModelScope.launch {
-                    updateState{it.copy( isAddBasketSheet = false)}
+                    updateState { it.copy(isAddBasketSheet = false) }
                 }
             }
 
             PDPContract.UiEvent.onOpenSizeSelectSheet -> {
                 viewModelScope.launch {
-                    updateState{it.copy( isSizeSelectSheet = true)}
+                    updateState { it.copy(isSizeSelectSheet = true) }
                 }
             }
 
             PDPContract.UiEvent.onCloseSizeSelectSheet -> {
                 viewModelScope.launch {
-                    updateState{it.copy( isSizeSelectSheet = false)}
+                    updateState { it.copy(isSizeSelectSheet = false) }
                 }
             }
 
             PDPContract.UiEvent.onOpenShareProductSheet -> {
                 viewModelScope.launch {
-                    updateState{it.copy( isShareProductSheet = true)}
+                    updateState { it.copy(isShareProductSheet = true) }
                 }
             }
 
             PDPContract.UiEvent.onCloseShareProductSheet -> {
                 viewModelScope.launch {
-                    updateState{it.copy( isShareProductSheet = false)}
+                    updateState { it.copy(isShareProductSheet = false) }
                 }
             }
 
@@ -104,6 +116,23 @@ class PDPViewModel @Inject constructor(
                 }
             }
 
+            is PDPContract.UiEvent.onChooseColorImg -> {
+                viewModelScope.launch {
+                    updateState { it.copy(selectedColorImg = event.value as Int) }
+                }
+            }
+
+            PDPContract.UiEvent.onOpenTabbySheet -> {
+                viewModelScope.launch {
+                    updateState { it.copy(tabbySheet = true) }
+                }
+            }
+
+            PDPContract.UiEvent.onCloseTabbySheet -> {
+                viewModelScope.launch {
+                    updateState { it.copy(tabbySheet = false) }
+                }
+            }
         }
     }
 
