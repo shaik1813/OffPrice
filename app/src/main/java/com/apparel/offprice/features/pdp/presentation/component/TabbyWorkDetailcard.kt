@@ -35,6 +35,7 @@ fun TabbyWorkDetailCard(tabbyData: TabbyPaymentInfo) {
             .fillMaxWidth()
             .background(Color.White, shape = RoundedCornerShape(8.dp))
             .padding(10.dp),
+
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -62,14 +63,15 @@ fun TabbyWorkDetailCard(tabbyData: TabbyPaymentInfo) {
                                 text = "$index",
                                 style = MaterialTheme.typography.titleMedium,
                                 fontSize = 10.sp,
-                                color = Color.Black
+                                color = Color.Black,
+                                modifier = Modifier.align(Alignment.Center)
                             )
                         }
 
                         Spacer(modifier = Modifier.size(6.dp))
 
                         Text(
-                            text = "${tabbyData.workDesc.get(index)}",
+                            text = "${item}",
                             style = MaterialTheme.typography.bodyMedium,
                             fontSize = 10.sp,
                             color = Color(0xFF36393)
