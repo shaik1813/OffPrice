@@ -27,7 +27,7 @@ import com.apparel.offprice.common.theme.loginButtonColor
 
 
 @Composable
-fun PaymentCardUI(onTabbyClick: () -> Unit) {
+fun PaymentCardUI(onTabbyClick: () -> Unit, onTamaraClick: ()-> Unit) {
 
     Row(
         modifier = Modifier
@@ -72,7 +72,9 @@ fun PaymentCardUI(onTabbyClick: () -> Unit) {
                     .clickable(interactionSource = null, indication = null){ onTabbyClick() })
 
             Image(painter = painterResource(R.drawable.tamara_payicon),
-                contentDescription = null, modifier = Modifier.padding(start = 8.dp).width(68.dp).height(21.dp))
+                contentDescription = null, modifier = Modifier.padding(start = 8.dp).width(68.dp).height(21.dp)
+                    .clickable(interactionSource = null, indication = null){ onTamaraClick() })
+
 
             Image(painter = painterResource(R.drawable.info_icon),
                 contentDescription = null, modifier = Modifier.padding(2.dp).size(14.dp))
