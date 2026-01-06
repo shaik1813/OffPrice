@@ -1,14 +1,11 @@
 package com.apparel.offprice.features.checkout.presentation.components
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -30,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
+import com.apparel.offprice.features.checkout.presentation.screens.CheckOutContract
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,7 +35,8 @@ fun AddressSelectionBottomSheet(
     selected: AddressUiModel?,
     onDismiss: () -> Unit,
     onAddressSelected: (AddressUiModel) -> Unit,
-    onAddAddressClick: () -> Unit
+    onAddAddressClick: () -> Unit,
+    event: (CheckOutContract.UiEvent) -> Unit
 ) {
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -67,15 +66,18 @@ fun AddressSelectionBottomSheet(
             }
         }
 
-        HorizontalDivider(Modifier.padding(horizontal = 16.dp),
-            color = Color.LightGray)
+        HorizontalDivider(
+            Modifier.padding(horizontal = 16.dp),
+            color = Color.LightGray
+        )
 
         LazyColumn {
             itemsIndexed(sampleAddresses) { index, address ->
                 AddressRow(
                     address = address,
                     selected = address.id == selected?.id,
-                    onClick = { onAddressSelected(address) }
+                    onClick = { onAddressSelected(address) },
+                    onEdit = { event(CheckOutContract.UiEvent.OnEditAddress(it)) }
                 )
 
                 if (index < sampleAddresses.lastIndex) {

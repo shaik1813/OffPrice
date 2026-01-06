@@ -217,6 +217,16 @@
     <string name="add_address">ADD ADDRESS</string>
     <string name="label_office">Office</string>
     <string name="label_other">Other</string>
+    <string name="label_add_new_address_1">Add New Address</string>
+    <string name="label_mark_as_default_address">Mark as default address</string>
+    <string name="label_edit_address">Edit Address</string>
+    <string name="label_payment">Payment</string>
+    <string name="label_save_payment_option">Save Payment Option</string>
+    <string name="label_order_placed_successfully">Order Placed Successfully</string>
+    <string name="order_confirmation_email">we ll email you an order confirmation with details</string>
+    <string name="label_payment_method">Payment Method</string>
+    <string name="label_delivery_details">Delivery Details</string>
+    <string name="label_paid">Paid</string>
 
     <!-- Categories -->
     <string name="label_categories">CATEGORIES</string>

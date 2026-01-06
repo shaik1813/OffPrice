@@ -25,6 +25,8 @@ import com.apparel.offprice.features.checkout.presentation.components.CheckoutPr
 import com.apparel.offprice.features.checkout.presentation.components.CheckoutStep
 import com.apparel.offprice.features.checkout.presentation.components.DeliveryTypeRow
 import com.apparel.offprice.features.checkout.presentation.components.OrderSummarySection
+import com.apparel.offprice.features.checkout.presentation.components.PaymentResult
+import com.apparel.offprice.features.checkout.presentation.components.PaymentScreenContent
 import com.apparel.offprice.features.checkout.presentation.components.PickupStoreSection
 import com.apparel.offprice.features.checkout.presentation.components.ShippingAddressFilter
 import com.apparel.offprice.features.checkout.presentation.components.TopBar
@@ -39,6 +41,42 @@ fun ShippingAddressScreen(
 
 
     val (state, event, effect) = use(viewModel = viewModel)
+
+    // 🔹 PAYMENT RESULT (SUCCESS / FAILURE)
+    when (val result = state.paymentResult) {
+
+        is PaymentResult.Success -> {
+            PaymentSuccessScreen(
+                orderId = result.orderId,
+                address = state.selectedAddress,
+                onContinueShopping = {
+                    event(CheckOutContract.UiEvent.OnContinueShopping)
+                },
+                onMyOrders = {
+                    event(CheckOutContract.UiEvent.OnMyOrders)
+                },
+                onViewAll = {
+                    //event(CheckOutContract.UiEvent.OnViewAll)
+                }
+            )
+            return
+        }
+
+        is PaymentResult.Failure -> {
+            PaymentFailureScreen(
+                result = result,
+                onRetry = {
+                    event(CheckOutContract.UiEvent.OnRetryPayment)
+                }
+            )
+            return
+        }
+
+        null -> {
+            // continue normal checkout UI
+        }
+    }
+
 
     effect.CollectInLaunchedEffect {
         when (it) {
@@ -60,20 +98,30 @@ fun ShippingAddressScreen(
             },
             onAddAddressClick = {
                 event(CheckOutContract.UiEvent.OnOpenAddAddress)
-            }
+            },
+            event = event
         )
     }
 
     if (state.isAddAddressSheetOpen) {
         AddAddressBottomSheet(
+            state = state,
             onDismiss = {
                 event(CheckOutContract.UiEvent.OnCloseAddAddress)
             },
+            onTypeSelected = {
+                event(CheckOutContract.UiEvent.OnAddAddressTypeSelected(it))
+            },
+            onDefaultChecked = {
+                event(CheckOutContract.UiEvent.OnDefaultAddressChecked(it))
+            },
             onSave = {
-                event(CheckOutContract.UiEvent.OnCloseAddAddress)
+                event(CheckOutContract.UiEvent.OnSaveNewAddress)
             }
         )
     }
+
+
 
     Column(
         modifier = Modifier
@@ -81,8 +129,14 @@ fun ShippingAddressScreen(
             .statusBarsPadding()
     ) {
 
-        // 🔹 FIXED TOP BAR
-        TopBar(onBack = onNavigateBack)
+        TopBar(
+            title =
+                if (state.checkoutStep == CheckoutStep.PAYMENT)
+                    stringResource(R.string.label_payment)
+                else
+                    stringResource(R.string.checkout),
+            onBack = onNavigateBack
+        )
 
         // 🔹 SCROLLABLE CONTENT
         LazyColumn(
@@ -92,19 +146,29 @@ fun ShippingAddressScreen(
         ) {
 
             item {
-                CheckoutProgressStepper(currentStep = 1)
+                CheckoutProgressStepper(
+                    currentStep =
+                        when (state.checkoutStep) {
+                            CheckoutStep.ADDRESS,
+                            CheckoutStep.SUMMARY -> 1
+
+                            CheckoutStep.PAYMENT -> 2
+                        }
+                )
             }
 
             item { Spacer(modifier = Modifier.height(16.dp)) }
 
             // ALWAYS SHOW TOGGLE
             item {
-                DeliveryTypeRow(
-                    selectedFilter = state.selectedFilter,
-                    onFilterSelected = {
-                        event(CheckOutContract.UiEvent.OnFilterSelected(it))
-                    }
-                )
+                if (state.checkoutStep != CheckoutStep.PAYMENT) {
+                    DeliveryTypeRow(
+                        selectedFilter = state.selectedFilter,
+                        onFilterSelected = {
+                            event(CheckOutContract.UiEvent.OnFilterSelected(it))
+                        }
+                    )
+                }
             }
 
             item { Spacer(modifier = Modifier.height(20.dp)) }
@@ -123,9 +187,7 @@ fun ShippingAddressScreen(
                             CheckoutStep.SUMMARY -> {
                                 Column {
                                     OrderSummarySection()
-
-                                    Spacer(modifier = Modifier.height(20.dp))
-
+                                    Spacer(Modifier.height(20.dp))
                                     PriceSummaryCard(
                                         isOpenShipFee = state.isOpenShipFee,
                                         priceData = priceData.apply { isAutoCoupon = true },
@@ -135,36 +197,53 @@ fun ShippingAddressScreen(
                                     )
                                 }
                             }
+
+                            CheckoutStep.PAYMENT -> {
+                                PaymentScreenContent(
+                                    state = state,
+                                    event = event,
+                                    orderSummary = { OrderSummarySection() },
+                                    priceSummary = {
+                                        PriceSummaryCard(
+                                            isOpenShipFee = false,
+                                            priceData = priceData,
+                                            OnShipFeeClick = {}
+                                        )
+                                    }
+                                )
+                            }
                         }
                     }
 
-                    // 🏬 PICKUP FLOW (NO SUMMARY EVER)
+                    // 🏬 PICKUP FLOW (UNCHANGED)
                     ShippingAddressFilter.PICKUPATSTORE -> {
                         PickupStoreSection()
                     }
                 }
             }
 
+
         }
 
 
-
         // 🔹 FIXED BOTTOM BAR
-        if (state.selectedFilter == ShippingAddressFilter.DELIVERY) {
+        if (
+            state.selectedFilter == ShippingAddressFilter.DELIVERY &&
+            state.checkoutStep != CheckoutStep.PAYMENT
+        ) {
             BottomBar(
                 onSave = {
                     if (state.checkoutStep == CheckoutStep.ADDRESS) {
                         event(CheckOutContract.UiEvent.OnSaveAddressClicked)
                     } else {
-                        //onProceedToPayment()
+                        event(CheckOutContract.UiEvent.OnProceedToPaymentClicked)
                     }
                 },
                 buttonText =
-                    if (state.checkoutStep == CheckoutStep.ADDRESS){
+                    if (state.checkoutStep == CheckoutStep.ADDRESS)
                         stringResource(R.string.label_verify_save_address)
-                    } else{
-                        stringResource(R.string.proceed_to_payment)
-                    },
+                    else
+                        stringResource(R.string.proceed_to_payment),
                 showArrow = state.checkoutStep == CheckoutStep.ADDRESS,
                 grandTotal = priceData.grandTotal,
                 onOpenAddressSheet = {
@@ -173,7 +252,6 @@ fun ShippingAddressScreen(
                 state = state
             )
         }
-
     }
 }
 
