@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -65,7 +66,7 @@ fun SimilarProductCard(
                 .clip(shape = MaterialTheme.shapes.small)
                 .background(brush = productCardColor)
         ) {
-            ImageSliderWithIndicatorPLP(
+            ImageSliderForRowPLP(
                 images = product.image,
                 modifier = Modifier
                     .fillMaxWidth()

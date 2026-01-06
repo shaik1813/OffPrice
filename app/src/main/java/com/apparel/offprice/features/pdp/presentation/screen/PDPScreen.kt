@@ -4,17 +4,20 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.common.utils.use
+import com.apparel.offprice.features.pdp.data.model.tabbyPaymentDetail
 import com.apparel.offprice.features.pdp.presentation.component.AddToBasketBottomSheet
 import com.apparel.offprice.features.pdp.presentation.component.ElevatedLine
 import com.apparel.offprice.features.pdp.presentation.component.PDPBottomView
@@ -24,30 +27,28 @@ import com.apparel.offprice.features.pdp.presentation.component.SelectSizeBottom
 import com.apparel.offprice.features.pdp.presentation.component.ShareProductBottomSheet
 import com.apparel.offprice.features.pdp.presentation.component.SimilarPLPSheet
 import com.apparel.offprice.features.pdp.presentation.component.SizeGuideScreen
+import com.apparel.offprice.features.pdp.presentation.component.TabbyDetailSheet
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PDPScreen(
-    productId: String?,
-    viewModel: PDPViewModel = hiltViewModel()) {
+    productId: String?, viewModel: PDPViewModel = hiltViewModel()
+) {
 
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp.dp
 
     val (state, event, effect) = use(viewModel = viewModel)
 
+
     if (state.isAddBasketSheet) {
 
-        AddToBasketBottomSheet(
-            sheetState = rememberModalBottomSheetState(),
-            onContinue = {
-                event(PDPContract.UiEvent.onCloseAddToBagSheet)
-            },
-            onDismiss = {
-                event(PDPContract.UiEvent.onCloseAddToBagSheet)
-            },
-            onGoToBag = {})
+        AddToBasketBottomSheet(sheetState = rememberModalBottomSheetState(), onContinue = {
+            event(PDPContract.UiEvent.onCloseAddToBagSheet)
+        }, onDismiss = {
+            event(PDPContract.UiEvent.onCloseAddToBagSheet)
+        }, onGoToBag = {})
     }
 
     if (state.isSizeSelectSheet) {
@@ -57,18 +58,16 @@ fun PDPScreen(
             onDismiss = { event(PDPContract.UiEvent.onCloseSizeSelectSheet) },
             onAddToBag = {
                 viewModel.event(PDPContract.UiEvent.onOpenAddToBagSheet)
-            }
-        )
+            })
     }
 
     if (state.isShareProductSheet) {
         ShareProductBottomSheet(
             sheetState = rememberModalBottomSheetState(),
-            onDismiss = { event(PDPContract.UiEvent.onCloseShareProductSheet) }
-        )
+            onDismiss = { event(PDPContract.UiEvent.onCloseShareProductSheet) })
     }
 
-    if(state.isSimilarPLPSheet){
+    if (state.isSimilarPLPSheet) {
         SimilarPLPSheet(
             sheetState = rememberModalBottomSheetState(),
             onDismiss = { event(PDPContract.UiEvent.onCloseSimilarProductSheet) },
@@ -76,39 +75,66 @@ fun PDPScreen(
             onProductClick = {})
     }
 
+    if (state.tabbySheet) {
+        TabbyDetailSheet (
+            sheetState = rememberModalBottomSheetState(),
+            paymentInfo = tabbyPaymentDetail,
+            onDismiss = { event(PDPContract.UiEvent.onCloseTabbySheet) })
+    }
 
     Box(
-        modifier = Modifier.fillMaxSize().systemBarsPadding().navigationBarsPadding()
+        modifier = Modifier
+            .fillMaxSize()
+            .systemBarsPadding()
+            .navigationBarsPadding()
     ) {
 
         if (!state.isSizeGuideSheet) {
-            LazyColumn{
-
+            LazyColumn {
                 item {
-                    ProductImageSection(
-                        onShareClick = { event(PDPContract.UiEvent.onOpenShareProductSheet) },
-                        onClickSimilar = {
-                            event(PDPContract.UiEvent.onOpenSimilarProductSheet)
-                        })
+                    Box() {
+                        ProductImageSection(
+                            state.pdpDetail!!,
+                            modifier = Modifier.align(Alignment.TopCenter),
+                            onShareClick = { event(PDPContract.UiEvent.onOpenShareProductSheet) },
+                            onClickSimilar = {
+                                event(PDPContract.UiEvent.onOpenSimilarProductSheet)
+                            })
+
+                        val configuration = LocalConfiguration.current
+
+                        val screenHeight = remember(configuration) {
+                            configuration.screenHeightDp.dp / 2.06f
+                        }
+
+                        ProductDescSection(
+                            state.pdpDetail,
+                            state = state,event = event,
+                            modifier = Modifier
+                                .align(Alignment.TopCenter)
+                                .padding(top = screenHeight),
+                            onTabbyInfoClick = {
+                                event(PDPContract.UiEvent.onOpenTabbySheet)
+                            },
+                            onSizeGuideClick = {
+                                event(PDPContract.UiEvent.onOpenSizeGuideSheet)
+                            })
+                    }
                 }
 
                 item {
-                    ProductDescSection(onSizeGuideClick = {
-                        event(PDPContract.UiEvent.onOpenSizeGuideSheet)
-                    })
+
                 }
             }
         }
 
         SizeGuideScreen(
             isVisible = state.isSizeGuideSheet,
-            onDismiss = { event(PDPContract.UiEvent.onCloseSizeGuideSheet) }
-        )
+            onDismiss = { event(PDPContract.UiEvent.onCloseSizeGuideSheet) })
 
         if (!state.isSizeGuideSheet) {
             Column(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
+                modifier = Modifier.align(Alignment.BottomCenter)
             ) {
 
                 ElevatedLine()

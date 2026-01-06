@@ -2,6 +2,7 @@ package com.apparel.offprice.features.pdp.presentation.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,7 +27,7 @@ import com.apparel.offprice.common.theme.loginButtonColor
 
 
 @Composable
-fun PaymentCardUI() {
+fun PaymentCardUI(onTabbyClick: () -> Unit) {
 
     Row(
         modifier = Modifier
@@ -60,13 +61,15 @@ fun PaymentCardUI() {
         }
 
 
-        Row(){
+        Row(verticalAlignment = Alignment.CenterVertically){
            Image(painter = painterResource(R.drawable.tabby_payicon),
                contentDescription = null,
-               modifier = Modifier.width(58.dp).height(23.dp))
+               modifier = Modifier.width(58.dp).height(23.dp)
+                   .clickable(interactionSource = null, indication = null){ onTabbyClick() })
 
             Image(painter = painterResource(R.drawable.info_icon),
-                contentDescription = null, modifier = Modifier.padding(2.dp).size(14.dp))
+                contentDescription = null, modifier = Modifier.padding(2.dp).size(14.dp)
+                    .clickable(interactionSource = null, indication = null){ onTabbyClick() })
 
             Image(painter = painterResource(R.drawable.tamara_payicon),
                 contentDescription = null, modifier = Modifier.padding(start = 8.dp).width(68.dp).height(21.dp))
