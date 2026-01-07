@@ -40,7 +40,7 @@ fun DeleteOptionDialog(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(
-                        color = MaterialTheme.colorScheme.surface,
+                        color = MaterialTheme.colorScheme.background,
                         shape = RoundedCornerShape(8.dp)
                     )
                     .padding(16.dp),

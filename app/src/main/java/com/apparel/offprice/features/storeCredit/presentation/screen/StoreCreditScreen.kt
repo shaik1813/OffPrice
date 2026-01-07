@@ -20,6 +20,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,11 +34,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
+import com.apparel.offprice.common.component.BottomSingleActionButton
 import com.apparel.offprice.common.component.DefaultTopAppBar
+import com.apparel.offprice.common.theme.borderColor
 import com.apparel.offprice.common.theme.buttonBorderColor
 import com.apparel.offprice.common.theme.nonreturnTxtColor
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
+import com.apparel.offprice.features.address.presentation.screen.DeliveryAddressContract
 import com.apparel.offprice.features.storeCredit.data.CreditType
 import com.apparel.offprice.features.storeCredit.data.StoreCreditFilter
 import com.apparel.offprice.features.storeCredit.data.StoreCreditTransaction
@@ -83,25 +87,31 @@ private fun StoreCreditContent(
         }
     }
 
-    Column(
+    Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .padding(WindowInsets.safeDrawing.asPaddingValues())
-            .background(MaterialTheme.colorScheme.surface),
-    ) {
-        DefaultTopAppBar(
-            title = stringResource(R.string.label_store_credit),
-            onBackPressed = { onBack() }
-        )
-        HorizontalDivider(thickness = 1.dp)
-        Spacer(modifier = Modifier.height(12.dp))
-        SummaryRow(state = state)
-        Spacer(modifier = Modifier.height(16.dp))
-        StoreCreditHistoryCard(
-            transactions = transactions,
-            selectedFilter = state.selectedFilter,
-            onFilterSelected = onFilterSelected,
-        )
+            .padding(WindowInsets.safeDrawing.asPaddingValues()),
+        topBar = {
+            DefaultTopAppBar(
+                title = stringResource(R.string.label_store_credit),
+                onBackPressed = { onBack() }
+            )
+        },
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            Spacer(modifier = Modifier.height(12.dp))
+            SummaryRow(state = state)
+            Spacer(modifier = Modifier.height(16.dp))
+            StoreCreditHistoryCard(
+                transactions = transactions,
+                selectedFilter = state.selectedFilter,
+                onFilterSelected = onFilterSelected,
+            )
+        }
     }
 }
 
@@ -157,8 +167,8 @@ private fun StoreCreditHistoryCard(
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
         shape = RoundedCornerShape(8.dp),
-        border = BorderStroke(1.dp, color = Color(0xFFE6E6E6)),
-        color = MaterialTheme.colorScheme.surface,
+        border = BorderStroke(1.dp, color = borderColor),
+        color = MaterialTheme.colorScheme.background,
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -197,7 +207,7 @@ private fun FilterRow(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),
         border = BorderStroke(1.dp, buttonBorderColor.copy(alpha = 0.4f)),
-        color = MaterialTheme.colorScheme.surface,
+        color = MaterialTheme.colorScheme.background,
     ) {
         Row(
             modifier = Modifier

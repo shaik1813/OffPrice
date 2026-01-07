@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.borderColor
 import com.apparel.offprice.common.theme.lineColor
 
 /**
@@ -88,7 +89,7 @@ fun CategoryDropdown(
                             .fillMaxSize()
                             .border(
                                 width = 0.75.dp,
-                                color = MaterialTheme.colorScheme.background,
+                                color = borderColor,
                                 shape = MaterialTheme.shapes.small
                             )
                             .padding(horizontal = 12.dp),

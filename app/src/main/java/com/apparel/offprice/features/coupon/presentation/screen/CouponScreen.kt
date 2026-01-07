@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -63,33 +64,41 @@ fun CouponScreen(
             }
         }
     }
-    Column(
+
+    Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .padding(WindowInsets.safeDrawing.asPaddingValues())
-    ) {
-        DefaultTopAppBar(title = stringResource(R.string.label_coupon)) {
-            event.invoke(CouponContract.UiEvent.OnBackPressed)
-        }
-        HorizontalDivider()
-        Spacer(modifier = Modifier.height(20.dp))
-        CouponContent(
-            coupons = state.coupons,
-            bankCoupons = state.bankCoupons,
-            onApplyCoupon = { code ->
-                event.invoke(CouponContract.UiEvent.OnApplyCoupon(code))
-            },
-            onTermsAndConditionsClicked = {
-                event.invoke(CouponContract.UiEvent.OnTermsAndConditionsClicked)
-            },
-            onCopyCode = {
-                event.invoke(CouponContract.UiEvent.OnCopyCode(it))
+            .padding(WindowInsets.safeDrawing.asPaddingValues()),
+        topBar = {
+            DefaultTopAppBar(title = stringResource(R.string.label_coupon)) {
+                event.invoke(CouponContract.UiEvent.OnBackPressed)
             }
-        )
-        if (state.isTermsAndConditionsDialog) {
-            TermsAndConditionsDialog(onDismiss = {
-                event.invoke(CouponContract.UiEvent.OnCleared)
-            })
+        },
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            Spacer(modifier = Modifier.height(20.dp))
+            CouponContent(
+                coupons = state.coupons,
+                bankCoupons = state.bankCoupons,
+                onApplyCoupon = { code ->
+                    event.invoke(CouponContract.UiEvent.OnApplyCoupon(code))
+                },
+                onTermsAndConditionsClicked = {
+                    event.invoke(CouponContract.UiEvent.OnTermsAndConditionsClicked)
+                },
+                onCopyCode = {
+                    event.invoke(CouponContract.UiEvent.OnCopyCode(it))
+                }
+            )
+            if (state.isTermsAndConditionsDialog) {
+                TermsAndConditionsDialog(onDismiss = {
+                    event.invoke(CouponContract.UiEvent.OnCleared)
+                })
+            }
         }
     }
 }

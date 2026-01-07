@@ -71,7 +71,7 @@ fun DeliveryAddressBottomSheet(
         dragHandle = null,
         shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
         sheetMaxWidth = BottomSheetDefaults.SheetPeekHeight,
-        containerColor = MaterialTheme.colorScheme.surface
+        containerColor = MaterialTheme.colorScheme.background
     ) {
         Column(
             modifier = Modifier
