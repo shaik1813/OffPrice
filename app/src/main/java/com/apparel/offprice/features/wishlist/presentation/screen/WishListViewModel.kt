@@ -2,11 +2,13 @@ package com.apparel.offprice.features.wishlist.presentation.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.apparel.offprice.features.plp.data.model.ProductCardItems
+import com.apparel.offprice.features.pdp.data.model.clothSize
 import com.apparel.offprice.features.plp.data.model.sampleProducts
-import com.apparel.offprice.features.wishlist.presentation.screen.WishListContract.UiEffect.*
+import com.apparel.offprice.features.wishlist.presentation.screen.WishListContract.UiEffect.OnBackPressed
+import com.apparel.offprice.features.wishlist.presentation.screen.WishListContract.UiEffect.OnNavigateToCart
+import com.apparel.offprice.features.wishlist.presentation.screen.WishListContract.UiEffect.OnNavigateToPDP
+import com.apparel.offprice.features.wishlist.presentation.screen.WishListContract.UiEffect.OnStartShopping
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -20,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WishListViewModel @Inject constructor(
 
-): ViewModel(),WishListContract {
+) : ViewModel(), WishListContract {
 
 
     private val _state = MutableStateFlow(WishListContract.UiState())
@@ -35,18 +37,21 @@ class WishListViewModel @Inject constructor(
 
 
     override fun event(event: WishListContract.UiEvent) {
-        when(event){
+        when (event) {
             is WishListContract.UiEvent.OnAddToBagClicked -> {
                 //save the item to cart Logic
-                openSuccessfulWishListDialog()
+                _state.update { it.copy(isAddToBagDialog = true) }
             }
+
             WishListContract.UiEvent.OnBackPressed -> {
                 viewModelScope.launch {
                     _effectFlow.emit(OnBackPressed)
                 }
             }
+
             WishListContract.UiEvent.OnStartShopping -> {
                 viewModelScope.launch {
+                    _state.update { it.copy(successfullyAddedToBag = false) }
                     _effectFlow.emit(OnStartShopping)
                 }
             }
@@ -59,35 +64,77 @@ class WishListViewModel @Inject constructor(
 
             is WishListContract.UiEvent.RemoveWishList -> {
                 //Remove the Item from WishList
-                dismissDialog()
+                _state.update { state ->
+                    state.copy(
+                        isWishListRemovalDialog = false,
+                        selectedRemovedProductId = "",
+                        wishListItems = sampleProducts.filter { it.id != event.productId },
+                        wishListCount = sampleProducts.filter { it.id != event.productId }.size
+                    )
+                }
             }
 
             WishListContract.UiEvent.OnNavigateToCart -> {
                 viewModelScope.launch {
+                    _state.update { it.copy(successfullyAddedToBag = false) }
                     _effectFlow.emit(OnNavigateToCart)
+                }
+            }
+
+            is WishListContract.UiEvent.OpenRemoveWishListDialog -> {
+                _state.update {
+                    it.copy(
+                        isWishListRemovalDialog = true,
+                        selectedRemovedProductId = event.productId
+                    )
+                }
+            }
+
+            WishListContract.UiEvent.OnDismissDialog -> {
+                _state.update {
+                    it.copy(
+                        isWishListRemovalDialog = false,
+                        selectedRemovedProductId = "",
+                        isAddToBagDialog = false
+                    )
+                }
+            }
+
+            WishListContract.UiEvent.DecreaseQty -> {
+                _state.update {
+                    it.copy(quantity = if (it.quantity > 1) it.quantity - 1 else 1)
+                }
+            }
+            WishListContract.UiEvent.IncreaseQty -> {
+                _state.update {
+                    it.copy(quantity = it.quantity + 1)
+                }
+            }
+            WishListContract.UiEvent.MoveToBag -> {
+                _state.update {
+                    it.copy(
+                        isAddToBagDialog = false,
+                        successfullyAddedToBag = true
+                    )
+                }
+            }
+            is WishListContract.UiEvent.SelectSize -> {
+                _state.update {
+                    it.copy(selectedSizeId = event.sizeId)
                 }
             }
         }
     }
 
-    fun loadSampleData(){
+    fun loadSampleData() {
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
-            delay(2000)
-            _state.update { it.copy(wishListCount = sampleProducts.size , wishListItems = sampleProducts, isLoading = false) }
+            _state.update {
+                it.copy(
+                    wishListCount = sampleProducts.size,
+                    wishListItems = sampleProducts,
+                    sizeListItem = clothSize
+                )
+            }
         }
-    }
-
-    fun openSuccessfulWishListDialog(){
-        _state.update { it.copy(isAddToBagDialog = true) }
-    }
-
-
-    fun openRemoveWishListDialog(productCardItems: ProductCardItems){
-        _state.update { it.copy(isWishListRemovalDialog = true) }
-    }
-
-    fun dismissDialog(){
-        _state.update { it.copy(isWishListRemovalDialog = false , isAddToBagDialog = false) }
     }
 }

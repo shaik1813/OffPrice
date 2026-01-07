@@ -11,6 +11,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -24,14 +25,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
-import com.apparel.offprice.common.component.home.PLPScreenShimmer
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
+import com.apparel.offprice.features.pdp.data.model.clothSize
 import com.apparel.offprice.features.plp.data.model.ProductCardItems
 import com.apparel.offprice.features.wishlist.presentation.component.EmptyWishListScreen
 import com.apparel.offprice.features.wishlist.presentation.component.RemoveWishListDialog
 import com.apparel.offprice.features.wishlist.presentation.component.SuccessfullyAddedToBasketBottomSheet
 import com.apparel.offprice.features.wishlist.presentation.component.WishList
+import com.apparel.offprice.features.wishlist.presentation.component.WishListSizeSelectionBottomSheet
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,14 +69,8 @@ fun WishListScreen(
             }
         }
     }
-    if (state.isLoading){
-        PLPScreenShimmer()
-    }else{
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(WindowInsets.safeDrawing.asPaddingValues())
-        ) {
+    Scaffold(
+        topBar = {
             TopAppBar(
                 title = {
                     Text(
@@ -106,7 +102,17 @@ fun WishListScreen(
                         spotColor = Color.Gray
                     ),
             )
-            HorizontalDivider(thickness = 1.dp)
+        },
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(WindowInsets.safeDrawing.asPaddingValues()),
+        contentWindowInsets = WindowInsets(bottom = 0),
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
             if (state.wishListCount == 0) {
                 //empty Wish List View
                 EmptyWishListScreen(onStartShoppingClicked = {
@@ -123,7 +129,7 @@ fun WishListScreen(
                         event.invoke(WishListContract.UiEvent.OnNavigateToPDP(product))
                     },
                     onWishListClicked = { product ->
-                        viewModel.openRemoveWishListDialog(productCardItems = product)
+                        event.invoke(WishListContract.UiEvent.OpenRemoveWishListDialog(product.id))
                     }
                 )
             }
@@ -131,19 +137,29 @@ fun WishListScreen(
             if (state.isWishListRemovalDialog) {
                 RemoveWishListDialog(
                     onDismiss = {
-                        viewModel.dismissDialog()
+                        event.invoke(WishListContract.UiEvent.OnDismissDialog)
                     },
                     onRemoveWishList = {
-                        event.invoke(WishListContract.UiEvent.RemoveWishList(productId = ""))
+                        event.invoke(WishListContract.UiEvent.RemoveWishList(state.selectedRemovedProductId))
                     }
                 )
             }
 
             if (state.isAddToBagDialog) {
-                //Show the BottomSheet
+                //Show the Size Selection BottomSheet
+                WishListSizeSelectionBottomSheet(
+                    state = state,
+                    onEvent = { event.invoke(it) },
+                    onDismiss = {
+                        event.invoke(WishListContract.UiEvent.OnDismissDialog)
+                    }
+                )
+            }
+
+            if (state.successfullyAddedToBag) {
                 SuccessfullyAddedToBasketBottomSheet(
                     onDismiss = {
-                        viewModel.dismissDialog()
+                        event.invoke(WishListContract.UiEvent.OnDismissDialog)
                     },
                     onContinueShoppingClicked = {
                         event.invoke(WishListContract.UiEvent.OnStartShopping)
