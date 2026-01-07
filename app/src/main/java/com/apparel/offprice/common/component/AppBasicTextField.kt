@@ -47,7 +47,7 @@ fun AppBasicTextField(
                         .fillMaxSize()
                         .border(
                             width = 0.75.dp,
-                            color = MaterialTheme.colorScheme.background,
+                            color = Color(0xFFB0B0B0),
                             shape = MaterialTheme.shapes.small
                         )
                         .padding(horizontal = 12.dp),

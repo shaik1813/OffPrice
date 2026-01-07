@@ -352,7 +352,9 @@ fun AccountUserScreen(
                 UserProfileCard(
                     name = state.username,
                     email = state.userEmail,
-                )
+                ){
+                    event.invoke(MyAccountContract.UiEvent.AccountItemClick(AppScreen.UserProfileScreen))
+                }
             }
 
             item {

@@ -34,6 +34,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -57,6 +58,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
+import com.apparel.offprice.common.component.BottomDoubleActionButton
+import com.apparel.offprice.common.component.DefaultTopAppBar
+import com.apparel.offprice.common.theme.backgroundColor
 import com.apparel.offprice.common.theme.inputTextColor
 import com.apparel.offprice.common.theme.loginButtonColor
 import com.apparel.offprice.common.theme.primaryColor
@@ -90,72 +94,30 @@ fun ProfileSizeScreen(
         }
     }
 
-    Box(
+    Scaffold(
+        topBar = {
+            DefaultTopAppBar(title = stringResource(R.string.label_mysize).uppercase()) {
+                event.invoke(ProfileSizeContract.UiEvent.OnBackPressed)
+            }
+        },
+        bottomBar = {
+            BottomDoubleActionButton(
+                leftButtonText = stringResource(R.string.label_clear_all).uppercase(),
+                rightButtonText = stringResource(R.string.label_save).uppercase(),
+                onLeftClick = { event.invoke(ProfileSizeContract.UiEvent.OnClearAll) },
+                onRightClick = { event.invoke(ProfileSizeContract.UiEvent.OnSave) }
+            )
+        },
         modifier = Modifier
             .fillMaxSize()
-            .padding(WindowInsets.safeDrawing.asPaddingValues())
-    ) {
+            .padding(WindowInsets.safeDrawing.asPaddingValues()),
+        contentWindowInsets = WindowInsets(bottom = 0),
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 100.dp)
+                .padding(paddingValues)
         ) {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "MY SIZE",
-                        style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.padding(start = 4.dp)
-                    )
-                },
-                navigationIcon = {
-                    Icon(
-                        painter = painterResource(R.drawable.back_icon),
-                        contentDescription = "Arrow back",
-                        modifier = Modifier
-                            .clickable {
-                                event.invoke(ProfileSizeContract.UiEvent.OnBackPressed)
-                            }
-                            .padding(8.dp)
-                    )
-                },
-                actions = {
-                    Row(
-                        modifier = Modifier.padding(horizontal = 4.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "English",
-                            style = MaterialTheme.typography.titleLarge.copy(
-                                fontSize = 13.sp
-                            ),
-                            color = saleCardColor
-                        )
-                        VerticalDivider(
-                            modifier = Modifier
-                                .height(16.dp)
-                                .padding(horizontal = 4.dp)
-                        )
-                        Text(
-                            text = "العربية",
-                            style = MaterialTheme.typography.labelMedium.copy(
-                                fontSize = 13.sp
-                            ),
-                            color = saleCardColor
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = secondaryColor
-                ),
-                windowInsets = WindowInsets(0, 0, 0, 0),
-                modifier = Modifier
-                    .shadow(
-                        elevation = 0.52.dp,
-                        spotColor = Color(0xFFCCCCCC)
-                    )
-            )
-            HorizontalDivider()
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -250,7 +212,7 @@ fun ProfileSizeScreen(
                         selectedSize = state.selectedClothingSize,
                         sizeList = state.clothingSize,
                         onClick = { size ->
-                            event.invoke(ProfileSizeContract.UiEvent.OnClothingSizeSelected( size))
+                            event.invoke(ProfileSizeContract.UiEvent.OnClothingSizeSelected(size))
                         }
                     )
 
@@ -259,7 +221,7 @@ fun ProfileSizeScreen(
                         selectedSize = state.selectedDenimSize,
                         sizeList = state.denimSize,
                         onClick = { size ->
-                            event.invoke(ProfileSizeContract.UiEvent.OnDenimSizeSelected( size))
+                            event.invoke(ProfileSizeContract.UiEvent.OnDenimSizeSelected(size))
                         }
                     )
 
@@ -267,75 +229,13 @@ fun ProfileSizeScreen(
                         title = stringResource(R.string.label_shoe_size),
                         selectedSize = state.selectedShoeSize,
                         sizeList = state.shoeSize,
-                        onClick = {  size ->
-                            event.invoke(ProfileSizeContract.UiEvent.OnShoeSizeSelected( size))
+                        onClick = { size ->
+                            event.invoke(ProfileSizeContract.UiEvent.OnShoeSizeSelected(size))
                         }
                     )
                 }
             }
-        }
 
-        // Bottom Action Buttons
-        Card(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .shadow(
-                    elevation = 14.dp,
-                    spotColor = Color(0x17000000)
-                ),
-            colors = CardDefaults.cardColors(containerColor = secondaryColor),
-            shape = RoundedCornerShape(topStart = 0.dp, topEnd = 0.dp)
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(46.dp)
-                        .border(
-                            width = 1.dp,
-                            color = saleCardColor,
-                            shape = RoundedCornerShape(6.dp)
-                        )
-                        .clickable { event.invoke(ProfileSizeContract.UiEvent.OnClearAll) },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = stringResource(R.string.label_clear_all),
-                        style = MaterialTheme.typography.labelLarge.copy(
-                            fontSize = 14.sp,
-                            letterSpacing = 0.sp
-                        ),
-                        color = saleCardColor
-                    )
-                }
-
-                TextButton(
-                    onClick = { event.invoke(ProfileSizeContract.UiEvent.OnSave) },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(46.dp),
-                    shape = RoundedCornerShape(6.dp),
-                    colors = androidx.compose.material3.ButtonDefaults.textButtonColors(
-                        containerColor = saleCardColor,
-                        contentColor = secondaryColor
-                    )
-                ) {
-                    Text(
-                        text = stringResource(R.string.label_save).uppercase(),
-                        style = MaterialTheme.typography.labelLarge.copy(
-                            fontSize = 14.sp,
-                            letterSpacing = 0.sp
-                        ),
-                        color = secondaryColor
-                    )
-                }
-            }
         }
     }
 }
@@ -359,7 +259,7 @@ fun GenderChip(
                 if (isSelected) {
                     Modifier.border(
                         width = 0.6.dp,
-                        color = tertiaryColor,
+                        color = secondaryColor,
                         shape = RoundedCornerShape(6.dp)
                     )
                 } else {
@@ -524,7 +424,7 @@ fun SizeChip(
             },
         shape = RoundedCornerShape(6.dp),
         colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) primaryColor else secondaryColor
+            containerColor = if (isSelected) primaryColor else backgroundColor
         ),
         border = BorderStroke(
             width = 1.dp,
@@ -540,7 +440,7 @@ fun SizeChip(
                 style = MaterialTheme.typography.bodyMedium.copy(
                     fontSize = 12.sp
                 ),
-                color = if (isSelected) secondaryColor else primaryColor,
+                color = if (isSelected) backgroundColor else primaryColor,
                 textAlign = TextAlign.Center
             )
         }
