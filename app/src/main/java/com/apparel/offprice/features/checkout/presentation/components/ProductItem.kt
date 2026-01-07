@@ -27,7 +27,7 @@ data class PriceData(
     val storePointAmount: Double,
     val grandTotal: Double,
     val points: String,
-    var isAutoCoupon : Boolean
+    var isAutoCoupon: Boolean
 )
 
 
@@ -158,6 +158,7 @@ data class AddressUiModel(
     val shortText: String
         get() = "$label · $addressLine"
 }
+
 val sampleAddresses = listOf(
     AddressUiModel(
         id = "1",
@@ -185,4 +186,42 @@ data class AddAddressUiState(
     val area: String = "",
     val isDefault: Boolean = false,
     val isLoading: Boolean = false
+)
+
+
+//PickUpStore
+data class PickupStore(
+    val id: String,
+    val name: String,
+    val address: String,
+    val timing: String,
+    val distanceKm: String,
+    val image: Int
+)
+
+val samplePickupStores = listOf(
+    PickupStore(
+        id = "1",
+        name = "World Trade Center - Abu Dhabi",
+        address = "World Trade Center - Khalifa Bin Zayed The First St - Zone 1 E2 - Abu Dhabi",
+        timing = "10:00 - 22:00 (Sat/Sun 10:00-12:00)",
+        distanceKm = "117.5 KM",
+        image = R.drawable.mall_1
+    ),
+    PickupStore(
+        id = "2",
+        name = "Khalidiya Mall",
+        address = "World Trade Center - Khalifa Bin Zayed The First St - Zone 1 E2 - Abu Dhabi",
+        timing = "10:00 - 22:00 (Sat/Sun 10:00-12:00)",
+        distanceKm = "117.5 KM",
+        image = R.drawable.mall_2
+    ),
+    PickupStore(
+        id = "3",
+        name = "Ramili Mall",
+        address = "World Trade Center - Khalifa Bin Zayed The First St - Zone 1 E2 - Abu Dhabi",
+        timing = "10:00 - 22:00 (Sat/Sun 10:00-12:00)",
+        distanceKm = "117.5 KM",
+        image = R.drawable.mall_3
+    )
 )

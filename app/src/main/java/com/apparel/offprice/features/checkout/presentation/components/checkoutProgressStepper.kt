@@ -21,10 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.surfaceColor
-import com.apparel.offprice.common.theme.tertiaryColor
 
 @Composable
 fun CheckoutProgressStepper(currentStep: Int) {
@@ -38,7 +39,7 @@ fun CheckoutProgressStepper(currentStep: Int) {
     ) {
 
         StepItem(
-            label = "Shipping",
+            label = stringResource(R.string.label_address),
             icons = shippingIcons,
             state = getStepState(currentStep, 1)
         )
@@ -48,7 +49,7 @@ fun CheckoutProgressStepper(currentStep: Int) {
         Spacer(modifier = Modifier.width(2.dp))
 
         StepItem(
-            label = "Payment",
+            label = stringResource(R.string.label_payment),
             icons = paymentIcons,
             state = getStepState(currentStep, 2)
         )
@@ -58,7 +59,7 @@ fun CheckoutProgressStepper(currentStep: Int) {
         Spacer(modifier = Modifier.width(2.dp))
 
         StepItem(
-            label = "Confirmation",
+            label = stringResource(R.string.label_confirmation),
             icons = confirmationIcons,
             state = getStepState(currentStep, 3)
         )
