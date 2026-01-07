@@ -46,6 +46,8 @@ interface PDPContract : UnidirectionalViewModel
         data class onChooseColorImg(val value: Int) : UiEvent
         data object onOpenTabbySheet : UiEvent
         data object onCloseTabbySheet : UiEvent
+        data object onOpenTamaraSheet : UiEvent
+        data object onCloseTamaraSheet : UiEvent
     }
 
     sealed interface UiEffect {
