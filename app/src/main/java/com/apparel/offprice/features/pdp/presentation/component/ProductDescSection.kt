@@ -36,6 +36,7 @@ fun ProductDescSection(
     pdpDetail: ProductDetailItem,
     modifier: Modifier,
     onSizeGuideClick: () -> Unit,
+    onOpenLocationSheet: () -> Unit,
     onTabbyInfoClick: () -> Unit,
     onTamaraInfoClick: () -> Unit,
     event: (PDPContract.UiEvent) -> Unit,
@@ -104,7 +105,7 @@ fun ProductDescSection(
                 event(PDPContract.UiEvent.onChooseColorImg(img))
             })
 
-        OfferCardUI()
+        OfferCardUI(onClickLocationSheet = {onOpenLocationSheet()})
 
         PaymentCardUI(
             onTabbyClick = { onTabbyInfoClick() },
@@ -115,6 +116,10 @@ fun ProductDescSection(
         ProductInfoUI()
 
         MoreBrandUI(
+            onWishlistClick = {},
+            onProductClick = {})
+
+        RecentViewProducts(
             onWishlistClick = {},
             onProductClick = {})
     }

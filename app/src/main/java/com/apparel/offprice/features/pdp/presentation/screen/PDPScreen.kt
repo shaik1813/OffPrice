@@ -21,6 +21,7 @@ import com.apparel.offprice.features.pdp.data.model.tabbyPaymentDetail
 import com.apparel.offprice.features.pdp.data.model.tamaraPaymentDetail
 import com.apparel.offprice.features.pdp.presentation.component.AddToBasketBottomSheet
 import com.apparel.offprice.features.pdp.presentation.component.ElevatedLine
+import com.apparel.offprice.features.pdp.presentation.component.LocationSheetPDP
 import com.apparel.offprice.features.pdp.presentation.component.PDPBottomView
 import com.apparel.offprice.features.pdp.presentation.component.ProductDescSection
 import com.apparel.offprice.features.pdp.presentation.component.ProductImageSection
@@ -62,6 +63,17 @@ fun PDPScreen(
                 viewModel.event(PDPContract.UiEvent.onOpenAddToBagSheet)
             })
     }
+
+
+    if (state.isOpenLocation) LocationSheetPDP(
+        state.selectedCity,
+        onCitySelected = {
+            event(PDPContract.UiEvent.onCitySelect(it))
+        },
+        onDismiss = { event(PDPContract.UiEvent.onCloseBottomSheetLocation) }
+    )
+
+
 
     if (state.isShareProductSheet) {
         ShareProductBottomSheet(
@@ -123,6 +135,9 @@ fun PDPScreen(
                             modifier = Modifier
                                 .align(Alignment.TopCenter)
                                 .padding(top = screenHeight),
+                            onOpenLocationSheet = {
+                                event(PDPContract.UiEvent.onOpenBottomSheetLocation)
+                            },
                             onTabbyInfoClick = {
                                 event(PDPContract.UiEvent.onOpenTabbySheet)
                             },
@@ -135,9 +150,6 @@ fun PDPScreen(
                     }
                 }
 
-                item {
-
-                }
             }
         }
 
@@ -158,8 +170,6 @@ fun PDPScreen(
 
             }
         }
-
     }
-
 
 }

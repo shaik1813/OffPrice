@@ -38,13 +38,19 @@ class PDPViewModel @Inject constructor(
 
             PDPContract.UiEvent.onOpenBottomSheetLocation -> {
                 viewModelScope.launch {
-                    _effectFlow.emit(PDPContract.UiEffect.onOpenBottomSheetLocation)
+                    updateState { it.copy(isOpenLocation = true) }
                 }
             }
 
             PDPContract.UiEvent.onCloseBottomSheetLocation -> {
                 viewModelScope.launch {
-                    _effectFlow.emit(PDPContract.UiEffect.onCloseBottomSheetLocation)
+                    updateState { it.copy(isOpenLocation = false) }
+                }
+            }
+
+            is PDPContract.UiEvent.onCitySelect -> {
+                viewModelScope.launch {
+                    updateState { it.copy(selectedCity = event.value, isOpenLocation = false) }
                 }
             }
 

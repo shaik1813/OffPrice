@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.common.theme.saleEndTextColor
+import com.apparel.offprice.common.theme.sizeDescColor
 
 
 @Composable
@@ -27,7 +28,7 @@ fun salesEndSection(){
             text = stringResource(com.apparel.offprice.R.string.sales_ends_in),
             style = MaterialTheme.typography.bodyLarge,
             fontSize = 14.sp,
-            color = saleEndTextColor, // Red Text
+            color = sizeDescColor, // Red Text
             modifier = Modifier.padding(end = 10.dp)
         )
 
@@ -37,7 +38,6 @@ fun salesEndSection(){
         TimeBox(value = 30, label = "Sec")
     }
 }
-
 
 
 @Composable
