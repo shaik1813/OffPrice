@@ -26,9 +26,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
+import com.apparel.offprice.R
 
 @Composable
 fun FilterChip(
@@ -107,7 +109,7 @@ fun PickupStoreTooltip(onDismiss: () -> Unit) {
             modifier = Modifier.padding(8.dp)
         ) {
             Text(
-                text = "SHOP ONLINE AND COLLECT FROM YOUR NEAREST STORE",
+                text = stringResource(R.string.label_shop_online_and_collect_from_your_nearest_store),
                 maxLines = 2,
                 color = Color.White,
                 fontSize = 11.sp,
