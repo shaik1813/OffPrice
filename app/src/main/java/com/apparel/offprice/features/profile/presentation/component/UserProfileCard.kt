@@ -33,10 +33,13 @@ import com.apparel.offprice.features.home.presentation.component.CircularProgres
 @Composable
 fun UserProfileCard(
     name: String,
-    email: String
+    email: String,
+    onClicked: () -> Unit
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable{ onClicked() },
         shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(2.dp)

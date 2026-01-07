@@ -52,7 +52,7 @@ fun CountryCodePicker(
             Row(
                 modifier = Modifier
                     .background(
-                        color = MaterialTheme.colorScheme.surface,
+                        color = MaterialTheme.colorScheme.background,
                         shape = RoundedCornerShape(8.dp)
                     )
                     .padding(6.dp)
@@ -87,7 +87,7 @@ fun CountryCodePicker(
                     .exposedDropdownSize(false)
                     .fillMaxWidth(0.8f)
                     .padding(horizontal = 16.dp),
-                containerColor = MaterialTheme.colorScheme.surface
+                containerColor = MaterialTheme.colorScheme.background
             ) {
                 countryList.forEach { country ->
                     DropdownMenuItem(

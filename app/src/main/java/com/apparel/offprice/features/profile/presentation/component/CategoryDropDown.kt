@@ -129,7 +129,7 @@ fun CategoryDropdown(
             expanded = expanded,
             onDismissRequest = { expanded = false },
             modifier = Modifier.exposedDropdownSize(true),
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.background
         ) {
             categoriesList.forEach { category ->
                 DropdownMenuItem(

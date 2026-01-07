@@ -29,7 +29,7 @@ interface SearchContract : UnidirectionalViewModel
 
     sealed interface UiEffect {
         object NavigateToHome : UiEffect
-        data class NavigateToSearchResult(val productId: String) : UiEffect
+        data class NavigateToSearchResult(val product: String) : UiEffect
         data class ShowError(val message: String) : UiEffect
     }
 }
