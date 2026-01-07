@@ -243,6 +243,9 @@
     <string name="label_sort">SORT</string>
     <string name="label_move_to_bag">Move To Bag</string>
     <string name="you_may_also_like">YOU MAY ALSO LIKE</string>
+    <string name="recent_viewed">RECENTLY VIEWED</string>
+    <string name="or_copy_link">Or Copy Link</string>
+    <string name="left">%1$d Left</string>
 
 
 </resources>

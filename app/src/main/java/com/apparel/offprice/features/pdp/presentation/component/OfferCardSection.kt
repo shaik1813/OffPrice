@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,52 +20,26 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.offerCardColor
-import com.apparel.offprice.common.utils.CollectInLaunchedEffect
-import com.apparel.offprice.common.utils.use
-import com.apparel.offprice.features.pdp.presentation.screen.PDPContract
-import com.apparel.offprice.features.pdp.presentation.screen.PDPViewModel
+
 
 @Composable
-fun OfferCardUI(viewModel: PDPViewModel = hiltViewModel()) {
+fun OfferCardUI(onClickLocationSheet: () -> Unit) {
 
-    var isOpenLocation by remember { mutableStateOf(false) }
-
-    var selectedCity by remember { mutableStateOf("") }
-
-    var (state, event, effect) = use(viewModel = viewModel)
-
-
-    if (isOpenLocation) LocationSheetPDP(
-        selectedCity,
-        onCitySelected = {
-            selectedCity = it
-            isOpenLocation = false
-        },
-        onDismiss = { isOpenLocation = false }
-    )
-
-    effect.CollectInLaunchedEffect { it ->
-        when (it) {
-            is PDPContract.UiEffect.onOpenBottomSheetLocation -> isOpenLocation = true
-            is PDPContract.UiEffect.onCloseBottomSheetLocation -> isOpenLocation = false
-        }
-    }
 
     Column(
         modifier = Modifier
@@ -138,26 +113,25 @@ fun OfferCardUI(viewModel: PDPViewModel = hiltViewModel()) {
             Box(
                 modifier = Modifier
                     .background(
-                        color = Color(0xFFFEEFCB), shape = RoundedCornerShape(20.dp)
+                        color = Color(0xFFEFEFEF), shape = RoundedCornerShape(12.dp)
                     )
                     .padding(horizontal = 5.dp, vertical = 1.dp)
             ) {
 
-                Row(horizontalArrangement = Arrangement.Center) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
                         painter = painterResource(R.drawable.arrive_icon),
-                        contentDescription = "arrive"
+                        contentDescription = "arrive",
+                        modifier = Modifier.padding(end = 3.dp).size(10.dp)
                     )
 
-                    Text(
-                        text = "ARRIVING IN 2-3 DAYS",
-                        fontSize = 7.sp,
-                        style = MaterialTheme.typography.labelMedium,
-                        color = Color.Black
+
+                    ArrivingText(
+                        fullText = "ARRIVING IN 2-3 DAYS",
+                        highlight = "2-3 DAYS"
                     )
                 }
             }
-
 
             Spacer(modifier = Modifier.height(5.dp))
 
@@ -167,7 +141,8 @@ fun OfferCardUI(viewModel: PDPViewModel = hiltViewModel()) {
                 modifier = Modifier
                     .wrapContentWidth()
                     .clickable {
-                        event.invoke(PDPContract.UiEvent.onOpenBottomSheetLocation)
+                        //event.invoke(PDPContract.UiEvent.onOpenBottomSheetLocation)
+                        onClickLocationSheet()
                     }
             ) {
 
@@ -193,6 +168,35 @@ fun OfferCardUI(viewModel: PDPViewModel = hiltViewModel()) {
 
         }
 
-
     }
+}
+
+@Composable
+fun ArrivingText(fullText: String, highlight: String) {
+    Text(
+        text = buildAnnotatedString {
+            val startIndex = fullText.indexOf(highlight)
+
+            if (startIndex >= 0) {
+                append(fullText.substring(0, startIndex))
+
+                withStyle(
+                    SpanStyle(
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF000000)
+                    )
+                ) {
+                    append(highlight)
+                }
+
+                append(fullText.substring(startIndex + highlight.length))
+            } else {
+                append(fullText)
+            }
+        },
+        style = TextStyle(
+            fontSize = 10.sp,
+            color = Color.Gray
+        )
+    )
 }

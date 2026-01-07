@@ -38,7 +38,7 @@ fun RecentViewProducts(onWishlistClick: (ProductCardItems) -> Unit, onProductCli
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = stringResource(com.apparel.offprice.R.string.more_from_brand),
+            text = stringResource(com.apparel.offprice.R.string.recent_viewed),
             style = MaterialTheme.typography.titleLarge,
             fontSize = 14.sp,
             color = saleCardColor
@@ -70,4 +70,5 @@ fun RecentViewProducts(onWishlistClick: (ProductCardItems) -> Unit, onProductCli
         }
     }
 
+    Spacer(modifier = Modifier.size(90.dp))
 }
