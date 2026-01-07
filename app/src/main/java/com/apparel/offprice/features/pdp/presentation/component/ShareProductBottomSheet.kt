@@ -1,9 +1,13 @@
 package com.apparel.offprice.features.pdp.presentation.component
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,16 +15,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.ContentCopy
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Facebook
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
@@ -30,13 +28,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.borderColor
+import com.apparel.offprice.common.theme.inputTextColor
+import com.apparel.offprice.common.theme.loginButtonColor
+import com.apparel.offprice.common.theme.saleCardColor
+import com.apparel.offprice.common.theme.secondaryBlue
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,7 +60,7 @@ fun ShareProductBottomSheet(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 12.dp)
+                .padding(horizontal = 20.dp, vertical = 20.dp)
         ) {
 
             // ------- Header -------
@@ -67,46 +71,60 @@ fun ShareProductBottomSheet(
             ) {
                 Text(
                     text = stringResource(R.string.share_product),
-                    style = MaterialTheme.typography.titleLarge,
-                    fontSize = 16.sp
+                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight(700)),
+                    fontSize = 16.sp,
+                    color = saleCardColor
                 )
+
                 Icon(
-                    Icons.Default.Close,
+                    painter = painterResource(R.drawable.close_24px),
                     contentDescription = "Close",
+                    tint = secondaryBlue,
                     modifier = Modifier
                         .size(24.dp)
                         .clickable { onDismiss() }
                 )
             }
 
+            Spacer(modifier = Modifier.height(15.dp))
+
+            HorizontalDivider(modifier = Modifier.fillMaxWidth().height(1.dp).background(borderColor))
+
             Spacer(modifier = Modifier.height(12.dp))
 
             Text(
                 text = stringResource(R.string.share_link_via),
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color.Gray
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    fontWeight = FontWeight(500),
+                    fontSize = 12.sp
+                ),
+                color = loginButtonColor
             )
 
             Spacer(modifier = Modifier.height(12.dp))
 
             // ------- Social Buttons -------
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                ShareCircleIcon(Icons.Default.Facebook, "WhatsApp")
-                ShareCircleIcon(Icons.Default.Facebook, "Facebook")
-                ShareCircleIcon(Icons.Default.Email, "Email")
-                ShareCircleIcon(Icons.Default.Email, "Pinterest")
+                ShareIcon(painterResource(R.drawable.share_whatsapp), "WhatsApp")
+                ShareIcon(painterResource(R.drawable.share_fb), "Facebook")
+                ShareIcon(painterResource(R.drawable.share_sms), "Email")
+                ShareIcon(painterResource(R.drawable.share_pinterest), "Pinterest")
             }
 
-            Spacer(modifier = Modifier.height(18.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             Text(
-                text = "Or Copy Link",
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color.Gray
+                text = stringResource(com.apparel.offprice.R.string.or_copy_link),
+                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight(500)),
+                fontSize = 12.sp,
+                color = loginButtonColor
             )
 
             Spacer(modifier = Modifier.height(10.dp))
 
+            val context = LocalContext.current
+            val clipboardManager =
+                context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             // ------- Copy Link UI -------
             OutlinedTextField(
                 value = productLink,
@@ -114,45 +132,49 @@ fun ShareProductBottomSheet(
                 modifier = Modifier.fillMaxWidth(),
                 readOnly = true,
                 singleLine = true,
+                textStyle = MaterialTheme.typography.bodyMedium
+                    .copy(fontSize = 12.sp, fontWeight = FontWeight(500), color = inputTextColor),
                 trailingIcon = {
-                    IconButton(onClick = {
-                        // copy clipboard logic
-                    }) {
-                        Icon(Icons.Default.ContentCopy, contentDescription = "Copy")
-                    }
+                    Image(
+                        painter = painterResource(R.drawable.copy_linkimg),
+                        modifier = Modifier
+                            .size(26.dp)
+                            .clickable {
+                                val clip = ClipData.newPlainText(
+                                    "product_link",
+                                    productLink
+                                )
+                                clipboardManager.setPrimaryClip(clip)
+
+                                Toast.makeText(
+                                    context,
+                                    "Copied to clipboard",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            },
+                        contentDescription = "Copy"
+                    )
                 },
-                shape = RoundedCornerShape(6.dp),
+                shape = RoundedCornerShape(8.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = androidx.compose.ui.graphics.Color.Transparent,
-                    unfocusedBorderColor = androidx.compose.ui.graphics.Color.Transparent,
+                    focusedBorderColor = borderColor,
+                    unfocusedBorderColor = borderColor,
                     errorBorderColor = androidx.compose.ui.graphics.Color.Transparent,
-                    disabledBorderColor = androidx.compose.ui.graphics.Color.Transparent,
+                    disabledBorderColor = borderColor,
                     cursorColor = MaterialTheme.colorScheme.primary
                 )
             )
 
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }
 
-
-
 @Composable
-fun ShareCircleIcon(icon: ImageVector, contentDescription: String) {
-    Box(
-        modifier = Modifier
-            .size(50.dp)
-            .clip(CircleShape)
-            .background(Color(0xFFECECEC))
-            .clickable { },
-        contentAlignment = Alignment.Center
-    ) {
-        Icon(
-            icon,
-            contentDescription = contentDescription,
-            tint = Color.Black,
-            modifier = Modifier.size(24.dp)
-        )
-    }
+fun ShareIcon(icon: Painter, contentDescription: String) {
+    Image(
+        icon,
+        contentDescription = contentDescription,
+        modifier = Modifier.size(45.dp)
+    )
 }

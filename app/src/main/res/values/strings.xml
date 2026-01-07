@@ -228,6 +228,9 @@
     <string name="label_delivery_details">Delivery Details</string>
     <string name="label_paid">Paid</string>
     <string name="label_credit_debit_card">Credit / Debit Card</string>
+    <string name="label_add_your_contact_details">Add Your Contact Details</string>
+    <string name="label_confirmation">Confirmation</string>
+    <string name="label_shop_online_and_collect_from_your_nearest_store">SHOP ONLINE AND COLLECT FROM YOUR NEAREST STORE</string>
 
     <!-- Categories -->
     <string name="label_categories">CATEGORIES</string>
@@ -243,6 +246,9 @@
     <string name="label_sort">SORT</string>
     <string name="label_move_to_bag">Move To Bag</string>
     <string name="you_may_also_like">YOU MAY ALSO LIKE</string>
+    <string name="recent_viewed">RECENTLY VIEWED</string>
+    <string name="or_copy_link">Or Copy Link</string>
+    <string name="left">%1$d Left</string>
     <string name="label_no_address_saved">No Address Saved yet</string>
     <string name="text_no_address_description">Add an address to get your order delivered on time</string>
     <string name="label_no_card_added">No cards added yet</string>

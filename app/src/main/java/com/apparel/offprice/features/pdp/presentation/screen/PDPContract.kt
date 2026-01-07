@@ -14,11 +14,13 @@ interface PDPContract : UnidirectionalViewModel
         var isOpenDialog: Boolean = false,
         var isAddBasketSheet: Boolean = false,
         var isSizeSelectSheet: Boolean = false,
+        val isOpenLocation: Boolean = false,
         var isShareProductSheet: Boolean = false,
         var isSizeGuideSheet: Boolean = false,
         var isSimilarPLPSheet: Boolean = false,
         var tabbySheet: Boolean = false,
         var tamaraSheet: Boolean = false,
+        val selectedCity: String = "",
         val countryItemList: List<Country> = countryList,
         val languageItemList: List<Language> = languageList,
         val countrySelected: Country = countryItemList.first(),
@@ -33,6 +35,7 @@ interface PDPContract : UnidirectionalViewModel
     sealed interface UiEvent {
         data object onOpenBottomSheetLocation : UiEvent
         data object onCloseBottomSheetLocation : UiEvent
+        data class onCitySelect(val value: String) : UiEvent
         data object onOpenAddToBagSheet : UiEvent
         data object onCloseAddToBagSheet : UiEvent
         data object onOpenSizeSelectSheet : UiEvent

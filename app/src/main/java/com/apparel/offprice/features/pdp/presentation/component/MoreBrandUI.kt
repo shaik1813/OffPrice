@@ -26,7 +26,7 @@ import com.apparel.offprice.features.plp.data.model.sampleProducts
 
 
 @Composable
-fun MoreBrandUI(onWishlistClick: (ProductCardItems) -> Unit, onProductClick: (ProductCardItems) -> Unit) {
+fun MoreBrandUI(title:String, onWishlistClick: (ProductCardItems) -> Unit, onProductClick: (ProductCardItems) -> Unit) {
 
     val heightOfList = LocalConfiguration.current.screenWidthDp.dp - 44.dp
 
@@ -37,7 +37,7 @@ fun MoreBrandUI(onWishlistClick: (ProductCardItems) -> Unit, onProductClick: (Pr
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = stringResource(com.apparel.offprice.R.string.more_from_brand),
+            text = title,
             style = MaterialTheme.typography.titleLarge,
             fontSize = 14.sp,
             color = saleCardColor

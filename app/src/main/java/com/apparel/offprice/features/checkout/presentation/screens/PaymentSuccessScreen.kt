@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.apparel.offprice.R
 import com.apparel.offprice.features.checkout.presentation.components.AddressUiModel
 import com.apparel.offprice.features.checkout.presentation.components.OrderSummarySection
+import com.apparel.offprice.features.pdp.presentation.component.MoreBrandUI
 import features.cart.presentation.component.PriceSummaryCard
 
 @Composable
@@ -164,12 +165,17 @@ fun PaymentSuccessScreen(
             )
         }
 
-        item { Spacer(Modifier.height(32.dp)) }
+        item {
+            // ✅ YOU MAY ALSO LIKE
+            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                MoreBrandUI(stringResource(R.string.you_may_also_like),
+                    onWishlistClick = {},
+                    onProductClick = {})
+            }
+        }
 
-        // ✅ YOU MAY ALSO LIKE
-        //item { YouMayAlsoLikeSection(onViewAll) }
+        item { Spacer(Modifier.height(8.dp)) }
 
-        //item { Spacer(Modifier.height(32.dp)) }
     }
 }
 
@@ -260,33 +266,5 @@ fun PaymentMethodSummary(
                 }
             }
         }
-    }
-}
-
-
-@Composable
-fun YouMayAlsoLikeSection(onViewAll: () -> Unit) {
-    Column(
-        modifier = Modifier.padding(horizontal = 16.dp)
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = stringResource(R.string.you_may_also_like),
-                style = MaterialTheme.typography.titleMedium
-            )
-
-            Text(
-                text = stringResource(R.string.view_all),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.clickable { onViewAll() }
-            )
-        }
-
-        Spacer(Modifier.height(12.dp))
-
     }
 }
