@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -23,6 +22,7 @@ import com.apparel.offprice.common.component.DefaultTopAppBar
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.paymentCard.presentation.component.DeletePaymentCardDialog
+import com.apparel.offprice.features.paymentCard.presentation.component.EmptyPaymentCardScreen
 import com.apparel.offprice.features.paymentCard.presentation.component.PaymentCardBottomSheet
 import com.apparel.offprice.features.paymentCard.presentation.component.PaymentCardList
 import com.apparel.offprice.features.profile.presentation.screen.profilePassword.showToast
@@ -63,34 +63,38 @@ fun PaymentCardScreen(
             )
         },
         bottomBar = {
-            BottomSingleActionButton(
-                title = stringResource(R.string.label_add_new_card),
-                onButtonClicked = {
-                    event(PaymentCardContract.UiEvent.OnAddCardClicked)
-                }
-            )
+            if (state.paymentCards.isNotEmpty() && !state.isAddCardOpened) {
+                BottomSingleActionButton(
+                    title = stringResource(R.string.label_add_new_card),
+                    onButtonClicked = {
+                        event(PaymentCardContract.UiEvent.OnAddCardClicked)
+                    }
+                )
+            }
         },
-        containerColor = MaterialTheme.colorScheme.surface
     ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            HorizontalDivider()
             Spacer(modifier = Modifier.height(12.dp))
 
             if (state.paymentCards.isNotEmpty()) {
                 PaymentCardList(
                     paymentCards = state.paymentCards,
                     onDeleteClicked = { cardModel ->
-                        event(PaymentCardContract.UiEvent.OnDeleteCard(cardModel))
+                        event.invoke(PaymentCardContract.UiEvent.OnDeleteCard(cardModel))
                     },
                     onDefaultChanged = { cardModel ->
-                        event(PaymentCardContract.UiEvent.OnDefaultChanged(cardModel))
+                        event.invoke(PaymentCardContract.UiEvent.OnDefaultChanged(cardModel))
                     },
                     modifier = Modifier.weight(1f)
                 )
+            }else{
+                EmptyPaymentCardScreen(onAddCardClicked = {
+                    event.invoke(PaymentCardContract.UiEvent.OnAddCardClicked)
+                })
             }
         }
         if (state.isAddCardOpened) {

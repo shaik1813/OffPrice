@@ -249,6 +249,10 @@
     <string name="recent_viewed">RECENTLY VIEWED</string>
     <string name="or_copy_link">Or Copy Link</string>
     <string name="left">%1$d Left</string>
+    <string name="label_no_address_saved">No Address Saved yet</string>
+    <string name="text_no_address_description">Add an address to get your order delivered on time</string>
+    <string name="label_no_card_added">No cards added yet</string>
+    <string name="text_no_card_description">Add a payment card to complete your purchase faster</string>
 
 
 </resources>
