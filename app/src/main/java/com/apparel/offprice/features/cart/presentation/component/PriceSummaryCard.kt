@@ -109,6 +109,6 @@ fun PriceSummaryCard(isOpenShipFee: Boolean, priceData: PriceData, OnShipFeeClic
             }
         }
 
-        Spacer(modifier = Modifier.size(90.dp))
+        Spacer(modifier = Modifier.size(16.dp))
     }
 }
