@@ -77,7 +77,8 @@ fun PaymentCardUI(onTabbyClick: () -> Unit, onTamaraClick: ()-> Unit) {
 
 
             Image(painter = painterResource(R.drawable.info_icon),
-                contentDescription = null, modifier = Modifier.padding(2.dp).size(14.dp))
+                contentDescription = null, modifier = Modifier.padding(2.dp).size(14.dp)
+                    .clickable(interactionSource = null, indication = null){ onTamaraClick() })
 
         }
 

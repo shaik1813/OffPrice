@@ -33,7 +33,6 @@ import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.borderColor
 import com.apparel.offprice.common.theme.primaryColor
 import com.apparel.offprice.features.pdp.data.model.TamaraPaymentInfo
-import com.apparel.offprice.features.pdp.data.model.tabbyPaymentDetail
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -115,6 +114,8 @@ fun TamaraDetailSheet(
 
             item {
                 TamaraWorkDetailCard(tamaraData = paymentInfo)
+
+                WhyTamaraDetailCard()
             }
         }
     }

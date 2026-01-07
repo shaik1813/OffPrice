@@ -20,10 +20,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.borderColor
+import com.apparel.offprice.common.theme.nonreturnTxtColor
 import com.apparel.offprice.common.theme.primaryColor
 
 
@@ -58,31 +60,42 @@ fun WhyTamaraRow() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         WhyTabbyItem(
+            modifier = Modifier.weight(1f),
             icon = R.drawable.why_tabicon1,   // 100% buyer protection
             text = "100%\nbuyer protection"
         )
 
         WhyTabbyItem(
+            modifier = Modifier.weight(1f),
             icon = R.drawable.why_tabicon1, // Sharia compliant
             text = "Sharia\ncompliant"
         )
 
         WhyTabbyItem(
+            modifier = Modifier.weight(1f),
             icon = R.drawable.why_tabicon1,   // No late fees
             text = "No late\nfees"
         )
     }
+
+    Text(
+        text = "Payment plans shown are estimates. Actual offers may vary based on your eligibility and order details. Not all merchants or products qualify for every plan, including Tamara’s long-term financing options. Approval is subject to eligibility checks and may require a down payment. Final terms, including monthly payment amounts, may change after checkout review and may exclude taxes, shipping, or other charges. For more information, see our Terms & Conditions",
+        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight(400)),
+        color = nonreturnTxtColor,
+        modifier = Modifier.padding(top = 14.dp)
+    )
 }
 
 
 @Composable
-fun WhyTabbyItem(icon: Int, text: String) {
-    Column {
+fun WhyTabbyItem(modifier: Modifier, icon: Int, text: String) {
+    Column(modifier = modifier) {
         Box(
             modifier = Modifier
                 .size(30.dp)
                 .clip(shape = RoundedCornerShape(15.dp))
                 .background(borderColor)
+                .align(Alignment.CenterHorizontally)
         ) {
             Image(
                 painter = painterResource(icon),
@@ -99,7 +112,9 @@ fun WhyTabbyItem(icon: Int, text: String) {
             text = text,
             style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight(500)),
             fontSize = 12.sp,
-            color = Color.Black
+            color = Color.Black,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
     }
 }
