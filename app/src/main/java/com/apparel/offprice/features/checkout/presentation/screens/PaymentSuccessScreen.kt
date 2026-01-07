@@ -168,7 +168,7 @@ fun PaymentSuccessScreen(
         item {
             // ✅ YOU MAY ALSO LIKE
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                MoreBrandUI(
+                MoreBrandUI(stringResource(R.string.you_may_also_like),
                     onWishlistClick = {},
                     onProductClick = {})
             }
