@@ -46,7 +46,6 @@ fun PDPScreen(
 
 
     if (state.isAddBasketSheet) {
-
         AddToBasketBottomSheet(sheetState = rememberModalBottomSheetState(), onContinue = {
             event(PDPContract.UiEvent.onCloseAddToBagSheet)
         }, onDismiss = {
@@ -64,7 +63,6 @@ fun PDPScreen(
             })
     }
 
-
     if (state.isOpenLocation) LocationSheetPDP(
         state.selectedCity,
         onCitySelected = {
@@ -72,7 +70,6 @@ fun PDPScreen(
         },
         onDismiss = { event(PDPContract.UiEvent.onCloseBottomSheetLocation) }
     )
-
 
 
     if (state.isShareProductSheet) {
