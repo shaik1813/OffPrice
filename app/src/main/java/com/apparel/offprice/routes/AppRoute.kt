@@ -88,7 +88,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         composable<AppScreen.SearchScreen> {
             SearchScreen(
                 onSearchSubmit = { productId ->
-                    navController.navigate(AppScreen.PDPScreen(productId))
+                    navController.navigate(AppScreen.PLPScreen(productId))
                 },
                 onNavigateToBack = {
                     navController.popBackStack()

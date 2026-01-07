@@ -7,6 +7,7 @@ import com.apparel.offprice.features.checkout.presentation.components.AddressUiM
 import com.apparel.offprice.features.checkout.presentation.components.CheckoutStep
 import com.apparel.offprice.features.checkout.presentation.components.PaymentMethod
 import com.apparel.offprice.features.checkout.presentation.components.PaymentResult
+import com.apparel.offprice.features.checkout.presentation.components.PickupStore
 import com.apparel.offprice.features.checkout.presentation.components.ProductItem
 import com.apparel.offprice.features.checkout.presentation.components.ShippingAddressFilter
 
@@ -42,7 +43,15 @@ interface CheckOutContract : UnidirectionalViewModel<
         val expandedPayment: PaymentMethod? = PaymentMethod.SAVED,
 
         // Result
-        val paymentResult: PaymentResult? = null
+        val paymentResult: PaymentResult? = null,
+
+        // PICKUPSTORE
+        val pickupStores: List<PickupStore> = emptyList(),
+        val selectedPickupStore: PickupStore? = null,
+        val isPickupStoreSelected: Boolean = false,
+
+        val pickupName: String = "",
+        val pickupPhone: String = ""
     )
 
     sealed interface UiEvent {
@@ -78,6 +87,12 @@ interface CheckOutContract : UnidirectionalViewModel<
         object OnMyOrders : UiEvent
         object OnRetryPayment : UiEvent
 
+
+        // PICKUP
+        data class OnPickupStoreSelected(val store: PickupStore) : UiEvent
+        data object OnChangePickupStore : UiEvent
+        data class OnPickupNameChanged(val value: String) : UiEvent
+        data class OnPickupPhoneChanged(val value: String) : UiEvent
     }
 
     sealed interface UiEffect {

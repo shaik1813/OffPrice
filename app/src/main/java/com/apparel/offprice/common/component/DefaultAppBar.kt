@@ -14,6 +14,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -67,6 +68,13 @@ fun DefaultTopAppBar(
                 )
             }
         },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color.White
+        ),
         windowInsets = WindowInsets(0, 0, 0, 0),
+        modifier = Modifier.shadow(
+            elevation = 6.dp,
+            spotColor = Color.Black
+        )
     )
 }

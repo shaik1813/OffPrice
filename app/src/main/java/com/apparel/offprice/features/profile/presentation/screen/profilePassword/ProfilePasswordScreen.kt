@@ -14,8 +14,8 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,13 +26,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
 import com.apparel.offprice.common.component.AppBasicPasswordField
+import com.apparel.offprice.common.component.BottomDoubleActionButton
 import com.apparel.offprice.common.component.DefaultTopAppBar
-import com.apparel.offprice.common.theme.OffPriceTheme
 import com.apparel.offprice.common.theme.redColor
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
@@ -63,105 +62,14 @@ fun ProfilePasswordScreen(
         }
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(WindowInsets.safeDrawing.asPaddingValues())
-    ) {
-        DefaultTopAppBar(title = stringResource(R.string.label_security)) { onNavigateBack() }
-        HorizontalDivider(thickness = 1.dp)
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Spacer(modifier = Modifier.height(20.dp))
-            Card(
-                shape = MaterialTheme.shapes.small,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = Color(0xFFEFEFEF)
-                )
-            ) {
-                Column(Modifier.padding(16.dp)) {
-                    Text(
-                        text = buildAnnotatedString {
-                            append(stringResource(R.string.label_old_password))
-                            withStyle(style = SpanStyle(color = redColor)) {
-                                append("*")
-                            }
-                        },
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                    Spacer(modifier = Modifier.height(6.dp))
-                    AppBasicPasswordField(
-                        value = state.oldPassword,
-                        enabled = true,
-                        isVisible = state.isOldPasswordVisible,
-                        onValueChange = {
-                            event.invoke(ProfilePasswordContract.UiEvent.OnOldPasswordChanged(it))
-                        },
-                        onIconToggle = {
-                            event.invoke(ProfilePasswordContract.UiEvent.ToggleOldPasswordVisibility)
-                        }
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        text = buildAnnotatedString {
-                            append(stringResource(R.string.label_new_password))
-                            withStyle(style = SpanStyle(color = redColor)) {
-                                append("*")
-                            }
-                        },
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                    Spacer(modifier = Modifier.height(6.dp))
-                    AppBasicPasswordField(
-                        value = state.newPassword,
-                        enabled = true,
-                        isVisible = state.isNewPasswordVisible,
-                        onValueChange = {
-                            event.invoke(ProfilePasswordContract.UiEvent.OnNewPasswordChanged(it))
-                        },
-                        onIconToggle = {
-                            event.invoke(ProfilePasswordContract.UiEvent.ToggleNewPasswordVisibility)
-                        }
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Text(
-                        text = buildAnnotatedString {
-                            append(stringResource(R.string.label_re_enter_password))
-                            withStyle(style = SpanStyle(color = redColor)) {
-                                append("*")
-                            }
-                        },
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                    Spacer(modifier = Modifier.height(6.dp))
-                    AppBasicPasswordField(
-                        value = state.confirmPassword,
-                        enabled = true,
-                        isVisible = state.isConfirmPasswordVisible,
-                        onValueChange = {
-                            event(ProfilePasswordContract.UiEvent.OnConfirmPasswordChanged(it))
-                        },
-                        onIconToggle = {
-                            event(ProfilePasswordContract.UiEvent.ToggleConfirmPasswordVisibility)
-                        }
-                    )
-                }
+    Scaffold(
+        topBar = {
+            DefaultTopAppBar(title = stringResource(R.string.label_security).uppercase()) {
+                onNavigateBack()
             }
-
-            //-----------------------Bottom Space------------------------
-            Spacer(modifier = Modifier.weight(1f))
-            ActionButtonsBar(
+        },
+        bottomBar = {
+            BottomDoubleActionButton(
                 leftButtonText = stringResource(R.string.label_cancel).uppercase(),
                 rightButtonText = stringResource(R.string.label_save).uppercase(),
                 onLeftClick = {
@@ -171,18 +79,113 @@ fun ProfilePasswordScreen(
                     event.invoke(ProfilePasswordContract.UiEvent.OnChangePasswordClicked)
                 }
             )
+        },
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(WindowInsets.safeDrawing.asPaddingValues()),
+        contentWindowInsets = WindowInsets(bottom = 0),
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.height(20.dp))
+                Card(
+                    shape = MaterialTheme.shapes.small,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 12.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color(0xFFEFEFEF)
+                    )
+                ) {
+                    Column(Modifier.padding(16.dp)) {
+                        Text(
+                            text = buildAnnotatedString {
+                                append(stringResource(R.string.label_old_password))
+                                withStyle(style = SpanStyle(color = redColor)) {
+                                    append("*")
+                                }
+                            },
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        AppBasicPasswordField(
+                            value = state.oldPassword,
+                            enabled = true,
+                            isVisible = state.isOldPasswordVisible,
+                            onValueChange = {
+                                event.invoke(ProfilePasswordContract.UiEvent.OnOldPasswordChanged(it))
+                            },
+                            onIconToggle = {
+                                event.invoke(ProfilePasswordContract.UiEvent.ToggleOldPasswordVisibility)
+                            }
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            text = buildAnnotatedString {
+                                append(stringResource(R.string.label_new_password))
+                                withStyle(style = SpanStyle(color = redColor)) {
+                                    append("*")
+                                }
+                            },
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        AppBasicPasswordField(
+                            value = state.newPassword,
+                            enabled = true,
+                            isVisible = state.isNewPasswordVisible,
+                            onValueChange = {
+                                event.invoke(ProfilePasswordContract.UiEvent.OnNewPasswordChanged(it))
+                            },
+                            onIconToggle = {
+                                event.invoke(ProfilePasswordContract.UiEvent.ToggleNewPasswordVisibility)
+                            }
+                        )
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Text(
+                            text = buildAnnotatedString {
+                                append(stringResource(R.string.label_re_enter_password))
+                                withStyle(style = SpanStyle(color = redColor)) {
+                                    append("*")
+                                }
+                            },
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        AppBasicPasswordField(
+                            value = state.confirmPassword,
+                            enabled = true,
+                            isVisible = state.isConfirmPasswordVisible,
+                            onValueChange = {
+                                event(ProfilePasswordContract.UiEvent.OnConfirmPasswordChanged(it))
+                            },
+                            onIconToggle = {
+                                event(ProfilePasswordContract.UiEvent.ToggleConfirmPasswordVisibility)
+                            }
+                        )
+                    }
+                }
+            }
         }
+
     }
+
+
 }
 
 fun showToast(context: Context, message: String) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ProfilePasswordScreenPreview() {
-    OffPriceTheme {
-        ProfilePasswordScreen(onNavigateBack = {})
-    }
 }

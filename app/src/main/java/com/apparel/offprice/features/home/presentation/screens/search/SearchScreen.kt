@@ -51,7 +51,7 @@ fun SearchScreen(
             }
 
             is SearchContract.UiEffect.NavigateToSearchResult -> {
-                onSearchSubmit(it.productId)
+                onSearchSubmit(it.product)
             }
 
             is SearchContract.UiEffect.ShowError -> {
