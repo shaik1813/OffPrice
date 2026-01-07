@@ -133,6 +133,18 @@ class PDPViewModel @Inject constructor(
                     updateState { it.copy(tabbySheet = false) }
                 }
             }
+
+            PDPContract.UiEvent.onOpenTamaraSheet -> {
+                viewModelScope.launch {
+                    updateState { it.copy(tamaraSheet = true) }
+                }
+            }
+
+            PDPContract.UiEvent.onCloseTamaraSheet -> {
+                viewModelScope.launch {
+                    updateState { it.copy(tamaraSheet = false) }
+                }
+            }
         }
     }
 

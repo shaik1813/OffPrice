@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.pdp.data.model.tabbyPaymentDetail
+import com.apparel.offprice.features.pdp.data.model.tamaraPaymentDetail
 import com.apparel.offprice.features.pdp.presentation.component.AddToBasketBottomSheet
 import com.apparel.offprice.features.pdp.presentation.component.ElevatedLine
 import com.apparel.offprice.features.pdp.presentation.component.PDPBottomView
@@ -28,6 +29,7 @@ import com.apparel.offprice.features.pdp.presentation.component.ShareProductBott
 import com.apparel.offprice.features.pdp.presentation.component.SimilarPLPSheet
 import com.apparel.offprice.features.pdp.presentation.component.SizeGuideScreen
 import com.apparel.offprice.features.pdp.presentation.component.TabbyDetailSheet
+import com.apparel.offprice.features.pdp.presentation.component.TamaraDetailSheet
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -82,6 +84,14 @@ fun PDPScreen(
             onDismiss = { event(PDPContract.UiEvent.onCloseTabbySheet) })
     }
 
+    if (state.tamaraSheet) {
+        TamaraDetailSheet (
+            sheetState = rememberModalBottomSheetState(),
+            paymentInfo = tamaraPaymentDetail,
+            onDismiss = { event(PDPContract.UiEvent.onCloseTamaraSheet) })
+    }
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -115,6 +125,9 @@ fun PDPScreen(
                                 .padding(top = screenHeight),
                             onTabbyInfoClick = {
                                 event(PDPContract.UiEvent.onOpenTabbySheet)
+                            },
+                            onTamaraInfoClick = {
+                                event(PDPContract.UiEvent.onOpenTamaraSheet)
                             },
                             onSizeGuideClick = {
                                 event(PDPContract.UiEvent.onOpenSizeGuideSheet)

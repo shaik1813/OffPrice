@@ -37,6 +37,7 @@ fun ProductDescSection(
     modifier: Modifier,
     onSizeGuideClick: () -> Unit,
     onTabbyInfoClick: () -> Unit,
+    onTamaraInfoClick: () -> Unit,
     event: (PDPContract.UiEvent) -> Unit,
     state: PDPContract.UiState
 ) {
@@ -105,7 +106,9 @@ fun ProductDescSection(
 
         OfferCardUI()
 
-        PaymentCardUI(onTabbyClick = { onTabbyInfoClick() })
+        PaymentCardUI(
+            onTabbyClick = { onTabbyInfoClick() },
+            onTamaraClick = { onTamaraInfoClick() })
 
         FreeDeliveryUI()
 
