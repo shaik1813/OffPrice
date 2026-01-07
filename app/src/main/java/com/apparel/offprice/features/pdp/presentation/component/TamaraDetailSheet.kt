@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.borderColor
 import com.apparel.offprice.common.theme.primaryColor
+import com.apparel.offprice.common.theme.secondaryBlue
 import com.apparel.offprice.features.pdp.data.model.TamaraPaymentInfo
 
 
@@ -79,7 +80,7 @@ fun TamaraDetailSheet(
                         Icon(
                             painter = painterResource(R.drawable.close_24px),
                             contentDescription = null,
-                            tint = Color(0xFF677089),
+                            tint = secondaryBlue,
                             modifier = Modifier
                                 .size(22.dp)
                                 .clickable { onDismiss() }

@@ -67,12 +67,18 @@ fun SizeSelector(onSizeGuideClick: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically,
 
             ) {
-            Text(
-                text = stringResource(com.apparel.offprice.R.string.size),
-                style = MaterialTheme.typography.titleMedium,
-                color = loginButtonColor,
-                fontSize = 16.sp
-            )
+            Row(){
+                Text(
+                    text = stringResource(com.apparel.offprice.R.string.size),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = loginButtonColor,
+                    fontSize = 16.sp
+                )
+
+                Spacer(modifier = Modifier.size(6.dp))
+
+                SizeTypeTabs()
+            }
 
             Row(verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.clickable { onSizeGuideClick() }) {
@@ -202,7 +208,7 @@ fun SizeCard(
 
         if (!sizeitem.disabled && sizeitem.stock > 0) {
             Text(
-                text = "${sizeitem.stock} Left",
+                text = stringResource(com.apparel.offprice.R.string.left, sizeitem.stock),
                 color = stockLeftColor,
                 fontSize = 10.sp,
                 style = MaterialTheme.typography.titleMedium

@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.loginButtonColor
+import com.apparel.offprice.common.theme.secondaryBlue
 import kotlinx.serialization.json.Json.Default.configuration
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -88,7 +89,7 @@ fun QuantityBottomSheet(
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = null,
-                        tint = Color(0xFF677089),
+                        tint = secondaryBlue,
                         modifier = Modifier.clickable {
                             onDismiss()
                         })
