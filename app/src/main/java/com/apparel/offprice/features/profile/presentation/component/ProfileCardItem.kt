@@ -20,8 +20,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.buttonBorderColor
+import com.apparel.offprice.common.theme.loginButtonColor
+import com.apparel.offprice.common.theme.nonreturnTxtColor
 
 @Composable
 fun ProfileCardItem(
@@ -32,7 +35,7 @@ fun ProfileCardItem(
 ) {
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.background
         ),
         shape = MaterialTheme.shapes.small,
         border = BorderStroke(1.dp, color = buttonBorderColor),
@@ -54,18 +57,22 @@ fun ProfileCardItem(
             ) {
                 Icon(
                     painter = painterResource(icon),
-                    contentDescription = "User Profile Icon"
+                    contentDescription = "User Profile Icon",
+                    tint = loginButtonColor
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Column {
                     Text(
                         text = userItem.uppercase(),
-                        style = MaterialTheme.typography.titleMedium
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontSize = 14.sp
+                        ),
+                        color = Color.Black
                     )
                     Text(
                         text = userDescription,
-                        style = MaterialTheme.typography.labelMedium,
-                        color = Color.Gray
+                        style = MaterialTheme.typography.labelSmall,
+                        color = nonreturnTxtColor
                     )
                 }
             }

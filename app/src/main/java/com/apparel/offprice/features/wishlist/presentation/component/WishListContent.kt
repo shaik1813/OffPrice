@@ -35,9 +35,8 @@ fun WishList(
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier.fillMaxSize()
-            .padding(all = 8.dp),
+            .padding(vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(wishlistItem) { product ->
             Column(
@@ -56,17 +55,17 @@ fun WishList(
                 )
                 OutlinedButton(
                     modifier = Modifier
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp),
                     onClick = { addToCartItem(product) },
-                    shape = RoundedCornerShape(8.dp)
+                    shape = MaterialTheme.shapes.small
                 ) {
                     Text(
                         text = stringResource(R.string.label_add_to_bag).uppercase(),
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            fontSize = 12.sp,
-                            letterSpacing = 0.2.sp
+                        style = MaterialTheme.typography.titleSmall.copy(
+                            fontSize = 10.sp
                         ),
-                        color = Color.Black
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
             }

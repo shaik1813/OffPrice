@@ -17,15 +17,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.apparel.offprice.common.theme.nonreturnTxtColor
+import com.apparel.offprice.common.theme.primaryColor
 import com.apparel.offprice.common.theme.saleCardColor
 import com.apparel.offprice.common.theme.sizeCardColor
-import com.apparel.offprice.features.pdp.data.model.TabbyPaymentInfo
+import com.apparel.offprice.features.pdp.data.model.TamaraPaymentInfo
 
 
 @Composable
-fun TabbyWorkDetailCard(tabbyData: TabbyPaymentInfo) {
+fun TamaraWorkDetailCard(tamaraData: TamaraPaymentInfo) {
     Row(
         modifier = Modifier
             .padding(top = 16.dp)
@@ -40,18 +43,20 @@ fun TabbyWorkDetailCard(tabbyData: TabbyPaymentInfo) {
         Column {
             Text(
                 text = "How it Works",
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight(600)),
                 fontSize = 15.sp,
                 color = saleCardColor
             )
 
+            Spacer(modifier = Modifier.size(4.dp))
+
             Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                tabbyData.workDesc.forEachIndexed { index, item ->
+                tamaraData.workDesc.forEachIndexed { index, item ->
 
                     Row(
-                        verticalAlignment = Alignment.CenterVertically,
+                        verticalAlignment = Alignment.Top,
                         modifier = Modifier.padding(6.dp)
                     ) {
                         Box(
@@ -71,13 +76,24 @@ fun TabbyWorkDetailCard(tabbyData: TabbyPaymentInfo) {
 
                         Spacer(modifier = Modifier.size(6.dp))
 
-                        Text(
-                            text = item,
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontSize = 12.sp,
-                            color = Color.Black,
-                        )
-                    }
+                        Column{
+                            Text(
+                                text = item.title,
+                                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight(600)),
+                                fontSize = 14.sp,
+                                color = primaryColor,
+                            )
+
+                            Spacer(modifier = Modifier.size(4.dp))
+
+                            Text(
+                                text = item.desc,
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontSize = 12.sp,
+                                color = nonreturnTxtColor,
+                            )
+                        }
+                                            }
                 }
 
             }

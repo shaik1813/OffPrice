@@ -41,11 +41,12 @@ import com.apparel.offprice.routes.AppScreen
 
 @Composable
 fun HomeScreen(
+    navId : Int = 0,
     onNavigateToOuter: (Any) -> Unit
 ) {
-
     val bottomNavController = rememberNavController()
     BottomNavigationContent(
+        navId = navId,
         navController = bottomNavController,
         onNavigateToOuter = {
             onNavigateToOuter(it)
@@ -57,6 +58,7 @@ fun HomeScreen(
 
 @Composable
 fun BottomNavigationContent(
+    navId: Int,
     navController: NavHostController,
     onNavigateToOuter: (Any) -> Unit
 ) {
@@ -65,9 +67,17 @@ fun BottomNavigationContent(
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         bottomBar = { BottomBar(navController = navController) }
     ) { innerPadding ->
+        val startDestination = when (navId) {
+            0 -> BottomNavScreen.Item1
+            1 -> BottomNavScreen.Item2
+            2 -> BottomNavScreen.Item3
+            3 -> BottomNavScreen.Item4
+            4 -> BottomNavScreen.Item5
+            else -> BottomNavScreen.Item1
+        }
         NavHost(
             navController = navController,
-            startDestination = BottomNavScreen.Item1,
+            startDestination = startDestination,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable<BottomNavScreen.Item1> {

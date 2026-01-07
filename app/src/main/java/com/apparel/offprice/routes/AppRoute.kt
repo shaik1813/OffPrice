@@ -76,8 +76,11 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
         }
 
-        composable<AppScreen.HomeScreen> {
-            HomeScreen(onNavigateToOuter = { route ->
+        composable<AppScreen.HomeScreen> { backStackEntry ->
+            val args = backStackEntry.toRoute<AppScreen.HomeScreen>()
+            HomeScreen(
+                navId = args.navId,
+                onNavigateToOuter = { route ->
                 navController.navigate(route)
             })
         }
@@ -85,7 +88,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         composable<AppScreen.SearchScreen> {
             SearchScreen(
                 onSearchSubmit = { productId ->
-                    navController.navigate(AppScreen.PDPScreen(productId))
+                    navController.navigate(AppScreen.PLPScreen(productId))
                 },
                 onNavigateToBack = {
                     navController.popBackStack()
@@ -103,12 +106,14 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                     navController.popBackStack()
                 },
                 onStartShoppingClicked = {
-                    navController.navigate(AppScreen.HomeScreen) {
-                        popUpTo(AppScreen.HomeScreen) { inclusive = true }
+                    navController.navigate(AppScreen.HomeScreen(0)) {
+                        popUpTo(0) { inclusive = true }
                     }
                 },
                 onNavigateToCart = {
-                    navController.navigate(BottomNavScreen.Item4)
+                    navController.navigate(AppScreen.HomeScreen(navId = 3)){
+                        popUpTo(0) {  }
+                    }
                 },
                 onNavigateToPDP = { product ->
                     navController.navigate(AppScreen.PDPScreen(product.id))
@@ -150,7 +155,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         composable<AppScreen.GenderCategoryScreen> {
             GenderCategoryScreen(
                 onCategoryClick = {
-                    navController.navigate(AppScreen.HomeScreen) {
+                    navController.navigate(AppScreen.HomeScreen(0)) {
                         popUpTo(0) { inclusive = true }
                     }
                 },
