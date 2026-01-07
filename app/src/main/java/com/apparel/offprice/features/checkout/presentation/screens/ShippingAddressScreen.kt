@@ -122,11 +122,6 @@ fun ShippingAddressScreen(
         )
     }
 
-    val isPickupFlow =
-        state.selectedFilter == ShippingAddressFilter.PICKUPATSTORE &&
-                state.isPickupStoreSelected
-
-
 
     Column(
         modifier = Modifier

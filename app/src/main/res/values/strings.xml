@@ -230,6 +230,7 @@
     <string name="label_credit_debit_card">Credit / Debit Card</string>
     <string name="label_add_your_contact_details">Add Your Contact Details</string>
     <string name="label_confirmation">Confirmation</string>
+    <string name="label_shop_online_and_collect_from_your_nearest_store">SHOP ONLINE AND COLLECT FROM YOUR NEAREST STORE</string>
 
     <!-- Categories -->
     <string name="label_categories">CATEGORIES</string>
