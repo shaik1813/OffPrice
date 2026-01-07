@@ -228,6 +228,8 @@
     <string name="label_delivery_details">Delivery Details</string>
     <string name="label_paid">Paid</string>
     <string name="label_credit_debit_card">Credit / Debit Card</string>
+    <string name="label_add_your_contact_details">Add Your Contact Details</string>
+    <string name="label_confirmation">Confirmation</string>
 
     <!-- Categories -->
     <string name="label_categories">CATEGORIES</string>

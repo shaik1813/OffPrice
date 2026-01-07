@@ -9,6 +9,7 @@ import com.apparel.offprice.features.checkout.presentation.components.PaymentMet
 import com.apparel.offprice.features.checkout.presentation.components.PaymentResult
 import com.apparel.offprice.features.checkout.presentation.components.ShippingAddressFilter
 import com.apparel.offprice.features.checkout.presentation.components.sampleAddresses
+import com.apparel.offprice.features.checkout.presentation.components.samplePickupStores
 import com.apparel.offprice.features.checkout.presentation.components.savedCards
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -47,13 +48,37 @@ class CheckOutViewModel @Inject constructor() : ViewModel(), CheckOutContract {
 
             CheckOutContract.UiEvent.OnCleared -> TODO()
 
+            /* is CheckOutContract.UiEvent.OnFilterSelected -> {
+                 _state.update { current ->
+
+                     if (current.checkoutStep == CheckoutStep.PAYMENT) {
+                         //Toggle disabled once payment starts
+                         current
+                     } else if (event.filter == ShippingAddressFilter.DELIVERY) {
+                         current.copy(
+                             selectedFilter = event.filter,
+                             checkoutStep =
+                                 if (current.isAddressConfirmed)
+                                     CheckoutStep.SUMMARY
+                                 else
+                                     CheckoutStep.ADDRESS
+                         )
+                     } else {
+                         current.copy(selectedFilter = event.filter)
+                     }
+                 }
+             }*/
+
             is CheckOutContract.UiEvent.OnFilterSelected -> {
                 _state.update { current ->
 
+                    // 🚫 Toggle disabled once payment starts
                     if (current.checkoutStep == CheckoutStep.PAYMENT) {
-                        //Toggle disabled once payment starts
                         current
-                    } else if (event.filter == ShippingAddressFilter.DELIVERY) {
+                    }
+
+                    // 🚚 DELIVERY FLOW (unchanged)
+                    else if (event.filter == ShippingAddressFilter.DELIVERY) {
                         current.copy(
                             selectedFilter = event.filter,
                             checkoutStep =
@@ -62,9 +87,40 @@ class CheckOutViewModel @Inject constructor() : ViewModel(), CheckOutContract {
                                 else
                                     CheckoutStep.ADDRESS
                         )
-                    } else {
-                        current.copy(selectedFilter = event.filter)
                     }
+
+                    // 🏬 PICKUP FLOW (NEW + SAFE)
+                    else {
+                        current.copy(
+                            selectedFilter = ShippingAddressFilter.PICKUPATSTORE,
+                            pickupStores =
+                                if (current.pickupStores.isEmpty()) {
+                                    samplePickupStores
+                                } else {
+                                    current.pickupStores
+                                },
+                            selectedPickupStore = null,
+                            checkoutStep = CheckoutStep.ADDRESS // stays at Address step
+                        )
+                    }
+                }
+            }
+
+            is CheckOutContract.UiEvent.OnPickupStoreSelected -> {
+                _state.update {
+                    it.copy(
+                        selectedPickupStore = event.store,
+                        isPickupStoreSelected = true
+                    )
+                }
+            }
+
+            CheckOutContract.UiEvent.OnChangePickupStore -> {
+                _state.update {
+                    it.copy(
+                        selectedPickupStore = null,
+                        isPickupStoreSelected = false
+                    )
                 }
             }
 
@@ -109,6 +165,7 @@ class CheckOutViewModel @Inject constructor() : ViewModel(), CheckOutContract {
                     )
                 }
             }
+
             CheckOutContract.UiEvent.OnOpenAddAddress -> {
                 _state.update {
                     it.copy(
@@ -221,6 +278,24 @@ class CheckOutViewModel @Inject constructor() : ViewModel(), CheckOutContract {
             }
 
 
+            //PICKUPSTORE
+            is CheckOutContract.UiEvent.OnPickupStoreSelected -> {
+                _state.update {
+                    it.copy(selectedPickupStore = event.store)
+                }
+            }
+
+            is CheckOutContract.UiEvent.OnPickupNameChanged -> {
+                _state.update {
+                    it.copy(pickupName = event.value)
+                }
+            }
+
+            is CheckOutContract.UiEvent.OnPickupPhoneChanged -> {
+                _state.update {
+                    it.copy(pickupPhone = event.value)
+                }
+            }
 
 
         }
