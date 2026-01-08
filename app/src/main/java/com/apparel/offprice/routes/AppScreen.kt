@@ -87,4 +87,7 @@ sealed interface AppScreen {
 
     @Serializable
     data class SubCategoryScreen(val title: String) : AppScreen
+
+    @Serializable
+    data object CustomerSupportScreen : AppScreen
 }
