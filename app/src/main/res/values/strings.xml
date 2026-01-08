@@ -231,6 +231,8 @@
     <string name="label_add_your_contact_details">Add Your Contact Details</string>
     <string name="label_confirmation">Confirmation</string>
     <string name="label_shop_online_and_collect_from_your_nearest_store">SHOP ONLINE AND COLLECT FROM YOUR NEAREST STORE</string>
+    <string name="label_completed">Completed</string>
+    <string name="label_request_new_return">REQUEST NEW RETURN</string>
 
     <!-- Categories -->
     <string name="label_categories">CATEGORIES</string>

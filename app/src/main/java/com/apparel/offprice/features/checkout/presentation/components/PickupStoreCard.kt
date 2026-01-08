@@ -27,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.secondaryColor
+import com.apparel.offprice.features.checkout.data.PickupStore
 
 @Composable
 fun PickupStoreCard(
