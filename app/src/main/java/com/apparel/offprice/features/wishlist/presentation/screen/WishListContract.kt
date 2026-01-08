@@ -43,7 +43,6 @@ interface WishListContract :
         data object DecreaseQty : UiEvent
         data object MoveToBag : UiEvent
 
-
     }
 
     sealed interface UiEffect {

@@ -17,9 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.saleCardColor
 
 
 @Composable
@@ -35,51 +37,58 @@ fun FreeDeliveryUI() {
         Box(
             modifier = Modifier
                 .weight(1f)
-                .height(80.dp)
-
-                .background(Color(0xFFF3F3F3)
-                    , RoundedCornerShape(8.dp)),
+                .height(60.dp)
+                .background(Color(0xFFF3F3F3), RoundedCornerShape(8.dp))
+                .padding(10.dp),
 
         ) {
-            Text("100 % Authentic International brands", style = MaterialTheme.typography.titleMedium,
+            Text("100 % Authentic International \nbrands",
+                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight(600)),
                 fontSize = 10.sp,
-                modifier = Modifier.align(Alignment.TopStart).padding(10.dp))
+                color = saleCardColor,
+                modifier = Modifier.align(Alignment.TopStart))
 
             Image(painter = painterResource(R.drawable.brand_icon),
                 contentDescription = null,
-                modifier = Modifier.padding(10.dp).width(17.dp).height(20.dp).align(Alignment.BottomEnd))
+                modifier = Modifier.width(17.dp).height(20.dp).align(Alignment.BottomEnd))
         }
 
         Box(
             modifier = Modifier
                 .weight(1f)
-                .height(80.dp)
-                .background(Color(0xFFF3F3F3), RoundedCornerShape(8.dp)),
+                .height(60.dp)
+                .background(Color(0xFFF3F3F3), RoundedCornerShape(8.dp))
+                .padding(10.dp),
 
         ) {
-            Text("100 % Authentic International brands", style = MaterialTheme.typography.titleMedium,
+            Text("Free Return \nWithin 14 days",
+                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight(600)),
                 fontSize = 10.sp,
-                modifier = Modifier.align(Alignment.TopStart).padding(10.dp))
+                color = saleCardColor,
+                modifier = Modifier.align(Alignment.TopStart))
 
-            Image(painter = painterResource(R.drawable.brand_icon),
+            Image(painter = painterResource(R.drawable.product_returnicon),
                 contentDescription = null,
-                modifier = Modifier.padding(10.dp).width(17.dp).height(20.dp).align(Alignment.BottomEnd))
+                modifier = Modifier.width(20.dp).height(20.dp).align(Alignment.BottomEnd))
         }
 
         Box(
             modifier = Modifier
                 .weight(1f)
-                .height(80.dp)
-                .background(Color(0xFFF3F3F3), RoundedCornerShape(8.dp)),
+                .height(60.dp)
+                .background(Color(0xFFF3F3F3), RoundedCornerShape(8.dp))
+                .padding(10.dp),
 
         ) {
-            Text("100 % Authentic International brands", style = MaterialTheme.typography.titleMedium,
+            Text("Free Delivery \nOn 200 AED \n+ Orders",
+                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight(600)),
                 fontSize = 10.sp,
-                modifier = Modifier.align(Alignment.TopStart).padding(10.dp))
+                color = saleCardColor,
+                modifier = Modifier.align(Alignment.TopStart))
 
-            Image(painter = painterResource(R.drawable.brand_icon),
+            Image(painter = painterResource(R.drawable.delivery_aedicon),
                 contentDescription = null,
-                modifier = Modifier.padding(10.dp).width(17.dp).height(20.dp).align(Alignment.BottomEnd))
+                modifier = Modifier.width(25.dp).height(25.dp).align(Alignment.BottomEnd))
         }
     }
 
