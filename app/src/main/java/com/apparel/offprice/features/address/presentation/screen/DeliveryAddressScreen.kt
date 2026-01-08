@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,6 +22,7 @@ import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.address.presentation.component.DeliveryAddressBottomSheet
 import com.apparel.offprice.features.address.presentation.component.DeliveryAddressDeleteDialog
 import com.apparel.offprice.features.address.presentation.component.DeliveryAddressItemList
+import com.apparel.offprice.features.address.presentation.component.EmptyAddressScreen
 
 @Composable
 fun DeliveryAddressScreen(
@@ -53,22 +52,22 @@ fun DeliveryAddressScreen(
             DefaultTopAppBar(title = stringResource(R.string.label_delivery_address)) { onNavigateToBack() }
         },
         bottomBar = {
-            // Bottom Action Buttons
-            BottomSingleActionButton(
-                title = stringResource(R.string.label_add_new_address),
-                onButtonClicked = {
-                    event.invoke(DeliveryAddressContract.UiEvent.OnAddAddressClicked)
-                }
-            )
+            if (state.deliveryAddress.isNotEmpty() && !state.isAddAddressOpened) {
+                // Bottom Action Buttons
+                BottomSingleActionButton(
+                    title = stringResource(R.string.label_add_new_address),
+                    onButtonClicked = {
+                        event.invoke(DeliveryAddressContract.UiEvent.OnAddAddressClicked)
+                    }
+                )
+            }
         },
-        containerColor = MaterialTheme.colorScheme.surface
     ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            HorizontalDivider(thickness = 1.dp)
             Spacer(modifier = Modifier.height(12.dp))
             if (state.deliveryAddress.isNotEmpty()) {
                 DeliveryAddressItemList(
@@ -81,6 +80,10 @@ fun DeliveryAddressScreen(
                     },
                     modifier = Modifier.weight(1f)
                 )
+            } else {
+                EmptyAddressScreen(onAddAddressClicked = {
+                    event.invoke(DeliveryAddressContract.UiEvent.OnAddAddressClicked)
+                })
             }
             if (state.isAddAddressOpened) {
                 //show AddressBottomSheet

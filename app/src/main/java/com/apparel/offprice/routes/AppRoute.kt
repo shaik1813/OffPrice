@@ -97,7 +97,9 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.StoreLocatorScreen> {
-            StoreLocatorScreen()
+            StoreLocatorScreen(
+                onNavigateBack = {navController.popBackStack()}
+            )
         }
 
         composable<AppScreen.WishListScreen> {

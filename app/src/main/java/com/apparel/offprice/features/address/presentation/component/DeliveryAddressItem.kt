@@ -25,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.borderColor
 import com.apparel.offprice.common.theme.nonreturnTxtColor
 import com.apparel.offprice.features.address.data.model.DeliveryAddressModel
 
@@ -43,7 +44,7 @@ fun DeliveryAddressItemList(
                     .padding(horizontal = 16.dp, vertical = 8.dp),
                 colors = CardDefaults.cardColors(containerColor = Color.White),
                 shape = MaterialTheme.shapes.medium,
-                border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.background)
+                border = BorderStroke(width = 1.dp, color = borderColor)
             ) {
                 Column(
                     modifier = Modifier

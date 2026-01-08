@@ -53,7 +53,8 @@ fun DefaultTopAppBar(
                     text = "English",
                     style = MaterialTheme.typography.titleLarge.copy(
                         fontSize = 14.sp
-                    )
+                    ),
+                    color = Color.Black
                 )
                 VerticalDivider(
                     modifier = Modifier
