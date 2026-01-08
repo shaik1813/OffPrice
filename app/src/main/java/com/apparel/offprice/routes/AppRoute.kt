@@ -265,6 +265,10 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
             )
         }
 
+        composable<AppScreen.CustomerSupportScreen> {
+
+        }
+
     }
 
 }
