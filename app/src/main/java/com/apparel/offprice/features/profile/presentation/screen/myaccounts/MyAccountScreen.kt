@@ -399,7 +399,7 @@ fun AccountUserScreen(
                             R.string.label_customer_support,
                             R.drawable.icon_info,
                             9,
-                            AppScreen.StoreLocatorScreen
+                            AppScreen.CustomerSupportScreen
                         ),
                     ),
                     onItemClick = { item ->
