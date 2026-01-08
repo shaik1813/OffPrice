@@ -118,6 +118,9 @@ fun PDPScreen(
                             onShareClick = { event(PDPContract.UiEvent.onOpenShareProductSheet) },
                             onClickSimilar = {
                                 event(PDPContract.UiEvent.onOpenSimilarProductSheet)
+                            },
+                            onWishListClick = {
+                                event(PDPContract.UiEvent.onWishListClicked(it))
                             })
 
                         val configuration = LocalConfiguration.current

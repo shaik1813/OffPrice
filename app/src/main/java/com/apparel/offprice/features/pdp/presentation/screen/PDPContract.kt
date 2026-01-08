@@ -51,11 +51,11 @@ interface PDPContract : UnidirectionalViewModel
         data object onCloseTabbySheet : UiEvent
         data object onOpenTamaraSheet : UiEvent
         data object onCloseTamaraSheet : UiEvent
+        data class onWishListClicked(val productId:String) : UiEvent
     }
 
     sealed interface UiEffect {
         object onOpenBottomSheetLocation : UiEffect
         object onCloseBottomSheetLocation : UiEffect
-
     }
 }

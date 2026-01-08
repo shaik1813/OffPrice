@@ -30,7 +30,6 @@ import com.apparel.offprice.common.theme.sizeDescColor
 @Composable
 fun salesEndSection(){
     Row(verticalAlignment = Alignment.CenterVertically) {
-
         Text(
             text = stringResource(com.apparel.offprice.R.string.sales_ends_in),
             style = MaterialTheme.typography.bodyLarge,

@@ -27,7 +27,8 @@ fun ProductImageSection(
     pdpdetail: ProductDetailItem,
     modifier: Modifier,
     onShareClick: () -> Unit,
-    onClickSimilar: () -> Unit
+    onClickSimilar: () -> Unit,
+    onWishListClick: (String) -> Unit
 ) {
     Box(modifier = modifier) {
         ImageSliderWithIndicatorPDP(pdpdetail.image)
@@ -90,11 +91,14 @@ fun ProductImageSection(
             Spacer(modifier = Modifier.size(12.dp))
 
             Image(
-                painter = painterResource(id = R.drawable.heart_pdpicon),
+                painter = painterResource(if (pdpdetail.isWishlist) R.drawable.heart_pdpred
+                else R.drawable.heart_pdpicon),
                 contentDescription = "App Icon",
                 modifier = Modifier
                     .size(40.dp)
-                    .align(Alignment.End)
+                    .align(Alignment.End).clickable{
+                        onWishListClick(pdpdetail.id)
+                    }
             )
 
             Spacer(modifier = Modifier.size(12.dp))

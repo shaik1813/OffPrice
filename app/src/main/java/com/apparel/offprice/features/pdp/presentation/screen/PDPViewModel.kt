@@ -151,6 +151,14 @@ class PDPViewModel @Inject constructor(
                     updateState { it.copy(tamaraSheet = false) }
                 }
             }
+
+            is PDPContract.UiEvent.onWishListClicked -> {
+                viewModelScope.launch {
+                    updateState {
+                        it.copy(pdpDetail = pdpDetail.copy(isWishlist = !it.pdpDetail!!.isWishlist))
+                    }
+                }
+            }
         }
     }
 
