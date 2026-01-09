@@ -35,6 +35,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
+import com.apparel.offprice.features.checkout.data.PaymentMethod
+import com.apparel.offprice.features.checkout.data.SavedCardUiModel
+import com.apparel.offprice.features.checkout.data.savedCards
 import com.apparel.offprice.features.checkout.presentation.screens.CheckOutContract
 
 @Composable

@@ -12,9 +12,17 @@ import com.apparel.offprice.features.address.presentation.screen.DeliveryAddress
 import com.apparel.offprice.features.authentication.presentation.screen.LoginEmptyScreen
 import com.apparel.offprice.features.checkout.presentation.screens.ShippingAddressScreen
 import com.apparel.offprice.features.coupon.presentation.screen.CouponScreen
-import com.apparel.offprice.features.home.presentation.screens.subcategory.SubCategoryScreen
+import com.apparel.offprice.features.customerSupport.presentation.screens.aboutUs.AboutUsScreen
+import com.apparel.offprice.features.customerSupport.presentation.screens.contactInquiry.ContactInquiryScreen
+import com.apparel.offprice.features.customerSupport.presentation.screens.customerSupport.CustomerSupportScreen
+import com.apparel.offprice.features.customerSupport.presentation.screens.disclaimer.DisclaimerScreen
+import com.apparel.offprice.features.customerSupport.presentation.screens.privacyPolicy.PrivacyPolicyScreen
+import com.apparel.offprice.features.customerSupport.presentation.screens.returnPolicy.ReturnPolicyScreen
+import com.apparel.offprice.features.customerSupport.presentation.screens.shippingInfo.ShippingInfoScreen
+import com.apparel.offprice.features.customerSupport.presentation.screens.termsAndCondition.TermsAndConditionScreen
 import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
 import com.apparel.offprice.features.home.presentation.screens.search.SearchScreen
+import com.apparel.offprice.features.home.presentation.screens.subcategory.SubCategoryScreen
 import com.apparel.offprice.features.paymentCard.presentation.screen.PaymentCardScreen
 import com.apparel.offprice.features.pdp.presentation.screen.PDPScreen
 import com.apparel.offprice.features.plp.presentation.screens.plpScreen.PLPScreen
@@ -22,6 +30,8 @@ import com.apparel.offprice.features.profile.presentation.screen.profileDetails.
 import com.apparel.offprice.features.profile.presentation.screen.profilePassword.ProfilePasswordScreen
 import com.apparel.offprice.features.profile.presentation.screen.profileSize.ProfileSizeScreen
 import com.apparel.offprice.features.profile.presentation.screen.userprofile.UserProfileScreen
+import com.apparel.offprice.features.returnFlow.presentation.screen.ReturnDetailsScreen
+import com.apparel.offprice.features.returnFlow.presentation.screen.ReturnsScreen
 import com.apparel.offprice.features.storeCredit.presentation.screen.StoreCreditScreen
 import com.apparel.offprice.features.storeLocator.presentation.screen.StoreLocatorScreen
 import com.apparel.offprice.features.welcome.presentation.genderCategory.GenderCategoryScreen
@@ -81,8 +91,8 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
             HomeScreen(
                 navId = args.navId,
                 onNavigateToOuter = { route ->
-                navController.navigate(route)
-            })
+                    navController.navigate(route)
+                })
         }
 
         composable<AppScreen.SearchScreen> {
@@ -98,7 +108,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
         composable<AppScreen.StoreLocatorScreen> {
             StoreLocatorScreen(
-                onNavigateBack = {navController.popBackStack()}
+                onNavigateBack = { navController.popBackStack() }
             )
         }
 
@@ -113,8 +123,8 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                     }
                 },
                 onNavigateToCart = {
-                    navController.navigate(AppScreen.HomeScreen(navId = 3)){
-                        popUpTo(0) {  }
+                    navController.navigate(AppScreen.HomeScreen(navId = 3)) {
+                        popUpTo(0) { }
                     }
                 },
                 onNavigateToPDP = { product ->
@@ -240,7 +250,42 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
         composable<AppScreen.MyOrdersScreen> {}
 
-        composable<AppScreen.ReturnsScreen> {}
+        composable<AppScreen.ReturnsScreen> {
+            ReturnsScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                },
+                onNavigateToReturnDetails = { returnId ->
+                    navController.navigate(
+                        AppScreen.ReturnDetailsScreen(returnId, navController.popBackStack())
+                    )
+                },
+                onNavigateToRequestReturn = {
+                    //navController.navigate(AppScreen.RequestReturnScreen)
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        composable<AppScreen.ReturnDetailsScreen> { backStackEntry ->
+            val args = backStackEntry.toRoute<AppScreen.ReturnDetailsScreen>()
+
+            ReturnDetailsScreen(
+                returnId = args.returnId,
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        /*composable<AppScreen.RequestReturnScreen> {
+            RequestReturnScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
+        }*/
+
 
         composable<AppScreen.ExchangeScreen> {}
 
@@ -262,6 +307,97 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                     navController.navigate(AppScreen.PDPScreen(it))
                 },
                 title = args.title
+            )
+        }
+
+        composable<AppScreen.CustomerSupportScreen> {
+            CustomerSupportScreen(
+                onNavigateToBack = { navController.popBackStack() },
+                onItemClick = { navController.navigate(it) }
+            )
+        }
+
+        composable<AppScreen.AboutUsScreen> {
+            AboutUsScreen(
+                onNavigateToBack = { navController.popBackStack() },
+                onSearchClicked = {
+                    navController.navigate(AppScreen.SearchScreen)
+                },
+                onWishlistClicked = {
+                    navController.navigate(AppScreen.WishListScreen)
+                }
+            )
+        }
+
+        composable<AppScreen.DisclaimerScreen> {
+            DisclaimerScreen(
+                onNavigateToBack = { navController.popBackStack() },
+                onSearchClicked = {
+                    navController.navigate(AppScreen.SearchScreen)
+                },
+                onWishlistClicked = {
+                    navController.navigate(AppScreen.WishListScreen)
+                }
+            )
+        }
+
+        composable<AppScreen.ContactInquiryScreen> {
+            ContactInquiryScreen(
+                onNavigateToBack = { navController.popBackStack() },
+                onSearchClicked = {
+                    navController.navigate(AppScreen.SearchScreen)
+                },
+                onWishlistClicked = {
+                    navController.navigate(AppScreen.WishListScreen)
+                }
+            )
+        }
+
+        composable<AppScreen.ReturnPolicyScreen> {
+            ReturnPolicyScreen(
+                onNavigateToBack = { navController.popBackStack() },
+                onSearchClicked = {
+                    navController.navigate(AppScreen.SearchScreen)
+                },
+                onWishlistClicked = {
+                    navController.navigate(AppScreen.WishListScreen)
+                }
+            )
+        }
+
+        composable<AppScreen.TermsAndConditionScreen> {
+            TermsAndConditionScreen(
+                onNavigateToBack = { navController.popBackStack() },
+                onSearchClicked = {
+                    navController.navigate(AppScreen.SearchScreen)
+                },
+                onWishlistClicked = {
+                    navController.navigate(AppScreen.WishListScreen)
+                }
+            )
+        }
+
+        composable<AppScreen.ShippingInfoScreen> {
+            ShippingInfoScreen(
+                onNavigateToBack = { navController.popBackStack() },
+                onSearchClicked = {
+                    navController.navigate(AppScreen.SearchScreen)
+                },
+                onWishlistClicked = {
+                    navController.navigate(AppScreen.WishListScreen)
+                }
+            )
+        }
+
+        composable<AppScreen.PrivacyPolicyScreen> {
+            PrivacyPolicyScreen(
+                onNavigateToBack = { navController.popBackStack() },
+                onSearchClicked = {
+                    navController.navigate(AppScreen.SearchScreen)
+                },
+                onWishlistClicked = {
+                    navController.navigate(AppScreen.WishListScreen)
+                }
             )
         }
 

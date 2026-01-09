@@ -1,11 +1,15 @@
 package com.apparel.offprice.common.utils
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.ui.graphics.Color
 import android.graphics.Color as AndroidColor
 import java.util.Locale
 import androidx.core.graphics.toColorInt
 import com.apparel.offprice.features.plp.data.model.FilterGroup
 import com.apparel.offprice.features.plp.data.model.FilterType
+import androidx.core.net.toUri
 
 
 fun String.takeInitials(): String{
@@ -50,6 +54,25 @@ fun List<FilterGroup>.selectedCount(type: FilterType): Int {
         ?.items
         ?.count { it.isSelected }
         ?: 0
+}
+
+fun Context.openDialer(phoneNumber: String) {
+    val intent = Intent(
+        Intent.ACTION_DIAL,
+        "tel:$phoneNumber".toUri()
+    )
+    startActivity(intent)
+}
+
+fun Context.openGoogleMapsNavigation(
+    latitude: Double,
+    longitude: Double
+) {
+    val uri = "google.navigation:q=$latitude,$longitude".toUri()
+    val intent = Intent(Intent.ACTION_VIEW, uri).apply {
+        setPackage("com.google.android.apps.maps")
+    }
+    startActivity(intent)
 }
 
 

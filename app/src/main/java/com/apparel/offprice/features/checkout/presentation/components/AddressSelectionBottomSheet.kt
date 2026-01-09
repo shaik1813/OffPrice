@@ -27,6 +27,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
+import com.apparel.offprice.features.checkout.data.AddressUiModel
+import com.apparel.offprice.features.checkout.data.sampleAddresses
 import com.apparel.offprice.features.checkout.presentation.screens.CheckOutContract
 
 @OptIn(ExperimentalMaterial3Api::class)

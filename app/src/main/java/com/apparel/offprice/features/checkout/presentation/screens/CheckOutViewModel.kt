@@ -2,15 +2,15 @@ package com.apparel.offprice.features.checkout.presentation.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.apparel.offprice.features.checkout.presentation.components.AddAddressFilter
-import com.apparel.offprice.features.checkout.presentation.components.AddressSheetMode
-import com.apparel.offprice.features.checkout.presentation.components.CheckoutStep
-import com.apparel.offprice.features.checkout.presentation.components.PaymentMethod
-import com.apparel.offprice.features.checkout.presentation.components.PaymentResult
-import com.apparel.offprice.features.checkout.presentation.components.ShippingAddressFilter
-import com.apparel.offprice.features.checkout.presentation.components.sampleAddresses
-import com.apparel.offprice.features.checkout.presentation.components.samplePickupStores
-import com.apparel.offprice.features.checkout.presentation.components.savedCards
+import com.apparel.offprice.features.checkout.data.AddAddressFilter
+import com.apparel.offprice.features.checkout.data.AddressSheetMode
+import com.apparel.offprice.features.checkout.data.CheckoutStep
+import com.apparel.offprice.features.checkout.data.PaymentMethod
+import com.apparel.offprice.features.checkout.data.PaymentResult
+import com.apparel.offprice.features.checkout.data.ShippingAddressFilter
+import com.apparel.offprice.features.checkout.data.sampleAddresses
+import com.apparel.offprice.features.checkout.data.samplePickupStores
+import com.apparel.offprice.features.checkout.data.savedCards
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow

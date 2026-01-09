@@ -22,13 +22,13 @@ import com.apparel.offprice.features.checkout.presentation.components.AddressFor
 import com.apparel.offprice.features.checkout.presentation.components.AddressSelectionBottomSheet
 import com.apparel.offprice.features.checkout.presentation.components.BottomBar
 import com.apparel.offprice.features.checkout.presentation.components.CheckoutProgressStepper
-import com.apparel.offprice.features.checkout.presentation.components.CheckoutStep
+import com.apparel.offprice.features.checkout.data.CheckoutStep
 import com.apparel.offprice.features.checkout.presentation.components.DeliveryTypeRow
 import com.apparel.offprice.features.checkout.presentation.components.OrderSummarySection
-import com.apparel.offprice.features.checkout.presentation.components.PaymentResult
+import com.apparel.offprice.features.checkout.data.PaymentResult
 import com.apparel.offprice.features.checkout.presentation.components.PaymentScreenContent
 import com.apparel.offprice.features.checkout.presentation.components.PickupStoreSection
-import com.apparel.offprice.features.checkout.presentation.components.ShippingAddressFilter
+import com.apparel.offprice.features.checkout.data.ShippingAddressFilter
 import com.apparel.offprice.features.checkout.presentation.components.TopBar
 import features.cart.presentation.component.PriceSummaryCard
 

@@ -25,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
+import com.apparel.offprice.features.checkout.data.CheckoutStep
 import com.apparel.offprice.features.checkout.presentation.screens.CheckOutContract
 
 @Composable
