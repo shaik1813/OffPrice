@@ -90,4 +90,27 @@ sealed interface AppScreen {
 
     @Serializable
     data object CustomerSupportScreen : AppScreen
+
+    @Serializable
+    data object AboutUsScreen : AppScreen
+
+    @Serializable
+    data object DisclaimerScreen : AppScreen
+
+    @Serializable
+    data object ContactInquiryScreen : AppScreen
+
+    @Serializable
+    data object ReturnPolicyScreen : AppScreen
+
+    @Serializable
+    data object TermsAndConditionScreen : AppScreen
+
+    @Serializable
+    data object ShippingInfoScreen : AppScreen
+
+    @Serializable
+    data object PrivacyPolicyScreen : AppScreen
+
+
 }
