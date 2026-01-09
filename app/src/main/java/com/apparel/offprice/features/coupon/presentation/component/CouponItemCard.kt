@@ -38,6 +38,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.saleCardColor
 import com.apparel.offprice.features.cart.presentation.component.DottedLine
 import com.apparel.offprice.features.coupon.data.CouponModel
 
@@ -110,9 +111,10 @@ fun CouponItemCard(
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
                                 text = coupon.offerDescription,
-                                style = MaterialTheme.typography.bodyMedium.copy(
+                                style = MaterialTheme.typography.titleMedium.copy(
                                     fontSize = 14.sp,
-                                    fontWeight = FontWeight.SemiBold,
+                                    lineHeight = 22.sp,
+                                    fontWeight = FontWeight(600),
                                 ),
                                 color = Color.White.copy(alpha = 0.8f),
                             )
@@ -187,8 +189,8 @@ fun CouponItemCard(
             ) {
                 Text(
                     text = stringResource(R.string.coupon_max_cashback_limit),
-                    style = MaterialTheme.typography.bodySmall.copy(
-                        fontSize = 12.sp,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        fontSize = 12.sp, lineHeight = 20.sp
                     ),
                     color = Color(0xFF575959),
                 )
@@ -241,11 +243,11 @@ fun CouponItemCard(
                 if (isCodeApplied) {
                     Text(
                         text = stringResource(R.string.coupon_apply_code),
-                        style = MaterialTheme.typography.bodyMedium.copy(
+                        style = MaterialTheme.typography.titleMedium.copy(
                             fontSize = 13.sp,
-                            fontWeight = FontWeight.SemiBold,
+                            fontWeight = FontWeight(600),
                         ),
-                        color = Color(0xFF040707),
+                        color = saleCardColor,
                         modifier = Modifier.clickable { onApplyClicked() },
                     )
                 }

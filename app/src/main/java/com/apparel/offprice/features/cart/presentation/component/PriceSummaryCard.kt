@@ -1,5 +1,6 @@
 package features.cart.presentation.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +15,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.IconBackgroundColor
+import com.apparel.offprice.common.theme.borderColor
+import com.apparel.offprice.common.theme.greenColor
 import com.apparel.offprice.features.cart.data.PriceData
 import com.apparel.offprice.features.cart.presentation.component.PriceCardUI
 import com.apparel.offprice.features.cart.presentation.component.ShippingFeeUI
@@ -23,15 +27,13 @@ import com.apparel.offprice.features.cart.presentation.component.ShippingFeeUI
 fun PriceSummaryCard(isOpenShipFee: Boolean, priceData: PriceData, OnShipFeeClick: () -> Unit) {
 
     Column() {
-
         Surface(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .padding(horizontal = 16.dp)
                 .fillMaxWidth(),
             shape = RoundedCornerShape(8.dp),
-            color = Color(0xFFF5F5F5)
+            color = IconBackgroundColor
         ) {
-
             Column(modifier = Modifier.padding(16.dp)) {
 
                 PriceCardUI(
@@ -45,7 +47,7 @@ fun PriceSummaryCard(isOpenShipFee: Boolean, priceData: PriceData, OnShipFeeClic
                         stringResource(R.string.discount)+" AUTO COUPON, COUPON"
                     } else stringResource(R.string.discount),
                     value = "-" + String.format("%.2f", priceData.discount),
-                    valueColor = Color(0xFF2E7D32)
+                    valueColor = greenColor
                 )
 
                 PriceCardUI(
@@ -73,11 +75,10 @@ fun PriceSummaryCard(isOpenShipFee: Boolean, priceData: PriceData, OnShipFeeClic
                     )
                 }
 
-                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
                 PriceCardUI(
                     title = stringResource(R.string.total_incl_vat),
-                    value = "" + priceData.total,
+                    value = "" + String.format("%.2f", priceData.total),
                     isBold = true
                 )
 
@@ -87,24 +88,23 @@ fun PriceSummaryCard(isOpenShipFee: Boolean, priceData: PriceData, OnShipFeeClic
                     title = stringResource(R.string.ca_points_used) + " - " + priceData.points + stringResource(
                         R.string.points
                     ),
-                    value = "- " + priceData.caPointAmount,
-                    valueColor = Color(0xFF2E7D32)
+                    value = ""+String.format("%.2f", priceData.caPointAmount),
+                    valueColor = greenColor
                 )
 
                 PriceCardUI(
                     title = stringResource(R.string.store_credits_used),
-                    value = "- " + priceData.storePointAmount,
-                    valueColor = Color(0xFF2E7D32)
+                    value = "" + String.format("%.2f", priceData.storePointAmount),
+                    valueColor = greenColor
                 )
 
-                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                Spacer(modifier = Modifier.padding(vertical = 8.dp))
 
                 PriceCardUI(
                     title = stringResource(R.string.grand_total),
-                    value = "" + priceData.grandTotal,
+                    value = "" + String.format("%.2f", priceData.grandTotal),
                     isBold = true
                 )
-
 
             }
         }

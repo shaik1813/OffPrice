@@ -19,12 +19,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.borderColor
+import com.apparel.offprice.common.theme.greenColor
+import com.apparel.offprice.common.theme.saleCardColor
 import com.apparel.offprice.features.cart.data.Creditsdata
 
 
@@ -50,8 +55,8 @@ fun UseCreditsCard(
             Text(
                 text = stringResource(R.string.use_credits),
                 fontSize = 14.sp,
-                style = MaterialTheme.typography.titleLarge,
-                color = Color.Black
+                style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight(700)),
+                color = saleCardColor
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -80,14 +85,13 @@ fun UseCreditsCard(
 }
 
 
-
 @Composable
 fun CreditRow(
     checked: Boolean,
     title: String,
     points: String,
     amount: Double,
-    painterResource : Painter,
+    painterResource: Painter,
     onCheckedChange: (Boolean) -> Unit
 ) {
 
@@ -95,7 +99,7 @@ fun CreditRow(
         modifier = Modifier
             .fillMaxWidth(),
         shape = RoundedCornerShape(6.dp),
-        border = BorderStroke(1.dp, Color(0xFFE0E0E0)),
+        border = BorderStroke(1.dp, borderColor),
         color = Color.White
     ) {
         Row(
@@ -129,7 +133,11 @@ fun CreditRow(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = title,
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontWeight = FontWeight(
+                                600
+                            )
+                        ),
                         fontSize = 12.sp
                     )
 
@@ -138,19 +146,35 @@ fun CreditRow(
                         Text(
                             text = points,
                             fontSize = 12.sp,
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight(
+                                    600
+                                )
+                            ),
                             color = Color(0xFF8A8A8A)
                         )
                     }
                 }
             }
 
-            Text(
-                text = String.format("%.2f",amount),
-                style = MaterialTheme.typography.titleLarge,
-                fontSize = 12.sp,
-                color = Color(0xFF4CAF50)
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Image(
+                    colorFilter = ColorFilter.tint(greenColor),
+                    painter = painterResource(R.drawable.icon_currency_uae),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(end = 3.dp)
+                        .width(12.dp)
+                        .height(12.dp)
+                        .align(Alignment.CenterVertically)
+                )
+                Text(
+                    text = String.format("%.2f", amount),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontSize = 12.sp,
+                    color = greenColor
+                )
+            }
         }
 
     }

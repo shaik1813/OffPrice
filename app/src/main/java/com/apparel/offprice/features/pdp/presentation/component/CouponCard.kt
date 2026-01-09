@@ -24,17 +24,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.borderColor
 import com.apparel.offprice.common.theme.loginButtonColor
+import com.apparel.offprice.common.theme.saleCardColor
 import com.apparel.offprice.features.cart.presentation.screen.CartContract
 
 
 @Composable
 fun CouponCard(
-    state: CartContract.UiState,
+    isApplied: Boolean,
+    couponCode:String,
     OnCouponChange : (String) -> Unit,
     OnApply : (String) -> Unit,
     OfferClick: () -> Unit
@@ -50,15 +54,16 @@ fun CouponCard(
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
                 text = stringResource(com.apparel.offprice.R.string.apply_coupon),
-                color = loginButtonColor,
-                style = MaterialTheme.typography.titleLarge
+                color = saleCardColor,
+                style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight(700),
+                    fontSize = 14.sp)
             )
 
             Spacer(modifier = Modifier.size(10.dp))
 
             Surface(
                 shape = RoundedCornerShape(6.dp),
-                border = BorderStroke(1.dp, Color(0xFFE0E0E0)),
+                border = BorderStroke(1.dp, borderColor),
                 color = Color.White
             ) {
                 Row(
@@ -74,7 +79,7 @@ fun CouponCard(
                             .align(Alignment.CenterVertically)
                     ) {
 
-                        if (state.isApplied) {
+                        if (isApplied) {
                             Image(
                                 painter = painterResource(R.drawable.cart_tick_icon),
                                 contentDescription = null,
@@ -86,13 +91,14 @@ fun CouponCard(
                         }
 
                         BasicTextField(
-                            value = state.couponCode,
+                            value = couponCode,
                             onValueChange = { it ->
                                 OnCouponChange(it)
                             },
                             textStyle = MaterialTheme.typography.titleMedium.copy(
                                 color = loginButtonColor,
-                                fontSize = 12.sp
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight(600)
                             ),
                             modifier = Modifier
                                 .align(Alignment.CenterVertically)
@@ -100,15 +106,15 @@ fun CouponCard(
                     }
 
                     Text(
-                        text = if (state.isApplied) stringResource(R.string.remove) else stringResource(R.string.apply),
-                        color = if (state.isApplied) Color(0xFFB5373D) else Color(0xFF4CAF50),
+                        text = if (isApplied) stringResource(R.string.remove) else stringResource(R.string.apply),
+                        color = if (isApplied) Color(0xFFB5373D) else Color(0xFF4CAF50),
                         fontSize = 12.sp,
                         textAlign = TextAlign.End,
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight(600)),
                         modifier = Modifier
                             .weight(0.25f)
                             .clickable(indication = null, interactionSource = null) {
-                                OnApply(state.couponCode)
+                                OnApply(couponCode)
                             },
                     )
                 }
@@ -129,13 +135,14 @@ fun CouponCard(
                         }) {
                     Image(
                         painter = painterResource(R.drawable.coupon_icon),
-                        contentDescription = null
+                        contentDescription = null,
+                        modifier = Modifier.size(16.dp)
                     )
                     Text(
                         text = stringResource(R.string.view_all_offers),
                         color = loginButtonColor,
                         fontSize = 12.sp,
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight(600)),
                         modifier = Modifier.padding(start = 5.dp)
                     )
                 }

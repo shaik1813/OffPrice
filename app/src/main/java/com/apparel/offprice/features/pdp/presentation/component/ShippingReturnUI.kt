@@ -12,9 +12,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Autorenew
-import androidx.compose.material.icons.filled.Undo
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -24,7 +21,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -34,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.common.theme.inputTextColor
 import com.apparel.offprice.common.theme.loginButtonColor
+import com.apparel.offprice.R
 
 @Composable
 fun ReturnExchangeSection() {
@@ -52,7 +51,7 @@ fun ReturnExchangeSection() {
                     .wrapContentHeight(),
                 title = stringResource(com.apparel.offprice.R.string.returnable),
                 subText = "Hassle Free Return\nWithin 20 Days",
-                icon = Icons.Default.Undo
+                icon = painterResource(R.drawable.return_icon)
             )
 
             InfoCard(
@@ -61,7 +60,7 @@ fun ReturnExchangeSection() {
                     .wrapContentHeight(),
                 title = stringResource(com.apparel.offprice.R.string.exchangeable),
                 subText = "Place An Exchange\nWithin 14 Days",
-                icon = Icons.Default.Autorenew
+                icon = painterResource(R.drawable.exchange_icon)
             )
         }
 
@@ -93,13 +92,13 @@ fun ReturnExchangeSection() {
 
 
 @Composable
-fun InfoCard(modifier: Modifier, title: String, subText: String, icon: ImageVector) {
+fun InfoCard(modifier: Modifier, title: String, subText: String, icon: Painter) {
 
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
-        border = BorderStroke(1.dp, color = Color(0xFFF3F3F3)),
+        border = BorderStroke(1.dp, color = Color(0xFFB0B0B0)),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
 
@@ -109,7 +108,7 @@ fun InfoCard(modifier: Modifier, title: String, subText: String, icon: ImageVect
             modifier = Modifier.padding(12.dp)
         ) {
             Icon(
-                imageVector = icon,
+                painter = icon,
                 contentDescription = null,
                 tint = Color.Black,
                 modifier = Modifier.size(24.dp),
@@ -125,18 +124,17 @@ fun InfoCard(modifier: Modifier, title: String, subText: String, icon: ImageVect
                 Text(
                     text = title,
                     fontSize = 14.sp,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight(600)),
                     color = loginButtonColor
-
                 )
 
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(5.dp))
 
                 Text(
                     text = subText,
                     fontSize = 12.sp,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = inputTextColor
+                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight(500)),
+                    color = Color(0xFF575959)
                 )
             }
         }

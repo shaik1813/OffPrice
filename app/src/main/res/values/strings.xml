@@ -263,6 +263,9 @@
     <string name="text_no_address_description">Add an address to get your order delivered on time</string>
     <string name="label_no_card_added">No cards added yet</string>
     <string name="text_no_card_description">Add a payment card to complete your purchase faster</string>
+    <string name="auto_coupon_applied">AUTO COUPON APPLIED</string>
+    <string name="coupon_applied">COUPON APPLIED</string>
+    <string name="coupon_not_applicable">COUPON NOT APPLICABLE</string>
     <string name="label_list_of_store">List of Store</string>
     <string name="label_find_store_near_you">Find a Store Near You</string>
     <string name="label_select_country">Select Country</string>

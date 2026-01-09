@@ -29,11 +29,11 @@ import com.apparel.offprice.common.theme.inputTextColor
 fun FreeShipCard() {
 
     Box(modifier = Modifier.fillMaxWidth()
-        .padding(start = 16.dp, end = 16.dp, top = 8.dp)
+        .padding(start = 16.dp, end = 16.dp, top = 16.dp)
         .clip(RoundedCornerShape(8.dp))
-        .background(Color(0xFFFFF8E6))) {
+        .background(Color(0x1AFDB300))) {
         Row(
-            modifier = Modifier.align(Alignment.Center).padding(horizontal = 20.dp, vertical = 12.dp),
+            modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
