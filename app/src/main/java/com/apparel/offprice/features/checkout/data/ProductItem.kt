@@ -1,4 +1,4 @@
-package com.apparel.offprice.features.checkout.presentation.components
+package com.apparel.offprice.features.checkout.data
 
 import com.apparel.offprice.R
 import com.apparel.offprice.features.cart.data.PriceData

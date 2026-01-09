@@ -30,6 +30,8 @@ import com.apparel.offprice.features.profile.presentation.screen.profileDetails.
 import com.apparel.offprice.features.profile.presentation.screen.profilePassword.ProfilePasswordScreen
 import com.apparel.offprice.features.profile.presentation.screen.profileSize.ProfileSizeScreen
 import com.apparel.offprice.features.profile.presentation.screen.userprofile.UserProfileScreen
+import com.apparel.offprice.features.returnFlow.presentation.screen.ReturnDetailsScreen
+import com.apparel.offprice.features.returnFlow.presentation.screen.ReturnsScreen
 import com.apparel.offprice.features.storeCredit.presentation.screen.StoreCreditScreen
 import com.apparel.offprice.features.storeLocator.presentation.screen.StoreLocatorScreen
 import com.apparel.offprice.features.welcome.presentation.genderCategory.GenderCategoryScreen
@@ -248,7 +250,42 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
         composable<AppScreen.MyOrdersScreen> {}
 
-        composable<AppScreen.ReturnsScreen> {}
+        composable<AppScreen.ReturnsScreen> {
+            ReturnsScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                },
+                onNavigateToReturnDetails = { returnId ->
+                    navController.navigate(
+                        AppScreen.ReturnDetailsScreen(returnId, navController.popBackStack())
+                    )
+                },
+                onNavigateToRequestReturn = {
+                    //navController.navigate(AppScreen.RequestReturnScreen)
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        composable<AppScreen.ReturnDetailsScreen> { backStackEntry ->
+            val args = backStackEntry.toRoute<AppScreen.ReturnDetailsScreen>()
+
+            ReturnDetailsScreen(
+                returnId = args.returnId,
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        /*composable<AppScreen.RequestReturnScreen> {
+            RequestReturnScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
+        }*/
+
 
         composable<AppScreen.ExchangeScreen> {}
 
