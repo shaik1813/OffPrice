@@ -1,15 +1,15 @@
 package com.apparel.offprice.features.checkout.presentation.screens
 
 import com.apparel.offprice.common.utils.UnidirectionalViewModel
-import com.apparel.offprice.features.checkout.presentation.components.AddAddressFilter
-import com.apparel.offprice.features.checkout.presentation.components.AddressSheetMode
-import com.apparel.offprice.features.checkout.presentation.components.AddressUiModel
-import com.apparel.offprice.features.checkout.presentation.components.CheckoutStep
-import com.apparel.offprice.features.checkout.presentation.components.PaymentMethod
-import com.apparel.offprice.features.checkout.presentation.components.PaymentResult
-import com.apparel.offprice.features.checkout.presentation.components.PickupStore
-import com.apparel.offprice.features.checkout.presentation.components.ProductItem
-import com.apparel.offprice.features.checkout.presentation.components.ShippingAddressFilter
+import com.apparel.offprice.features.checkout.data.AddAddressFilter
+import com.apparel.offprice.features.checkout.data.AddressSheetMode
+import com.apparel.offprice.features.checkout.data.AddressUiModel
+import com.apparel.offprice.features.checkout.data.CheckoutStep
+import com.apparel.offprice.features.checkout.data.PaymentMethod
+import com.apparel.offprice.features.checkout.data.PaymentResult
+import com.apparel.offprice.features.checkout.data.PickupStore
+import com.apparel.offprice.features.checkout.data.ProductItem
+import com.apparel.offprice.features.checkout.data.ShippingAddressFilter
 
 interface CheckOutContract : UnidirectionalViewModel<
         CheckOutContract.UiState, CheckOutContract.UiEvent, CheckOutContract.UiEffect> {

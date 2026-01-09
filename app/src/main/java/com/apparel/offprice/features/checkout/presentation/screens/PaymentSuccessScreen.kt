@@ -1,7 +1,6 @@
 package com.apparel.offprice.features.checkout.presentation.screens
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,7 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.apparel.offprice.R
-import com.apparel.offprice.features.checkout.presentation.components.AddressUiModel
+import com.apparel.offprice.features.checkout.data.AddressUiModel
 import com.apparel.offprice.features.checkout.presentation.components.OrderSummarySection
 import com.apparel.offprice.features.pdp.presentation.component.MoreBrandUI
 import features.cart.presentation.component.PriceSummaryCard
