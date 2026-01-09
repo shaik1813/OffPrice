@@ -1,5 +1,6 @@
 package com.apparel.offprice.features.cart.data
 
+import androidx.compose.runtime.Immutable
 import com.apparel.offprice.R
 
 data class CreditItem(
@@ -66,7 +67,6 @@ data class CartProductItems(
     val delivery: String,
     val isWishlist: Boolean = false,
     val isCouponApply: Int
-
 )
 
 

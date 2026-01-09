@@ -22,6 +22,7 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -35,6 +36,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,15 +48,13 @@ import com.apparel.offprice.common.theme.lineColor
 
 @Composable
 fun GiftCard() {
-    Card(
+    Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(horizontal = 16.dp),
         shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(2.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        )
+        border = BorderStroke(1.dp, Color(0xFFE0E0E0)),
+        color = Color.White
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
@@ -63,8 +63,8 @@ fun GiftCard() {
             // Title
             Text(
                 text = stringResource(R.string.gift_card),
-                fontSize = 14.sp,
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight(700),
+                    fontSize = 14.sp)
             )
 
             Spacer(modifier = Modifier.height(12.dp))

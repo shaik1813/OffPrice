@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
@@ -29,12 +30,12 @@ fun QuantityRow(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick(value) }
-            .padding(top = 12.dp, bottom = 12.dp),
+            .padding(top = 16.dp, bottom = 16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = value.toString(), style = MaterialTheme.typography.titleMedium,
+            text = value.toString(), style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight(600)),
             fontSize = 15.sp,
             modifier = Modifier.padding(start = 16.dp)
         )

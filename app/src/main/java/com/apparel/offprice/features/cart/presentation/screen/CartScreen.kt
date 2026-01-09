@@ -20,11 +20,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -50,6 +53,8 @@ import features.cart.presentation.component.PriceSummaryCard
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CartScreen(onCheckoutClick : () -> Unit,viewModel: CartViewModel = hiltViewModel()) {
+
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
 
     val context = LocalContext.current
 
@@ -125,7 +130,7 @@ fun CartScreen(onCheckoutClick : () -> Unit,viewModel: CartViewModel = hiltViewM
                 )
             }
         },
-        containerColor = MaterialTheme.colorScheme.surface
+        containerColor = Color.White
     ) { paddingValues ->
 
         Column(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
@@ -143,16 +148,30 @@ fun CartScreen(onCheckoutClick : () -> Unit,viewModel: CartViewModel = hiltViewM
                 LazyColumn(modifier = Modifier.fillMaxWidth().weight(1f),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-
                     items(items = state.cartItems,  key = { it -> it.id }) {  item ->
+
+                        val callbackonQuantity = remember(item.quantity) {
+                            { qty: Int ->
+                                event(CartContract.UiEvent.OnOpenQuantitySheet(qty))
+                            }
+                        }
+
+                        val callBackDelete = remember(item.id) {
+                            { id: Int ->
+                                event(CartContract.UiEvent.onOpenDeleteCartConfirm(id))
+                            }
+                        }
+                        val callBackWishList = remember(item.id) {
+                            { id: Int ->
+                                event(CartContract.UiEvent.onWishListClicked(id))
+                            }
+                        }
                         CartItemCard(
                             item,
-                            selectQuantity = {
-                                event(CartContract.UiEvent.OnOpenQuantitySheet(it))
-                            },
-                            onDelete = {
-                                event(CartContract.UiEvent.onOpenDeleteCartConfirm(it))
-                            }
+                            selectQuantity = callbackonQuantity,
+                            onDelete = callBackDelete,
+                            onWishListClick = callBackWishList,
+                            screenWidth = screenWidth
                         )
                     }
 
@@ -162,7 +181,8 @@ fun CartScreen(onCheckoutClick : () -> Unit,viewModel: CartViewModel = hiltViewM
 
                     item {
                         CouponCard(
-                            state,
+                            state.isApplied,
+                            state.couponCode,
                             OnApply = {
                                 event(CartContract.UiEvent.OnApplyToggleClick)
                             },
@@ -228,8 +248,8 @@ fun CartToolBar() {
 
         Text(
             text = stringResource(R.string.cart_items),
-            style = MaterialTheme.typography.titleMedium,
-            color = Color.Black,
+            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight(600)),
+            color = Color(0xFF000000),
             fontSize = 14.sp
         )
     }

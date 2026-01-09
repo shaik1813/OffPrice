@@ -3,6 +3,7 @@ package com.apparel.offprice.features.cart.presentation.screen
 
 import com.apparel.offprice.common.utils.UnidirectionalViewModel
 import com.apparel.offprice.features.cart.data.CartProductItems
+import com.apparel.offprice.features.pdp.presentation.screen.PDPContract
 
 interface CartContract : UnidirectionalViewModel
 <CartContract.UiState, CartContract.UiEvent, CartContract.UiEffect> {
@@ -43,6 +44,7 @@ interface CartContract : UnidirectionalViewModel
         data class OnDeleteCartItem(val itemId:Int) : UiEvent
         data class OnQuantitySelected(val quantity: Int) : UiEvent
         object OnSubmitQuantity : UiEvent
+        data class onWishListClicked(val productId:Int) : UiEvent
     }
 
     sealed interface UiEffect {
