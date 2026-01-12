@@ -37,7 +37,6 @@ class MyAccountViewModel @Inject constructor(
 
     init {
         initialData()
-        setLanguagePreference()
     }
 
     private fun setRegionPreference(){
@@ -52,12 +51,18 @@ class MyAccountViewModel @Inject constructor(
         }
     }
 
+    private fun setLoggedInUser(){
+        viewModelScope.launch {
+            val isGuestUser = appPreference.isGuestUser.first()
+            _state.update { it.copy(isGuestUser = isGuestUser) }
+        }
+    }
+
     private fun initialData(){
         _state.update {
             it.copy(
                 countryItemList = countryList,
                 languageItemList = languageList,
-                isGuestUser = false,
                 username = "Jack Harrington",
                 userEmail = "Jackharrington21@gmail.com",
                 accountSettingItem = accountSettingItems,
@@ -121,6 +126,19 @@ class MyAccountViewModel @Inject constructor(
                 _state.update {
                     it.copy(isLanguageBottomSheetOpened = !it.isLanguageBottomSheetOpened)
                 }
+            }
+
+            MyAccountContract.UiEvent.Logout -> {
+                viewModelScope.launch {
+                    appPreference.saveIsGuestUser(true)
+                    _state.update { it.copy(isGuestUser = true) }
+                }
+            }
+
+            MyAccountContract.UiEvent.OnScreenEntry -> {
+                setLoggedInUser()
+                setRegionPreference()
+                setLanguagePreference()
             }
         }
     }

@@ -53,6 +53,10 @@ fun LoginScreen(
             is LoginContract.UiEffect.OnNavigateBack -> {
                 onNavigateBack()
             }
+
+            LoginContract.UiEffect.NavigateToHomeScreen -> {
+                onNavigateBack()
+            }
         }
     }
 
