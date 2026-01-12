@@ -18,6 +18,7 @@ val warningColor = Color(0xFFFDB32F)
 val successColor = Color(0xFF49AE56)
 
 val borderColor = Color(0xFFE6E6E6)
+val greenColor = Color(0xFF4CAF50)
 
 val badgeColor = Color(0xFFF36872)
 val secondaryBlue = Color(0xFF677089)

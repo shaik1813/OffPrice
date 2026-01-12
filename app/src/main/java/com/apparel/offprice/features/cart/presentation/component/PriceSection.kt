@@ -20,9 +20,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
+import com.apparel.offprice.common.theme.greenColor
+import com.apparel.offprice.common.theme.primaryColor
+import com.apparel.offprice.common.theme.saleCardColor
 
 
 @Composable
@@ -32,13 +36,13 @@ fun PriceCardUI(
     valueColor: Color = Color.Black,
     isBold: Boolean = false,
     showArrow: Boolean = false,
-    shipFeeClick : () -> Unit ={}
+    shipFeeClick: () -> Unit = {}
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 6.dp)
-            .clickable(indication = null, interactionSource = null){
+            .clickable(indication = null, interactionSource = null) {
                 shipFeeClick()
             },
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -48,9 +52,11 @@ fun PriceCardUI(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = title,
-                fontSize = 13.sp,
-                style = if (isBold) MaterialTheme.typography.titleMedium else MaterialTheme.typography.bodyMedium,
-                color = Color(0xFF040707)
+                fontSize = 12.sp,
+                style = if (isBold)
+                    MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight(500))
+                else MaterialTheme.typography.bodyMedium,
+                color = if(isBold) primaryColor else saleCardColor
             )
 
             if (showArrow) {
@@ -64,11 +70,19 @@ fun PriceCardUI(
         }
 
         Row() {
+            if (valueColor == greenColor) {
+                Text(
+                    text = " - ",
+                    color = greenColor,
+                    style = MaterialTheme.typography.titleLarge, fontSize = 12.sp
+                )
+            }
             Image(
                 colorFilter = ColorFilter.tint(valueColor),
                 painter = painterResource(R.drawable.icon_currency_uae),
                 contentDescription = null,
                 modifier = Modifier
+                    .padding(end = 2.dp)
                     .width(12.dp)
                     .height(10.dp)
                     .align(Alignment.CenterVertically)
@@ -77,13 +91,12 @@ fun PriceCardUI(
                 text = value,
                 fontSize = 13.sp,
                 style = if (isBold) MaterialTheme.typography.titleMedium else MaterialTheme.typography.bodyMedium,
-                color = valueColor,
+                color =  if(isBold) primaryColor else valueColor    ,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
         }
     }
 }
-
 
 
 @Composable
@@ -105,7 +118,7 @@ fun ShippingFeeUI(
             Text(
                 text = title,
                 fontSize = 13.sp,
-                style =  MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyMedium,
                 color = valueColor
             )
 

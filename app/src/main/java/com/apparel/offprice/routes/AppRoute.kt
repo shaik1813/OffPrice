@@ -12,6 +12,14 @@ import com.apparel.offprice.features.address.presentation.screen.DeliveryAddress
 import com.apparel.offprice.features.authentication.presentation.screen.LoginEmptyScreen
 import com.apparel.offprice.features.checkout.presentation.screens.ShippingAddressScreen
 import com.apparel.offprice.features.coupon.presentation.screen.CouponScreen
+import com.apparel.offprice.features.customerSupport.presentation.screens.aboutUs.AboutUsScreen
+import com.apparel.offprice.features.customerSupport.presentation.screens.contactInquiry.ContactInquiryScreen
+import com.apparel.offprice.features.customerSupport.presentation.screens.customerSupport.CustomerSupportScreen
+import com.apparel.offprice.features.customerSupport.presentation.screens.disclaimer.DisclaimerScreen
+import com.apparel.offprice.features.customerSupport.presentation.screens.privacyPolicy.PrivacyPolicyScreen
+import com.apparel.offprice.features.customerSupport.presentation.screens.returnPolicy.ReturnPolicyScreen
+import com.apparel.offprice.features.customerSupport.presentation.screens.shippingInfo.ShippingInfoScreen
+import com.apparel.offprice.features.customerSupport.presentation.screens.termsAndCondition.TermsAndConditionScreen
 import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
 import com.apparel.offprice.features.home.presentation.screens.search.SearchScreen
 import com.apparel.offprice.features.home.presentation.screens.subcategory.SubCategoryScreen
@@ -249,12 +257,12 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                 },
                 onNavigateToReturnDetails = { returnId ->
                     navController.navigate(
-                        AppScreen.ReturnDetailsScreen(returnId)
+                        AppScreen.ReturnDetailsScreen(returnId, navController.popBackStack())
                     )
                 },
                 onNavigateToRequestReturn = {
                     //navController.navigate(AppScreen.RequestReturnScreen)
-                    //navController.popBackStack()
+                    navController.popBackStack()
                 }
             )
         }
@@ -269,7 +277,6 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                 }
             )
         }
-
 
         /*composable<AppScreen.RequestReturnScreen> {
             RequestReturnScreen(
@@ -304,7 +311,94 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
         }
 
         composable<AppScreen.CustomerSupportScreen> {
+            CustomerSupportScreen(
+                onNavigateToBack = { navController.popBackStack() },
+                onItemClick = { navController.navigate(it) }
+            )
+        }
 
+        composable<AppScreen.AboutUsScreen> {
+            AboutUsScreen(
+                onNavigateToBack = { navController.popBackStack() },
+                onSearchClicked = {
+                    navController.navigate(AppScreen.SearchScreen)
+                },
+                onWishlistClicked = {
+                    navController.navigate(AppScreen.WishListScreen)
+                }
+            )
+        }
+
+        composable<AppScreen.DisclaimerScreen> {
+            DisclaimerScreen(
+                onNavigateToBack = { navController.popBackStack() },
+                onSearchClicked = {
+                    navController.navigate(AppScreen.SearchScreen)
+                },
+                onWishlistClicked = {
+                    navController.navigate(AppScreen.WishListScreen)
+                }
+            )
+        }
+
+        composable<AppScreen.ContactInquiryScreen> {
+            ContactInquiryScreen(
+                onNavigateToBack = { navController.popBackStack() },
+                onSearchClicked = {
+                    navController.navigate(AppScreen.SearchScreen)
+                },
+                onWishlistClicked = {
+                    navController.navigate(AppScreen.WishListScreen)
+                }
+            )
+        }
+
+        composable<AppScreen.ReturnPolicyScreen> {
+            ReturnPolicyScreen(
+                onNavigateToBack = { navController.popBackStack() },
+                onSearchClicked = {
+                    navController.navigate(AppScreen.SearchScreen)
+                },
+                onWishlistClicked = {
+                    navController.navigate(AppScreen.WishListScreen)
+                }
+            )
+        }
+
+        composable<AppScreen.TermsAndConditionScreen> {
+            TermsAndConditionScreen(
+                onNavigateToBack = { navController.popBackStack() },
+                onSearchClicked = {
+                    navController.navigate(AppScreen.SearchScreen)
+                },
+                onWishlistClicked = {
+                    navController.navigate(AppScreen.WishListScreen)
+                }
+            )
+        }
+
+        composable<AppScreen.ShippingInfoScreen> {
+            ShippingInfoScreen(
+                onNavigateToBack = { navController.popBackStack() },
+                onSearchClicked = {
+                    navController.navigate(AppScreen.SearchScreen)
+                },
+                onWishlistClicked = {
+                    navController.navigate(AppScreen.WishListScreen)
+                }
+            )
+        }
+
+        composable<AppScreen.PrivacyPolicyScreen> {
+            PrivacyPolicyScreen(
+                onNavigateToBack = { navController.popBackStack() },
+                onSearchClicked = {
+                    navController.navigate(AppScreen.SearchScreen)
+                },
+                onWishlistClicked = {
+                    navController.navigate(AppScreen.WishListScreen)
+                }
+            )
         }
 
     }

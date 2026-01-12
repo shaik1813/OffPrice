@@ -15,4 +15,13 @@
     <string name="label_customer_support">دعم العملاء والسياسات</string>
     <string name="label_log_out">تسجيل الخروج</string>
 
+    <!--  Customer Support Section -->
+    <string name="label_about_us">About Us</string>
+    <string name="label_disclaimer">Disclaimer</string>
+    <string name="label_contact_inquiry">Contact Inquiry</string>
+    <string name="label_return_policy">Return Policy</string>
+    <string name="label_terms_and_condition">Terms &amp; Conditions</string>
+    <string name="label_shipping_info">Shipping Info</string>
+    <string name="label_privacy_policy">Privacy Policy</string>
+
 </resources>

@@ -179,6 +179,18 @@ class CartViewModel @Inject constructor(
                 }
             }
 
+            is CartContract.UiEvent.onWishListClicked -> {
+               viewModelScope.launch {
+                   updateState {
+                       val updateList = it.cartItems.map { item ->
+                           if(item.id == event.productId){
+                               item.copy(isWishlist = !item.isWishlist)
+                           }else item
+                       }
+                       it.copy(cartItems = updateList)
+                   }
+               }
+            }
         }
     }
 
