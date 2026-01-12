@@ -51,7 +51,7 @@ fun ReturnIdStatusSection(
         Surface(shape = RoundedCornerShape(5.dp), color = surfaceColor) {
             Row(modifier = Modifier.padding(3.dp)) {
                 Text(
-                    text = "RETURN ID - $returnId",
+                    text = stringResource(R.string.return_id)+ returnId,
                     style = MaterialTheme.typography.labelSmall,
                     modifier = Modifier.padding(5.dp)
                 )

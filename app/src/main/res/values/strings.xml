@@ -284,6 +284,7 @@
     <string name="label_get_direction">Get Directions</string>
     <string name="label_call_store">Call store</string>
     <string name="label_customer_support_policy">Customer Support &amp; Policies</string>
+    <string name="return_id">RETURN ID - </string>
 
 
 </resources>
