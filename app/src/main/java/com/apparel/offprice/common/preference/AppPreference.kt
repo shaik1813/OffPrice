@@ -3,6 +3,7 @@ package com.apparel.offprice.common.preference
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -24,11 +25,15 @@ class AppPreference @Inject constructor(
         private val LANGUAGE_PREFERENCE = stringPreferencesKey("LanguagePreference")
 
         private val REGIONAL_PREFERENCE = stringPreferencesKey("RegionalPreference")
+        private val IS_GUEST_USER = booleanPreferencesKey("isGuestUser")
     }
 
     val languagePreference: Flow<String?> = dataStore.data.map { preferences -> preferences[LANGUAGE_PREFERENCE] ?: "en"}
 
     val regionalPreference: Flow<String?> = dataStore.data.map { preferences -> preferences[REGIONAL_PREFERENCE] ?: ""}
+
+    val isGuestUser: Flow<Boolean> = dataStore.data.map { preferences -> preferences[IS_GUEST_USER] ?: false }
+
 
 
     suspend fun saveLanguagePreference(language: String) {
@@ -55,5 +60,10 @@ class AppPreference @Inject constructor(
         }
     }
 
+    suspend fun saveIsGuestUser(bool: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[IS_GUEST_USER] = bool
+        }
+    }
 
 }
