@@ -257,7 +257,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                 },
                 onNavigateToReturnDetails = { returnId ->
                     navController.navigate(
-                        AppScreen.ReturnDetailsScreen(returnId, navController.popBackStack())
+                        AppScreen.ReturnDetailsScreen(returnId)
                     )
                 },
                 onNavigateToRequestReturn = {
