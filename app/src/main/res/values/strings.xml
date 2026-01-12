@@ -275,6 +275,9 @@
     <string name="label_get_direction">Get Directions</string>
     <string name="label_call_store">Call store</string>
     <string name="label_customer_support_policy">Customer Support &amp; Policies</string>
+    <string name="my_order">My Order</string>
+    <string name="all_orders">All Orders</string>
+    <string name="order">ORDER - </string>
 
 
 </resources>

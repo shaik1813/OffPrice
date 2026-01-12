@@ -2,6 +2,10 @@ package com.apparel.offprice.features.myorder.presentation.screen
 
 import androidx.lifecycle.ViewModel
 import com.apparel.offprice.common.preference.AppPreference
+import com.apparel.offprice.features.myorder.data.OrderItem
+import com.apparel.offprice.features.myorder.data.orderProducts
+import com.apparel.offprice.features.myorder.data.orderProducts2
+import com.apparel.offprice.features.myorder.data.orderProducts3
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,9 +18,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class MyOrderViewModel @Inject constructor(
-    private val appPreference: AppPreference
-) : ViewModel(), MyOrderContract {
+class MyOrderViewModel @Inject constructor() : ViewModel(), MyOrderContract {
 
     private val _state = MutableStateFlow(MyOrderContract.UiState())
     override val state: StateFlow<MyOrderContract.UiState> = _state.asStateFlow()
@@ -31,7 +33,18 @@ class MyOrderViewModel @Inject constructor(
     private fun initialData(){
         _state.update {
             it.copy(
-                isGuestUser = false,
+                orderData = listOf(OrderItem("#296660504211678",
+                    items = orderProducts,
+                    orderStatus = "Order Received"
+                ),
+                    OrderItem("#296660504211678",
+                        items = orderProducts2,
+                        orderStatus = "Out For Delivery"
+                    ),
+                    OrderItem("#296660504211678",
+                        items = orderProducts3,
+                        orderStatus = "Shipped"
+                    ))
             )
         }
     }

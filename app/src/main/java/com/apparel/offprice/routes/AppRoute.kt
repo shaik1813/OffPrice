@@ -23,7 +23,7 @@ import com.apparel.offprice.features.customerSupport.presentation.screens.termsA
 import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
 import com.apparel.offprice.features.home.presentation.screens.search.SearchScreen
 import com.apparel.offprice.features.home.presentation.screens.subcategory.SubCategoryScreen
-import com.apparel.offprice.features.myorder.presentation.MyOrderScreen
+import com.apparel.offprice.features.myorder.presentation.screen.MyOrderScreen
 import com.apparel.offprice.features.paymentCard.presentation.screen.PaymentCardScreen
 import com.apparel.offprice.features.pdp.presentation.screen.PDPScreen
 import com.apparel.offprice.features.plp.presentation.screens.plpScreen.PLPScreen
