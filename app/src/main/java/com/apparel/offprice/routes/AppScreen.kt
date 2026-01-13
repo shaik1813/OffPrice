@@ -97,9 +97,6 @@ sealed interface AppScreen {
     object ExchangeScreen : AppScreen
 
     @Serializable
-    object LogOutScreen : AppScreen
-
-    @Serializable
     data class SubCategoryScreen(val title: String) : AppScreen
 
     @Serializable

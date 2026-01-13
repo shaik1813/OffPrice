@@ -339,8 +339,6 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
 
         composable<AppScreen.ExchangeScreen> {}
 
-        composable<AppScreen.LogOutScreen> {}
-
         composable<AppScreen.PLPScreen> { backStack ->
             val args = backStack.toRoute<AppScreen.PLPScreen>()
             PLPScreen(

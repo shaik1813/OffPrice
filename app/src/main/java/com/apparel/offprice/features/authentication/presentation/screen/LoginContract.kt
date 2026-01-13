@@ -36,6 +36,8 @@ interface LoginContract : UnidirectionalViewModel
         object OnCheckToggle : UiEvent
         object OnAnimationToggle : UiEvent
 
+        object OnLoginClick : UiEvent
+
         object OnPasswordVisibleToggle : UiEvent
         object OnOpenSignUp : UiEvent
         object OnOpenLogin : UiEvent
@@ -55,5 +57,6 @@ interface LoginContract : UnidirectionalViewModel
     sealed interface UiEffect {
         data class Navigate(val screen: AppScreen) : UiEffect
         data object OnNavigateBack : UiEffect
+        data object NavigateToHomeScreen : UiEffect
     }
 }

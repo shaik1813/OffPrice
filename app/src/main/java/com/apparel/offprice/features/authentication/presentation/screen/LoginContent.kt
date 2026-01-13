@@ -155,6 +155,7 @@ fun LoginForm(
         AuthButton(
             text = stringResource(R.string.login_caps),
             onButtonClick = {
+                event(LoginContract.UiEvent.OnLoginClick)
             })
 
         Spacer(Modifier.height(30.dp))

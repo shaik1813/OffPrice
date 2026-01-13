@@ -46,6 +46,10 @@ interface MyAccountContract : UnidirectionalViewModel
         data object OnLanguageToggle : UiEvent
 
         data object OnCleared : UiEvent
+
+        data object Logout : UiEvent
+
+        data object OnScreenEntry : UiEvent
     }
 
     sealed interface UiEffect {
