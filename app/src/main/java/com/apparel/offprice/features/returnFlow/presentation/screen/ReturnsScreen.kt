@@ -25,7 +25,7 @@ fun ReturnsScreen(
     viewModel: ReturnsViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit,
     onNavigateToReturnDetails: (String) -> Unit,
-    onNavigateToRequestReturn: () -> Unit
+    onNavigateToNewRequestReturn: () -> Unit
 ) {
 
     val (state, event, effect) = use(viewModel)
@@ -37,8 +37,8 @@ fun ReturnsScreen(
                 onNavigateBack()
             }
 
-            ReturnsContract.UiEffect.NavigateToRequestReturn -> {
-                onNavigateToRequestReturn()
+            ReturnsContract.UiEffect.NavigateToNewRequestReturn -> {
+                onNavigateToNewRequestReturn()
             }
 
             is ReturnsContract.UiEffect.NavigateToReturnDetails -> {

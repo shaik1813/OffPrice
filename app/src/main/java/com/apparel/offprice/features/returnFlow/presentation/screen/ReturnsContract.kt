@@ -36,7 +36,7 @@ interface ReturnsContract : UnidirectionalViewModel<
 
         data object NavigateBack : UiEffect
 
-        data object NavigateToRequestReturn : UiEffect
+        data object NavigateToNewRequestReturn : UiEffect
 
         data class NavigateToReturnDetails(val returnId: String) : UiEffect
 
