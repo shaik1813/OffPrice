@@ -9,11 +9,12 @@ interface TermsAndConditionContract: UnidirectionalViewModel<
         > {
 
     data class UiState(
-        val isLoading : Boolean = false
+        val isLoading : Boolean = false,
+        val termsAndConditionText:String = ""
     )
 
     sealed interface UiEvent {
-
+        data object LoadTermsCondition : UiEvent
     }
 
     sealed interface UiEffect {
