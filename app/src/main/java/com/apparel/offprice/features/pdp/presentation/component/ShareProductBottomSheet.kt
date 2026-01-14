@@ -36,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.apparel.offprice.R
+import com.apparel.offprice.common.component.noRippleClickable
 import com.apparel.offprice.common.theme.borderColor
 import com.apparel.offprice.common.theme.inputTextColor
 import com.apparel.offprice.common.theme.loginButtonColor
@@ -77,12 +78,12 @@ fun ShareProductBottomSheet(
                 )
 
                 Icon(
-                    painter = painterResource(R.drawable.close_24px),
+                    painter = painterResource(R.drawable.close_login),
                     contentDescription = "Close",
                     tint = secondaryBlue,
                     modifier = Modifier
                         .size(24.dp)
-                        .clickable { onDismiss() }
+                        .noRippleClickable { onDismiss() }
                 )
             }
 

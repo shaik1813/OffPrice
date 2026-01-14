@@ -202,6 +202,7 @@
     <string name="coupon_max_cashback_limit">Maximum Cashback Limit is</string>
     <string name="coupon_terms_conditions">T&amp;C*</string>
     <string name="coupon_apply_code">Apply Code</string>
+    <string name="label_terms_and_condition2">Terms and conditions</string>
     <string name="label_offer_details">OFFER DETAILS</string>
     <string name="label_add_new_card">+ Add New Card</string>
     <string name="text_delete_payment_card">Are you sure you want to delete this card?</string>
@@ -284,6 +285,17 @@
     <string name="label_get_direction">Get Directions</string>
     <string name="label_call_store">Call store</string>
     <string name="label_customer_support_policy">Customer Support &amp; Policies</string>
+    <string name="my_order">My Order</string>
+    <string name="all_orders">All Orders</string>
+    <string name="order">ORDER - </string>
+    <string name="delivered">DELIVERED</string>
+    <string name="cancelled">CANCELLED</string>
+    <string name="in_progress">IN PROGRESS</string>
+    <string name="filter">Filter</string>
+    <string name="label_no_orders">NO PREVIOUS ORDERS</string>
+    <string name="text_no_orders_description">Try changing the filter or check back later.</string>
+    <string name="label_view_all_orders">VIEW ALL ORDERS</string>
+
     <string name="return_id">RETURN ID - </string>
     <string name="return_order_label">Return Order</string>
     <string name="label_select_reason">Select Reason</string>
