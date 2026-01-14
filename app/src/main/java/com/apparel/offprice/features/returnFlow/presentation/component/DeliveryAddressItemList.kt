@@ -23,7 +23,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.apparel.offprice.R
 import com.apparel.offprice.common.theme.borderColor
@@ -78,23 +77,6 @@ fun DeliveryAddressItemList(
                         )
 
                         Spacer(modifier = Modifier.width(8.dp))
-
-                        if (address.isDefault) {
-                            Card(
-                                colors = CardDefaults.cardColors(
-                                    containerColor = Color(0xFF4CAF50)
-                                ),
-                                shape = RoundedCornerShape(4.dp),
-                            ) {
-                                Text(
-                                    text = stringResource(R.string.label_default),
-                                    color = Color.White,
-                                    style = MaterialTheme.typography.bodySmall,
-                                    modifier = Modifier.padding(6.dp)
-                                )
-                            }
-                            Spacer(modifier = Modifier.width(6.dp))
-                        }
 
                         Card(
                             colors = CardDefaults.cardColors(
