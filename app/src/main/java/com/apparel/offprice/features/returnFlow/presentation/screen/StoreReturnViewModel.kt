@@ -1,5 +1,6 @@
 package com.apparel.offprice.features.returnFlow.presentation.screen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.apparel.offprice.features.checkout.data.samplePickupStores
@@ -38,23 +39,66 @@ class StoreReturnViewModel @Inject constructor() : ViewModel(), StoreReturnContr
     override fun event(event: StoreReturnContract.UiEvent) {
         when (event) {
 
+            //Store selection
             is StoreReturnContract.UiEvent.OnStoreSelected -> {
                 _state.update {
                     it.copy(selectedStoreId = event.storeId)
                 }
             }
 
+            //  Continue → Refund Sheet
             StoreReturnContract.UiEvent.OnContinueClick -> {
-                viewModelScope.launch {
-                    _effect.emit(StoreReturnContract.UiEffect.NavigateNext)
+                Log.e("StoreReturn", "Continue clicked")
+                _state.update { it.copy(isRefundSheetOpen = true) }
+            }
+
+            //  Refund Flow
+            is StoreReturnContract.UiEvent.OnRefundMethodSelected -> {
+                _state.update {
+                    it.copy(selectedRefundMethod = event.method)
                 }
             }
 
-            StoreReturnContract.UiEvent.OnCancelClick -> {
-                viewModelScope.launch {
-                    _effect.emit(StoreReturnContract.UiEffect.NavigateBack)
+            StoreReturnContract.UiEvent.OnReturnItemClick -> {
+                _state.update {
+                    it.copy(
+                        isRefundSheetOpen = false,
+                        showConfirmDialog = true
+                    )
                 }
             }
+
+            StoreReturnContract.UiEvent.OnConfirmReturn -> {
+                _state.update {
+                    it.copy(
+                        showConfirmDialog = false,
+                        showSuccessDialog = true
+                    )
+                }
+            }
+
+            StoreReturnContract.UiEvent.OnCancelReturn -> {
+                _state.update {
+                    it.copy(showConfirmDialog = false)
+                }
+            }
+
+            StoreReturnContract.UiEvent.OnSuccessOkayClick -> {
+                emitEffect(StoreReturnContract.UiEffect.FinishFlow)
+            }
+
+            StoreReturnContract.UiEvent.OnRefundSheetDismiss -> {
+                _state.update { it.copy(isRefundSheetOpen = false) }
+            }
+
+            //  Back
+            StoreReturnContract.UiEvent.OnCancelClick -> {
+                emitEffect(StoreReturnContract.UiEffect.NavigateBack)
+            }
         }
+    }
+
+    private fun emitEffect(effect: StoreReturnContract.UiEffect) {
+        viewModelScope.launch { _effect.emit(effect) }
     }
 }

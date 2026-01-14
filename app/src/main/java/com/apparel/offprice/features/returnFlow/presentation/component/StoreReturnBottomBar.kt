@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -34,11 +35,14 @@ fun StoreReturnBottomBar(
         }
 
         Button(
-            onClick = onContinue,
             enabled = enabled,
+            onClick = {
+                onContinue()
+            },
             modifier = Modifier.weight(1f)
         ) {
             Text(stringResource(R.string.continue_txt))
         }
     }
 }
+
