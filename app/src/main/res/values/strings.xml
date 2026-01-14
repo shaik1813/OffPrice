@@ -278,6 +278,13 @@
     <string name="my_order">My Order</string>
     <string name="all_orders">All Orders</string>
     <string name="order">ORDER - </string>
+    <string name="delivered">DELIVERED</string>
+    <string name="cancelled">CANCELLED</string>
+    <string name="in_progress">IN PROGRESS</string>
+    <string name="filter">Filter</string>
+    <string name="label_no_orders">NO PREVIOUS ORDERS</string>
+    <string name="text_no_orders_description">Try changing the filter or check back later.</string>
+    <string name="label_view_all_orders">VIEW ALL ORDERS</string>
 
 
 </resources>

@@ -80,7 +80,7 @@ fun PDPScreen(
 
     if (state.isSimilarPLPSheet) {
         SimilarPLPSheet(
-            sheetState = rememberModalBottomSheetState(),
+            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
             onDismiss = { event(PDPContract.UiEvent.onCloseSimilarProductSheet) },
             onWishlistClick = {},
             onProductClick = {})

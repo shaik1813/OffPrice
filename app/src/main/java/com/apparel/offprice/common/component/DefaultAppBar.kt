@@ -1,5 +1,6 @@
 package com.apparel.offprice.common.component
 
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -50,7 +51,8 @@ fun DefaultTopAppBar(
                 contentDescription = "Back",
                 modifier = Modifier
                     .padding(start = 8.dp)
-                    .clickable { onBackPressed() },
+                    .clickable {
+                        onBackPressed() },
             )
         },
         actions = {

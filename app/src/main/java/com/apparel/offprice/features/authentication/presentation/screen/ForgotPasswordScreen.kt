@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.apparel.offprice.R
+import com.apparel.offprice.common.component.noRippleClickable
 import com.apparel.offprice.common.theme.errorColor
 import com.apparel.offprice.common.theme.inputTextColor
 import com.apparel.offprice.common.theme.redColor
@@ -125,7 +126,7 @@ fun ForgotPasswordScreen(
                 modifier = Modifier
                     .padding(top = 20.dp)
                     .align(Alignment.CenterHorizontally)
-                    .clickable(indication = null, interactionSource = null) { onClickLogin() }
+                    .noRippleClickable { onClickLogin() }
             )
         }
 

@@ -2,6 +2,7 @@ package com.apparel.offprice.features.myorder.data
 
 import com.apparel.offprice.features.cart.data.CartProductItems
 
+import com.apparel.offprice.R
 
 
 
@@ -26,7 +27,7 @@ val orderProducts = listOf(
     CartProductItems(
         id = 2,
         tag = "GOLD LABEL",
-        image = R.drawable.product_item_2,
+        image = R.drawable.product_item_6,
         brand = "NIKE",
         title = "Printed Shirt with Crew Neck Member with Polish Style",
         color = "Blue",
@@ -41,6 +42,22 @@ val orderProducts = listOf(
     ),
     CartProductItems(
         id = 3,
+        tag = "GOLD LABEL",
+        image = R.drawable.product_item_5,
+        brand = "PUMA",
+        title = "Printed Shirt with Crew Neck Member with Polish Style",
+        color = "Blue",
+        size = "L",
+        quantity = 1,
+        basePrice = 35.00,
+        discountPrice = 120.00,
+        rrp = 172.00,
+        discount = "90%",
+        delivery = "GET IT TODAY",
+        isCouponApply = 0
+    ),
+    CartProductItems(
+        id = 4,
         tag = "GOLD LABEL",
         image = R.drawable.product_item_2,
         brand = "PUMA",
