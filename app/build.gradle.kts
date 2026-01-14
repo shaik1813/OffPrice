@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.google.service)
 }
 
 android {
@@ -27,12 +28,13 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
 
         getByName("debug") {
             isMinifyEnabled = false
             isDebuggable = true
-            applicationIdSuffix = ".debug"
+            applicationIdSuffix = ""
         }
 
         create("staging") {
@@ -61,14 +63,12 @@ android {
            versionName = "D1.0.0"
            dimension = "version"
            applicationIdSuffix = ".dev"
-           versionNameSuffix = "-dev"
        }
         create("prod") {
             versionCode = 1
             versionName = "1.0.0"
             dimension = "version"
-            applicationIdSuffix = ".prod"
-            versionNameSuffix = "-prod"
+            applicationIdSuffix = ""
         }
     }
 }
@@ -87,6 +87,7 @@ dependencies {
     implementation(libs.androidx.compose.material3.adaptive.navigation.suite)
     implementation(libs.androidx.appcompat)
     implementation(libs.material3)
+    implementation(libs.androidx.compose.ui.text)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -124,4 +125,7 @@ dependencies {
     implementation(libs.androidx.foundation)
 
     implementation(libs.material.icons.extended)
+
+    //Firebase
+    implementation(platform(libs.firebase.bom))
 }

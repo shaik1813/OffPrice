@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "188035142740",
+    "project_id": "offprice-78786",
+    "storage_bucket": "offprice-78786.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188035142740:android:dbffff21d2cc6579d1c9c1",
+        "android_client_info": {
+          "package_name": "com.apparel.offprice"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFFYOQte5rS86mNbeKtVbQ2RyW__Z2A3s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188035142740:android:88c2cdaaad3c5437d1c9c1",
+        "android_client_info": {
+          "package_name": "com.apparel.offprice.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFFYOQte5rS86mNbeKtVbQ2RyW__Z2A3s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

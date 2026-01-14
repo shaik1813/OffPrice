@@ -3,6 +3,7 @@ package com.apparel.offprice.features.authentication.presentation.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.apparel.offprice.common.preference.AppPreference
 import com.apparel.offprice.features.authentication.data.AuthPage
 import com.apparel.offprice.features.authentication.presentation.screen.LoginContract.UiEffect.Navigate
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
+    private val appPreference: AppPreference
 ) : ViewModel(), LoginContract {
 
     val _state = MutableStateFlow(LoginContract.UiState())
@@ -43,8 +45,14 @@ class LoginViewModel @Inject constructor(
 
             LoginContract.UiEvent.OnBackClick -> {
                 viewModelScope.launch {
-                    updateState { it.copy(currentPage = AuthPage.LOGIN, isLoginScreen = true, isForgotScreen = false,
-                        isResetPasswordScreen = false) }
+                    updateState {
+                        it.copy(
+                            currentPage = AuthPage.LOGIN,
+                            isLoginScreen = true,
+                            isForgotScreen = false,
+                            isResetPasswordScreen = false
+                        )
+                    }
                 }
             }
 
@@ -77,7 +85,13 @@ class LoginViewModel @Inject constructor(
             }
 
             LoginContract.UiEvent.OnOpenSignUp -> {
-                updateState { it.copy(isLoginScreen = false, isSignUpScreen = true, currentPage = AuthPage.SIGNUP) }
+                updateState {
+                    it.copy(
+                        isLoginScreen = false,
+                        isSignUpScreen = true,
+                        currentPage = AuthPage.SIGNUP
+                    )
+                }
             }
 
             LoginContract.UiEvent.OnOpenLogin -> {
@@ -115,8 +129,20 @@ class LoginViewModel @Inject constructor(
             }
 
             LoginContract.UiEvent.OnOpenResetPassword -> {
-                updateState { it.copy(isResetPasswordScreen = true, isForgotScreen = false, isLoginScreen = false,
-                    currentPage = AuthPage.RESET_PASSWORD) }
+                updateState {
+                    it.copy(
+                        isResetPasswordScreen = true, isForgotScreen = false, isLoginScreen = false,
+                        currentPage = AuthPage.RESET_PASSWORD
+                    )
+                }
+            }
+
+            LoginContract.UiEvent.OnLoginClick -> {
+                viewModelScope.launch {
+                    appPreference.saveIsGuestUser(false)
+                    _effect.emit(LoginContract.UiEffect.NavigateToHomeScreen)
+
+                }
             }
         }
     }

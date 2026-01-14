@@ -41,10 +41,19 @@ class ReturnsViewModel @Inject constructor() : ViewModel(), ReturnsContract {
             }
 
             ReturnsContract.UiEvent.OnRequestNewReturnClick -> {
-                emitEffect(ReturnsContract.UiEffect.NavigateToRequestReturn)
+                emitEffect(ReturnsContract.UiEffect.NavigateToNewRequestReturn)
             }
 
             is ReturnsContract.UiEvent.OnReturnItemClick -> {
+
+                val selectedItem = state.value.returnsList.firstOrNull {
+                    it.returnId == event.returnId
+                }
+
+                _state.update {
+                    it.copy(selectedReturn = selectedItem)
+                }
+
                 emitEffect(
                     ReturnsContract.UiEffect.NavigateToReturnDetails(event.returnId)
                 )

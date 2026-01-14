@@ -11,7 +11,8 @@ interface ReturnsContract : UnidirectionalViewModel<
         val isLoading: Boolean = false,
         val returnsList: List<ReturnItem> = emptyList(),
         val selectedFilter: ReturnFilter = ReturnFilter.LAST_3_MONTHS,
-        val isFilterBottomSheetOpen: Boolean = false
+        val isFilterBottomSheetOpen: Boolean = false,
+        val selectedReturn: ReturnItem? = null
     )
 
     sealed interface UiEvent {
@@ -35,7 +36,7 @@ interface ReturnsContract : UnidirectionalViewModel<
 
         data object NavigateBack : UiEffect
 
-        data object NavigateToRequestReturn : UiEffect
+        data object NavigateToNewRequestReturn : UiEffect
 
         data class NavigateToReturnDetails(val returnId: String) : UiEffect
 

@@ -34,6 +34,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -70,7 +71,12 @@ fun MyAccountScreen(
 
     val (state, event, effect) = use(viewModel = viewModel)
 
-
+    /**
+     * Note: This is ideal and recommended way to run an Event Once landed on screen in MVI for Compose
+     */
+    LaunchedEffect(Unit) {
+        event.invoke(MyAccountContract.UiEvent.OnScreenEntry)
+    }
 
     effect.CollectInLaunchedEffect {
         when (it) {
@@ -98,6 +104,7 @@ fun MyAccountScreen(
             }
         }
     }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -415,11 +422,11 @@ fun AccountUserScreen(
                             R.string.label_log_out,
                             R.drawable.icon_log_out,
                             1,
-                            AppScreen.LogOutScreen
+                            AppScreen.ExchangeScreen
                         ),
                     ),
                     onItemClick = { item ->
-                        event.invoke(MyAccountContract.UiEvent.AccountItemClick(item.navigation))
+                        event.invoke(MyAccountContract.UiEvent.Logout)
                     }
                 )
             }

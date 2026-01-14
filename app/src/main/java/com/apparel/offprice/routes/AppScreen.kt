@@ -80,13 +80,21 @@ sealed interface AppScreen {
     object ReturnsScreen : AppScreen
 
     @Serializable
-    data class ReturnDetailsScreen(val returnId: String, val onNavigateBack: Boolean) : AppScreen
+    object RequestNewReturnScreen : AppScreen
+    @Serializable
+    object ChooseReturnMethodScreen : AppScreen
+    @Serializable
+    object StoreReturnScreen : AppScreen
+    @Serializable
+    object AddressReturnScreen : AppScreen
+
+
+
+    @Serializable
+    data class ReturnDetailsScreen(val returnId: String) : AppScreen
 
     @Serializable
     object ExchangeScreen : AppScreen
-
-    @Serializable
-    object LogOutScreen : AppScreen
 
     @Serializable
     data class SubCategoryScreen(val title: String) : AppScreen

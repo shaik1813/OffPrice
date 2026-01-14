@@ -242,6 +242,16 @@
     <string name="label_shop_online_and_collect_from_your_nearest_store">SHOP ONLINE AND COLLECT FROM YOUR NEAREST STORE</string>
     <string name="label_completed">Completed</string>
     <string name="label_request_new_return">REQUEST NEW RETURN</string>
+    <string name="return_id_label">RETURN ID</string>
+    <string name="label_approved">Approved</string>
+    <string name="label_requested_on">Requested On</string>
+    <string name="pick_up_address_label">PICK UP ADDRESS</string>
+    <string name="refund_processed_label">Refund Processed</string>
+    <string name="refund_back_to_your_payment_method_label">will be refunded back to your payment method.</string>
+    <string name="temp_name">Michael Jonathon</string> <!--Temp-->
+    <string name="temp_address">Flat 402, Al Zahra Building Al Nahda Street, Nahda 2, Dubai, UAE</string> <!--Temp-->
+    <string name="temp_number">+971 436842594</string> <!--Temp-->
+    <string name="reason_label">Reason : </string>
 
     <!-- Categories -->
     <string name="label_categories">CATEGORIES</string>
@@ -286,5 +296,15 @@
     <string name="text_no_orders_description">Try changing the filter or check back later.</string>
     <string name="label_view_all_orders">VIEW ALL ORDERS</string>
 
+    <string name="return_id">RETURN ID - </string>
+    <string name="return_order_label">Return Order</string>
+    <string name="label_select_reason">Select Reason</string>
+    <string name="label_return_reason">Return Reason</string>
+    <string name="choose_return_method">Choose Return Method</string>
+    <string name="store_return">Store Return</string>
+    <string name="address_return">Address Return</string>
+    <string name="label_about_off_price">ABOUT OFF/PRICE</string>
+    <string name="label_off_price_experience">THE OFF/PRICE EXPERIENCE</string>
+    <string name="label_brand_we_love">BRAND WE LOVE</string>
 
 </resources>
