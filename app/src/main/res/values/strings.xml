@@ -285,6 +285,12 @@
     <string name="label_call_store">Call store</string>
     <string name="label_customer_support_policy">Customer Support &amp; Policies</string>
     <string name="return_id">RETURN ID - </string>
+    <string name="return_order_label">Return Order</string>
+    <string name="label_select_reason">Select Reason</string>
+    <string name="label_return_reason">Return Reason</string>
+    <string name="choose_return_method">Choose Return Method</string>
+    <string name="store_return">Store Return</string>
+    <string name="address_return">Address Return</string>
 
 
 </resources>

@@ -41,7 +41,7 @@ class ReturnsViewModel @Inject constructor() : ViewModel(), ReturnsContract {
             }
 
             ReturnsContract.UiEvent.OnRequestNewReturnClick -> {
-                emitEffect(ReturnsContract.UiEffect.NavigateToRequestReturn)
+                emitEffect(ReturnsContract.UiEffect.NavigateToNewRequestReturn)
             }
 
             is ReturnsContract.UiEvent.OnReturnItemClick -> {

@@ -30,8 +30,12 @@ import com.apparel.offprice.features.profile.presentation.screen.profileDetails.
 import com.apparel.offprice.features.profile.presentation.screen.profilePassword.ProfilePasswordScreen
 import com.apparel.offprice.features.profile.presentation.screen.profileSize.ProfileSizeScreen
 import com.apparel.offprice.features.profile.presentation.screen.userprofile.UserProfileScreen
+import com.apparel.offprice.features.returnFlow.presentation.screen.AddressReturnScreen
+import com.apparel.offprice.features.returnFlow.presentation.screen.ChooseReturnMethodScreen
+import com.apparel.offprice.features.returnFlow.presentation.screen.RequestNewReturnScreen
 import com.apparel.offprice.features.returnFlow.presentation.screen.ReturnDetailsScreen
 import com.apparel.offprice.features.returnFlow.presentation.screen.ReturnsScreen
+import com.apparel.offprice.features.returnFlow.presentation.screen.StoreReturnScreen
 import com.apparel.offprice.features.storeCredit.presentation.screen.StoreCreditScreen
 import com.apparel.offprice.features.storeLocator.presentation.screen.StoreLocatorScreen
 import com.apparel.offprice.features.welcome.presentation.genderCategory.GenderCategoryScreen
@@ -260,9 +264,10 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                         AppScreen.ReturnDetailsScreen(returnId)
                     )
                 },
-                onNavigateToRequestReturn = {
-                    //navController.navigate(AppScreen.RequestReturnScreen)
-                    navController.popBackStack()
+                onNavigateToNewRequestReturn = {
+                    navController.navigate(
+                        AppScreen.RequestNewReturnScreen
+                    )
                 }
             )
         }
@@ -278,13 +283,58 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
             )
         }
 
-        /*composable<AppScreen.RequestReturnScreen> {
-            RequestReturnScreen(
+        composable<AppScreen.RequestNewReturnScreen> {
+            RequestNewReturnScreen(
                 onBackClick = {
                     navController.popBackStack()
+                },
+                onContinue = {
+                    navController.navigate(
+                        AppScreen.ChooseReturnMethodScreen
+                    )
                 }
             )
-        }*/
+        }
+
+        composable<AppScreen.ChooseReturnMethodScreen> {
+            ChooseReturnMethodScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onNavigateToStoreReturn = {
+                    navController.navigate(AppScreen.StoreReturnScreen)
+                },
+                onNavigateToAddressReturn = {
+                    navController.navigate(AppScreen.AddressReturnScreen)
+                }
+            )
+        }
+
+
+        composable<AppScreen.StoreReturnScreen> {
+            StoreReturnScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onContinue = {
+                    // navigate to next return step
+                }
+            )
+        }
+
+        composable<AppScreen.AddressReturnScreen> {
+            AddressReturnScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onContinue = {
+                    // navigate to next return step
+                },
+                onAddNewAddress = {
+                    navController.navigate(AppScreen.DeliveryAddressScreen)
+                }
+            )
+        }
 
 
         composable<AppScreen.ExchangeScreen> {}
