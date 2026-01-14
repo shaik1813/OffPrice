@@ -291,6 +291,8 @@
     <string name="choose_return_method">Choose Return Method</string>
     <string name="store_return">Store Return</string>
     <string name="address_return">Address Return</string>
-
+    <string name="label_about_off_price">ABOUT OFF/PRICE</string>
+    <string name="label_off_price_experience">THE OFF/PRICE EXPERIENCE</string>
+    <string name="label_brand_we_love">BRAND WE LOVE</string>
 
 </resources>
