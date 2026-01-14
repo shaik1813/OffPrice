@@ -38,6 +38,7 @@ class AddressReturnViewModel @Inject constructor() : ViewModel(), AddressReturnC
     override fun event(event: AddressReturnContract.UiEvent) {
         when (event) {
 
+            // Address selection
             is AddressReturnContract.UiEvent.OnAddressSelected -> {
                 _state.update {
                     it.copy(selectedAddressId = event.addressId)
@@ -49,19 +50,62 @@ class AddressReturnViewModel @Inject constructor() : ViewModel(), AddressReturnC
             }
 
             is AddressReturnContract.UiEvent.OnEditAddress -> {
-                // optional: route to edit screen
+                // keep for later
             }
 
             is AddressReturnContract.UiEvent.OnDeleteAddress -> {
-                // optional: delete logic
+                // keep for later
             }
 
+            // Continue → Refund Sheet
             AddressReturnContract.UiEvent.OnContinueClick -> {
-                emitEffect(AddressReturnContract.UiEffect.NavigateNext)
+                _state.update {
+                    it.copy(isRefundSheetOpen = true)
+                }
             }
 
+            //  Refund flow
+            is AddressReturnContract.UiEvent.OnRefundMethodSelected -> {
+                _state.update {
+                    it.copy(selectedRefundMethod = event.method)
+                }
+            }
+
+            AddressReturnContract.UiEvent.OnReturnItemClick -> {
+                _state.update {
+                    it.copy(
+                        isRefundSheetOpen = false,
+                        showConfirmDialog = true
+                    )
+                }
+            }
+
+            AddressReturnContract.UiEvent.OnConfirmReturn -> {
+                _state.update {
+                    it.copy(
+                        showConfirmDialog = false,
+                        showSuccessDialog = true
+                    )
+                }
+            }
+
+            AddressReturnContract.UiEvent.OnCancelReturn -> {
+                _state.update {
+                    it.copy(showConfirmDialog = false)
+                }
+            }
+
+            AddressReturnContract.UiEvent.OnSuccessOkayClick -> {
+                emitEffect(AddressReturnContract.UiEffect.FinishFlow)
+            }
+
+            //  Back
             AddressReturnContract.UiEvent.OnCancelClick -> {
                 emitEffect(AddressReturnContract.UiEffect.NavigateBack)
+            }
+
+            is AddressReturnContract.UiEvent.OnRefundSheetDismiss -> {
+                _state.update { it.copy(isRefundSheetOpen = false) }
             }
         }
     }

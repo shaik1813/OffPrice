@@ -317,7 +317,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                     navController.popBackStack()
                 },
                 onContinue = {
-                    // navigate to next return step
+                    navController.popBackStack(route = AppScreen.ReturnsScreen, inclusive = false)
                 }
             )
         }
@@ -328,7 +328,7 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
                     navController.popBackStack()
                 },
                 onContinue = {
-                    // navigate to next return step
+                    navController.popBackStack(route = AppScreen.ReturnsScreen, inclusive = false)
                 },
                 onAddNewAddress = {
                     navController.navigate(AppScreen.DeliveryAddressScreen)

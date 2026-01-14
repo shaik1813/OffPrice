@@ -8,6 +8,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -16,7 +19,10 @@ import com.apparel.offprice.R
 import com.apparel.offprice.common.utils.CollectInLaunchedEffect
 import com.apparel.offprice.common.utils.use
 import com.apparel.offprice.features.checkout.presentation.components.TopBar
+import com.apparel.offprice.features.returnFlow.presentation.component.ConfirmReturnDialog
 import com.apparel.offprice.features.returnFlow.presentation.component.PickupStoreCard
+import com.apparel.offprice.features.returnFlow.presentation.component.RefundMethodBottomSheet
+import com.apparel.offprice.features.returnFlow.presentation.component.ReturnSuccessDialog
 import com.apparel.offprice.features.returnFlow.presentation.component.StoreReturnBottomBar
 
 @Composable
@@ -26,14 +32,29 @@ fun StoreReturnScreen(
     onContinue: () -> Unit
 ) {
 
-    val (state, event, effect) = use(viewModel)
+    /*val (state, event, effect) = use(viewModel)
 
     effect.CollectInLaunchedEffect {
         when (it) {
             StoreReturnContract.UiEffect.NavigateBack -> onBackClick()
-            StoreReturnContract.UiEffect.NavigateNext -> onContinue()
+            StoreReturnContract.UiEffect.NavigateNext  -> onContinue()
+            StoreReturnContract.UiEffect.FinishFlow  -> onContinue()
+        }
+    }*/
+
+    val state by viewModel.state.collectAsState()
+    val event = viewModel::event
+
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                StoreReturnContract.UiEffect.NavigateBack -> onBackClick()
+                StoreReturnContract.UiEffect.NavigateNext -> onContinue()
+                StoreReturnContract.UiEffect.FinishFlow -> onContinue()
+            }
         }
     }
+
 
     Scaffold(
         modifier = Modifier.statusBarsPadding(),
@@ -80,4 +101,42 @@ fun StoreReturnScreen(
             }
         }
     }
+
+    // 🔹 Refund Bottom Sheet (REUSED)
+    if (state.isRefundSheetOpen) {
+        RefundMethodBottomSheet(
+            selected = state.selectedRefundMethod,
+            onSelect = {
+                event(StoreReturnContract.UiEvent.OnRefundMethodSelected(it))
+            },
+            onReturnItemClick = {
+                event(StoreReturnContract.UiEvent.OnReturnItemClick)
+            },
+            onDismiss = {
+                event(StoreReturnContract.UiEvent.OnRefundSheetDismiss)
+            }
+        )
+    }
+
+    // 🔹 Confirm Dialog (REUSED)
+    if (state.showConfirmDialog) {
+        ConfirmReturnDialog(
+            onYes = {
+                event(StoreReturnContract.UiEvent.OnConfirmReturn)
+            },
+            onNo = {
+                event(StoreReturnContract.UiEvent.OnCancelReturn)
+            }
+        )
+    }
+
+    // 🔹 Success Dialog (REUSED)
+    if (state.showSuccessDialog) {
+        ReturnSuccessDialog(
+            onOkay = {
+                event(StoreReturnContract.UiEvent.OnSuccessOkayClick)
+            }
+        )
+    }
+
 }

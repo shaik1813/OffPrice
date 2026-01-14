@@ -167,6 +167,12 @@ val sampleAddresses = listOf(
     )
 )
 
+enum class RefundMethod {
+    STORE_CREDITS,
+    ORIGINAL_PAYMENT
+}
+
+
 data class DeliveryAddressModel2(
     val id: String,
     val userName: String,
