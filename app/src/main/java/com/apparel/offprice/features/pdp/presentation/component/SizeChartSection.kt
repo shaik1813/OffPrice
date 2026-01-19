@@ -1,6 +1,5 @@
 package com.apparel.offprice.features.pdp.presentation.component
 
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -53,7 +52,7 @@ fun SizeSelector(onSizeGuideClick: () -> Unit) {
         SizeItem(id ="1","L", 2),
         SizeItem(id ="1","XL", 0),  // Sold out example
         SizeItem(id ="1","XXL", 5),
-        SizeItem(id ="1","XXXL", 0, disabled = false)
+        SizeItem(id ="1","XXXL", 0, disabled = true)
     )
 
     var selectedSize by remember { mutableStateOf<String?>(null) }
@@ -162,7 +161,7 @@ fun SizeCard(
     onClick: () -> Unit
 ) {
     val backgroundColor = when {
-        sizeitem.disabled -> sizeCardColor
+        sizeitem.disabled -> Color(0xFFB0B0B0)
         isSelected -> sizeCardColor
         else -> sizeCardColor
     }
@@ -189,8 +188,8 @@ fun SizeCard(
                     drawLine(
                         color = Color.White,
                         start = Offset(0f, 0f),
-                        end = Offset(size.width, size.height),
-                        strokeWidth = 5f
+                        end = Offset(size.width, size.height/2),
+                        strokeWidth = 3f
                     )
                 }
             }

@@ -1,6 +1,7 @@
 package com.apparel.offprice.routes
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
@@ -23,6 +24,7 @@ import com.apparel.offprice.features.customerSupport.presentation.screens.termsA
 import com.apparel.offprice.features.home.presentation.screens.home.HomeScreen
 import com.apparel.offprice.features.home.presentation.screens.search.SearchScreen
 import com.apparel.offprice.features.home.presentation.screens.subcategory.SubCategoryScreen
+import com.apparel.offprice.features.myorder.presentation.screen.MyOrderScreen
 import com.apparel.offprice.features.paymentCard.presentation.screen.PaymentCardScreen
 import com.apparel.offprice.features.pdp.presentation.screen.PDPScreen
 import com.apparel.offprice.features.plp.presentation.screens.plpScreen.PLPScreen
@@ -252,7 +254,13 @@ fun AppRoutes(windowSizeClass: WindowSizeClass) {
             })
         }
 
-        composable<AppScreen.MyOrdersScreen> {}
+        composable<AppScreen.MyOrdersScreen> {
+            MyOrderScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
 
         composable<AppScreen.ReturnsScreen> {
             ReturnsScreen(
