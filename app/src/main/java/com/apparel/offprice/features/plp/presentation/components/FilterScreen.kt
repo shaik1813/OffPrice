@@ -174,6 +174,16 @@ fun FilterScreen(
                             )
                         }
 
+                        FilterType.SHOE_SIZE -> {
+                            ShoeSizeFilterContent(
+                                filterGroup = filterList.first { it.type == FilterType.SHOE_SIZE },
+                                onFilterClick = { filterType, itemId ->
+                                    onFilterItemClick(filterType, itemId)
+                                }
+                            )
+                        }
+
+
                         FilterType.COLOR -> {
                             CategoryFilterListItem(
                                 filter = filterList.filter { it.type == FilterType.COLOR },
@@ -182,6 +192,15 @@ fun FilterScreen(
                                 }
                             )
                         }
+
+                        FilterType.PRICE -> {
+                            PriceFilterContent(
+                                onRangeChange = { from, to ->
+                                    onFilterItemClick(FilterType.PRICE, "$from-$to")
+                                }
+                            )
+                        }
+
 
                         FilterType.DISCOUNT -> {
                             CategoryFilterListItem(
@@ -219,11 +238,6 @@ fun FilterScreen(
                             )
                         }
 
-                        else -> Text(
-                            text = "No UI implemented for '${selectedFilter}' yet",
-                            color = Color.Gray,
-                            modifier = Modifier.padding(16.dp)
-                        )
                     }
                 }
             }

@@ -6,7 +6,8 @@ data class FilterItem(
     val name: String,
     val itemStock: Int = 0,
     val isSelected: Boolean = false,
-    val hexColor: String? = null // Only used for color filter
+    val hexColor: String? = null, // Only used for color filter
+    val sizeRegion: ShoeSizeRegion? = null
 )
 
 data class FilterGroup(
@@ -20,10 +21,9 @@ enum class FilterType {
     BRAND, CATEGORY, CLOTHING_SIZE, SHOE_SIZE, COLOR, PRICE, DISCOUNT, DELIVERY_TYPE, OCCASION, BY_STOCK
 }
 
-enum class ShoeSizeUnit {
+enum class ShoeSizeRegion {
     EU, UK, US
 }
-
 
 val filterList = listOf(
     FilterGroup(
@@ -68,11 +68,24 @@ val filterList = listOf(
         type = FilterType.SHOE_SIZE,
         title = "Shoe Size",
         items = listOf(
-            FilterItem("1", "40", itemStock = 10),
-            FilterItem("2", "40 2/3", itemStock = 16),
-            FilterItem("3", "41 1/3", itemStock = 10),
-            FilterItem("4", "42", itemStock = 2),
-            FilterItem("5", "44", itemStock = 15)
+
+            // 🔹 EU
+            FilterItem("eu_40", "40", itemStock = 10),
+            FilterItem("eu_41", "41", itemStock = 12),
+            FilterItem("eu_42", "42", itemStock = 8),
+            FilterItem("eu_43", "43", itemStock = 6),
+
+            // 🔹 UK
+            FilterItem("uk_6", "6", itemStock = 7),
+            FilterItem("uk_7", "7", itemStock = 9),
+            FilterItem("uk_8", "8", itemStock = 5),
+            FilterItem("uk_9", "9", itemStock = 4),
+
+            // 🔹 US
+            FilterItem("us_7", "7", itemStock = 11),
+            FilterItem("us_8", "8", itemStock = 13),
+            FilterItem("us_9", "9", itemStock = 10),
+            FilterItem("us_10", "10", itemStock = 6)
         )
     ),
     FilterGroup(
